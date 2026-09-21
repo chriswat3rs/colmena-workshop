@@ -260,6 +260,8 @@ details.more>summary{cursor:pointer;font-weight:700;color:var(--accent-strong);p
 .lockup{display:flex;align-items:center;justify-content:center;gap:18px}
 .lockup-plus{font-family:var(--display);font-weight:300;font-size:44px;line-height:1;color:var(--ink-3);transform:translateY(-2px)}
 .lockup .brand-mark.lg{width:92px;height:92px}
+.bee-mark{width:80px;height:88px;font-size:42px;background:var(--accent-soft)}
+.lockup.sm .bee-mark{width:38px;height:42px;font-size:20px}
 .lockup.sm{gap:10px}.lockup.sm .lockup-plus{font-size:24px}.lockup.sm .brand-mark{width:40px;height:40px}
 /* ---------- Iconos «liquid glass» (reemplazan a los emojis) ----------
    Vidrio translúcido con brillo especular arriba, luz de borde y refracción
@@ -445,7 +447,7 @@ const MOODS = [
 ];
 /* Logo de Colmena y lockup «Colmena + Quality & Knowledge» */
 function colmenaMark(size){ return `<span class="cm-wrap${size?" "+size:""}" aria-hidden="true"><span class="cm-mark"><span>C</span></span></span>`; }
-function brandLockup(size){ return `<div class="lockup${size?" "+size:""}" role="img" aria-label="Colmena + ${BRAND_ORG}">${colmenaMark(size==="sm"?"md":"")}<span class="lockup-plus" aria-hidden="true">+</span><img class="brand-mark${size==="sm"?"":" lg"}" src="${BRAND_IMG.imagotipo}" alt=""></div>`; }
+function brandLockup(size){ return `<div class="lockup${size?" "+size:""}" role="img" aria-label="Colmena + ${BRAND_ORG}"><span class="hex hex-avatar bee-mark" aria-hidden="true">🐝</span><span class="lockup-plus" aria-hidden="true">+</span><img class="brand-mark${size==="sm"?"":" lg"}" src="${BRAND_IMG.imagotipo}" alt=""></div>`; }
 const PHASES = [
   {id:"lobby",   t:"Lobby"},
   {id:"checkin", t:"Check-in"},
