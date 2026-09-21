@@ -1,4 +1,4 @@
-# Colmena 🐝
+# Colmena · Quality & Knowledge
 
 Herramienta propia para workshops de design thinking en vivo.
 
@@ -6,10 +6,12 @@ Herramienta propia para workshops de design thinking en vivo.
 - **Recorrido del taller:**
   1. **Check-in.**
   2. **Dolores:** cada quien los publica por etapa del proceso y herramienta.
-  3. **Votación:** reparten su miel entre los dolores.
+  3. **Votación:** reparten sus votos entre los dolores.
   4. **Quick wins:** califican las mejoras que ya se habían identificado y proponen las que falten.
   5. **Ideas:** «¿Cómo podríamos…?» sobre los 3 dolores más votados, con apoyos.
 - **Tú, como facilitador:** proyectas un **panel en vivo** con participantes, muro, ranking, tabla de quick wins, ideas por reto y exportación a CSV.
+
+**Identidad:** imagotipo y logotipo de Quality & Knowledge, colores corporativos (azul `#278FD8`, marino `#01133B`), tipografía Montserrat y modo claro. En lugar de emojis usa iconos propios estilo «liquid glass»: avatares, estados de ánimo e indicadores.
 
 Todo es **un solo archivo** (`index.html`) más una base de datos gratuita en Supabase, **con autenticación**: tu cuenta está protegida con segundo factor y cada participante solo accede a lo suyo.
 
