@@ -156,7 +156,8 @@ input[type=range]{width:100%;accent-color:var(--accent);height:32px}
 .panel h2 .sub{font-family:var(--sans);font-weight:500;font-size:13.5px;color:var(--ink-2)}
 .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
 .wcol h3{font-size:13.5px;color:var(--ink-2);font-family:var(--sans);font-weight:700;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-.wcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;animation:cardin .35s ease}
+.wcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.wcard.new,.icard.new{animation:cardin .35s ease}
 @keyframes cardin{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
 .wcard .txt{font-size:14.5px;margin-bottom:8px}
 .wcard .who{font-size:12.5px;color:var(--ink-3);font-weight:600}
@@ -185,6 +186,61 @@ input[type=range]{width:100%;accent-color:var(--accent);height:32px}
 .hr{border:none;border-top:1px solid var(--line);margin:6px 0}
 .hint{font-size:13px;color:var(--ink-3)}
 .empty{color:var(--ink-3);font-size:14.5px;padding:14px 0;text-align:center}
+/* ---------- v1.2: perfil, herramienta, quick wins e ideas ---------- */
+.opt{font-weight:500;color:var(--ink-3)}
+.btn-link{margin-top:14px;align-self:flex-start;color:var(--accent);font-weight:700;font-size:15px;padding:6px 0}
+.tag.tool{background:var(--surface);color:var(--ink-2);border:1px solid var(--line)}
+.tag.mine{background:var(--ink);color:var(--card)}
+.sec-title{font-family:var(--display);font-size:20px;font-weight:700;margin:26px 0 6px}
+.stage-h{font-size:13px;font-weight:700;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em;margin:18px 0 8px}
+.qwcard{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-card);padding:14px 16px;margin-bottom:10px}
+.qwcard.done{border-color:var(--accent)}
+.qwcard .txt{font-size:16px;margin:4px 0 12px}
+.qw-id{font-family:var(--display);font-weight:800;font-size:12px;color:var(--ink-3);letter-spacing:.04em}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.seg button{padding:11px 4px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);font-weight:700;font-size:14px;min-height:44px}
+.seg button.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.seg button[data-v="0"].on{background:var(--ink-2);border-color:var(--ink-2);color:var(--card)}
+details.more{margin-top:8px}
+details.more>summary{cursor:pointer;font-weight:700;color:var(--accent);padding:10px 0;font-size:15px}
+.reto{background:var(--honey-soft);border:1.5px solid var(--honey);border-radius:var(--r-card);padding:14px 16px;margin:14px 0 16px}
+.reto .rk{font-size:12.5px;font-weight:800;color:#8A6200;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+.reto .txt{font-size:16.5px;font-weight:600;margin-bottom:8px}
+.ideacard{background:var(--card);border:1.5px solid var(--line);border-radius:var(--r-card);padding:14px 16px;margin-bottom:10px}
+.ideacard .txt{font-size:16px;margin-bottom:10px}
+.support{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:var(--r-chip);border:1.5px solid var(--line);font-weight:700;font-size:14px;min-height:40px}
+.support.on{background:var(--honey-soft);border-color:var(--honey);color:#6B4D00}
+.support .vhex{width:13px;height:15px}
+/* admin: tabla de quick wins (barras apiladas ordinales, un solo tono + gris para «no aplica») */
+.qwt{display:flex;flex-direction:column}
+.qwt-row{display:grid;grid-template-columns:minmax(220px,1fr) minmax(160px,300px) 44px 54px;gap:14px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.qwt-row.head{font-size:12.5px;font-weight:700;color:var(--ink-2);padding-top:0}
+.qwt-row .lbl{font-size:14px;font-weight:600;line-height:1.35}
+.qwt-row .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:14px}
+.qwt-row .idx{font-family:var(--display);font-size:17px}
+.qwt-stage{font-size:12.5px;font-weight:800;color:var(--ink-2);text-transform:uppercase;letter-spacing:.05em;padding:14px 0 4px}
+.sbar{display:flex;gap:2px;height:16px}
+.sbar span{display:block;height:100%;min-width:0}
+.sbar span:first-child{border-radius:4px 0 0 4px}.sbar span:last-child{border-radius:0 4px 4px 0}
+.s3{background:var(--accent)}
+.s2{background:color-mix(in srgb,var(--accent) 58%,transparent)}
+.s1{background:color-mix(in srgb,var(--accent) 28%,transparent)}
+.s0{background:var(--line)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);font-weight:600;margin-top:12px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.retos{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.retocol{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.retocol h3{font-size:14.5px;font-family:var(--sans);font-weight:700;margin-bottom:4px}
+.retocol .rmeta{font-size:12.5px;color:var(--ink-3);font-weight:600;margin-bottom:12px}
+.icard{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+.icard .txt{font-size:14px}
+.icard .sup{font-weight:800;color:var(--honey);font-variant-numeric:tabular-nums;white-space:nowrap}
+.icard .who{display:block;margin-top:4px;font-size:12px;color:var(--ink-3);font-weight:600}
+.ptable .et{font-size:12.5px;color:var(--ink-2)}
+.panel h2 .right{margin-left:auto}
+.pw-wrap{position:relative}
+.pw-wrap .input{padding-right:92px}
+.pw-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);padding:8px 12px;border-radius:9px;font-weight:700;font-size:13.5px;color:var(--accent)}
 /* ---------- acceso del facilitador ---------- */
 .steps{margin:0 0 14px 20px;color:var(--ink-2);font-size:14.5px;display:grid;gap:6px}
 .mfa-qr{display:flex;justify-content:center;background:#fff;border-radius:14px;padding:12px;width:max-content;margin:4px auto 14px}
@@ -216,23 +272,65 @@ const CONFIG = {
   SUPABASE_ANON_KEY: "sb_publishable_M_m44DH56kNxz8TU5egqwg_U339aK2m",
   BRAND: "Colmena",
   PRESETS: {
+    /* Plantilla Lockton · Actua — etapas, herramientas y quick wins tomados de la
+       lámina del cliente «Proceso de Valuación Actuarial» (análisis v2, sección 7) */
     lockton: {
-      name: "Actua · Dolores del proceso de valuación",
+      name: "Actua · Workshop del proceso de valuación",
       facilitator: "Christian",
       votes_per_user: 5,
-      areas: ["Valuación Actuarial","Control Facturación","Compliance","Finanzas · Altas","Finanzas · Timbrado","Finanzas · Cobranza","Legal","TI","Enlace / Productores"],
-      stages: ["1 Propuesta y aceptación","2 Solicitud de datos","3 Revisión de información","4 Análisis de supuestos","5 Determinación de pasivos","6 Anexos contables","7 Generación de reporte","8 Cierre","Alta de cliente / Facturación","Transversal"],
+      idea_votes: 3,
+      idea_top: 3,
+      areas: ["Valuación actuarial","Control Facturación Actuarial","Compliance","Finanzas (alta, timbrado, cobranza)","Legal","TI / Sistemas","Enlace / Productores"],
+      roles: ["Director","Gerente / Subdirector","Subgerente","Asesor Sr","Asesor","Becario"],
+      stages: ["1 Preparar propuesta","2 Solicitar / recibir información","3 Revisar información","4 Preparar base definitiva","5 Analizar supuestos","6 Determinación de pasivos","7 Anexo contable","8 Reportes","Alta de cliente / Facturación","Transversal (comunicación, seguimiento)"],
+      tools: {
+        "1 Preparar propuesta": ["Generador de propuestas"],
+        "2 Solicitar / recibir información": ["Layout (XLS)"],
+        "3 Revisar información": ["Base de datos (XLS)","SICI (cruce BD)","Papeles de trabajo preliminares (XLS)"],
+        "4 Preparar base definitiva": ["Base de datos definitiva (XLS)","Insumo para SACS"],
+        "5 Analizar supuestos": ["Papeles de trabajo definitivos (XLS)","SACS (carrera salarial)","Tasa de descuento (XLS)","Carta de supuestos (PDF)"],
+        "6 Determinación de pasivos": ["ProVal","Resultados y listados individuales (XLS)"],
+        "7 Anexo contable": ["Anexo por norma contable (XLS)"],
+        "8 Reportes": ["Reporte por norma e idioma (DOC)"],
+        "Alta de cliente / Facturación": ["Formulario de facturación","Opera","Oracle","Robot de Compliance"]
+      },
+      quickwins: [
+        {id:"QW-01", stage:"1 Preparar propuesta", text:"Generar propuestas de manera masiva desde el sistema (cubriría ~90% de las renovaciones)"},
+        {id:"QW-02", stage:"2 Solicitar / recibir información", text:"Versiones de layout por alcance del servicio, homologadas con el procesamiento de la información"},
+        {id:"QW-03", stage:"3 Revisar información", text:"Parametrizar la formulación de la base de datos"},
+        {id:"QW-04", stage:"3 Revisar información", text:"Homologar la base de datos para los sistemas internos y ProVal"},
+        {id:"QW-05", stage:"3 Revisar información", text:"Plantilla estandarizada de dudas para enviar al cliente"},
+        {id:"QW-06", stage:"5 Analizar supuestos", text:"Concentrar las bajas históricas en una sola base para analizar rotación y despido más rápido"},
+        {id:"QW-07", stage:"5 Analizar supuestos", text:"Generar automáticamente la Carta de Supuestos"},
+        {id:"QW-08", stage:"5 Analizar supuestos", text:"Incorporar al proveedor de precios"},
+        {id:"QW-09", stage:"5 Analizar supuestos", text:"Incorporar análisis adicionales estándar"},
+        {id:"QW-10", stage:"6 Determinación de pasivos", text:"Parametrizar beneficios y criterios de programación"},
+        {id:"QW-11", stage:"6 Determinación de pasivos", text:"Estandarizar las salidas del sistema"},
+        {id:"QW-12", stage:"7 Anexo contable", text:"Mejorar las macros para sacar PDF y XLS en bulk"},
+        {id:"QW-13", stage:"7 Anexo contable", text:"Versiones cortas del formato del anexo"},
+        {id:"QW-14", stage:"7 Anexo contable", text:"Estandarizar criterios para insumos"},
+        {id:"QW-15", stage:"7 Anexo contable", text:"Automatizar insumos (ya en curso)"},
+        {id:"QW-16", stage:"7 Anexo contable", text:"Estandarizar el análisis de variaciones"},
+        {id:"QW-17", stage:"8 Reportes", text:"Versiones cortas del formato del reporte"},
+        {id:"QW-18", stage:"8 Reportes", text:"Estandarizar insumos parametrizados en BD y anexos contables"},
+        {id:"QW-19", stage:"8 Reportes", text:"Automatizar insumos (ya en curso)"}
+      ],
       q_checkin: "¿Cómo llegas a esta sesión?",
       q_expect: "En una frase: ¿qué esperas de este workshop?",
-      q_pain: "Piensa en tu día a día en el proceso de valuación. ¿Qué es lo que más tiempo te roba o más te frustra?"
+      q_pain: "Piensa en tu día a día en el proceso de valuación. ¿Qué es lo que más tiempo te roba o más te frustra?",
+      q_idea: "¿Cómo podríamos resolverlo?"
     },
     generic: {
-      name: "", facilitator: "", votes_per_user: 5,
+      name: "", facilitator: "", votes_per_user: 5, idea_votes: 3, idea_top: 3,
       areas: ["Producto","Diseño","Desarrollo","Operaciones","Comercial","Dirección"],
+      roles: [],
       stages: ["Inicio","Proceso","Entrega","Seguimiento","Transversal"],
+      tools: {},
+      quickwins: [],
       q_checkin: "¿Cómo llegas a esta sesión?",
       q_expect: "En una frase: ¿qué esperas de este workshop?",
-      q_pain: "¿Qué es lo que más tiempo te roba o más te frustra en este proceso?"
+      q_pain: "¿Qué es lo que más tiempo te roba o más te frustra en este proceso?",
+      q_idea: "¿Cómo podríamos resolverlo?"
     }
   }
 };
@@ -249,10 +347,16 @@ const PHASES = [
   {id:"checkin", t:"Check-in"},
   {id:"pains",   t:"Dolores"},
   {id:"votes",   t:"Votación"},
+  {id:"quickwins", t:"Quick wins"},
+  {id:"ideas",   t:"Ideas"},
   {id:"results", t:"Resultados"},
   {id:"closed",  t:"Cierre"}
 ];
 const SEV_LABELS = {1:"Molesta poco",2:"Incomoda",3:"Duele",4:"Duele mucho",5:"Insoportable"};
+/* Escala para calificar quick wins: ¿cuánto te ayudaría en tu día a día? */
+const QW_SCALE = [{v:3,t:"Mucho"},{v:2,t:"Algo"},{v:1,t:"Poco"},{v:0,t:"No aplica"}];
+/* Herramientas que aparecen en cualquier etapa, además de las propias de cada una */
+const COMMON_TOOLS = ["Correo / Teams","Excel propio","Otra"];
 </script>
 <script>
 /* ============================================================
@@ -276,6 +380,31 @@ function downloadCSV(name, rows){
 }
 function fmtTime(iso){ try{ return new Date(iso).toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit"}); }catch(e){ return ""; } }
 
+/* ---------- v1.2: cálculos compartidos (participante y facilitador) ---------- */
+/* Retos de la fase Ideas: los N dolores más votados (desempate: el más antiguo) */
+function topPains(cards, totals, n){
+  return [...cards].map(c=>({...c, pts: totals[c.id]||0})).filter(c=>c.pts>0)
+    .sort((a,b)=> b.pts-a.pts || String(a.created_at).localeCompare(String(b.created_at)) || String(a.id).localeCompare(String(b.id)))
+    .slice(0, n||3);
+}
+/* Índice de ayuda de un quick win: 0–100 (mucho = 100, algo = 50, poco = 0). «No aplica» no cuenta. */
+function qwStats(t){
+  const m=t&&t.m||0, a=t&&t.a||0, p=t&&t.p||0, na=t&&t.na||0, base=m+a+p;
+  return {m,a,p,na,n:base+na, idx: base ? Math.round((m*100+a*50)/base) : null};
+}
+/* Cuenta calificaciones crudas → {qw_id:{m,a,p,na}} */
+function qwCount(ratings){
+  const t={}; ratings.forEach(r=>{ const o=t[r.qw_id]=t[r.qw_id]||{m:0,a:0,p:0,na:0};
+    if(r.score===3) o.m++; else if(r.score===2) o.a++; else if(r.score===1) o.p++; else o.na++; });
+  return t;
+}
+/* Etiqueta corta de etapa: «3 Revisar información» → «3» */
+function shortStage(t){ const m=String(t||"").match(/^(\d+)\b/); return m ? m[1] : String(t||""); }
+function toolsFor(session, stage){
+  const own = (session && session.tools && session.tools[stage]) || [];
+  return [...new Set([...own, ...COMMON_TOOLS])];
+}
+function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
 
 </script>
 <script>
@@ -382,9 +511,27 @@ const SupaStore = {
   async listVotes(sid){ const {data,error}=await this.client.from("ws_votes").select("*").eq("session_id",sid); if(error) throw error; return data||[]; },
   async cardTotals(sid){ const {data,error}=await this.client.rpc("ws_card_totals",{p_session:sid}); if(error) throw error; const t={}; (data||[]).forEach(r=>t[r.card_id]=Number(r.points)||0); return t; },
 
+  /* ---- v1.2 · Quick wins ---- */
+  async setQwRating(r){ const {error}=await this.client.from("ws_qw_ratings").upsert(r,{onConflict:"session_id,participant_id,qw_id"}); if(error) throw error; },
+  async listMyQwRatings(sid,pid){ const {data,error}=await this.client.from("ws_qw_ratings").select("qw_id,score").eq("session_id",sid).eq("participant_id",pid); if(error) throw error; return data||[]; },
+  async listQwRatings(sid){ const {data,error}=await this.client.from("ws_qw_ratings").select("*").eq("session_id",sid); if(error) throw error; return data||[]; },
+  async qwTotals(sid){ const {data,error}=await this.client.rpc("ws_qw_totals",{p_session:sid}); if(error) throw error; const t={}; (data||[]).forEach(r=>t[r.qw_id]={m:+r.mucho||0,a:+r.algo||0,p:+r.poco||0,na:+r.no_aplica||0}); return t; },
+
+  /* ---- v1.2 · Ideas y propuestas de quick win ---- */
+  async addIdea(i){ const {data,error}=await this.client.from("ws_ideas").insert(i).select().single(); if(error) throw error; return data; },
+  async deleteIdea(id){ const {error}=await this.client.from("ws_ideas").delete().eq("id",id); if(error) throw error; },
+  async listIdeas(sid){ const {data,error}=await this.client.from("ws_ideas").select("*").eq("session_id",sid).order("created_at"); if(error) throw error; return data||[]; },
+  async listMyIdeaVotes(sid,pid){ const {data,error}=await this.client.from("ws_idea_votes").select("idea_id").eq("session_id",sid).eq("participant_id",pid); if(error) throw error; return data||[]; },
+  async listIdeaVotes(sid){ const {data,error}=await this.client.from("ws_idea_votes").select("*").eq("session_id",sid); if(error) throw error; return data||[]; },
+  async setIdeaVote(v,on){
+    if(on){ const {error}=await this.client.from("ws_idea_votes").insert(v); if(error) throw error; return; }
+    const {error}=await this.client.from("ws_idea_votes").delete().eq("session_id",v.session_id).eq("participant_id",v.participant_id).eq("idea_id",v.idea_id); if(error) throw error;
+  },
+  async ideaTotals(sid){ const {data,error}=await this.client.rpc("ws_idea_totals",{p_session:sid}); if(error) throw error; const t={}; (data||[]).forEach(r=>t[r.idea_id]=Number(r.votes)||0); return t; },
+
   subscribe(sid, cb){
     const ch = this.client.channel("ws-"+sid);
-    ["ws_sessions","ws_participants","ws_cards","ws_votes"].forEach(tb=>{
+    ["ws_sessions","ws_participants","ws_cards","ws_votes","ws_qw_ratings","ws_ideas","ws_idea_votes"].forEach(tb=>{
       ch.on("postgres_changes",{event:"*",schema:"public",table:tb,filter: tb==="ws_sessions" ? "id=eq."+sid : "session_id=eq."+sid}, ()=>cb(tb));
     });
     ch.subscribe();
@@ -396,7 +543,8 @@ const SupaStore = {
    Cada pestaña es un participante distinto, para poder probar varios. */
 const DemoStore = {
   KEY:"colmena_demo_db",
-  db(){ try{ return JSON.parse(storageGet(this.KEY))||{sessions:[],participants:[],cards:[],votes:[]}; }catch(e){ return {sessions:[],participants:[],cards:[],votes:[]}; } },
+  db(){ let d=null; try{ d=JSON.parse(storageGet(this.KEY)); }catch(e){}
+    d=d||{}; ["sessions","participants","cards","votes","qw","ideas","ideaVotes"].forEach(k=>{ if(!Array.isArray(d[k])) d[k]=[]; }); return d; },
   save(db){ storageSet(this.KEY, JSON.stringify(db)); window.dispatchEvent(new Event("demo-change")); },
   _cbs:[],
   init(){ window.addEventListener("storage", e=>{ if(e.key===this.KEY) this._cbs.forEach(cb=>cb("storage")); }); window.addEventListener("demo-change", ()=>this._cbs.forEach(cb=>cb("local"))); },
@@ -410,18 +558,35 @@ const DemoStore = {
   async lookupSession(code){ return this.getMySession(code); },
   async listMySessions(){ return [...this.db().sessions].sort((a,b)=>a.created_at<b.created_at?1:-1); },
   async updateSession(id,patch){ const db=this.db(); const s=db.sessions.find(x=>x.id===id); if(s) Object.assign(s,patch); this.save(db); },
-  async deleteSession(id){ const db=this.db(); db.sessions=db.sessions.filter(s=>s.id!==id); db.participants=db.participants.filter(p=>p.session_id!==id); db.cards=db.cards.filter(c=>c.session_id!==id); db.votes=db.votes.filter(v=>v.session_id!==id); this.save(db); },
+  async deleteSession(id){ const db=this.db(); ["participants","cards","votes","qw","ideas","ideaVotes"].forEach(k=>db[k]=db[k].filter(x=>x.session_id!==id)); db.sessions=db.sessions.filter(s=>s.id!==id); this.save(db); },
   async joinParticipant(p){ const db=this.db(); p={id:uid(),joined_at:now(),user_id:this._uid(),...p}; db.participants.push(p); this.save(db); return p; },
   async myParticipant(sid){ const me=this._uid(); return this.db().participants.find(p=>p.session_id===sid && p.user_id===me)||null; },
   async updateParticipant(id,patch){ const db=this.db(); const p=db.participants.find(x=>x.id===id); if(p) Object.assign(p,patch); this.save(db); },
   async listParticipants(sid){ return this.db().participants.filter(p=>p.session_id===sid); },
   async addCard(c){ const db=this.db(); c={id:uid(),created_at:now(),...c}; db.cards.push(c); this.save(db); return c; },
-  async deleteCard(id){ const db=this.db(); db.cards=db.cards.filter(c=>c.id!==id); db.votes=db.votes.filter(v=>v.card_id!==id); this.save(db); },
+  async deleteCard(id){ const db=this.db(); const gone=new Set(db.ideas.filter(i=>i.card_id===id).map(i=>i.id)); db.cards=db.cards.filter(c=>c.id!==id); db.votes=db.votes.filter(v=>v.card_id!==id); db.ideas=db.ideas.filter(i=>!gone.has(i.id)); db.ideaVotes=db.ideaVotes.filter(v=>!gone.has(v.idea_id)); this.save(db); },
   async listCards(sid){ return this.db().cards.filter(c=>c.session_id===sid); },
   async setVote(v){ const db=this.db(); const i=db.votes.findIndex(x=>x.session_id===v.session_id&&x.participant_id===v.participant_id&&x.card_id===v.card_id); if(i>=0){ if(v.points<=0) db.votes.splice(i,1); else db.votes[i].points=v.points; } else if(v.points>0){ db.votes.push({id:uid(),...v}); } this.save(db); },
   async listMyVotes(sid,pid){ return this.db().votes.filter(v=>v.session_id===sid && v.participant_id===pid); },
   async listVotes(sid){ return this.db().votes.filter(v=>v.session_id===sid); },
   async cardTotals(sid){ const t={}; this.db().votes.filter(v=>v.session_id===sid).forEach(v=>t[v.card_id]=(t[v.card_id]||0)+(v.points||0)); return t; },
+
+  async setQwRating(r){ const db=this.db(); const i=db.qw.findIndex(x=>x.session_id===r.session_id&&x.participant_id===r.participant_id&&x.qw_id===r.qw_id); if(i>=0) db.qw[i].score=r.score; else db.qw.push({id:uid(),created_at:now(),...r}); this.save(db); },
+  async listMyQwRatings(sid,pid){ return this.db().qw.filter(r=>r.session_id===sid&&r.participant_id===pid); },
+  async listQwRatings(sid){ return this.db().qw.filter(r=>r.session_id===sid); },
+  async qwTotals(sid){ return qwCount(this.db().qw.filter(r=>r.session_id===sid)); },
+  async addIdea(i){ const db=this.db(); i={id:uid(),created_at:now(),...i}; if(i.kind!=="idea") i.card_id=null; db.ideas.push(i); this.save(db); return i; },
+  async deleteIdea(id){ const db=this.db(); db.ideas=db.ideas.filter(i=>i.id!==id); db.ideaVotes=db.ideaVotes.filter(v=>v.idea_id!==id); this.save(db); },
+  async listIdeas(sid){ return this.db().ideas.filter(i=>i.session_id===sid); },
+  async listMyIdeaVotes(sid,pid){ return this.db().ideaVotes.filter(v=>v.session_id===sid&&v.participant_id===pid); },
+  async listIdeaVotes(sid){ return this.db().ideaVotes.filter(v=>v.session_id===sid); },
+  async setIdeaVote(v,on){ const db=this.db(); const i=db.ideaVotes.findIndex(x=>x.session_id===v.session_id&&x.participant_id===v.participant_id&&x.idea_id===v.idea_id);
+    if(on){ const s=db.sessions.find(x=>x.id===v.session_id)||{}; const used=db.ideaVotes.filter(x=>x.session_id===v.session_id&&x.participant_id===v.participant_id).length;
+      const idea=db.ideas.find(x=>x.id===v.idea_id); if(idea && idea.participant_id===v.participant_id) throw new Error("No puedes apoyar tu propia idea");
+      if(i<0){ if(used>=(s.idea_votes||3)) throw new Error("Ya usaste todos tus apoyos"); db.ideaVotes.push({id:uid(),...v}); } }
+    else if(i>=0) db.ideaVotes.splice(i,1);
+    this.save(db); },
+  async ideaTotals(sid){ const t={}; this.db().ideaVotes.filter(v=>v.session_id===sid).forEach(v=>t[v.idea_id]=(t[v.idea_id]||0)+1); return t; },
   subscribe(sid,cb){ this._cbs.push(cb); return ()=>{ this._cbs=this._cbs.filter(x=>x!==cb); }; }
 };
 
@@ -436,7 +601,10 @@ if(!HAS_SUPA){
 /* ============================================================
    Flujo del participante (móvil)
    ============================================================ */
-const P = { session:null, me:null, step:0, form:{nombre:"",apellido:"",area:"",rol:"",emoji:""}, cards:[], votes:[], myCards:[], unsub:null, poll:null, sending:false };
+const P = { session:null, me:null, step:0,
+  form:{nombre:"",apellido:"",area:"",rol:"",etapas:[],emoji:""},
+  cards:[], votes:[], myCards:[], unsub:null, poll:null, sending:false,
+  qw:{ratings:{}}, ideas:{targets:[], reto:0, list:[], mine:new Set()} };
 
 function pTop(withDots, totalDots, onDot){
   const s=P.session;
@@ -477,8 +645,27 @@ function screenWelcome(){
   $("#wgo").onclick=()=>{ P.step=0; renderOnboarding(); };
 }
 
-const OB_STEPS = [
-  {
+/* ---------- Onboarding: los pasos dependen de cómo se configuró el taller ---------- */
+function stepPickOne({key, title, sub, opts, otherLabel, otherField, placeholder}){
+  return {
+    title, sub,
+    body:()=>{ const cur=P.form[key]; const isOther = !!cur && !opts.includes(cur);
+      return `<div class="chips" id="f-${key}">${opts.map(a=>`<button class="chip ${cur===a?"on":""}" data-a="${esc(a)}">${esc(a)}</button>`).join("")}<button class="chip ${isOther?"on":""}" data-a="__otra">${otherLabel}</button></div>
+      <div class="field" id="f-${key}-wrap" style="margin-top:14px;display:${isOther?"block":"none"}"><label for="f-${key}-otra">${otherField}</label><input id="f-${key}-otra" class="input" value="${esc(isOther?cur:"")}" placeholder="${esc(placeholder||"")}"></div>`; },
+    wire:()=>{
+      $$(`#f-${key} .chip`).forEach(ch=>ch.onclick=()=>{ const v=ch.dataset.a;
+        if(v==="__otra"){ $(`#f-${key}-wrap`).style.display="block"; $$(`#f-${key} .chip`).forEach(x=>x.classList.remove("on")); ch.classList.add("on"); P.form[key]=$(`#f-${key}-otra`).value.trim(); $(`#f-${key}-otra`).focus(); }
+        else { P.form[key]=v; $(`#f-${key}-wrap`).style.display="none"; $$(`#f-${key} .chip`).forEach(x=>x.classList.toggle("on",x===ch)); }
+        refreshCTA(); });
+      const o=$(`#f-${key}-otra`); if(o) o.addEventListener("input",()=>{ P.form[key]=o.value.trim(); refreshCTA(); });
+    },
+    read:()=>{}, valid:()=>P.form[key].length>=2
+  };
+}
+
+function obSteps(){
+  const s=P.session, roles=s.roles||[], stages=s.stages||[];
+  const steps=[{
     title:"¿Cómo te llamas?", sub:"Así aparecerás en el muro de la sala.",
     body:()=>`
       <div class="field"><label for="f-nombre">Nombre</label><input id="f-nombre" class="input" value="${esc(P.form.nombre)}" autocomplete="given-name"></div>
@@ -486,43 +673,54 @@ const OB_STEPS = [
     read:()=>{ P.form.nombre=$("#f-nombre").value.trim(); P.form.apellido=$("#f-apellido").value.trim(); },
     valid:()=>P.form.nombre.length>=2
   },
-  {
-    title:"¿En qué área trabajas?", sub:"Elige la más cercana a tu día a día.",
-    body:()=>`<div class="chips" id="f-areas">${P.session.areas.map(a=>`<button class="chip ${P.form.area===a?"on":""}" data-a="${esc(a)}">${esc(a)}</button>`).join("")}<button class="chip ${P.form.area && !P.session.areas.includes(P.form.area)?"on":""}" data-a="__otra">Otra…</button></div>
-      <div class="field" id="f-otrawrap" style="margin-top:14px;display:${P.form.area && !P.session.areas.includes(P.form.area)?"block":"none"}"><label for="f-otra">Tu área</label><input id="f-otra" class="input" value="${esc(!P.session.areas.includes(P.form.area)?P.form.area:"")}"></div>`,
-    wire:()=>{ $$("#f-areas .chip").forEach(ch=>ch.onclick=()=>{ const v=ch.dataset.a;
-        if(v==="__otra"){ $("#f-otrawrap").style.display="block"; $$("#f-areas .chip").forEach(x=>x.classList.remove("on")); ch.classList.add("on"); P.form.area=$("#f-otra").value.trim(); $("#f-otra").focus(); }
-        else { P.form.area=v; $("#f-otrawrap").style.display="none"; $$("#f-areas .chip").forEach(x=>x.classList.toggle("on",x===ch)); }
-        refreshCTA(); });
-      const o=$("#f-otra"); if(o) o.addEventListener("input",()=>{ P.form.area=o.value.trim(); refreshCTA(); }); },
-    read:()=>{}, valid:()=>P.form.area.length>=2
-  },
-  {
-    title:"¿Cuál es tu puesto?", sub:"Nos ayuda a leer los dolores por rol.",
-    body:()=>`<div class="field"><label for="f-rol">Puesto o rol</label><input id="f-rol" class="input" value="${esc(P.form.rol)}" placeholder="Ej. Gerente actuarial, Asesor Sr…"></div>`,
-    read:()=>{ P.form.rol=$("#f-rol").value.trim(); }, valid:()=>P.form.rol.length>=2
-  },
-  {
+  stepPickOne({key:"area", title:"¿En qué área trabajas?", sub:"Elige la más cercana a tu día a día.", opts:s.areas||[], otherLabel:"Otra…", otherField:"Tu área"})];
+  if(roles.length){
+    steps.push(stepPickOne({key:"rol", title:"¿Cuál es tu rol?", sub:"Nos ayuda a leer los resultados por rol.", opts:roles, otherLabel:"Otro…", otherField:"Tu puesto", placeholder:"Ej. Analista de facturación"}));
+  } else {
+    steps.push({
+      title:"¿Cuál es tu puesto?", sub:"Nos ayuda a leer los dolores por rol.",
+      body:()=>`<div class="field"><label for="f-rol">Puesto o rol</label><input id="f-rol" class="input" value="${esc(P.form.rol)}" placeholder="Ej. Gerente, Analista…"></div>`,
+      read:()=>{ P.form.rol=$("#f-rol").value.trim(); }, valid:()=>P.form.rol.length>=2
+    });
+  }
+  if(stages.length){
+    steps.push({
+      title:"¿En qué etapas participas?", sub:"Elige todas las que apliquen. Así te mostramos lo que te toca.",
+      body:()=>`<button class="btn-link" id="f-etapas-all" style="margin:0 0 12px">${P.form.etapas.length===stages.length?"Quitar todas":"Participo en todas"}</button>
+        <div class="chips" id="f-etapas">${stages.map(t=>`<button class="chip ${P.form.etapas.includes(t)?"on":""}" data-t="${esc(t)}">${esc(t)}</button>`).join("")}</div>`,
+      wire:()=>{
+        const allBtn=()=>{ $("#f-etapas-all").textContent = P.form.etapas.length===stages.length ? "Quitar todas" : "Participo en todas"; };
+        $$("#f-etapas .chip").forEach(ch=>ch.onclick=()=>{ const t=ch.dataset.t;
+          P.form.etapas = P.form.etapas.includes(t) ? P.form.etapas.filter(x=>x!==t) : [...P.form.etapas, t];
+          ch.classList.toggle("on", P.form.etapas.includes(t)); allBtn(); refreshCTA(); });
+        $("#f-etapas-all").onclick=()=>{ P.form.etapas = P.form.etapas.length===stages.length ? [] : [...stages];
+          $$("#f-etapas .chip").forEach(x=>x.classList.toggle("on", P.form.etapas.length>0)); allBtn(); refreshCTA(); };
+      },
+      read:()=>{}, valid:()=>P.form.etapas.length>=1
+    });
+  }
+  steps.push({
     title:"Elige tu avatar", sub:"Tu celda en la colmena.",
     body:()=>`<div class="emoji-grid">${EMOJIS.map(e=>`<button class="emoji-pick ${P.form.emoji===e?"on":""}" data-e="${e}" aria-label="avatar ${e}">${e}</button>`).join("")}</div>`,
     wire:()=>{ $$(".emoji-pick").forEach(b=>b.onclick=()=>{ P.form.emoji=b.dataset.e; $$(".emoji-pick").forEach(x=>x.classList.toggle("on",x===b)); refreshCTA(); }); },
     read:()=>{}, valid:()=>!!P.form.emoji
-  }
-];
+  });
+  return steps;
+}
 
-function refreshCTA(){ const st=OB_STEPS[P.step]; const b=$("#obNext"); if(b) b.disabled = !st.valid(); }
+function refreshCTA(){ const st=obSteps()[P.step]; const b=$("#obNext"); if(b && st) b.disabled = !st.valid(); }
 
 function renderOnboarding(){
-  const st=OB_STEPS[P.step];
-  $("#app").innerHTML = `<div class="p-shell">${pTop(true, OB_STEPS.length, P.step)}
+  const steps=obSteps(), st=steps[P.step];
+  $("#app").innerHTML = `<div class="p-shell">${pTop(true, steps.length, P.step)}
     <div class="p-body">
-      <p class="p-kicker">Paso ${P.step+1} de ${OB_STEPS.length}</p>
+      <p class="p-kicker">Paso ${P.step+1} de ${steps.length}</p>
       <h1 class="p-title">${st.title}</h1>
       <p class="p-sub">${st.sub}</p>
       ${st.body()}
     </div>
     <div class="p-cta">
-      <button class="btn btn-primary" id="obNext">${P.step===OB_STEPS.length-1?"Entrar a la colmena":"Continuar"}</button>
+      <button class="btn btn-primary" id="obNext">${P.step===steps.length-1?"Entrar a la colmena":"Continuar"}</button>
       ${P.step>0?'<button class="btn btn-ghost" id="obBack">Regresar</button>':""}
     </div>
   </div>`;
@@ -532,10 +730,11 @@ function renderOnboarding(){
   const back=$("#obBack"); if(back) back.onclick=()=>{ st.read(); P.step--; renderOnboarding(); };
   $("#obNext").onclick = async ()=>{
     st.read(); if(!st.valid()) return;
-    if(P.step<OB_STEPS.length-1){ P.step++; renderOnboarding(); return; }
+    if(P.step<steps.length-1){ P.step++; renderOnboarding(); return; }
     if(P.sending) return; P.sending=true; $("#obNext").disabled=true;
     try{
-      const me = await Store.joinParticipant({ session_id:P.session.id, nombre:P.form.nombre, apellido:P.form.apellido, area:P.form.area, rol:P.form.rol, emoji:P.form.emoji });
+      const me = await Store.joinParticipant({ session_id:P.session.id, nombre:P.form.nombre, apellido:P.form.apellido,
+        area:P.form.area, rol:P.form.rol, etapas:P.form.etapas, emoji:P.form.emoji });
       P.me=me;
       toast("¡Dentro! 🐝");
       renderPhase();
@@ -563,7 +762,7 @@ async function renderPhase(){
   }
   if(ph==="checkin"){
     if(P.me.mood){
-      $("#app").innerHTML = `<div class="p-shell">${pTop(false)}${waitBlock("✅","Check-in enviado","En cuanto todos respondan pasamos a la siguiente actividad.")}</div>`;
+      $("#app").innerHTML = `<div class="p-shell">${pTop(false)}${waitBlock("✅","Check-in enviado","Espera a que "+esc(s.facilitator||"quien facilita")+" abra la siguiente actividad. Tu pantalla cambiará sola.")}</div>`;
       return;
     }
     let mood="", expect="";
@@ -584,42 +783,7 @@ async function renderPhase(){
       catch(e){ toast("No se pudo enviar, intenta otra vez"); } finally{ P.sending=false; } };
     return;
   }
-  if(ph==="pains"){
-    P.myCards = (await Store.listCards(s.id)).filter(c=>c.participant_id===P.me.id);
-    let sev=3;
-    $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-      <div class="p-body">
-        <p class="p-kicker">Dolores</p>
-        <h1 class="p-title" style="font-size:24px">${esc(s.q_pain)}</h1>
-        <p class="p-sub">Una idea por tarjeta. Puedes publicar todas las que quieras.</p>
-        <div class="field"><label for="f-pain">Tu dolor</label>
-          <textarea id="f-pain" class="input" maxlength="240" placeholder="Ej. Capturo la misma información en tres archivos distintos…"></textarea></div>
-        <div class="field"><label>¿En qué parte del proceso pasa?</label>
-          <div class="chips" id="f-stage">${s.stages.map(t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>
-        <div class="field"><label for="f-sev">¿Qué tanto duele?</label>
-          <div class="slider-wrap">
-            <input type="range" id="f-sev" min="1" max="5" step="1" value="3">
-            <div class="slider-labels"><span>Molesta</span><span>Insoportable</span></div>
-            <div class="sev-now" id="sevNow">3 · ${SEV_LABELS[3]}</div>
-          </div></div>
-        <div id="mine" style="margin-top:10px">${renderMyCards()}</div>
-      </div>
-      <div class="p-cta"><button class="btn btn-primary" id="painGo" disabled>Publicar tarjeta</button></div>
-    </div>`;
-    let stage="";
-    const val=()=>{ $("#painGo").disabled = !($("#f-pain").value.trim().length>=8 && stage); };
-    $$("#f-stage .chip").forEach(ch=>ch.onclick=()=>{ stage=ch.dataset.t; $$("#f-stage .chip").forEach(x=>x.classList.toggle("on",x===ch)); val(); });
-    $("#f-pain").addEventListener("input",val);
-    $("#f-sev").addEventListener("input",e=>{ sev=+e.target.value; $("#sevNow").textContent=sev+" · "+SEV_LABELS[sev]; });
-    $("#painGo").onclick=async()=>{ if(P.sending)return; P.sending=true; $("#painGo").disabled=true;
-      try{
-        await Store.addCard({session_id:s.id, participant_id:P.me.id, texto:$("#f-pain").value.trim(), etapa:stage, severidad:sev});
-        toast("Tarjeta publicada 🐝"); renderPhase();
-      }catch(e){ toast("No se pudo publicar"); P.sending=false; }
-      P.sending=false; };
-    $$("#mine .del").forEach(b=>b.onclick=async()=>{ await Store.deleteCard(b.dataset.id); renderPhase(); });
-    return;
-  }
+  if(ph==="pains") return renderPains();
   if(ph==="votes"){
     [P.cards,P.votes] = await Promise.all([Store.listCards(s.id), Store.listMyVotes(s.id, P.me.id)]);
     const mine = P.votes;
@@ -638,7 +802,7 @@ async function renderPhase(){
           const m=my[c.id]||0;
           return `<div class="votecard">
             <div class="txt">${esc(c.texto)}</div>
-            <div class="meta-row"><span class="tag">${esc(c.etapa)}</span><span class="tag sev">Dolor ${c.severidad}/5</span></div>
+            <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span></div>
             <div class="vote-ctrl">
               <button class="vbtn" data-id="${c.id}" data-d="-1" ${m<=0?"disabled":""} aria-label="quitar voto">−</button>
               <span class="vcount">${m>0?`<span class="vhex"></span> ${m}`:`<span style="color:var(--ink-3);font-weight:600">Sin votos</span>`}</span>
@@ -657,33 +821,231 @@ async function renderPhase(){
     });
     return;
   }
-  if(ph==="results"){
-    let totals={};
-    [P.cards,totals] = await Promise.all([Store.listCards(s.id), Store.cardTotals(s.id)]);
-    const top=[...P.cards].map(c=>({...c,pts:totals[c.id]||0})).sort((a,b)=>b.pts-a.pts).slice(0,8);
-    $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-      <div class="p-body">
-        <p class="p-kicker">Resultados</p>
-        <h1 class="p-title">Lo que más nos duele</h1>
-        <p class="p-sub">Decidido entre todos. Esto marca la agenda de lo que sigue.</p>
-        ${top.map((c,i)=>`<div class="mycard"><div class="txt"><strong>${i+1}.</strong> ${esc(c.texto)}</div>
-          <div class="meta-row"><span class="tag">${esc(c.etapa)}</span><span class="tag sev">${c.pts} voto${c.pts===1?"":"s"}</span></div></div>`).join("")}
-      </div>
-    </div>`;
-    return;
-  }
+  if(ph==="quickwins") return renderQuickwins();
+  if(ph==="ideas") return renderIdeas();
+  if(ph==="results") return renderResults();
   /* closed */
   $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
     ${waitBlock("🍯","Gracias, "+esc(P.me.nombre),"La sesión terminó. Lo que aportaste ya quedó guardado y trabajaremos sobre ello.")}
   </div>`;
 }
 
+/* ---------- Dolores: texto + etapa + herramienta (opcional) + severidad ---------- */
+async function renderPains(){
+  const s=P.session;
+  P.myCards = (await Store.listCards(s.id)).filter(c=>c.participant_id===P.me.id);
+  let sev=3, stage="", tool="";
+  $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
+    <div class="p-body">
+      <p class="p-kicker">Dolores</p>
+      <h1 class="p-title" style="font-size:24px">${esc(s.q_pain)}</h1>
+      <p class="p-sub">Una idea por tarjeta. Puedes publicar todas las que quieras.</p>
+      <div class="field"><label for="f-pain">Tu dolor</label>
+        <textarea id="f-pain" class="input" maxlength="240" placeholder="Ej. Capturo la misma información en tres archivos distintos…"></textarea></div>
+      <div class="field"><label>¿En qué parte del proceso pasa?</label>
+        <div class="chips" id="f-stage">${s.stages.map(t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>
+      <div class="field" id="toolField" style="display:none"><label>¿Con qué herramienta? <span class="opt">(opcional)</span></label>
+        <div class="chips" id="f-tool"></div></div>
+      <div class="field"><label for="f-sev">¿Qué tanto duele?</label>
+        <div class="slider-wrap">
+          <input type="range" id="f-sev" min="1" max="5" step="1" value="3">
+          <div class="slider-labels"><span>Molesta</span><span>Insoportable</span></div>
+          <div class="sev-now" id="sevNow">3 · ${SEV_LABELS[3]}</div>
+        </div></div>
+      <div id="mine" style="margin-top:10px">${renderMyCards()}</div>
+    </div>
+    <div class="p-cta"><button class="btn btn-primary" id="painGo" disabled>Publicar tarjeta</button></div>
+  </div>`;
+  const val=()=>{ $("#painGo").disabled = !($("#f-pain").value.trim().length>=8 && stage); };
+  const drawTools=()=>{
+    const opts=toolsFor(s, stage);
+    $("#toolField").style.display = stage ? "block" : "none";
+    $("#f-tool").innerHTML = opts.map(t=>`<button class="chip ${tool===t?"on":""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
+    $$("#f-tool .chip").forEach(ch=>ch.onclick=()=>{ tool = tool===ch.dataset.t ? "" : ch.dataset.t; $$("#f-tool .chip").forEach(x=>x.classList.toggle("on",x.dataset.t===tool)); });
+  };
+  $$("#f-stage .chip").forEach(ch=>ch.onclick=()=>{ stage=ch.dataset.t; tool=""; $$("#f-stage .chip").forEach(x=>x.classList.toggle("on",x===ch)); drawTools(); val(); });
+  $("#f-pain").addEventListener("input",val);
+  $("#f-sev").addEventListener("input",e=>{ sev=+e.target.value; $("#sevNow").textContent=sev+" · "+SEV_LABELS[sev]; });
+  $("#painGo").onclick=async()=>{ if(P.sending)return; P.sending=true; $("#painGo").disabled=true;
+    try{
+      await Store.addCard({session_id:s.id, participant_id:P.me.id, texto:$("#f-pain").value.trim(), etapa:stage, herramienta:tool||null, severidad:sev});
+      toast("Tarjeta publicada 🐝"); P.sending=false; renderPhase();
+    }catch(e){ toast("No se pudo publicar"); P.sending=false; val(); }
+  };
+  $$("#mine .del").forEach(b=>b.onclick=async()=>{ await Store.deleteCard(b.dataset.id); renderPhase(); });
+}
+
 function renderMyCards(){
   if(!P.myCards.length) return "";
   return `<p style="font-weight:700;font-size:14px;color:var(--ink-2);margin:8px 0 10px">Tus tarjetas (${P.myCards.length})</p>`+
     P.myCards.map(c=>`<div class="mycard"><div class="txt">${esc(c.texto)}</div>
-      <div class="meta-row"><span class="tag">${esc(c.etapa)}</span><span class="tag sev">Dolor ${c.severidad}/5</span>
+      <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span>
       <button class="del" data-id="${c.id}">Eliminar</button></div></div>`).join("");
+}
+
+/* ---------- Quick wins: calificar mejoras propuestas + proponer las que falten ---------- */
+function qwCard(q){
+  const cur=P.qw.ratings[q.id];
+  return `<div class="qwcard ${cur!==undefined?"done":""}" data-q="${esc(q.id)}">
+    <span class="qw-id">${esc(q.id)}</span>
+    <div class="txt">${esc(q.text)}</div>
+    <div class="seg" role="group" aria-label="¿Cuánto te ayudaría?">${QW_SCALE.map(o=>`<button data-v="${o.v}" class="${cur===o.v?"on":""}" aria-pressed="${cur===o.v}">${o.t}</button>`).join("")}</div>
+  </div>`;
+}
+function qwGroup(list){
+  const byStage=[]; list.forEach(q=>{ let g=byStage.find(x=>x.stage===q.stage); if(!g){ g={stage:q.stage,items:[]}; byStage.push(g); } g.items.push(q); });
+  return byStage.map(g=>`<p class="stage-h">${esc(g.stage)}</p>${g.items.map(qwCard).join("")}`).join("");
+}
+async function renderQuickwins(){
+  const s=P.session, qws=s.quickwins||[];
+  const [mine, ideas] = await Promise.all([Store.listMyQwRatings(s.id,P.me.id), Store.listIdeas(s.id)]);
+  P.qw.ratings = Object.fromEntries(mine.map(r=>[r.qw_id, r.score]));
+  const myProps = ideas.filter(i=>i.kind==="qw" && i.participant_id===P.me.id);
+  const et=new Set(P.me.etapas||[]);
+  const hasMine = et.size && qws.some(q=>et.has(q.stage));
+  const mineQ = hasMine ? qws.filter(q=>et.has(q.stage)) : qws;
+  const otherQ = hasMine ? qws.filter(q=>!et.has(q.stage)) : [];
+  const doneCount=()=>mineQ.filter(q=>P.qw.ratings[q.id]!==undefined).length;
+  let pStage="";
+  $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
+    ${qws.length?`<div class="sticky-votes"><span>Calificaste</span><span id="qwDone">${doneCount()}</span><span style="color:var(--ink-2);font-weight:600">de ${mineQ.length}</span></div>`:""}
+    <div class="p-body">
+      <p class="p-kicker">Quick wins</p>
+      ${qws.length?`
+      <h1 class="p-title" style="font-size:26px">¿Cuánto te ayudaría cada mejora?</h1>
+      <p class="p-sub">Son mejoras rápidas que el equipo ya identificó. ${hasMine?"Te mostramos primero las de tus etapas.":""} Si alguna no tiene que ver con tu trabajo, marca «No aplica».</p>
+      ${qwGroup(mineQ)}
+      ${otherQ.length?`<details class="more"><summary>Ver quick wins de otras etapas (${otherQ.length})</summary>${qwGroup(otherQ)}</details>`:""}
+      <h2 class="sec-title">¿Falta alguna mejora rápida?</h2>`
+      :`<h1 class="p-title" style="font-size:26px">¿Qué mejora rápida propones?</h1>`}
+      <p class="p-sub" style="margin-bottom:14px">Propón la que más te ayudaría en tu día a día. Solo la ve quien facilita.</p>
+      <div class="field"><label for="f-qwnew">Tu propuesta</label>
+        <textarea id="f-qwnew" class="input" maxlength="240" placeholder="Ej. Que el layout valide los datos al subirlo…"></textarea></div>
+      ${(s.stages||[]).length?`<div class="field"><label>¿En qué etapa? <span class="opt">(opcional)</span></label>
+        <div class="chips" id="f-qwstage">${s.stages.map(t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>`:""}
+      <button class="btn btn-line" id="qwPropose" disabled>Enviar propuesta</button>
+      <div id="myProps" style="margin-top:16px"></div>
+    </div>
+  </div>`;
+  const drawProps=()=>{ $("#myProps").innerHTML = myProps.length ? `<p style="font-weight:700;font-size:14px;color:var(--ink-2);margin:8px 0 10px">Tus propuestas (${myProps.length})</p>`+
+    myProps.map(i=>`<div class="mycard"><div class="txt">${esc(i.texto)}</div><div class="meta-row">${i.etapa?`<span class="tag">${esc(i.etapa)}</span>`:""}<button class="del" data-id="${i.id}">Eliminar</button></div></div>`).join("") : "";
+    $$("#myProps .del").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteIdea(b.dataset.id); const k=myProps.findIndex(x=>x.id===b.dataset.id); if(k>=0) myProps.splice(k,1); drawProps(); }catch(e){ toast("No se pudo eliminar"); } }); };
+  drawProps();
+  $$(".qwcard .seg button").forEach(b=>b.onclick=async()=>{
+    const card=b.closest(".qwcard"), id=card.dataset.q, v=+b.dataset.v, prev=P.qw.ratings[id];
+    P.qw.ratings[id]=v;
+    card.classList.add("done"); $$("button",card).forEach(x=>{ const on=+x.dataset.v===v; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on); });
+    const d=$("#qwDone"); if(d) d.textContent=doneCount();
+    try{ await Store.setQwRating({session_id:s.id, participant_id:P.me.id, qw_id:id, score:v}); }
+    catch(e){ console.error(e); toast("No se guardó tu calificación. Intenta de nuevo.");
+      if(prev===undefined){ delete P.qw.ratings[id]; card.classList.remove("done"); } else P.qw.ratings[id]=prev;
+      $$("button",card).forEach(x=>{ const on=+x.dataset.v===P.qw.ratings[id]; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on); });
+      if(d) d.textContent=doneCount(); }
+  });
+  $$("#f-qwstage .chip").forEach(ch=>ch.onclick=()=>{ pStage = pStage===ch.dataset.t ? "" : ch.dataset.t; $$("#f-qwstage .chip").forEach(x=>x.classList.toggle("on",x.dataset.t===pStage)); });
+  const ta=$("#f-qwnew"); ta.addEventListener("input",()=>{ $("#qwPropose").disabled = ta.value.trim().length<8; });
+  $("#qwPropose").onclick=async()=>{ if(P.sending) return; P.sending=true; $("#qwPropose").disabled=true;
+    try{ const i=await Store.addIdea({session_id:s.id, participant_id:P.me.id, kind:"qw", etapa:pStage||null, texto:ta.value.trim()});
+      myProps.push(i); ta.value=""; pStage=""; $$("#f-qwstage .chip").forEach(x=>x.classList.remove("on")); drawProps(); toast("Propuesta enviada 🐝"); }
+    catch(e){ console.error(e); toast("No se pudo enviar la propuesta"); $("#qwPropose").disabled=false; }
+    P.sending=false; };
+}
+
+/* ---------- Ideas: «¿Cómo podríamos…?» sobre los dolores más votados ---------- */
+async function renderIdeas(){
+  const s=P.session;
+  const [cards, totals] = await Promise.all([Store.listCards(s.id), Store.cardTotals(s.id)]);
+  P.ideas.targets = topPains(cards, totals, s.idea_top||3);
+  if(P.ideas.reto >= P.ideas.targets.length) P.ideas.reto=0;
+  const T=P.ideas.targets;
+  if(!T.length){
+    $("#app").innerHTML = `<div class="p-shell">${pTop(false)}${waitBlock("💡","Ideas","Aún no hay dolores votados para trabajar. Espera la indicación de "+esc(s.facilitator||"quien facilita")+".")}</div>`;
+    return;
+  }
+  $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
+    <div class="sticky-votes" id="supBar"></div>
+    <div class="p-body">
+      <p class="p-kicker">Ideas</p>
+      <h1 class="p-title" style="font-size:26px">${esc(s.q_idea||"¿Cómo podríamos resolverlo?")}</h1>
+      <p class="p-sub" style="margin-bottom:14px">Estos son los dolores más votados. Elige un reto, propón ideas y apoya las que más te convenzan.</p>
+      <div class="chips" id="retos">${T.map((c,i)=>`<button class="chip ${i===P.ideas.reto?"on":""}" data-i="${i}">Reto ${i+1}</button>`).join("")}</div>
+      <div class="reto" id="retoCard"></div>
+      <div class="field"><label for="f-idea">Tu idea para este reto</label>
+        <textarea id="f-idea" class="input" maxlength="240" placeholder="Ej. Que la carta de supuestos se arme sola con los datos ya cargados…"></textarea></div>
+      <button class="btn btn-line" id="ideaGo" disabled>Publicar idea</button>
+      <div id="ideaList" style="margin-top:18px"></div>
+    </div>
+  </div>`;
+  const drawReto=()=>{ const c=T[P.ideas.reto];
+    $("#retoCard").innerHTML = `<p class="rk">Reto ${P.ideas.reto+1} · ${c.pts} voto${c.pts===1?"":"s"}</p><div class="txt">${esc(c.texto)}</div>
+      <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}</div>`; };
+  drawReto();
+  $$("#retos .chip").forEach(ch=>ch.onclick=()=>{ P.ideas.reto=+ch.dataset.i; $$("#retos .chip").forEach(x=>x.classList.toggle("on",x===ch)); drawReto(); drawIdeaList(); });
+  const ta=$("#f-idea"); ta.addEventListener("input",()=>{ $("#ideaGo").disabled = ta.value.trim().length<8; });
+  $("#ideaGo").onclick=async()=>{ if(P.sending) return; P.sending=true; $("#ideaGo").disabled=true;
+    try{ await Store.addIdea({session_id:s.id, participant_id:P.me.id, kind:"idea", card_id:T[P.ideas.reto].id, texto:ta.value.trim()});
+      ta.value=""; toast("Idea publicada 💡"); await refreshIdeas(); }
+    catch(e){ console.error(e); toast("No se pudo publicar la idea"); $("#ideaGo").disabled=false; }
+    P.sending=false; };
+  await refreshIdeas();
+}
+async function refreshIdeas(){
+  const s=P.session;
+  try{
+    const [ideas, mv] = await Promise.all([Store.listIdeas(s.id), Store.listMyIdeaVotes(s.id, P.me.id)]);
+    P.ideas.list = ideas.filter(i=>i.kind==="idea");
+    P.ideas.mine = new Set(mv.map(v=>v.idea_id));
+  }catch(e){ return; }
+  drawIdeaList();
+}
+function drawIdeaList(){
+  const s=P.session, T=P.ideas.targets; if(!T.length || !$("#ideaList")) return;
+  const total=s.idea_votes||3, left=Math.max(0,total-P.ideas.mine.size);
+  $("#supBar").innerHTML = `<span>Tus apoyos:</span>
+    <span class="honeycells" aria-label="${left} de ${total} apoyos disponibles">${Array.from({length:total},(_,i)=>`<span class="honeycell ${i<left?"full":""}"></span>`).join("")}</span>
+    <span style="color:var(--ink-2);font-weight:600">${left} de ${total}</span>`;
+  const cid=T[P.ideas.reto].id;
+  const list=P.ideas.list.filter(i=>i.card_id===cid).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)));
+  $("#ideaList").innerHTML = `<p style="font-weight:700;font-size:14px;color:var(--ink-2);margin:0 0 10px">Ideas para este reto (${list.length})</p>`+
+    (list.length ? list.map(i=>{ const own=i.participant_id===P.me.id, on=P.ideas.mine.has(i.id);
+      return `<div class="ideacard"><div class="txt">${esc(i.texto)}</div><div class="meta-row">
+        ${own?`<span class="tag mine">Tu idea</span><button class="del" data-del="${i.id}">Eliminar</button>`
+             :`<button class="support ${on?"on":""}" data-sup="${i.id}" aria-pressed="${on}"><span class="vhex"></span>${on?"Apoyada":"Apoyar"}</button>`}
+      </div></div>`; }).join("") : '<p class="empty">Sé la primera persona en proponer una idea.</p>');
+  $$("#ideaList [data-sup]").forEach(b=>b.onclick=async()=>{
+    if(P.sending) return; const id=b.dataset.sup, on=P.ideas.mine.has(id);
+    if(!on && left<=0) return toast(`Ya usaste tus ${total} apoyos. Quita uno para apoyar otra idea.`);
+    P.sending=true;
+    try{ await Store.setIdeaVote({session_id:s.id, participant_id:P.me.id, idea_id:id}, !on); if(on) P.ideas.mine.delete(id); else P.ideas.mine.add(id); drawIdeaList(); }
+    catch(e){ console.error(e); toast(/apoyos/.test(String(e&&e.message))?"Ya usaste todos tus apoyos":"No se pudo guardar tu apoyo"); }
+    P.sending=false; });
+  $$("#ideaList [data-del]").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteIdea(b.dataset.del); await refreshIdeas(); }catch(e){ toast("No se pudo eliminar"); } });
+}
+
+/* ---------- Resultados: dolores, quick wins e ideas ---------- */
+async function renderResults(){
+  const s=P.session;
+  const safe = p => p.catch(()=>null);
+  const [cards,totals,qwT,ideas,ideaT] = await Promise.all([Store.listCards(s.id), Store.cardTotals(s.id), safe(Store.qwTotals(s.id)), safe(Store.listIdeas(s.id)), safe(Store.ideaTotals(s.id))]);
+  const top=topPains(cards, totals, 5);
+  const qws=(s.quickwins||[]).map(q=>({...q, st:qwStats((qwT||{})[q.id])})).filter(q=>q.st.idx!==null)
+    .sort((a,b)=>b.st.idx-a.st.idx || b.st.m-a.st.m).slice(0,5);
+  const topIdeas=(ideas||[]).filter(i=>i.kind==="idea").map(i=>({...i, v:(ideaT||{})[i.id]||0})).filter(i=>i.v>0)
+    .sort((a,b)=>b.v-a.v).slice(0,5);
+  const card = (n,txt,tags) => `<div class="mycard"><div class="txt"><strong>${n}.</strong> ${esc(txt)}</div><div class="meta-row">${tags}</div></div>`;
+  $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
+    <div class="p-body">
+      <p class="p-kicker">Resultados</p>
+      <h1 class="p-title">Lo que decidimos juntos</h1>
+      <p class="p-sub">Esto marca la agenda de lo que sigue.</p>
+      <h2 class="sec-title" style="margin-top:4px">Lo que más nos duele</h2>
+      ${top.length? top.map((c,i)=>card(i+1,c.texto,`<span class="tag">${esc(c.etapa)}</span><span class="tag sev">${c.pts} voto${c.pts===1?"":"s"}</span>`)).join("") : '<p class="empty">Sin votos registrados.</p>'}
+      ${qws.length?`<h2 class="sec-title">Quick wins que más ayudarían</h2>
+        ${qws.map((q,i)=>card(i+1,q.text,`<span class="tag">${esc(q.stage)}</span><span class="tag sev">Índice ${q.st.idx}/100</span>`)).join("")}`:""}
+      ${topIdeas.length?`<h2 class="sec-title">Ideas con más apoyo</h2>
+        ${topIdeas.map((x,i)=>card(i+1,x.texto,`<span class="tag sev">${x.v} apoyo${x.v===1?"":"s"}</span>`)).join("")}`:""}
+    </div>
+  </div>`;
 }
 
 async function startParticipant(code){
@@ -701,9 +1063,15 @@ async function startParticipant(code){
   }
   const refresh = async ()=>{
     let ns=null; try{ ns=await Store.lookupSession(code); }catch(e){ return; }
-    if(ns){ const changed=ns.phase!==P.session.phase; P.session=ns;
-      /* en "pains" no se re-renderiza en automático: borraría lo que estás escribiendo */
-      if(P.me && (changed || ["votes","results"].includes(ns.phase))) renderPhase(); } };
+    if(!ns) return;
+    const changed=ns.phase!==P.session.phase; P.session=ns;
+    if(!P.me) return;
+    if(changed) return renderPhase();
+    /* En Dolores y Quick wins no se re-renderiza solo: borraría lo que estás escribiendo.
+       En Ideas solo se actualiza la lista (el texto que escribes se conserva). */
+    if(["votes","results"].includes(ns.phase)) return renderPhase();
+    if(ns.phase==="ideas") return refreshIdeas();
+  };
   P.unsub = Store.subscribe(s.id, ()=>refresh());
   P.poll = setInterval(refresh, 7000);
   if(P.me) renderPhase(); else screenWelcome();
@@ -714,7 +1082,7 @@ async function startParticipant(code){
 /* ============================================================
    Panel del facilitador (admin) — se proyecta en la sala
    ============================================================ */
-const A = { session:null, participants:[], cards:[], votes:[], unsub:null, poll:null, showAuthors:false, _t:null };
+const A = { session:null, participants:[], cards:[], votes:[], qwRatings:[], ideas:[], ideaVotes:[], unsub:null, poll:null, showAuthors:false, _t:null, seen:new Set() };
 
 /* ---------- Acceso del facilitador: contraseña + segundo factor ---------- */
 function aShell(inner){
@@ -741,21 +1109,26 @@ async function adminBoot(openCode){
   adminHome(st.email);
 }
 
-function adminLogin(msg){
+function adminLogin(msg, email){
   aShell(`<div class="panel">
       <h2>Inicia sesión</h2>
       <form id="lgForm" autocomplete="on">
-        <div class="field"><label for="lg-mail">Correo</label><input id="lg-mail" class="input" type="email" autocomplete="username" required></div>
-        <div class="field"><label for="lg-pass">Contraseña</label><input id="lg-pass" class="input" type="password" autocomplete="current-password" required></div>
+        <div class="field"><label for="lg-mail">Correo</label><input id="lg-mail" class="input" type="email" autocomplete="username" value="${esc(email||"")}" required></div>
+        <div class="field"><label for="lg-pass">Contraseña</label>
+          <div class="pw-wrap"><input id="lg-pass" class="input" type="password" autocomplete="current-password" required>
+          <button type="button" class="pw-eye" id="lg-eye" aria-pressed="false">Mostrar</button></div></div>
         ${msg?`<p class="err">${esc(msg)}</p>`:""}
         <button class="abtn primary" id="lg-go" type="submit" style="width:100%;padding:13px">Continuar</button>
       </form>
-      <p class="hint" style="margin-top:12px">Después te pediremos el código de tu app autenticadora.</p>
+      <p class="hint" style="margin-top:12px">Después te pediremos el código de tu app autenticadora. Tu cuenta se crea en Supabase → Authentication → Users.</p>
     </div>`);
+  if(email) $("#lg-pass").focus();
+  $("#lg-eye").onclick=()=>{ const i=$("#lg-pass"), show=i.type==="password"; i.type=show?"text":"password"; $("#lg-eye").textContent=show?"Ocultar":"Mostrar"; $("#lg-eye").setAttribute("aria-pressed",show); };
   $("#lgForm").onsubmit = async e=>{
     e.preventDefault(); $("#lg-go").disabled=true;
-    try{ await Store.signIn($("#lg-mail").value.trim(), $("#lg-pass").value); adminBoot(currentCode()); }
-    catch(err){ adminLogin(friendlyAuthError(err)); }
+    const mail=$("#lg-mail").value.trim();
+    try{ await Store.signIn(mail, $("#lg-pass").value); adminBoot(currentCode()); }
+    catch(err){ adminLogin(friendlyAuthError(err), mail); }
   };
 }
 
@@ -856,6 +1229,17 @@ async function adminHome(email){
         <div class="field"><label for="c-stages">Etapas del proceso (una por línea)</label><textarea id="c-stages" class="input" rows="6">${pre.stages.join("\n")}</textarea></div>
       </div>
       <div class="field"><label for="c-qpain">Pregunta de dolores</label><textarea id="c-qpain" class="input" rows="2">${esc(pre.q_pain)}</textarea></div>
+      <details style="margin-bottom:14px"><summary class="hint" style="cursor:pointer;font-weight:600">Perfil, herramientas y quick wins</summary>
+        <div class="grid2" style="margin-top:10px">
+          <div class="field"><label for="c-roles">Roles para el registro (uno por línea; vacío = texto libre)</label><textarea id="c-roles" class="input" rows="6">${(pre.roles||[]).join("\n")}</textarea></div>
+          <div class="field"><label for="c-tools">Herramientas por etapa (Etapa | herr1, herr2)</label><textarea id="c-tools" class="input" rows="6">${toolsText(pre.tools)}</textarea></div>
+        </div>
+        <div class="field"><label for="c-qws">Quick wins a validar (Etapa | mejora). Se numeran solos: QW-01, QW-02…</label><textarea id="c-qws" class="input" rows="8">${qwsText(pre.quickwins)}</textarea></div>
+        <div class="grid2">
+          <div class="field"><label for="c-qidea">Pregunta de ideas</label><input id="c-qidea" class="input" value="${esc(pre.q_idea||"")}"></div>
+          <div class="field"><label for="c-ivotes">Apoyos por persona en Ideas</label><input id="c-ivotes" class="input" type="number" min="1" max="10" value="${pre.idea_votes||3}"></div>
+        </div>
+      </details>
       <details style="margin-bottom:14px"><summary class="hint" style="cursor:pointer;font-weight:600">Preguntas del check-in</summary>
         <div class="field" style="margin-top:10px"><label for="c-qcheck">Estado de ánimo</label><input id="c-qcheck" class="input" value="${esc(pre.q_checkin)}"></div>
         <div class="field"><label for="c-qexp">Expectativa</label><input id="c-qexp" class="input" value="${esc(pre.q_expect)}"></div>
@@ -865,7 +1249,9 @@ async function adminHome(email){
     </div>`);
   const fill = p => { $("#c-name").value=p.name; $("#c-fac").value=p.facilitator; $("#c-votes").value=p.votes_per_user;
     $("#c-areas").value=p.areas.join("\n"); $("#c-stages").value=p.stages.join("\n");
-    $("#c-qpain").value=p.q_pain; $("#c-qcheck").value=p.q_checkin; $("#c-qexp").value=p.q_expect; };
+    $("#c-qpain").value=p.q_pain; $("#c-qcheck").value=p.q_checkin; $("#c-qexp").value=p.q_expect;
+    $("#c-roles").value=(p.roles||[]).join("\n"); $("#c-tools").value=toolsText(p.tools); $("#c-qws").value=qwsText(p.quickwins);
+    $("#c-qidea").value=p.q_idea||""; $("#c-ivotes").value=p.idea_votes||3; };
   $("#pre-lockton").onclick=()=>fill(CONFIG.PRESETS.lockton);
   $("#pre-generic").onclick=()=>fill(CONFIG.PRESETS.generic);
   $("#outBtn").onclick=async()=>{ await Store.signOut(); adminBoot(); };
@@ -878,28 +1264,37 @@ async function adminHome(email){
       areas:$("#c-areas").value.split("\n").map(x=>x.trim()).filter(Boolean),
       stages:$("#c-stages").value.split("\n").map(x=>x.trim()).filter(Boolean),
       q_checkin:$("#c-qcheck").value.trim(), q_expect:$("#c-qexp").value.trim(), q_pain:$("#c-qpain").value.trim(),
-      brand:CONFIG.BRAND
+      brand:CONFIG.BRAND,
+      roles:linesOf($("#c-roles").value), tools:parseTools($("#c-tools").value), quickwins:parseQws($("#c-qws").value),
+      q_idea:$("#c-qidea").value.trim()||"¿Cómo podríamos resolverlo?", idea_votes:Math.max(1,Math.min(10,+$("#c-ivotes").value||3)), idea_top:3
     };
     try{ const created=await Store.createSession(s); startAdmin(created); toast("Taller creado: "+created.code); }
     catch(e){ console.error(e); toast("No se pudo crear el taller: "+friendlyAuthError(e)); $("#c-create").disabled=false; }
   };
 }
 
+function toolsText(t){ return Object.entries(t||{}).map(([k,v])=>k+" | "+(v||[]).join(", ")).join("\n"); }
+function qwsText(q){ return (q||[]).map(x=>(x.stage?x.stage+" | ":"")+x.text).join("\n"); }
+function parseTools(v){ const o={}; linesOf(v).forEach(l=>{ const i=l.indexOf("|"); if(i<0) return; const k=l.slice(0,i).trim(); const tools=l.slice(i+1).split(",").map(x=>x.trim()).filter(Boolean); if(k&&tools.length) o[k]=tools; }); return o; }
+function parseQws(v){ return linesOf(v).map((l,n)=>{ const i=l.indexOf("|"); const stage=i<0?"":l.slice(0,i).trim(); const text=(i<0?l:l.slice(i+1)).trim();
+  return {id:"QW-"+String(n+1).padStart(2,"0"), stage, text}; }).filter(x=>x.text); }
+
 function stopAdmin(){ if(A.unsub) A.unsub(); if(A.poll) clearInterval(A.poll); clearTimeout(A._t); A.unsub=null; A.poll=null; }
 function currentCode(){ return (new URLSearchParams(location.search).get("s")||"").trim().toUpperCase(); }
 
 async function refetchAll(){
   const s=A.session;
-  const [ns,ps,cs,vs] = await Promise.all([
-    Store.getMySession(s.code), Store.listParticipants(s.id), Store.listCards(s.id), Store.listVotes(s.id)
+  const [ns,ps,cs,vs,qr,ids,ivs] = await Promise.all([
+    Store.getMySession(s.code), Store.listParticipants(s.id), Store.listCards(s.id), Store.listVotes(s.id),
+    Store.listQwRatings(s.id), Store.listIdeas(s.id), Store.listIdeaVotes(s.id)
   ]);
-  if(ns) A.session=ns; A.participants=ps; A.cards=cs; A.votes=vs;
+  if(ns) A.session=ns; A.participants=ps; A.cards=cs; A.votes=vs; A.qwRatings=qr; A.ideas=ids; A.ideaVotes=ivs;
 }
 
 function startAdmin(s){
   stopAdmin();
   document.body.classList.add("admin-theme");
-  A.session=s; A.participants=[]; A.cards=[]; A.votes=[];
+  A.session=s; A.participants=[]; A.cards=[]; A.votes=[]; A.qwRatings=[]; A.ideas=[]; A.ideaVotes=[]; A.seen=new Set();
   try{ history.replaceState(null,"",location.pathname+"?s="+encodeURIComponent(s.code)+"#admin"); }catch(e){}
   const kick=()=>{ clearTimeout(A._t); A._t=setTimeout(async()=>{ await refetchAll(); renderAdmin(); },350); };
   A.unsub=Store.subscribe(s.id, kick);
@@ -913,13 +1308,104 @@ function participantURL(){
 }
 
 function renderAdmin(){
-  const s=A.session;
+  const s=A.session, ph=s.phase||"lobby";
   const totals={}; A.votes.forEach(v=>totals[v.card_id]=(totals[v.card_id]||0)+(v.points||0));
   const votesUsed=A.votes.reduce((a,v)=>a+(v.points||0),0);
   const voters=new Set(A.votes.filter(v=>v.points>0).map(v=>v.participant_id)).size;
   const checkins=A.participants.filter(p=>p.mood).length;
+  const qwRaters=new Set(A.qwRatings.map(r=>r.participant_id)).size;
+  const ideasOnly=A.ideas.filter(i=>i.kind==="idea");
   const byId=Object.fromEntries(A.participants.map(p=>[p.id,p]));
-  const phaseIdx=PHASES.findIndex(p=>p.id===(s.phase||"lobby"));
+  const phaseIdx=PHASES.findIndex(p=>p.id===ph);
+  /* solo las tarjetas que acaban de llegar se animan (el panel se redibuja cada pocos segundos) */
+  const fresh = id => A.seen.has(id) ? "" : " new";
+  const who = pid => { const au=byId[pid]; return A.showAuthors&&au ? `<span class="who">${esc(au.emoji||"")} ${esc(au.nombre)} · ${esc(au.rol||au.area||"")}</span>` : ""; };
+
+  const panelParticipants = `
+      <div class="panel">
+        <h2>Participantes <span class="sub">entran escaneando el QR</span></h2>
+        ${A.participants.length? `<div style="overflow-x:auto"><table class="ptable">
+          <thead><tr><th></th><th>Nombre</th><th>Área</th><th>Rol</th><th>Etapas</th><th>Ánimo</th><th>Expectativa</th><th>Hora</th></tr></thead>
+          <tbody>${A.participants.map(p=>{
+            const m=MOODS.find(x=>x.v===p.mood);
+            const et=(p.etapas||[]); const all=(s.stages||[]).length && et.length===(s.stages||[]).length;
+            return `<tr><td><span class="hex hex-avatar sm">${esc(p.emoji||"🐝")}</span></td>
+              <td style="font-weight:600">${esc(p.nombre)} ${esc(p.apellido||"")}</td>
+              <td>${esc(p.area||"")}</td><td>${esc(p.rol||"")}</td>
+              <td class="et">${all?"Todas":esc(et.map(shortStage).join(" · "))}</td>
+              <td>${m? m.em+" "+m.t : '<span class="hint">—</span>'}</td>
+              <td>${esc(p.expectativa||"")}</td><td class="hint">${fmtTime(p.joined_at)}</td></tr>`;
+          }).join("")}</tbody></table></div>`
+        : '<p class="empty">Aún no entra nadie. Proyecta el QR y espera a la colmena.</p>'}
+      </div>`;
+
+  const panelWall = `
+      <div class="panel">
+        <h2>Muro de dolores <span class="sub">${A.cards.length} tarjetas, agrupadas por etapa</span></h2>
+        ${A.cards.length? `<div class="wall">${
+          orderStages(s,[...new Set(A.cards.map(c=>c.etapa))]).map(et=>{
+            const cs=A.cards.filter(c=>c.etapa===et);
+            return `<div class="wcol"><h3>${esc(et)} · ${cs.length}</h3>${cs.map(c=>`<div class="wcard${fresh(c.id)}"><div class="txt">${esc(c.texto)}</div>
+                <div class="meta-row">${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span>
+                ${totals[c.id]?`<span class="tag">${totals[c.id]} voto${totals[c.id]===1?"":"s"}</span>`:""}
+                ${who(c.participant_id)}</div></div>`).join("")}</div>`;
+          }).join("")}</div>`
+        : '<p class="empty">Las tarjetas aparecerán aquí en vivo conforme el equipo las publique.</p>'}
+      </div>`;
+
+  const panelRank = `
+      <div class="panel">
+        <h2>Ranking de dolores <span class="sub">votación con ${s.votes_per_user} puntos por persona</span></h2>
+        ${votesUsed? renderRank(totals) : '<p class="empty">Todavía no hay votos.</p>'}
+      </div>`;
+
+  const qwT=qwCount(A.qwRatings);
+  const qwList=(s.quickwins||[]).map(q=>({...q, st:qwStats(qwT[q.id])}));
+  const byScore=[...qwList].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1) || b.st.m-a.st.m);
+  const panelQW = (s.quickwins||[]).length ? `
+      <div class="panel">
+        <h2>Quick wins · ¿cuánto ayudarían? <span class="sub">${qwRaters} de ${A.participants.length} personas han calificado</span></h2>
+        ${renderQWTable(ph==="quickwins" ? qwList : byScore, ph==="quickwins")}
+      </div>` : "";
+  const props=A.ideas.filter(i=>i.kind==="qw");
+  const panelProps = `
+      <div class="panel">
+        <h2>Quick wins propuestos por el equipo <span class="sub">${props.length} propuesta${props.length===1?"":"s"}</span></h2>
+        ${props.length? `<div class="wall">${props.map(i=>`<div class="wcard${fresh(i.id)}"><div class="txt">${esc(i.texto)}</div>
+          <div class="meta-row">${i.etapa?`<span class="tag">${esc(i.etapa)}</span>`:""}${who(i.participant_id)}</div></div>`).join("")}</div>`
+        : '<p class="empty">Las propuestas aparecerán aquí en vivo.</p>'}
+      </div>`;
+
+  const iTot={}; A.ideaVotes.forEach(v=>iTot[v.idea_id]=(iTot[v.idea_id]||0)+1);
+  const targets=topPains(A.cards, totals, s.idea_top||3);
+  const panelIdeas = `
+      <div class="panel">
+        <h2>Ideas · ${esc(s.q_idea||"¿Cómo podríamos resolverlo?")} <span class="sub">${ideasOnly.length} ideas · ${A.ideaVotes.length} apoyos</span></h2>
+        ${targets.length? `<div class="retos">${targets.map((c,i)=>{
+          const list=ideasOnly.filter(x=>x.card_id===c.id).sort((a,b)=>(iTot[b.id]||0)-(iTot[a.id]||0) || String(a.created_at).localeCompare(String(b.created_at)));
+          return `<div class="retocol"><h3>Reto ${i+1} · ${esc(c.texto)}</h3><p class="rmeta">${esc(c.etapa)} · ${c.pts} voto${c.pts===1?"":"s"} · ${list.length} idea${list.length===1?"":"s"}</p>
+            ${list.map(x=>`<div class="icard${fresh(x.id)}"><div><div class="txt">${esc(x.texto)}</div>${who(x.participant_id)}</div><span class="sup" title="apoyos">${iTot[x.id]||0}</span></div>`).join("")||'<p class="empty" style="padding:6px 0">Aún sin ideas</p>'}
+          </div>`; }).join("")}</div>`
+        : '<p class="empty">Primero hace falta la votación de dolores: los 3 más votados se vuelven los retos.</p>'}
+      </div>`;
+
+  const topIdeas=ideasOnly.map(x=>({...x,v:iTot[x.id]||0})).filter(x=>x.v>0).sort((a,b)=>b.v-a.v).slice(0,8);
+  const panelTopIdeas = `
+      <div class="panel">
+        <h2>Ideas con más apoyo <span class="sub">${s.idea_votes||3} apoyos por persona</span></h2>
+        ${topIdeas.length? `<div class="rank">${(()=>{ const max=Math.max(...topIdeas.map(x=>x.v),1);
+          return topIdeas.map(x=>`<div class="rrow" title="${esc(x.texto)}"><span class="rlabel">${esc(x.texto)}</span>
+            <span class="rtrack"><span class="rbar" style="width:${Math.round(x.v/max*100)}%;background:var(--honey)"></span></span><span class="rval">${x.v}</span></div>`).join(""); })()}</div>`
+        : '<p class="empty">Todavía no hay apoyos.</p>'}
+      </div>`;
+
+  let panels="";
+  if(ph==="lobby"||ph==="checkin") panels=panelParticipants;
+  else if(ph==="pains") panels=panelWall;
+  else if(ph==="votes") panels=panelRank+panelWall;
+  else if(ph==="quickwins") panels=panelQW+panelProps+panelRank;
+  else if(ph==="ideas") panels=panelIdeas;
+  else panels=panelRank+panelQW+panelTopIdeas+panelProps+panelWall;
 
   $("#app").innerHTML = `<div class="a-shell">
     <div class="a-top">
@@ -935,7 +1421,7 @@ function renderAdmin(){
       </div>
     </div>
     <div class="phasebar" role="tablist" aria-label="Fase de la sesión">
-      ${PHASES.map((p,i)=>`<button class="phase ${p.id===s.phase?"on":i<phaseIdx?"done":""}" data-ph="${p.id}">${i+1}. ${p.t}</button>`).join("")}
+      ${PHASES.map((p,i)=>`<button class="phase ${p.id===ph?"on":i<phaseIdx?"done":""}" data-ph="${p.id}">${i+1}. ${p.t}</button>`).join("")}
     </div>
     <div class="a-main">
       <div class="kpis">
@@ -943,49 +1429,14 @@ function renderAdmin(){
         <div class="kpi"><div class="n">${checkins}</div><div class="l">Check-ins</div></div>
         <div class="kpi"><div class="n">${A.cards.length}</div><div class="l">Tarjetas de dolor</div></div>
         <div class="kpi"><div class="n">${votesUsed}</div><div class="l">Votos usados · ${voters} personas</div></div>
+        <div class="kpi"><div class="n">${A.qwRatings.length}</div><div class="l">Calificaciones de quick wins · ${qwRaters} personas</div></div>
+        <div class="kpi"><div class="n">${ideasOnly.length}</div><div class="l">Ideas · ${A.ideaVotes.length} apoyos</div></div>
       </div>
-
-      ${s.phase==="lobby"||s.phase==="checkin" ? `
-      <div class="panel">
-        <h2>Participantes <span class="sub">entran escaneando el QR</span></h2>
-        ${A.participants.length? `<div style="overflow-x:auto"><table class="ptable">
-          <thead><tr><th></th><th>Nombre</th><th>Área</th><th>Puesto</th><th>Ánimo</th><th>Expectativa</th><th>Hora</th></tr></thead>
-          <tbody>${A.participants.map(p=>{
-            const m=MOODS.find(x=>x.v===p.mood);
-            return `<tr><td><span class="hex hex-avatar sm">${esc(p.emoji||"🐝")}</span></td>
-              <td style="font-weight:600">${esc(p.nombre)} ${esc(p.apellido||"")}</td>
-              <td>${esc(p.area||"")}</td><td>${esc(p.rol||"")}</td>
-              <td>${m? m.em+" "+m.t : '<span class="hint">—</span>'}</td>
-              <td>${esc(p.expectativa||"")}</td><td class="hint">${fmtTime(p.joined_at)}</td></tr>`;
-          }).join("")}</tbody></table></div>`
-        : '<p class="empty">Aún no entra nadie. Proyecta el QR y espera a la colmena.</p>'}
-      </div>`:""}
-
-      ${["pains","votes","results","closed"].includes(s.phase) ? `
-      <div class="panel">
-        <h2>Muro de dolores <span class="sub">${A.cards.length} tarjetas, agrupadas por etapa</span></h2>
-        ${A.cards.length? `<div class="wall">${
-          [...new Set(A.cards.map(c=>c.etapa))].map(et=>{
-            const cs=A.cards.filter(c=>c.etapa===et);
-            return `<div class="wcol"><h3>${esc(et)} · ${cs.length}</h3>${cs.map(c=>{
-              const au=byId[c.participant_id];
-              return `<div class="wcard"><div class="txt">${esc(c.texto)}</div>
-                <div class="meta-row"><span class="tag sev">Dolor ${c.severidad}/5</span>
-                ${totals[c.id]?`<span class="tag">${totals[c.id]} voto${totals[c.id]===1?"":"s"}</span>`:""}
-                ${A.showAuthors&&au?`<span class="who">${esc(au.emoji||"")} ${esc(au.nombre)} · ${esc(au.area||"")}</span>`:""}</div></div>`;
-            }).join("")}</div>`;
-          }).join("")}</div>`
-        : '<p class="empty">Las tarjetas aparecerán aquí en vivo conforme el equipo las publique.</p>'}
-      </div>`:""}
-
-      ${["votes","results","closed"].includes(s.phase) ? `
-      <div class="panel">
-        <h2>Ranking de dolores <span class="sub">votación con ${s.votes_per_user} puntos por persona</span></h2>
-        ${votesUsed? renderRank(totals) : '<p class="empty">Todavía no hay votos.</p>'}
-      </div>`:""}
+      ${panels}
     </div>
   </div>`;
 
+  A.cards.forEach(c=>A.seen.add(c.id)); A.ideas.forEach(i=>A.seen.add(i.id));
   $$(".phase").forEach(b=>b.onclick=async()=>{
     const ph=b.dataset.ph;
     if(ph==="closed" && !confirm("¿Cerrar la sesión para todos?")) return;
@@ -994,13 +1445,19 @@ function renderAdmin(){
   });
   $("#btnBack").onclick=()=>{ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); adminBoot(); };
   $("#btnDel").onclick=async()=>{
-    if(!confirm("¿Borrar este taller y TODO lo capturado (participantes, tarjetas y votos)? Exporta el CSV antes si lo necesitas. No se puede deshacer.")) return;
+    if(!confirm("¿Borrar este taller y TODO lo capturado (participantes, tarjetas, votos, quick wins e ideas)? Exporta el CSV antes si lo necesitas. No se puede deshacer.")) return;
     try{ await Store.deleteSession(s.id); stopAdmin(); toast("Taller borrado"); history.replaceState(null,"",location.pathname+"#admin"); adminBoot(); }
     catch(e){ toast("No se pudo borrar: "+friendlyAuthError(e)); }
   };
   $("#btnAuthors").onclick=()=>{ A.showAuthors=!A.showAuthors; renderAdmin(); };
   $("#btnQR").onclick=showQR;
   $("#btnCSV").onclick=exportAll;
+}
+
+/* Etapas del muro en el orden del proceso (las no configuradas van al final) */
+function orderStages(s, list){
+  const order=(s.stages||[]);
+  return [...list].sort((a,b)=>{ const ia=order.indexOf(a), ib=order.indexOf(b); return (ia<0?999:ia)-(ib<0?999:ib); });
 }
 
 function renderRank(totals){
@@ -1012,6 +1469,24 @@ function renderRank(totals){
       <span class="rtrack"><span class="rbar" style="width:${Math.round(pts/max*100)}%"></span></span>
       <span class="rval">${pts}</span>
     </div>`).join("")}</div>`;
+}
+
+/* Tabla de quick wins: barra apilada Mucho/Algo/Poco/No aplica + índice 0–100 */
+function renderQWTable(list, groupByStage){
+  const row = q => { const st=q.st, n=st.n||0, w=v=> n? (v/n*100).toFixed(1)+"%" : "0";
+    return `<div class="qwt-row" title="Mucho ${st.m} · Algo ${st.a} · Poco ${st.p} · No aplica ${st.na}">
+      <div class="lbl"><span class="qw-id">${esc(q.id)}</span> ${esc(q.text)}</div>
+      <div class="sbar" aria-label="Mucho ${st.m}, algo ${st.a}, poco ${st.p}, no aplica ${st.na}">${n?`<span class="s3" style="width:${w(st.m)}"></span><span class="s2" style="width:${w(st.a)}"></span><span class="s1" style="width:${w(st.p)}"></span><span class="s0" style="width:${w(st.na)}"></span>`:`<span class="s0" style="width:100%;opacity:.4"></span>`}</div>
+      <div class="num">${n}</div>
+      <div class="num idx">${st.idx===null?"—":st.idx}</div>
+    </div>`; };
+  let body="";
+  if(groupByStage){
+    const groups=[]; list.forEach(q=>{ let g=groups.find(x=>x.stage===q.stage); if(!g){ g={stage:q.stage,items:[]}; groups.push(g); } g.items.push(q); });
+    body=groups.map(g=>`<div class="qwt-stage">${esc(g.stage||"Sin etapa")}</div>${g.items.map(row).join("")}`).join("");
+  } else body=list.map(row).join("");
+  return `<div class="qwt"><div class="qwt-row head"><span>Quick win</span><span>Respuestas</span><span class="num">n</span><span class="num" title="0–100: 100 = todos dicen «mucho». «No aplica» no cuenta.">Índice</span></div>${body}</div>
+    <div class="legend"><span><i class="s3"></i>Mucho</span><span><i class="s2"></i>Algo</span><span><i class="s1"></i>Poco</span><span><i class="s0"></i>No aplica</span><span>Índice 0–100: mucho = 100, algo = 50, poco = 0</span></div>`;
 }
 
 function showQR(){
@@ -1037,15 +1512,30 @@ function showQR(){
 }
 
 function exportAll(){
-  const byId=Object.fromEntries(A.participants.map(p=>[p.id,p]));
+  const s=A.session, byId=Object.fromEntries(A.participants.map(p=>[p.id,p]));
   const totals={}; A.votes.forEach(v=>totals[v.card_id]=(totals[v.card_id]||0)+(v.points||0));
-  downloadCSV(`colmena_${A.session.code}_participantes.csv`,
-    [["nombre","apellido","area","puesto","avatar","animo","expectativa","hora_entrada"],
-     ...A.participants.map(p=>[p.nombre,p.apellido,p.area,p.rol,p.emoji,p.mood,p.expectativa,p.joined_at])]);
-  downloadCSV(`colmena_${A.session.code}_tarjetas.csv`,
-    [["dolor","etapa","severidad","votos","autor","area_autor","hora"],
-     ...A.cards.map(c=>{const a=byId[c.participant_id]||{};return [c.texto,c.etapa,c.severidad,totals[c.id]||0,(a.nombre||"")+" "+(a.apellido||""),a.area||"",c.created_at];})]);
-  toast("CSV descargados (participantes y tarjetas)");
+  const cardById=Object.fromEntries(A.cards.map(c=>[c.id,c]));
+  const iTot={}; A.ideaVotes.forEach(v=>iTot[v.idea_id]=(iTot[v.idea_id]||0)+1);
+  const name = p => ((p.nombre||"")+" "+(p.apellido||"")).trim();
+  downloadCSV(`colmena_${s.code}_participantes.csv`,
+    [["nombre","apellido","area","rol","etapas","avatar","animo","expectativa","hora_entrada"],
+     ...A.participants.map(p=>[p.nombre,p.apellido,p.area,p.rol,(p.etapas||[]).join(" | "),p.emoji,p.mood,p.expectativa,p.joined_at])]);
+  downloadCSV(`colmena_${s.code}_dolores.csv`,
+    [["dolor","etapa","herramienta","severidad","votos","autor","area_autor","rol_autor","hora"],
+     ...A.cards.map(c=>{const a=byId[c.participant_id]||{};return [c.texto,c.etapa,c.herramienta||"",c.severidad,totals[c.id]||0,name(a),a.area||"",a.rol||"",c.created_at];})]);
+  if((s.quickwins||[]).length || A.ideas.some(i=>i.kind==="qw")){
+    const t=qwCount(A.qwRatings);
+    downloadCSV(`colmena_${s.code}_quickwins.csv`,
+      [["id","etapa","quick_win","origen","mucho","algo","poco","no_aplica","indice_0_100","autor","area_autor"],
+       ...(s.quickwins||[]).map(q=>{const st=qwStats(t[q.id]);return [q.id,q.stage,q.text,"lámina del cliente",st.m,st.a,st.p,st.na,st.idx??"","",""];}),
+       ...A.ideas.filter(i=>i.kind==="qw").map(i=>{const a=byId[i.participant_id]||{};return ["",i.etapa||"",i.texto,"propuesto en el workshop","","","","","",name(a),a.area||""];})]);
+  }
+  if(A.ideas.some(i=>i.kind==="idea")){
+    downloadCSV(`colmena_${s.code}_ideas.csv`,
+      [["reto_dolor","etapa_reto","idea","apoyos","autor","area_autor","rol_autor","hora"],
+       ...A.ideas.filter(i=>i.kind==="idea").map(i=>{const a=byId[i.participant_id]||{}, c=cardById[i.card_id]||{};return [c.texto||"",c.etapa||"",i.texto,iTot[i.id]||0,name(a),a.area||"",a.rol||"",i.created_at];})]);
+  }
+  toast("CSV descargados: participantes, dolores, quick wins e ideas");
 }
 
 /* ============================================================

@@ -1,6 +1,15 @@
 # Colmena 🐝
 
-Herramienta propia para workshops de design thinking en vivo. Los participantes entran con un **QR desde su celular** y hacen un onboarding rápido (nombre, área, puesto, avatar). Luego responden un **check-in**, publican sus **dolores** por etapa del proceso y **votan** repartiendo su miel. Tú, como facilitador, proyectas un **panel en vivo** con participantes, muro de tarjetas, ranking y exportación a CSV.
+Herramienta propia para workshops de design thinking en vivo.
+
+- **Participantes:** entran con un **QR desde su celular** y se registran (nombre, área, rol, etapas en las que participan y avatar).
+- **Recorrido del taller:**
+  1. **Check-in.**
+  2. **Dolores:** cada quien los publica por etapa del proceso y herramienta.
+  3. **Votación:** reparten su miel entre los dolores.
+  4. **Quick wins:** califican las mejoras que ya se habían identificado y proponen las que falten.
+  5. **Ideas:** «¿Cómo podríamos…?» sobre los 3 dolores más votados, con apoyos.
+- **Tú, como facilitador:** proyectas un **panel en vivo** con participantes, muro, ranking, tabla de quick wins, ideas por reto y exportación a CSV.
 
 Todo es **un solo archivo** (`index.html`) más una base de datos gratuita en Supabase, **con autenticación**: tu cuenta está protegida con segundo factor y cada participante solo accede a lo suyo.
 
@@ -11,8 +20,9 @@ Todo es **un solo archivo** (`index.html`) más una base de datos gratuita en Su
 ### 1. Base de datos
 
 1. En [supabase.com](https://supabase.com) crea un proyecto (plan gratuito).
-2. **SQL Editor → New query** → pega TODO `setup.sql` → **Run**. Al final verás 5 tablas con `rls = true`.
+2. **SQL Editor → New query** → pega TODO `setup.sql` → **Run**. Al final verás 8 tablas con `rls = true`.
    - Se puede correr las veces que quieras. Si tenías la v1 (con PIN), la reemplaza sola.
+   - Si tenías la v1.1, la actualiza **sin borrar** tu cuenta, tus talleres ni lo capturado.
 
 ### 2. Autenticación (en el panel de Supabase)
 
@@ -52,10 +62,32 @@ Desde entonces, cada vez que entres te pedirá contraseña + código de tu app.
 ## Cómo se usa en la sala
 
 1. En tu laptop abre `#admin`, entra y crea un taller con la plantilla **Lockton · Actua** o la genérica.
-2. Con **QR para entrar** proyectas el código. La gente escanea y hace su onboarding desde el celular.
-3. Tú llevas el ritmo con la barra de fases: **Lobby → Check-in → Dolores → Votación → Resultados → Cierre**. Las pantallas de todos cambian solas.
-4. **Exportar CSV** descarga participantes y tarjetas con votos, autor, área y hora.
+2. Con **QR para entrar** proyectas el código. La gente escanea y hace su registro desde el celular.
+3. Tú llevas el ritmo con la barra de fases. Nada avanza solo: las pantallas de todos cambian cuando das clic.
+
+| Fase | En el celular | En el panel proyectado |
+|---|---|---|
+| 1. Lobby | Registro: nombre, área, rol, etapas, avatar | Tabla de quién entró (con rol y etapas) |
+| 2. Check-in | Ánimo y expectativa | Misma tabla con respuestas |
+| 3. Dolores | Tarjetas con etapa, herramienta (opcional) y qué tanto duele | Muro en vivo agrupado por etapa |
+| 4. Votación | Reparte sus votos (tope validado en el servidor) | Ranking en vivo |
+| 5. Quick wins | Califica cada mejora: Mucho / Algo / Poco / No aplica (primero las de sus etapas) y propone nuevas | Barra por quick win + índice 0–100, propuestas nuevas |
+| 6. Ideas | «¿Cómo podríamos…?» para los 3 dolores más votados; apoya hasta 3 ideas ajenas | Ideas por reto con sus apoyos |
+| 7. Resultados | Top de dolores, quick wins e ideas | Todo junto para la conversación final |
+| 8. Cierre | Agradecimiento | — |
+
+4. **Exportar CSV** descarga 4 archivos: participantes, dolores, quick wins e ideas (con autor, área, rol, votos y hora).
 5. Al terminar, exporta y usa **Borrar taller** para no guardar datos del cliente más tiempo del necesario.
+
+### Configurar un taller (formulario «Crear taller nuevo»)
+
+- **Áreas** y **Etapas del proceso**: una por línea.
+- En **Perfil, herramientas y quick wins**:
+  - **Roles**: uno por línea (vacío = el participante escribe su puesto).
+  - **Herramientas por etapa**: `Etapa | herramienta 1, herramienta 2`. La etapa debe escribirse igual que en la lista de etapas. Siempre se agregan «Correo / Teams», «Excel propio» y «Otra».
+  - **Quick wins a validar**: `Etapa | mejora`, uno por línea. Se numeran solos (QW-01, QW-02…).
+  - **Pregunta de ideas** y **apoyos por persona**.
+- La plantilla **Lockton · Actua** ya trae las 8 etapas, herramientas y 19 quick wins de la lámina «Proceso de Valuación Actuarial» del cliente.
 
 Trucos:
 
@@ -72,12 +104,12 @@ Todas las reglas viven **en la base de datos** (políticas RLS en `setup.sql`), 
 | Quién | Qué puede hacer |
 |---|---|
 | Sin iniciar sesión (solo con la llave pública) | Nada. Toda lectura da "no autorizado". |
-| Participante (anónimo) | Buscar un taller por código, unirse, ver y editar **solo su** registro. Publicar tarjetas en la fase Dolores, ver las tarjetas del taller **sin autor**, votar hasta su tope (validado en el servidor) y ver totales en Resultados. |
+| Participante (anónimo) | Buscar un taller por código, unirse, ver y editar **solo su** registro. Publicar tarjetas en la fase Dolores, ver las tarjetas del taller **sin autor** y votar hasta su tope (validado en el servidor). Calificar quick wins solo en su fase, ver solo sus propias calificaciones y proponer mejoras que solo ve el facilitador. En Ideas: publicar ideas para los retos y apoyar hasta su tope (no las propias). Los totales se ven solo en Resultados. |
 | Tu cuenta sin el código 2FA | Nada (aunque alguien robe tu contraseña). |
 | Tu cuenta con 2FA | Crear, ver, controlar, exportar y borrar **tus** talleres. |
 | Cualquier otra cuenta | Nada: no puede volverse facilitador ni ver talleres ajenos. |
 
-Verificado con 47 pruebas de ataque directas contra la API (leer datos ajenos, suplantar, cambiar fases, votar de más, etc.): todas bloqueadas.
+Verificado con 96 pruebas de ataque directas contra la API: leer datos ajenos, suplantar, cambiar fases, votar de más, calificar o proponer fuera de fase, apoyar la idea propia o pasarse del tope, etc. Todas bloqueadas.
 
 Límites que conviene conocer:
 
@@ -107,7 +139,7 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | Archivo | Qué es |
 |---|---|
 | `index.html` | Toda la app: participante (móvil) + panel del facilitador. Incluye la librería de Supabase y el generador de QR, sin depender de CDNs. |
-| `setup.sql` | Esquema, reglas de seguridad y tiempo real (re-ejecutable). |
+| `setup.sql` | Esquema, reglas de seguridad y tiempo real (re-ejecutable; actualiza versiones anteriores sin borrar datos). |
 | `README.md` | Esta guía. |
 
 Sin `SUPABASE_URL`, la app corre en **modo demo**: todo funciona en tu navegador y sin cuentas, útil para enseñarla o probar cambios.
