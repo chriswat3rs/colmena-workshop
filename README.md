@@ -11,7 +11,7 @@ Herramienta propia para workshops de design thinking en vivo.
   5. **Ideas:** «¿Cómo podríamos…?» sobre los 3 dolores más votados, con apoyos.
 - **Tú, como facilitador:** proyectas un **panel en vivo** con participantes, muro, ranking, tabla de quick wins, ideas por reto y exportación a CSV.
 
-**Identidad:** imagotipo y logotipo de Quality & Knowledge, colores corporativos (azul `#278FD8`, marino `#01133B`), tipografía Montserrat y modo claro. Usa iconos propios estilo «liquid glass» para estados de ánimo e indicadores. Los avatares son animales dentro de mosaicos de vidrio, y la abeja de Colmena acompaña al imagotipo de Quality & Knowledge en la portada y en el QR.
+**Identidad:** imagotipo y logotipo de Quality & Knowledge, colores corporativos (azul `#278FD8`, marino `#01133B`), tipografía Montserrat y modo claro. Usa iconos planos propios (glifos SVG sobre un fondo suave) para estados de ánimo e indicadores. Los avatares son animales, y la abeja de Colmena acompaña al imagotipo de Quality & Knowledge en la portada y en el QR.
 
 Todo es **un solo archivo** (`index.html`) más una base de datos gratuita en Supabase, **con autenticación**: tu cuenta está protegida con segundo factor y cada participante solo accede a lo suyo.
 

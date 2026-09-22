@@ -141,31 +141,16 @@ input[type=range]{width:100%;accent-color:var(--accent-strong);height:32px}
 .phase.on{background:var(--primary);border-color:var(--primary);color:#fff}
 .phase.done{color:var(--ink);border-color:var(--accent)}
 .a-main{flex:1;padding:22px;display:flex;flex-direction:column;gap:22px;max-width:1280px;width:100%;margin:0 auto}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:18px 20px}
-.kpi .n{font-family:var(--display);font-weight:800;font-size:34px;line-height:1}
-.kpi .l{color:var(--ink-2);font-weight:600;font-size:13.5px;margin-top:6px}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:20px}
 .panel h2{font-size:17px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
 .panel h2 .sub{font-family:var(--sans);font-weight:500;font-size:13.5px;color:var(--ink-2)}
-.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
-.wcol h3{font-size:13.5px;color:var(--ink-2);font-family:var(--sans);font-weight:700;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-.wcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
 .wcard.new,.icard.new{animation:cardin .35s ease}
 @keyframes cardin{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
-.wcard .txt{font-size:14.5px;margin-bottom:8px}
-.wcard .who{font-size:12.5px;color:var(--ink-3);font-weight:600}
 .ptable{width:100%;border-collapse:collapse;font-size:14px}
 .ptable th{text-align:left;color:var(--ink-2);font-weight:700;font-size:12.5px;padding:8px 10px;border-bottom:1px solid var(--line)}
 .ptable td{padding:9px 10px;border-bottom:1px solid var(--line)}
 .ptable tr:last-child td{border-bottom:none}
 /* ranking (dataviz: barras delgadas, un solo tono, remate 4px, etiquetas en tinta) */
-.rank{display:flex;flex-direction:column;gap:12px}
-.rrow{display:grid;grid-template-columns:minmax(140px,300px) 1fr 52px;gap:12px;align-items:center}
-.rlabel{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rtrack{display:block;height:18px;position:relative}
-.rbar{display:block;height:100%;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px;transition:width .5s ease}
-.rval{font-weight:700;font-size:14px;text-align:right;font-variant-numeric:tabular-nums}
 .qr-modal{position:fixed;inset:0;background:rgba(10,8,26,.72);display:flex;align-items:center;justify-content:center;z-index:80;padding:20px}
 .qr-box{background:#fff;color:#01133B;border-radius:20px;padding:28px;max-width:420px;width:100%;text-align:center}
 .qr-box h2{font-size:20px;margin-bottom:4px}
@@ -206,30 +191,6 @@ details.more>summary{cursor:pointer;font-weight:700;color:var(--accent-strong);p
 .support.on{background:var(--accent-soft);border-color:var(--accent-strong);color:var(--accent-strong)}
 .support .vhex{width:13px;height:15px}
 /* admin: tabla de quick wins (barras apiladas ordinales, un solo tono + gris para «no aplica») */
-.qwt{display:flex;flex-direction:column}
-.qwt-row{display:grid;grid-template-columns:minmax(220px,1fr) minmax(160px,300px) 44px 54px;gap:14px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
-.qwt-row.head{font-size:12.5px;font-weight:700;color:var(--ink-2);padding-top:0}
-.qwt-row .lbl{font-size:14px;font-weight:600;line-height:1.35}
-.qwt-row .num{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:14px}
-.qwt-row .idx{font-family:var(--display);font-size:17px}
-.qwt-stage{font-size:12.5px;font-weight:800;color:var(--ink-2);text-transform:uppercase;letter-spacing:.05em;padding:14px 0 4px}
-.sbar{display:flex;gap:2px;height:16px}
-.sbar span{display:block;height:100%;min-width:0}
-.sbar span:first-child{border-radius:4px 0 0 4px}.sbar span:last-child{border-radius:0 4px 4px 0}
-.s3{background:var(--accent)}
-.s2{background:color-mix(in srgb,var(--accent) 58%,transparent)}
-.s1{background:color-mix(in srgb,var(--accent) 28%,transparent)}
-.s0{background:var(--line)}
-.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);font-weight:600;margin-top:12px}
-.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-.retos{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-.retocol{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
-.retocol h3{font-size:14.5px;font-family:var(--sans);font-weight:700;margin-bottom:4px}
-.retocol .rmeta{font-size:12.5px;color:var(--ink-3);font-weight:600;margin-bottom:12px}
-.icard{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
-.icard .txt{font-size:14px}
-.icard .sup{font-weight:800;color:var(--accent-strong);font-variant-numeric:tabular-nums;white-space:nowrap}
-.icard .who{display:block;margin-top:4px;font-size:12px;color:var(--ink-3);font-weight:600}
 .ptable .et{font-size:12.5px;color:var(--ink-2)}
 .panel h2 .right{margin-left:auto}
 .pw-wrap{position:relative}
@@ -258,55 +219,32 @@ details.more>summary{cursor:pointer;font-weight:700;color:var(--accent-strong);p
 .cm-wrap.sm{filter:drop-shadow(0 2px 5px rgba(1,19,59,.18))}.cm-wrap.sm .cm-mark{--s:28px}
 .cm-wrap.md .cm-mark{--s:40px}
 /* Lockup abeja + imagotipo: misma jerarquía visual.
-   Un hexágono de igual alto que un círculo tiene ~13% menos área y su relleno claro pesa menos,
-   así que el hexágono va un 13% más alto que el diámetro del imagotipo y con relleno y borde más firmes. */
+   Un hexágono de igual alto que un círculo tiene ~13% menos área, así que va un 13% más alto y con relleno más firme. */
 .lockup{--lk:92px;display:flex;align-items:center;justify-content:center;gap:calc(var(--lk)*.2)}
 .lockup.sm{--lk:40px}
 .lockup.xs{--lk:30px;justify-content:flex-start}
 .lockup .brand-mark{width:var(--lk);height:var(--lk)}
-.bee-mark{position:relative;width:var(--lk);height:calc(var(--lk)*1.13);font-size:calc(var(--lk)*.64);line-height:1;
-  background:linear-gradient(160deg,#EAF4FC 0%,#CFE5F7 55%,#B5D7F2 100%)}
-.bee-mark::after{content:"";position:absolute;inset:0;clip-path:inherit;pointer-events:none;
-  background:linear-gradient(160deg,rgba(255,255,255,.55),rgba(255,255,255,0) 45%);mix-blend-mode:soft-light}
+.bee-mark{width:var(--lk);height:calc(var(--lk)*1.13);font-size:calc(var(--lk)*.64);line-height:1;background:#CFE5F7}
 .lockup-plus{font-family:var(--display);font-weight:300;font-size:calc(var(--lk)*.46);line-height:1;color:var(--ink-3)}
 .lockup.xs .lockup-plus{font-weight:400}
-/* ---------- Iconos «liquid glass» (reemplazan a los emojis) ----------
-   Vidrio translúcido con brillo especular arriba, luz de borde y refracción
-   inferior en el color de la marca. Glifos SVG propios, trazo 1.9 px. */
-.glass{--g:var(--brand-blue);position:relative;display:inline-grid;place-items:center;flex:none;width:56px;height:56px;border-radius:32%;
-  color:color-mix(in srgb,var(--g) 82%,#01133B);
-  background:
-    radial-gradient(120% 85% at 28% 6%,rgba(255,255,255,.96) 0%,rgba(255,255,255,.42) 40%,rgba(255,255,255,0) 62%),
-    linear-gradient(165deg,color-mix(in srgb,var(--g) 14%,#fff) 0%,color-mix(in srgb,var(--g) 34%,#fff) 100%);
-  border:1px solid rgba(255,255,255,.9);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.95),inset 0 -8px 16px color-mix(in srgb,var(--g) 28%,transparent),
-    0 8px 20px color-mix(in srgb,var(--g) 18%,transparent),0 1px 2px rgba(1,19,59,.10);
-  -webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%)}
-.glass::after{content:"";position:absolute;left:10%;right:10%;top:5%;height:42%;border-radius:40% 40% 50% 50%/60% 60% 40% 40%;
-  background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));pointer-events:none}
-.glass svg{position:relative;z-index:1;width:50%;height:50%;overflow:visible;filter:drop-shadow(0 1px 1.5px color-mix(in srgb,var(--g) 35%,transparent))}
-.glass.tint,.avatar-pick.on .glass:not(.ava),.mood-opt.on .glass{color:#fff;border-color:rgba(255,255,255,.6);
-  background:
-    radial-gradient(120% 85% at 28% 6%,rgba(255,255,255,.62) 0%,rgba(255,255,255,.14) 42%,rgba(255,255,255,0) 62%),
-    linear-gradient(165deg,color-mix(in srgb,var(--g) 68%,#fff) 0%,var(--g) 68%,color-mix(in srgb,var(--g) 84%,#000) 100%);
-  box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 -8px 16px rgba(1,19,59,.22),0 10px 22px color-mix(in srgb,var(--g) 32%,transparent),0 1px 2px rgba(1,19,59,.14)}
-.glass.tint::after,.avatar-pick.on .glass:not(.ava)::after,.mood-opt.on .glass::after{background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0))}
-.glass.tint svg,.avatar-pick.on .glass svg,.mood-opt.on .glass svg{filter:drop-shadow(0 1px 1.5px rgba(1,19,59,.35))}
+/* ---------- Iconos planos: fondo suave del tono y glifo SVG de trazo 1.9 px ---------- */
+.glass{--g:var(--brand-blue);position:relative;display:inline-grid;place-items:center;flex:none;width:56px;height:56px;border-radius:28%;
+  color:var(--g);background:color-mix(in srgb,var(--g) 12%,#fff)}
+.glass svg{width:52%;height:52%;overflow:visible}
+.glass.tint,.avatar-pick.on .glass:not(.ava),.mood-opt.on .glass{color:#fff;background:var(--g)}
 .glass.xl{width:104px;height:104px}.glass.lg{width:76px;height:76px}.glass.md{width:44px;height:44px}
 .glass.sm{width:36px;height:36px}.glass.xs{width:22px;height:22px;border-radius:30%}
-.glass.xs::after{display:none}
 .t-blue{--g:#278FD8}.t-navy{--g:#173F84}.t-sky{--g:#4FA9E6}.t-deep{--g:#1B6FAE}
 .t-green{--g:#1FA971}.t-slate{--g:#7A879F}.t-amber{--g:#F0962E}.t-coral{--g:#E5484D}
 .avatar-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;justify-items:center}
 .avatar-pick{width:100%;max-width:84px;padding:5px;border-radius:24px;border:2px solid transparent;background:none;transition:transform .12s;display:grid;place-items:center}
 .avatar-pick .glass{width:100%;height:auto;aspect-ratio:1}
-/* Avatares de animales dentro de vidrio claro */
-.glass.ava .ava-emoji{position:relative;z-index:1;line-height:1;font-size:28px;filter:drop-shadow(0 2px 3px rgba(1,19,59,.18))}
+/* Avatares de animales sobre un fondo suave del tono */
+.glass.ava .ava-emoji{position:relative;line-height:1;font-size:28px}
 .glass.ava.xl .ava-emoji{font-size:56px}.glass.ava.lg .ava-emoji{font-size:40px}.glass.ava.md .ava-emoji{font-size:23px}
-.glass.ava.sm .ava-emoji{font-size:19px}.glass.ava.xs .ava-emoji{font-size:12px;filter:none}
+.glass.ava.sm .ava-emoji{font-size:19px}.glass.ava.xs .ava-emoji{font-size:12px}
 .avatar-pick .glass.ava .ava-emoji{font-size:clamp(26px,9.5vw,42px)}
-.avatar-pick.on .glass.ava{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent),inset 0 1px 1px rgba(255,255,255,.95),0 10px 22px rgba(39,143,216,.30);
-  background:radial-gradient(120% 85% at 28% 6%,rgba(255,255,255,.96) 0%,rgba(255,255,255,.4) 40%,rgba(255,255,255,0) 62%),linear-gradient(165deg,#DCEEFB 0%,#A9D3F3 100%)}
+.avatar-pick.on .glass.ava{box-shadow:0 0 0 3px var(--accent);background:#DCEEFB}
 .avatar-pick.on{border-color:transparent;background:none;transform:scale(1.04)}
 .avatar-pick:active{transform:scale(.96)}
 .avatar-pick.on{border-color:var(--accent-strong);background:rgba(39,143,216,.06)}
@@ -378,12 +316,10 @@ details.ah-sec[open]>summary{margin-bottom:4px}
 .a-actions .abtn{padding:9px 14px;font-size:13.5px;white-space:nowrap}
 .phasebar{padding:12px clamp(14px,2.5vw,28px)}
 .a-main{padding:clamp(14px,2.5vw,28px)}
-.kpis{grid-template-columns:repeat(6,minmax(0,1fr))}
 @media (max-width:1200px){
   .a-top{grid-template-columns:auto minmax(0,1fr)}
   .a-top .a-actions{grid-column:1/-1;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
   .a-top .a-actions #btnQR{order:-1}
-  .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
   .a-top .a-actions::-webkit-scrollbar{display:none}
 }
 @media (max-width:720px){
@@ -393,17 +329,180 @@ details.ah-sec[open]>summary{margin-bottom:4px}
   .a-title{white-space:normal;font-size:15px;line-height:1.3}
   .a-code{font-size:16px;padding:4px 10px;flex:none}
   .a-top .a-actions{margin:0 calc(-1 * clamp(14px,2.5vw,28px));padding:0 clamp(14px,2.5vw,28px) 2px}
-  .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .kpi{padding:14px 16px}
-  .kpi .n{font-size:26px}
-  .kpi .l{font-size:12.5px}
   .panel{padding:16px}
-  .rrow{grid-template-columns:minmax(0,1fr) 40px;gap:4px 10px}
-  .rrow .rtrack{grid-column:1/-1;grid-row:2}
-  .qwt-row{grid-template-columns:minmax(0,1fr) 36px 44px;gap:6px 10px}
-  .qwt-row .sbar{grid-column:1/-1;grid-row:2}
-  .qwt-row.head span:nth-child(2){display:none}
 }
+/* ================= Panel: tarjetas y gráficas (v1.4) =================
+   Mismo lenguaje en todas las tarjetas: título, descripción, gráfica y un pie con el dato destacado.
+   Paleta monocroma en el azul de la marca (validada: la escala Poco→Mucho pasa las comprobaciones ordinales). */
+:root{--c1:#278FD8;--c2:#7FBAEC;--c3:#15588F;--c-light:#A9D3F3;--c-track:#EDF3FA;--lk-m:#15588F;--lk-a:#3A97DC;--lk-p:#7FBAEC}
+.ico-line{display:inline-grid;place-items:center;width:20px;height:20px;color:var(--ink-3);flex:none}
+.ico-line svg{width:18px;height:18px}
+.panel{padding:22px 24px 18px}
+.ph{margin-bottom:18px}
+.ph h2{display:block;font-family:var(--sans);font-size:16px;font-weight:700;color:var(--ink);margin:0 0 4px;line-height:1.3}
+.pdesc{font-size:13.5px;font-weight:500;color:var(--ink-3);margin:0;line-height:1.4}
+.pf{display:flex;flex-direction:column;gap:4px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.pf-main{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--ink);line-height:1.35}
+.pf-main svg{width:16px;height:16px;flex:none;stroke-width:2.2;color:var(--ink)}
+.pf-sub{font-size:13px;font-weight:500;color:var(--ink-3)}
+.duo{display:grid;grid-template-columns:minmax(320px,460px) minmax(0,1fr);gap:16px;align-items:start}
+.leg{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:12.5px;font-weight:600;color:var(--ink-2);margin-bottom:14px}
+.leg span{display:inline-flex;align-items:center;gap:6px}
+.leg i{width:12px;height:12px;border-radius:3px;flex:none}
+.leg i.m{background:var(--lk-m)}.leg i.a{background:var(--lk-a)}.leg i.p{background:var(--lk-p)}
+.leg .leg-help{font-weight:500;color:var(--ink-3);margin-left:auto}
+
+/* Indicadores */
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;padding-top:4px}
+.kpi{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:18px 18px 14px;box-shadow:0 1px 2px rgba(1,19,59,.04)}
+.kpi.on{border-color:#8EC3EC;box-shadow:0 0 0 3px rgba(39,143,216,.12)}
+.kpi-h{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.kpi-l{font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi-live{position:absolute;top:-10px;right:14px;display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:.03em;color:#fff;background:var(--primary);padding:3px 9px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 6px rgba(1,19,59,.18)}
+.kpi-live i{width:6px;height:6px;border-radius:50%;background:#6FC0F5;animation:livepulse 1.6s ease-in-out infinite}
+@keyframes livepulse{0%,100%{opacity:1}50%{opacity:.3}}
+@media (prefers-reduced-motion:reduce){.kpi-live i{animation:none}}
+.kpi-b{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
+.kpi-v{display:flex;align-items:baseline;gap:6px;min-width:0}
+.kpi-v .n{font-family:var(--sans);font-weight:700;font-size:32px;line-height:1;color:var(--ink);letter-spacing:-.02em}
+.kpi-v .of{font-size:13px;font-weight:600;color:var(--ink-3);white-space:nowrap}
+.kpi-viz{flex:none;display:flex}
+.ring{width:60px;height:60px}
+.ring-t{font-family:var(--sans);font-size:12.5px;font-weight:700;fill:var(--ink)}
+.kpi-wide{display:flex;align-items:flex-end;height:44px}
+.spark{width:100%;height:44px;display:block}
+.cols{display:flex;align-items:flex-end;gap:5px;width:100%;height:40px}
+.cols .col{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;background:var(--c-track);border-radius:4px}
+.cols .col i{display:block;background:var(--c1);border-radius:4px;min-height:0}
+.kpi-f{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:var(--ink-3);line-height:1.35;margin-top:auto}
+.kpi-f svg{width:14px;height:14px;flex:none;color:var(--ink-2)}
+
+/* Columnas apiladas (dolores por etapa) */
+.bars-v{position:relative;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:clamp(6px,1.5vw,20px);height:240px;padding-top:22px}
+.bars-v::before{content:"";position:absolute;left:0;right:0;top:22px;bottom:22px;background:linear-gradient(to top,var(--line) 1px,transparent 1px) 0 0/100% 25% repeat-y;pointer-events:none}
+.bars-v .bv{position:relative}
+.bv{display:flex;flex-direction:column;height:100%;min-width:0}
+.bv-stack{position:relative;flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:2px}
+.bv-stack i{display:block;min-height:0}
+.bv-stack .hi{background:var(--c3);border-radius:0 0 0 0}
+.bv-stack .lo{background:var(--c2)}
+.bv-stack i:first-of-type{border-radius:8px 8px 0 0}
+.bv-n{position:absolute;left:0;right:0;text-align:center;font-size:12.5px;font-weight:700;color:var(--ink)}
+.bv-x{height:22px;padding-top:8px;text-align:center;font-size:12px;font-weight:600;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Barras horizontales (ranking) */
+.hb{display:flex;flex-direction:column;gap:10px}
+.hb-row{display:grid;grid-template-columns:minmax(180px,36%) minmax(0,1fr);gap:18px;align-items:center}
+.hb-lbl{display:flex;gap:10px;align-items:flex-start;min-width:0}
+.hb-pos{flex:none;width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:11.5px;font-weight:700;background:var(--navy-soft);color:var(--ink-2);margin-top:1px}
+.hb-row.top .hb-pos{background:var(--primary);color:#fff}
+.hb-t{min-width:0}
+.hb-txt{font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hb-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:3px;font-size:11.5px;font-weight:600;color:var(--ink-3)}
+.hb-reto{font-size:10.5px;font-weight:700;color:var(--accent-strong);background:var(--accent-soft);padding:1px 7px;border-radius:999px}
+.hb-track{display:grid;grid-template-columns:minmax(0,1fr) 36px;gap:10px;align-items:center}
+.hb-rail{display:block;min-width:0}
+.hb-bar{display:block;height:34px;border-radius:8px;background:var(--c-light);min-width:6px;transition:width .5s ease}
+.hb-row.top .hb-bar{background:var(--c1)}
+.hb-val{font-size:14px;font-weight:700;color:var(--ink)}
+.hb-more{font-size:12.5px;color:var(--ink-3);margin-top:10px}
+.pips{display:inline-flex;gap:3px;align-items:center}
+.pips i{width:7px;height:7px;border-radius:50%;background:#E3E8EF}
+.pips i.on{background:var(--c1)}
+
+/* Quick wins: columnas al 100 % + lista */
+.qwc-wrap{overflow-x:auto;padding-bottom:4px}
+.qwc{display:grid;grid-template-columns:repeat(var(--n),minmax(30px,1fr));gap:clamp(4px,1vw,14px);align-items:end;min-width:min(100%,calc(var(--n)*36px))}
+.qwc-col{display:flex;flex-direction:column;gap:6px;min-width:0}
+.qwc-idx{text-align:center;font-size:12px;font-weight:700;color:var(--ink)}
+.qwc-stack{height:190px;display:flex;flex-direction:column;gap:2px;border-radius:8px;overflow:hidden;background:var(--card)}
+.qwc-stack.none{background:var(--c-track)}
+.qwc-stack i{display:block;min-height:0}
+.qwc-stack .p{background:var(--lk-p)}.qwc-stack .a{background:var(--lk-a)}.qwc-stack .m{background:var(--lk-m)}
+.qwc-id{text-align:center;font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.03em}
+.qwl{columns:2 380px;column-gap:28px;margin-top:20px}
+.qwl-row,.qwl-stage{break-inside:avoid}
+.qwl-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.qwl-t{font-weight:600;color:var(--ink);line-height:1.35}
+.qwl-idx{text-align:right;font-weight:700;font-size:15px;color:var(--ink);line-height:1.1;min-width:44px}
+.qwl-idx small{display:block;font-size:10.5px;font-weight:600;color:var(--ink-3);margin-top:1px}
+.qwl-idx .na{color:var(--ink-3)}
+.qwl-stage{font-size:11.5px;font-weight:800;color:var(--ink-2);text-transform:uppercase;letter-spacing:.05em;padding:16px 0 4px}
+
+/* Retos e ideas */
+.retos{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+.reto{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.reto-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.reto-k{flex:none;white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--primary);padding:4px 10px;border-radius:999px}
+.reto-m{min-width:0;font-size:12px;font-weight:600;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reto-t{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--ink);line-height:1.35;margin:10px 0 6px}
+.ideas{list-style:none;margin:0;padding:0}
+.idea{display:flex;flex-direction:column;gap:7px;padding:11px 0;border-top:1px solid var(--line)}
+.idea.new{animation:cardin .35s ease}
+.idea-t{font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.4}
+.idea-t .who{display:flex;margin-top:4px;font-size:12px;color:var(--ink-3);font-weight:600}
+.idea-b{display:grid;grid-template-columns:minmax(0,1fr) 28px;gap:10px;align-items:center}
+.idea-rail{display:block;min-width:0}
+.idea-rail i{display:block;height:18px;border-radius:6px;background:var(--c-light);min-width:4px}
+.idea.lead .idea-rail i{background:var(--c1)}
+.idea-b b{font-size:13.5px;font-weight:700;color:var(--ink)}
+.empty-idea{color:var(--ink-3);font-size:13.5px;text-align:center}
+
+/* Dona de ánimo */
+.donut-wrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center}
+.donut{width:160px;height:160px;flex:none}
+.donut-n{font-family:var(--sans);font-size:32px;font-weight:700;fill:var(--ink)}
+.donut-s{font-family:var(--sans);font-size:12px;font-weight:600;fill:var(--ink-3)}
+.dleg{display:flex;flex-direction:column;gap:9px;min-width:0}
+.dleg-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto 40px;gap:10px;align-items:center;font-size:13.5px}
+.dleg-row.zero{opacity:.45}
+.dleg-row .sw{width:10px;height:10px;border-radius:3px}
+.dleg-row .dl-t{font-weight:600;color:var(--ink);line-height:1.3}
+.dleg-row b{font-weight:700}
+.dleg-row .pct{text-align:right;color:var(--ink-3);font-weight:600;font-size:12.5px}
+
+/* Muro de dolores y propuestas */
+.wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.wall.props{gap:12px}.wall.props .wcard{margin:0}
+.wcol h3{display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:var(--sans);font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #E3EAF3}
+.wcol h3 b{flex:none;font-size:11.5px;font-weight:700;color:var(--ink-2);background:var(--navy-soft);padding:2px 9px;border-radius:999px}
+.wcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px;box-shadow:0 1px 2px rgba(1,19,59,.04)}
+.wcard.new{animation:cardin .35s ease}
+.wc-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;min-height:22px}
+.wc-sev{font-size:11.5px;font-weight:700;color:var(--ink-2)}
+.wc-votes{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--accent-strong);background:var(--accent-soft);padding:3px 9px;border-radius:999px}
+.wc-kind{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--accent-strong)}
+.wc-kind svg{width:14px;height:14px}
+.hx{display:inline-block;width:9px;height:10.5px;background:currentColor;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.wcard .txt{font-size:14.5px;line-height:1.45;color:var(--ink)}
+.wc-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+.wc-tool{font-size:11.5px;font-weight:600;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);padding:3px 8px;border-radius:6px}
+.wcard .who{font-size:12px;color:var(--ink-3);font-weight:600}
+
+/* Tooltip de las gráficas */
+.vtip{position:fixed;z-index:1000;left:0;top:0;max-width:300px;padding:8px 11px;border-radius:9px;background:var(--card);color:var(--ink);border:1px solid var(--line);font:600 12.5px/1.4 var(--sans);
+  box-shadow:0 8px 24px rgba(1,19,59,.14);pointer-events:none;opacity:0;transform:translateY(2px);transition:opacity .12s,transform .12s;white-space:pre-line}
+.vtip.on{opacity:1;transform:none}
+
+@media (max-width:1200px){ .kpis{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:1024px){ .duo{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:720px){
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .kpi{padding:14px 14px 12px;gap:10px}
+  .kpi-v .n{font-size:28px}
+  .ring{width:52px;height:52px}
+  .panel{padding:18px 16px 14px}
+  .hb-row{grid-template-columns:minmax(0,1fr);gap:6px}
+  .hb-bar{height:26px}
+  .bars-v{height:200px}
+  .leg .leg-help{margin-left:0}
+  .qwc-stack{height:150px}
+  .qwl{grid-template-columns:minmax(0,1fr)}
+  .retos{grid-template-columns:minmax(0,1fr)}
+  .donut-wrap{grid-template-columns:minmax(0,1fr);justify-items:center}
+  .dleg{width:100%}
+}
+
 /* ---------- acceso del facilitador ---------- */
 .steps{margin:0 0 14px 20px;color:var(--ink-2);font-size:14.5px;display:grid;gap:6px}
 .mfa-qr{display:flex;justify-content:center;background:#fff;border-radius:14px;padding:12px;width:max-content;margin:4px auto 14px}
@@ -521,6 +620,8 @@ const GLYPHS = {
   wave:'<path d="M2.8 8.5c2.3 0 2.3-2 4.6-2s2.3 2 4.6 2 2.3-2 4.6-2 2.3 2 4.6 2M2.8 13.5c2.3 0 2.3-2 4.6-2s2.3 2 4.6 2 2.3-2 4.6-2 2.3 2 4.6 2M2.8 18.5c2.3 0 2.3-2 4.6-2s2.3 2 4.6 2 2.3-2 4.6-2 2.3 2 4.6 2"/>',
   target:'<circle cx="12" cy="12" r="8.8"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/>',
   sparkle:'<path d="M11 3.5l1.8 5 5 1.8-5 1.8-1.8 5-1.8-5-5-1.8 5-1.8z"/><path d="M18.5 15.2l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
+  trendup:'<path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>',
+  users:'<circle cx="9" cy="8" r="3.4"/><path d="M2.8 20c.4-3.6 3-5.6 6.2-5.6s5.8 2 6.2 5.6"/><path d="M16 4.6a3.4 3.4 0 0 1 0 6.8"/><path d="M17.5 14.6c2.3.5 3.5 2.3 3.7 5.4"/>',
   hexagon:'<path d="M12 2.9l7.9 4.55v9.1L12 21.1l-7.9-4.55v-9.1z"/><path d="M12 8.3l3.2 1.85v3.7L12 15.7l-3.2-1.85v-3.7z"/>',
   cloudsun:'<path d="M7.6 3.6v1.3M3.4 7.8h1.3M4.6 4.8l.9.9M10.6 4.8l-.9.9"/><path d="M10.7 8.6a3.2 3.2 0 0 0-5.8 1.4"/><path d="M9.3 19.6h8.2a3.5 3.5 0 0 0 .4-6.97 4.7 4.7 0 0 0-9 1.1 2.95 2.95 0 0 0 .4 5.87z"/>',
   rain:'<path d="M7.2 15.3h9.9a4 4 0 0 0 .5-7.97A5.6 5.6 0 0 0 6.8 8.7a3.3 3.3 0 0 0 .4 6.6z"/><path d="M8.7 18.2l-.9 2.5M12.7 18.2l-.9 2.5M16.7 18.2l-.9 2.5"/>',
@@ -1574,10 +1675,16 @@ function renderAdmin(){
   const fresh = id => A.seen.has(id) ? "" : " new";
   const who = pid => { const au=byId[pid]; return A.showAuthors&&au ? `<span class="who">${avatar(au.emoji,"xs")} ${esc(au.nombre)} · ${esc(au.rol||au.area||"")}</span>` : ""; };
 
+  /* Cabecera y pie de cada tarjeta del panel (título, descripción, dato destacado) */
+  const head=(t,d)=>`<div class="ph"><h2>${t}</h2>${d?`<p class="pdesc">${d}</p>`:""}</div>`;
+  const foot=(main,sub,ic)=> main?`<div class="pf"><span class="pf-main">${icon(ic||"trendup")}<span>${main}</span></span>${sub?`<span class="pf-sub">${sub}</span>`:""}</div>`:"";
+  const nP=A.participants.length;
+  const TONE={green:"#1FA971",blue:"#278FD8",slate:"#7A879F",amber:"#F0962E",coral:"#E5484D",navy:"#173F84",sky:"#4FA9E6",deep:"#1B6FAE"};
+
   const panelParticipants = `
       <div class="panel">
-        <h2>Participantes <span class="sub">entran escaneando el QR</span></h2>
-        ${A.participants.length? `<div style="overflow-x:auto"><table class="ptable">
+        ${head("Participantes","Entran escaneando el QR · "+nP+" registrado"+(nP===1?"":"s"))}
+        ${nP? `<div style="overflow-x:auto"><table class="ptable">
           <thead><tr><th></th><th>Nombre</th><th>Área</th><th>Rol</th><th>Etapas</th><th>Ánimo</th><th>Expectativa</th><th>Hora</th></tr></thead>
           <tbody>${A.participants.map(p=>{
             const m=MOODS.find(x=>x.v===p.mood);
@@ -1592,73 +1699,133 @@ function renderAdmin(){
         : '<p class="empty">Aún no entra nadie. Proyecta el QR y espera a la colmena.</p>'}
       </div>`;
 
+  /* Ánimo del equipo: dona con el total al centro */
+  const moodN=MOODS.map(m=>({...m,n:A.participants.filter(p=>p.mood===m.v).length}));
+  const topMood=[...moodN].sort((a,b)=>b.n-a.n)[0];
+  const panelMood = checkins? `
+      <div class="panel">
+        ${head("Ánimo del equipo", `${checkins} de ${nP} respondieron el check-in`)}
+        <div class="donut-wrap">
+          ${donutSVG(moodN.map(m=>({t:m.t,v:m.n,color:TONE[m.tone]})),{center:checkins,sub:"check-ins"})}
+          <div class="dleg">${moodN.map(m=>`<div class="dleg-row${m.n?"":" zero"}"><span class="sw" style="background:${TONE[m.tone]}"></span><span class="dl-t">${esc(m.t)}</span><b>${m.n}</b><span class="pct">${pctOf(m.n,checkins)}%</span></div>`).join("")}</div>
+        </div>
+        ${foot(`Predomina: ${esc(topMood.t)}`, `${pctOf(topMood.n,checkins)}% del equipo que hizo check-in`, topMood.ic)}
+      </div>` : "";
+
+  /* Dolores por etapa: columnas apiladas por intensidad */
+  const stN=(s.stages||[]).map(st=>{ const cs=A.cards.filter(c=>c.etapa===st); return {st,n:cs.length,hi:cs.filter(c=>+c.severidad>=4).length}; });
+  const stMax=Math.max(1,...stN.map(x=>x.n));
+  const topSt=[...stN].sort((a,b)=>b.n-a.n||b.hi-a.hi)[0];
+  const hiTotal=A.cards.filter(c=>+c.severidad>=4).length;
+  const panelStages = A.cards.length? `
+      <div class="panel">
+        ${head("Dolores por etapa del proceso", `${A.cards.length} tarjetas · ${hiTotal} duelen mucho o son insoportables`)}
+        <div class="leg"><span><i style="background:var(--c3)"></i>Duele mucho / insoportable (4–5)</span><span><i style="background:var(--c2)"></i>Molesta / incomoda / duele (1–3)</span></div>
+        <div class="bars-v" style="--n:${stN.length}">${stN.map(x=>{ const lo=x.n-x.hi, pct=v=>(v/stMax*100).toFixed(1);
+          return `<div class="bv" data-tip="${esc(x.st)}\n${x.n} tarjeta${x.n===1?"":"s"} · ${x.hi} de 4–5">
+            <div class="bv-stack">${x.n?`<span class="bv-n" style="bottom:calc(${pct(x.n)}% + 6px)">${x.n}</span>`:""}${lo?`<i class="lo" style="height:${pct(lo)}%"></i>`:""}${x.hi?`<i class="hi" style="height:${pct(x.hi)}%"></i>`:""}</div>
+            <span class="bv-x">${esc(stageX(x.st))}</span></div>`; }).join("")}</div>
+        ${foot(`Donde más duele: ${esc(topSt.st)}`, `${topSt.n} tarjeta${topSt.n===1?"":"s"} · el número bajo cada columna es el paso del proceso`, "flame")}
+      </div>` : "";
+
+  /* Muro de dolores */
+  const sorted = list => votesUsed ? [...list].sort((x,y)=>(totals[y.id]||0)-(totals[x.id]||0) || y.severidad-x.severidad) : list;
+  const wcard = c => `<div class="wcard${fresh(c.id)}">
+      <div class="wc-top">${sevPips(c.severidad)}<span class="wc-sev">${esc(SEV_LABELS[c.severidad]||"")}</span>
+        ${totals[c.id]?`<span class="wc-votes" data-tip="${totals[c.id]} voto${totals[c.id]===1?"":"s"} en la votación">${hexIco()}${totals[c.id]}</span>`:""}</div>
+      <div class="txt">${esc(c.texto)}</div>
+      ${c.herramienta||A.showAuthors?`<div class="wc-foot">${c.herramienta?`<span class="wc-tool">${esc(c.herramienta)}</span>`:""}${who(c.participant_id)}</div>`:""}
+    </div>`;
   const panelWall = `
       <div class="panel">
-        <h2>Muro de dolores <span class="sub">${A.cards.length} tarjetas, agrupadas por etapa</span></h2>
+        ${head("Muro de dolores", `${A.cards.length} tarjetas, agrupadas por etapa`)}
         ${A.cards.length? `<div class="wall">${
           orderStages(s,[...new Set(A.cards.map(c=>c.etapa))]).map(et=>{
-            const cs=A.cards.filter(c=>c.etapa===et);
-            return `<div class="wcol"><h3>${esc(et)} · ${cs.length}</h3>${cs.map(c=>`<div class="wcard${fresh(c.id)}"><div class="txt">${esc(c.texto)}</div>
-                <div class="meta-row">${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span>
-                ${totals[c.id]?`<span class="tag">${totals[c.id]} voto${totals[c.id]===1?"":"s"}</span>`:""}
-                ${who(c.participant_id)}</div></div>`).join("")}</div>`;
+            const cs=sorted(A.cards.filter(c=>c.etapa===et));
+            return `<div class="wcol"><h3><span>${esc(et)}</span><b>${cs.length}</b></h3>${cs.map(wcard).join("")}</div>`;
           }).join("")}</div>`
         : '<p class="empty">Las tarjetas aparecerán aquí en vivo conforme el equipo las publique.</p>'}
       </div>`;
 
+  const targets=topPains(A.cards, totals, s.idea_top||3);
   const panelRank = `
       <div class="panel">
-        <h2>Ranking de dolores <span class="sub">votación con ${s.votes_per_user} puntos por persona</span></h2>
-        ${votesUsed? renderRank(totals) : '<p class="empty">Todavía no hay votos.</p>'}
+        ${head("Ranking de dolores", `${votesUsed} votos de ${voters} persona${voters===1?"":"s"} · ${s.votes_per_user} por persona`)}
+        ${votesUsed? renderRank(totals, targets) : '<p class="empty">Todavía no hay votos.</p>'}
+        ${votesUsed? foot(`Los ${targets.length} más votados se vuelven los retos de la fase de ideas`, `El resto queda en el muro y en el CSV`, "target") : ""}
       </div>`;
 
   const qwT=qwCount(A.qwRatings);
   const qwList=(s.quickwins||[]).map(q=>({...q, st:qwStats(qwT[q.id])}));
   const byScore=[...qwList].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1) || b.st.m-a.st.m);
+  const best=byScore[0];
   const panelQW = (s.quickwins||[]).length ? `
       <div class="panel">
-        <h2>Quick wins · ¿cuánto ayudarían? <span class="sub">${qwRaters} de ${A.participants.length} personas han calificado</span></h2>
-        ${renderQWTable(ph==="quickwins" ? qwList : byScore, ph==="quickwins")}
+        ${head("Quick wins · ¿cuánto ayudarían?", `${qwRaters} de ${nP} personas han calificado · columnas de mayor a menor índice`)}
+        ${renderQW(qwList, byScore, ph==="quickwins")}
+        ${best&&best.st.idx!==null? foot(`${esc(best.id)} es el que más ayudaría · índice ${best.st.idx}`, "Índice 0–100: mucho = 100 · algo = 50 · poco = 0 · «No aplica» no cuenta", "bolt") : ""}
       </div>` : "";
   const props=A.ideas.filter(i=>i.kind==="qw");
   const panelProps = `
       <div class="panel">
-        <h2>Quick wins propuestos por el equipo <span class="sub">${props.length} propuesta${props.length===1?"":"s"}</span></h2>
-        ${props.length? `<div class="wall">${props.map(i=>`<div class="wcard${fresh(i.id)}"><div class="txt">${esc(i.texto)}</div>
-          <div class="meta-row">${i.etapa?`<span class="tag">${esc(i.etapa)}</span>`:""}${who(i.participant_id)}</div></div>`).join("")}</div>`
+        ${head("Quick wins propuestos por el equipo", `${props.length} propuesta${props.length===1?"":"s"}`)}
+        ${props.length? `<div class="wall props">${props.map(i=>`<div class="wcard${fresh(i.id)}"><div class="wc-top"><span class="wc-kind">${icon("bolt")}Propuesta</span></div><div class="txt">${esc(i.texto)}</div>
+          <div class="wc-foot">${i.etapa?`<span class="wc-tool">${esc(i.etapa)}</span>`:""}${who(i.participant_id)}</div></div>`).join("")}</div>`
         : '<p class="empty">Las propuestas aparecerán aquí en vivo.</p>'}
       </div>`;
 
   const iTot={}; A.ideaVotes.forEach(v=>iTot[v.idea_id]=(iTot[v.idea_id]||0)+1);
-  const targets=topPains(A.cards, totals, s.idea_top||3);
+  const lead=ideasOnly.map(x=>({...x,v:iTot[x.id]||0})).sort((a,b)=>b.v-a.v)[0];
+  const retos = () => renderRetos(targets, ideasOnly, iTot, who, fresh);
   const panelIdeas = `
       <div class="panel">
-        <h2>Ideas · ${esc(s.q_idea||"¿Cómo podríamos resolverlo?")} <span class="sub">${ideasOnly.length} ideas · ${A.ideaVotes.length} apoyos</span></h2>
-        ${targets.length? `<div class="retos">${targets.map((c,i)=>{
-          const list=ideasOnly.filter(x=>x.card_id===c.id).sort((a,b)=>(iTot[b.id]||0)-(iTot[a.id]||0) || String(a.created_at).localeCompare(String(b.created_at)));
-          return `<div class="retocol"><h3>Reto ${i+1} · ${esc(c.texto)}</h3><p class="rmeta">${esc(c.etapa)} · ${c.pts} voto${c.pts===1?"":"s"} · ${list.length} idea${list.length===1?"":"s"}</p>
-            ${list.map(x=>`<div class="icard${fresh(x.id)}"><div><div class="txt">${esc(x.texto)}</div>${who(x.participant_id)}</div><span class="sup" title="apoyos">${iTot[x.id]||0}</span></div>`).join("")||'<p class="empty" style="padding:6px 0">Aún sin ideas</p>'}
-          </div>`; }).join("")}</div>`
-        : '<p class="empty">Primero hace falta la votación de dolores: los 3 más votados se vuelven los retos.</p>'}
+        ${head("Ideas · "+esc(s.q_idea||"¿Cómo podríamos resolverlo?"), `${ideasOnly.length} ideas · ${A.ideaVotes.length} apoyos · ${s.idea_votes||3} por persona`)}
+        ${targets.length? retos() : '<p class="empty">Primero hace falta la votación de dolores: los 3 más votados se vuelven los retos.</p>'}
+        ${lead&&lead.v? foot(`La idea con más apoyo: ${esc(lead.texto)}`, `${lead.v} apoyo${lead.v===1?"":"s"}`, "bulb") : ""}
       </div>`;
-
-  const topIdeas=ideasOnly.map(x=>({...x,v:iTot[x.id]||0})).filter(x=>x.v>0).sort((a,b)=>b.v-a.v).slice(0,8);
   const panelTopIdeas = `
       <div class="panel">
-        <h2>Ideas con más apoyo <span class="sub">${s.idea_votes||3} apoyos por persona</span></h2>
-        ${topIdeas.length? `<div class="rank">${(()=>{ const max=Math.max(...topIdeas.map(x=>x.v),1);
-          return topIdeas.map(x=>`<div class="rrow" title="${esc(x.texto)}"><span class="rlabel">${esc(x.texto)}</span>
-            <span class="rtrack"><span class="rbar" style="width:${Math.round(x.v/max*100)}%;background:var(--honey)"></span></span><span class="rval">${x.v}</span></div>`).join(""); })()}</div>`
-        : '<p class="empty">Todavía no hay apoyos.</p>'}
+        ${head("Ideas con más apoyo", `Por reto · ${A.ideaVotes.length} apoyos · ${s.idea_votes||3} por persona`)}
+        ${A.ideaVotes.length && targets.length? retos() : '<p class="empty">Todavía no hay apoyos.</p>'}
+        ${lead&&lead.v? foot(`La idea con más apoyo: ${esc(lead.texto)}`, `${lead.v} apoyo${lead.v===1?"":"s"}`, "bulb") : ""}
       </div>`;
 
+  /* ---------- Indicadores: una tarjeta por fase ---------- */
+  const kOn = k => k.includes(ph);
+  const joins=A.participants.map(p=>+new Date(p.joined_at)).filter(Boolean).sort((a,b)=>a-b);
+  let spark=[]; if(joins.length){ const t0=Math.min(joins[0], +new Date(s.created_at)||joins[0]), t1=Math.max(Date.now(),joins[joins.length-1]); const B=12;
+    spark=Array.from({length:B},(_,i)=>{ const edge=t0+(t1-t0)*(i+1)/B; return joins.filter(t=>t<=edge).length; }); }
+  const recent=joins.filter(t=>Date.now()-t<5*60000).length;
+  const sevAvg=A.cards.length? (A.cards.reduce((a,c)=>a+(+c.severidad||0),0)/A.cards.length).toFixed(1).replace(".0","") : null;
+  const votesMax=nP*(s.votes_per_user||5), supMax=nP*(s.idea_votes||3);
+  const kpis = `<div class="kpis">
+    ${kpiTile({on:kOn(["lobby"]), icon:"users", label:"Participantes", value:nP,
+      wide: nP? sparkSVG(spark) : "",
+      foot: nP? (recent? `${recent} entraron en los últimos 5 min` : "Registrados en el taller") : "Proyecta el QR para que entren", fic:"trendup"})}
+    ${kpiTile({on:kOn(["checkin"]), icon:"cloudsun", label:"Check-in", value:checkins, of:nP,
+      viz: ringSVG(checkins,nP),
+      foot: checkins? `Predomina: ${esc(topMood.t)}` : "Aún sin respuestas", fic: checkins? topMood.ic : "neutral"})}
+    ${kpiTile({on:kOn(["pains"]), icon:"flame", label:"Dolores", value:A.cards.length,
+      wide: `<div class="cols" role="img" aria-label="Tarjetas por etapa">${stN.map(x=>`<div class="col" data-tip="${esc(x.st)} · ${x.n} tarjeta${x.n===1?"":"s"}"><i style="height:${x.n?Math.max(8,Math.round(x.n/stMax*100)):0}%"></i></div>`).join("")}</div>`,
+      foot: A.cards.length? `Más en ${esc(stageTag(topSt.st))} · dolor promedio ${sevAvg}/5` : "Tarjetas por etapa del proceso", fic:"flame"})}
+    ${kpiTile({on:kOn(["votes"]), icon:"target", label:"Votación", value:votesUsed, of:votesMax,
+      viz: ringSVG(votesUsed,votesMax),
+      foot: `${voters} de ${nP} personas votaron`, fic:"check"})}
+    ${kpiTile({on:kOn(["quickwins"]), icon:"bolt", label:"Quick wins", value:qwRaters, of:nP,
+      viz: ringSVG(qwRaters,nP),
+      foot: `${A.qwRatings.length} calificaciones · ${props.length} propuesta${props.length===1?"":"s"}`, fic:"bolt"})}
+    ${kpiTile({on:kOn(["ideas","results","closed"]), icon:"bulb", label:"Ideas", value:ideasOnly.length,
+      viz: ringSVG(A.ideaVotes.length,supMax),
+      foot: `${A.ideaVotes.length} de ${supMax} apoyos usados`, fic:"bulb"})}
+  </div>`;
+
   let panels="";
-  if(ph==="lobby"||ph==="checkin") panels=panelParticipants;
-  else if(ph==="pains") panels=panelWall;
-  else if(ph==="votes") panels=panelRank+panelWall;
+  if(ph==="lobby"||ph==="checkin") panels= panelMood ? `<div class="duo">${panelMood}${panelParticipants}</div>` : panelParticipants;
+  else if(ph==="pains") panels=panelStages+panelWall;
+  else if(ph==="votes") panels=panelRank+panelStages+panelWall;
   else if(ph==="quickwins") panels=panelQW+panelProps+panelRank;
   else if(ph==="ideas") panels=panelIdeas;
-  else panels=panelRank+panelQW+panelTopIdeas+panelProps+panelWall;
+  else panels=panelRank+panelQW+panelTopIdeas+panelProps+(panelMood?`<div class="duo">${panelMood}${panelStages}</div>`:panelStages)+panelWall;
 
   $("#app").innerHTML = `<div class="a-shell">
     <div class="a-top">
@@ -1676,18 +1843,12 @@ function renderAdmin(){
       ${PHASES.map((p,i)=>`<button class="phase ${p.id===ph?"on":i<phaseIdx?"done":""}" data-ph="${p.id}">${i+1}. ${p.t}</button>`).join("")}
     </div>
     <div class="a-main">
-      <div class="kpis">
-        <div class="kpi"><div class="n">${A.participants.length}</div><div class="l">Participantes</div></div>
-        <div class="kpi"><div class="n">${checkins}</div><div class="l">Check-ins</div></div>
-        <div class="kpi"><div class="n">${A.cards.length}</div><div class="l">Tarjetas de dolor</div></div>
-        <div class="kpi"><div class="n">${votesUsed}</div><div class="l">Votos usados · ${voters} personas</div></div>
-        <div class="kpi"><div class="n">${A.qwRatings.length}</div><div class="l">Calificaciones de quick wins · ${qwRaters} personas</div></div>
-        <div class="kpi"><div class="n">${ideasOnly.length}</div><div class="l">Ideas · ${A.ideaVotes.length} apoyos</div></div>
-      </div>
+      ${kpis}
       ${panels}
     </div>
   </div>`;
 
+  installTips();
   A.cards.forEach(c=>A.seen.add(c.id)); A.ideas.forEach(i=>A.seen.add(i.id));
   $$(".phase").forEach(b=>b.onclick=async()=>{
     const ph=b.dataset.ph;
@@ -1712,33 +1873,109 @@ function orderStages(s, list){
   return [...list].sort((a,b)=>{ const ia=order.indexOf(a), ib=order.indexOf(b); return (ia<0?999:ia)-(ib<0?999:ib); });
 }
 
-function renderRank(totals){
-  const rows=[...A.cards].map(c=>({c,pts:totals[c.id]||0})).filter(r=>r.pts>0).sort((a,b)=>b.pts-a.pts).slice(0,12);
-  const max=Math.max(...rows.map(r=>r.pts),1);
-  return `<div class="rank">${rows.map(({c,pts})=>`
-    <div class="rrow" title="${esc(c.texto)} — ${esc(c.etapa)}">
-      <span class="rlabel">${esc(c.texto)}</span>
-      <span class="rtrack"><span class="rbar" style="width:${Math.round(pts/max*100)}%"></span></span>
-      <span class="rval">${pts}</span>
-    </div>`).join("")}</div>`;
+/* ---------- Piezas de visualización (SVG y HTML propios, sin librerías) ---------- */
+const pctOf=(a,b)=> b ? Math.max(0,Math.min(100,Math.round(a/b*100))) : 0;
+function sevPips(n){ n=+n||0; return `<span class="pips" role="img" aria-label="Dolor ${n} de 5">${[1,2,3,4,5].map(i=>`<i${i<=n?' class="on"':""}></i>`).join("")}</span>`; }
+function hexIco(){ return '<i class="hx" aria-hidden="true"></i>'; }
+/* «3 Revisar información» → «Etapa 3»; «Transversal (…)» → «Transversal» */
+function stageTag(t){ const n=shortStage(t); return /^\d+$/.test(n) ? "Etapa "+n : String(t||"").split(/[ (/]/)[0]; }
+/* Etiqueta de eje: el número del paso, o la primera palabra */
+function stageX(t){ const n=shortStage(t); return /^\d+$/.test(n) ? n : String(t||"").split(/[ (/]/)[0]; }
+
+/* Anillo de avance (gráfica radial) con el porcentaje al centro */
+function ringSVG(v,max,size){ size=size||60; const st=7, pct=max?Math.min(1,v/max):0, r=(size-st)/2, c=2*Math.PI*r;
+  return `<svg class="ring" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img" aria-label="${Math.round(pct*100)} por ciento">
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--c-track)" stroke-width="${st}"/>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--c1)" stroke-width="${st}" stroke-linecap="round" stroke-dasharray="${(c*pct).toFixed(2)} ${c.toFixed(2)}" transform="rotate(-90 ${size/2} ${size/2})"/>
+    <text x="50%" y="50%" dy=".36em" text-anchor="middle" class="ring-t">${Math.round(pct*100)}%</text></svg>`; }
+
+/* Área suavizada con degradado (tendencia) */
+function sparkSVG(vals){ const w=160,h=44; if(!vals||!vals.length) return "";
+  const max=Math.max(...vals,1), n=vals.length, P=vals.map((v,i)=>[n>1? i/(n-1)*w : w/2, 3+(1-v/max)*(h-6)]);
+  let d=`M${P[0][0].toFixed(1)},${P[0][1].toFixed(1)}`;
+  for(let i=0;i<P.length-1;i++){ const p0=P[i-1]||P[i], p1=P[i], p2=P[i+1], p3=P[i+2]||p2;
+    const c1=[p1[0]+(p2[0]-p0[0])/6, p1[1]+(p2[1]-p0[1])/6], c2=[p2[0]-(p3[0]-p1[0])/6, p2[1]-(p3[1]-p1[1])/6];
+    d+=` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`; }
+  const id="sg"+Math.random().toString(36).slice(2,8);
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#278FD8" stop-opacity=".42"/><stop offset="1" stop-color="#278FD8" stop-opacity=".03"/></linearGradient></defs>
+    <path d="${d} L${w},${h} L0,${h} Z" fill="url(#${id})"/><path d="${d}" fill="none" stroke="#278FD8" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/></svg>`; }
+
+/* Dona con el total al centro; cada gajo lleva su tooltip */
+function donutSVG(parts,o){ o=o||{}; const size=170, st=26, total=parts.reduce((a,p)=>a+p.v,0)||1, r=(size-st)/2, c=2*Math.PI*r; let off=0;
+  const segs=parts.filter(p=>p.v>0).map(p=>{ const len=c*p.v/total, gap=parts.filter(x=>x.v>0).length>1?3:0;
+    const el=`<circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${p.color}" stroke-width="${st}" stroke-dasharray="${Math.max(0,len-gap).toFixed(2)} ${c.toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" data-tip="${esc(p.t)} · ${p.v} (${pctOf(p.v,total)}%)"/>`; off+=len; return el; }).join("");
+  return `<svg class="donut" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img" aria-label="${esc(parts.map(p=>p.t+" "+p.v).join(", "))}"><g transform="rotate(-90 ${size/2} ${size/2})">${segs}</g>
+    <text x="50%" y="48%" text-anchor="middle" class="donut-n">${o.center??""}</text><text x="50%" y="48%" dy="1.7em" text-anchor="middle" class="donut-s">${o.sub||""}</text></svg>`; }
+
+function kpiTile(o){
+  return `<div class="kpi${o.on?" on":""}">
+    <div class="kpi-h"><span class="kpi-l">${o.label}</span><span class="ico-line">${icon(o.icon)}</span>${o.on?'<span class="kpi-live"><i></i>En curso</span>':""}</div>
+    <div class="kpi-b"><div class="kpi-v"><span class="n">${o.value}</span>${o.of!=null?`<span class="of">de ${o.of}</span>`:""}</div>${o.viz?`<div class="kpi-viz">${o.viz}</div>`:""}</div>
+    ${o.wide?`<div class="kpi-wide">${o.wide}</div>`:""}
+    <div class="kpi-f">${icon(o.fic||"trendup")}<span>${o.foot||""}</span></div>
+  </div>`;
+}
+/* Tooltip único para todo lo que tenga data-tip (texto plano, nunca HTML) */
+function installTips(){
+  if(window.__tips) return; window.__tips=true;
+  const tip=document.createElement("div"); tip.className="vtip"; tip.setAttribute("role","tooltip"); document.body.appendChild(tip);
+  const place=(x,y)=>{ const r=tip.getBoundingClientRect(); let L=x+14, T=y+16;
+    if(L+r.width>innerWidth-8) L=x-r.width-14; if(T+r.height>innerHeight-8) T=y-r.height-16;
+    tip.style.left=Math.max(8,L)+"px"; tip.style.top=Math.max(8,T)+"px"; };
+  const find=t=>t&&t.closest?t.closest("[data-tip]"):null;
+  document.addEventListener("pointermove",e=>{ const el=find(e.target); if(!el){ tip.classList.remove("on"); return; } tip.textContent=el.dataset.tip||el.getAttribute("data-tip"); tip.classList.add("on"); place(e.clientX,e.clientY); });
+  document.addEventListener("focusin",e=>{ const el=find(e.target); if(!el) return; tip.textContent=el.getAttribute("data-tip"); tip.classList.add("on"); const r=el.getBoundingClientRect(); place(r.left+r.width/2,r.bottom); });
+  ["focusout","scroll","pointerleave"].forEach(ev=>document.addEventListener(ev,()=>tip.classList.remove("on"),true));
 }
 
-/* Tabla de quick wins: barra apilada Mucho/Algo/Poco/No aplica + índice 0–100 */
-function renderQWTable(list, groupByStage){
-  const row = q => { const st=q.st, n=st.n||0, w=v=> n? (v/n*100).toFixed(1)+"%" : "0";
-    return `<div class="qwt-row" title="Mucho ${st.m} · Algo ${st.a} · Poco ${st.p} · No aplica ${st.na}">
-      <div class="lbl"><span class="qw-id">${esc(q.id)}</span> ${esc(q.text)}</div>
-      <div class="sbar" aria-label="Mucho ${st.m}, algo ${st.a}, poco ${st.p}, no aplica ${st.na}">${n?`<span class="s3" style="width:${w(st.m)}"></span><span class="s2" style="width:${w(st.a)}"></span><span class="s1" style="width:${w(st.p)}"></span><span class="s0" style="width:${w(st.na)}"></span>`:`<span class="s0" style="width:100%;opacity:.4"></span>`}</div>
-      <div class="num">${n}</div>
-      <div class="num idx">${st.idx===null?"—":st.idx}</div>
-    </div>`; };
+/* Ranking de dolores: barras horizontales gruesas. Los retos en azul de marca, el resto en azul claro. */
+function renderRank(totals, targets){
+  const rows=[...A.cards].map(c=>({c,pts:totals[c.id]||0})).filter(r=>r.pts>0).sort((a,b)=>b.pts-a.pts).slice(0,10);
+  const rest=[...A.cards].filter(c=>(totals[c.id]||0)>0).length-rows.length;
+  const max=Math.max(...rows.map(r=>r.pts),1);
+  const retoOf=id=>{ const i=(targets||[]).findIndex(t=>t.id===id); return i<0?0:i+1; };
+  return `<div class="hb">${rows.map(({c,pts},i)=>{ const r=retoOf(c.id);
+    return `<div class="hb-row${r?" top":""}">
+      <div class="hb-lbl"><span class="hb-pos" aria-label="Lugar ${i+1}">${i+1}</span>
+        <div class="hb-t"><div class="hb-txt">${esc(c.texto)}</div><div class="hb-meta">${r?`<span class="hb-reto">Reto ${r}</span>`:""}<span>${esc(c.etapa)} · dolor ${c.severidad}/5</span></div></div></div>
+      <div class="hb-track" data-tip="${pts} voto${pts===1?"":"s"} · ${esc(c.etapa)}"><span class="hb-rail"><i class="hb-bar" style="width:${Math.max(2,pts/max*100).toFixed(1)}%"></i></span><b class="hb-val">${pts}</b></div>
+    </div>`; }).join("")}</div>
+    ${rest>0?`<p class="hb-more">y ${rest} tarjeta${rest===1?"":"s"} más con votos</p>`:""}`;
+}
+
+/* Quick wins: columnas apiladas al 100 % (Mucho abajo, Algo, Poco arriba), ordenadas por índice, y la lista con el texto de cada uno */
+function renderQW(list, byScore, groupByStage){
+  const col = q => { const st=q.st, b=st.m+st.a+st.p;
+    return `<div class="qwc-col" data-tip="${esc(q.id)} · ${esc(q.text)}\nMucho ${st.m} · Algo ${st.a} · Poco ${st.p}${st.na?` · No aplica ${st.na}`:""}">
+      <span class="qwc-idx">${st.idx===null?"—":st.idx}</span>
+      <div class="qwc-stack${b?"":" none"}">${b?`${st.p?`<i class="p" style="flex:${st.p}"></i>`:""}${st.a?`<i class="a" style="flex:${st.a}"></i>`:""}${st.m?`<i class="m" style="flex:${st.m}"></i>`:""}`:""}</div>
+      <span class="qwc-id">${esc(q.id.replace(/^QW-/,""))}</span></div>`; };
+  const row = q => `<div class="qwl-row"><span class="qw-id">${esc(q.id)}</span><span class="qwl-t">${esc(q.text)}</span><span class="qwl-idx">${q.st.idx===null?'<span class="na">—</span>':q.st.idx}<small>${q.st.n} resp.</small></span></div>`;
   let body="";
   if(groupByStage){
     const groups=[]; list.forEach(q=>{ let g=groups.find(x=>x.stage===q.stage); if(!g){ g={stage:q.stage,items:[]}; groups.push(g); } g.items.push(q); });
-    body=groups.map(g=>`<div class="qwt-stage">${esc(g.stage||"Sin etapa")}</div>${g.items.map(row).join("")}`).join("");
-  } else body=list.map(row).join("");
-  return `<div class="qwt"><div class="qwt-row head"><span>Quick win</span><span>Respuestas</span><span class="num">n</span><span class="num" title="0–100: 100 = todos dicen «mucho». «No aplica» no cuenta.">Índice</span></div>${body}</div>
-    <div class="legend"><span><i class="s3"></i>Mucho</span><span><i class="s2"></i>Algo</span><span><i class="s1"></i>Poco</span><span><i class="s0"></i>No aplica</span><span>Índice 0–100: mucho = 100, algo = 50, poco = 0</span></div>`;
+    body=groups.map(g=>`<div class="qwl-stage">${esc(g.stage||"Sin etapa")}</div>${g.items.map(row).join("")}`).join("");
+  } else body=byScore.map(row).join("");
+  return `<div class="leg"><span><i class="m"></i>Mucho</span><span><i class="a"></i>Algo</span><span><i class="p"></i>Poco</span><span class="leg-help">El número arriba de cada columna es el índice; abajo, el número del quick win</span></div>
+    <div class="qwc-wrap"><div class="qwc" style="--n:${list.length}">${byScore.map(col).join("")}</div></div>
+    <div class="qwl">${body}</div>`;
+}
+
+/* Retos e ideas: cada idea con su barra de apoyos (misma escala en los tres retos) */
+function renderRetos(targets, ideasOnly, iTot, who, fresh){
+  const gmax=Math.max(1,...ideasOnly.map(x=>iTot[x.id]||0));
+  return `<div class="retos">${targets.map((c,i)=>{
+    const list=ideasOnly.filter(x=>x.card_id===c.id).map(x=>({...x,v:iTot[x.id]||0}))
+      .sort((a,b)=>b.v-a.v || String(a.created_at).localeCompare(String(b.created_at)));
+    const lead=list.length&&list[0].v>0 ? list[0].id : null;
+    return `<section class="reto">
+      <div class="reto-h"><span class="reto-k">Reto ${i+1}</span><span class="reto-m" title="${esc(c.etapa)}">${esc(stageTag(c.etapa))} · ${c.pts} voto${c.pts===1?"":"s"}</span></div>
+      <h3 class="reto-t">${esc(c.texto)}</h3>
+      <ul class="ideas">${list.map(x=>`<li class="idea${x.id===lead?" lead":""}${fresh(x.id)}">
+          <div class="idea-t">${esc(x.texto)}${who(x.participant_id)}</div>
+          <div class="idea-b" data-tip="${x.v} apoyo${x.v===1?"":"s"}"><span class="idea-rail"><i style="width:${(x.v/gmax*100).toFixed(1)}%"></i></span><b>${x.v}</b></div>
+        </li>`).join("")||'<li class="idea empty-idea">Aún sin ideas</li>'}</ul>
+    </section>`; }).join("")}</div>`;
 }
 
 function showQR(){
