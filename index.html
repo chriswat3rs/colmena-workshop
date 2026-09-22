@@ -428,9 +428,23 @@ details.more .chips{padding-top:4px}
   background:rgba(247,250,253,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .st-list{list-style:none;margin:0;padding:2px;display:flex;align-items:flex-start;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
 .st-list::-webkit-scrollbar{display:none}
-.st{display:flex;align-items:flex-start;flex:none}
-.st+.st::before{content:"";width:clamp(10px,1.6vw,34px);height:2px;border-radius:1px;background:var(--line);margin-top:21px;flex:none}
-.st.done+.st::before{background:var(--accent)}
+.st{display:flex;align-items:flex-start;flex:1 1 0;min-width:0}
+.st:first-child{flex:0 0 auto}
+.st+.st::before{content:"";flex:1 1 auto;min-width:10px;height:2px;border-radius:1px;background:linear-gradient(90deg,var(--accent) 0 50%,var(--line) 50% 100%) right/200% 100% no-repeat;margin:21px 4px 0;transition:background-position .6s ease}
+.st.done+.st::before{background-position:left}
+.st.on::before{background-image:linear-gradient(90deg,var(--accent),#8EC3EC)!important;background-size:100% 100%!important}
+.st-ic{position:relative}
+.st.on .st-ic::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(39,143,216,.55);animation:stpulse 2.2s ease-out infinite}
+.st.on .st-b{position:relative;isolation:isolate}
+.st.on .st-b::before{content:"";position:absolute;inset:0;border-radius:12px;background:#DCEBF9;z-index:-1;animation:stglow 2.4s ease-in-out infinite}
+@keyframes stpulse{0%{transform:scale(.9);opacity:.9}70%{transform:scale(1.35);opacity:0}100%{opacity:0}}
+@keyframes stglow{0%,100%{opacity:.35}50%{opacity:1}}
+.st-next.all{animation:nextglow 1.8s ease-in-out infinite}
+@keyframes nextglow{0%,100%{box-shadow:0 0 0 0 rgba(31,169,113,.0)}50%{box-shadow:0 0 0 6px rgba(31,169,113,.28)}}
+.ready.all .ready-bar span{background:linear-gradient(90deg,#1FA971,#5ED39E,#1FA971);background-size:200% 100%;animation:barshine 2.4s linear infinite}
+@keyframes barshine{from{background-position:200% 0}to{background-position:0 0}}
+.pb-seg.cur i{background:linear-gradient(90deg,var(--accent-strong),#6FB5EA,var(--accent-strong));background-size:200% 100%;animation:barshine 2.6s linear infinite}
+@media (prefers-reduced-motion:reduce){ .st.on .st-ic::after,.st.on .st-b::before,.st-next.all,.ready.all .ready-bar span,.pb-seg.cur i{animation:none} .st.on .st-b::before{opacity:.8} }
 .st-b{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:62px;padding:5px 6px 4px;border-radius:10px;background:transparent;color:var(--ink-3);transition:background .15s,color .15s}
 .st-b:hover{background:#EAF1F9;color:var(--ink)}
 .st-ic{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--card);border:1.5px solid #CBD6E4;color:var(--ink-3);flex:none;transition:all .15s}
@@ -454,8 +468,15 @@ details.more .chips{padding-top:4px}
 .pop{position:fixed;z-index:81;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(1,19,59,.18),0 2px 6px rgba(1,19,59,.06)}
 .pop.anim{animation:popin .16s ease-out}
 @keyframes popin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.pop.menu{width:240px;padding:6px}
-.pop.menu button{display:flex;align-items:center;gap:10px;width:100%;height:42px;padding:0 12px;border-radius:10px;font-weight:600;font-size:14px;color:var(--ink);text-align:left}
+.pop.menu{width:280px;padding:6px}
+.pop.menu button{display:flex;align-items:center;gap:12px;width:100%;min-height:46px;padding:8px 12px;border-radius:10px;font-weight:600;font-size:14px;color:var(--ink);text-align:left}
+.pop.menu button>span{display:flex;flex-direction:column;flex:1;min-width:0;line-height:1.25}
+.pop.menu button b{font-weight:600}
+.pop.menu button small{font-size:12px;font-weight:500;color:var(--ink-3)}
+.mn-tg{flex:none;width:32px;height:18px;border-radius:999px;background:#C5D2E2;position:relative;transition:background .15s}
+.mn-tg::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .15s}
+.mn-tg.on{background:var(--accent-strong)}
+.mn-tg.on::after{transform:translateX(14px)}
 .pop.menu button:hover,.pop.menu button:focus-visible{background:#F1F5FA;outline:none}
 .pop.menu button svg{width:18px;height:18px;color:var(--ink-2)}
 .pop.menu button.danger,.pop.menu button.danger svg{color:var(--danger)}
@@ -703,8 +724,8 @@ details.more .chips{padding-top:4px}
 .wcard .who{font-size:12px;color:var(--ink-3);font-weight:600}
 
 /* ===== Resultados v1.4: titular, cinco secciones numeradas, una forma por sección, contexto plegado ===== */
-.a-main.results{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
-.a-main.results>.panel,.a-main.results .duo2>.panel{padding:28px 28px 24px}
+.a-main.results{max-width:1480px;margin:0 auto;display:flex;flex-direction:column;gap:32px;padding-left:clamp(16px,3vw,48px);padding-right:clamp(16px,3vw,48px)}
+.a-main.results>.panel,.a-main.results .duo2>.panel{padding:32px 36px 28px}
 .hero{padding:8px 4px 0}
 .hero-ctx{font-size:16px;font-weight:600;color:var(--ink-3);margin:0 0 22px}
 .hero-l{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-strong);margin:0 0 8px}
@@ -725,7 +746,7 @@ a.tile:hover{border-color:#8EC3EC;transform:translateY(-1px)}
 .ph.sec .pdesc{font-size:15px}
 .a-main.results .pf-main{font-size:16px}
 .a-main.results .pf-sub{font-size:14px}
-.duo2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+.duo2{display:flex;flex-direction:column;gap:32px}
 .more-a{margin-top:14px}
 .more-a>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--accent-strong);padding:8px 0}
 .more-a>summary::-webkit-details-marker{display:none}
@@ -871,7 +892,7 @@ body.project .hxu i{width:18px;height:21px}
   .ready{margin-left:0}
 }
 /* Pocas respuestas: columnas por respuesta */
-.bk{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;align-items:start}
+.bk{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;align-items:start}
 .bk-col{border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden}
 .bk-col header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);background:#F7FAFD}
 .bk-col header b{font-size:14.5px;font-weight:700;color:var(--ink)}
@@ -2739,10 +2760,8 @@ function renderAdmin(){
       <div class="at-r">
         <button class="at-code" id="btnCode" data-tip="Código para entrar · clic para copiar" aria-label="Código ${esc(s.code)}, copiar">${esc(s.code)}${icon("copy")}</button>
         <span class="at-div" aria-hidden="true"></span>
-        <button class="ib lbl${A.showAuthors?" on":""}" id="btnAuthors" aria-pressed="${!!A.showAuthors}" data-tip="${A.showAuthors?"Ocultar":"Mostrar"} quién escribió cada tarjeta e idea">${icon(A.showAuthors?"eye":"eyeoff")}<span>Autores</span></button>
-        <button class="ib lbl${A.pop==="share"?" on":""}" id="btnShare" aria-haspopup="dialog" aria-expanded="${A.pop==="share"}">${icon("share")}<span>Compartir</span><i class="chev">${icon("chevdown")}</i></button>
         <button class="ib lbl primary" id="btnQR">${icon("qr")}<span>QR para entrar</span></button>
-        <button class="ib${A.pop==="more"?" on":""}" id="btnMore" aria-haspopup="menu" aria-expanded="${A.pop==="more"}" aria-label="Más opciones" data-tip="Más opciones">${icon("more")}</button>
+        <button class="ib${A.pop?" on":""}" id="btnMore" aria-haspopup="menu" aria-expanded="${!!A.pop}" aria-label="Más opciones: compartir, autores, talleres" data-tip="Compartir, autores y más">${icon("more")}</button>
       </div>
     </header>
     <nav class="stepper" aria-label="Fases del taller">
@@ -2753,7 +2772,7 @@ function renderAdmin(){
         <span class="st-now">Fase ${phaseIdx+1} de ${PHASES.length} · <b>${(PHASES[phaseIdx]||{}).t||""}</b></span>
         ${ready}
         ${isResults?`<button class="ib lbl${A.project?" on":""}" id="btnProject" aria-pressed="${!!A.project}" data-tip="Pantalla completa, una sección por pantalla; avanza con las flechas o el clicker">${icon("monitor")}<span>Presentar</span></button>`:""}
-        ${nextPh?`<button class="ib lbl primary st-next" id="btnNext" data-ph="${nextPh.id}">${nextPh.id==="closed"?"Cerrar taller":"Siguiente: "+nextPh.t}${icon("arrowright")}</button>`:""}
+        ${nextPh?`<button class="ib lbl primary st-next${ACT_T[ph]&&nP&&listos===nP?" all":""}" id="btnNext" data-ph="${nextPh.id}">${nextPh.id==="closed"?"Cerrar taller":"Siguiente: "+nextPh.t}${icon("arrowright")}</button>`:""}
       </div>
     </nav>
     <div class="a-main${isResults?" results":""}">
@@ -2775,13 +2794,11 @@ function renderAdmin(){
   const cur=$(".st.on"); if(cur && cur.scrollIntoView && window.innerWidth<1100){ const l=$(".st-list"); if(l) l.scrollLeft = cur.offsetLeft - l.clientWidth/2 + cur.clientWidth/2; }
   $("#btnBack").onclick=leaveAdmin;
   $("#btnCode").onclick=async()=>{ try{ await navigator.clipboard.writeText(s.code); toast("Código copiado: "+s.code); }catch(e){ toast("Código: "+s.code); } };
-  $("#btnAuthors").onclick=()=>{ A.showAuthors=!A.showAuthors; renderAdmin(); };
   const bp=$("#btnProject"); if(bp) bp.onclick=()=>startPresentation();
   /* «Ver todos» y «Contexto» recuerdan si estaban abiertos (el panel se redibuja cada pocos segundos) */
   $$("details[data-k]").forEach(d=>{ d.open=A.open.has(d.dataset.k); d.addEventListener("toggle",()=>{ if(d.open) A.open.add(d.dataset.k); else A.open.delete(d.dataset.k); }); });
   $$("[data-go]").forEach(a=>a.onclick=e=>{ e.preventDefault(); const t=$(a.dataset.go); if(t) t.scrollIntoView({behavior:"smooth",block:"start"}); });
   $("#btnQR").onclick=showQR;
-  $("#btnShare").onclick=e=>{ e.stopPropagation(); A.pop==="share" ? closePop() : openPop("share"); };
   $("#btnMore").onclick=e=>{ e.stopPropagation(); A.pop==="more" ? closePop() : openPop("more"); };
   if(A.pop) placePop();
 }
@@ -2807,10 +2824,10 @@ function shareSummary(){
   return `<span class="ps-l">Incluye</span><span class="ps-v">${pl(n,"participante","participantes")}</span><span class="ps-v">${pl(A.cards.length,"dolor","dolores")}</span><span class="ps-v">${pl(v,"voto","votos")}</span><span class="ps-v">${pl(A.qwRatings.length,"respuesta","respuestas")}</span><span class="ps-v">${pl(i,"idea","ideas")}</span>`;
 }
 function shareCanFiles(){ try{ return !!(navigator.canShare && navigator.canShare({files:[new File(["x"],"x.txt",{type:"text/plain"})]})); }catch(e){ return false; } }
-function openPop(kind){ A.pop=kind; A.hold=true; renderPop(); if(kind==="share") refetchAll().then(()=>{ const sm=$("#shSum"); if(sm) sm.innerHTML=shareSummary(); }).catch(()=>{}); const b=$(kind==="share"?"#btnShare":"#btnMore"); if(b){ b.classList.add("on"); b.setAttribute("aria-expanded","true"); } }
-function closePop(){ const L=$("#popLayer"); if(L) L.innerHTML=""; A.pop=null; A.hold=false; $$("#btnShare,#btnMore").forEach(b=>{ b.classList.remove("on"); b.setAttribute("aria-expanded","false"); }); }
+function openPop(kind){ const L=$("#popLayer"); if(L) L.innerHTML=""; A.pop=kind; A.hold=true; renderPop(); if(kind==="share") refetchAll().then(()=>{ const sm=$("#shSum"); if(sm) sm.innerHTML=shareSummary(); }).catch(()=>{}); const b=$("#btnMore"); if(b){ b.classList.add("on"); b.setAttribute("aria-expanded","true"); } }
+function closePop(){ const L=$("#popLayer"); if(L) L.innerHTML=""; A.pop=null; A.hold=false; $$("#btnMore").forEach(b=>{ b.classList.remove("on"); b.setAttribute("aria-expanded","false"); }); }
 function placePop(){
-  const L=$("#popLayer"), el=L&&L.querySelector(".pop"), b=$(A.pop==="share"?"#btnShare":"#btnMore"); if(!el||!b) return;
+  const L=$("#popLayer"), el=L&&L.querySelector(".pop"), b=$("#btnMore"); if(!el||!b) return;
   if(window.innerWidth<720){ el.classList.add("sheet-pop"); el.style.left=el.style.top=""; return; }
   el.classList.remove("sheet-pop");
   const r=b.getBoundingClientRect(), w=el.offsetWidth;
@@ -2821,13 +2838,14 @@ function renderPop(){
   const fresh=!L.querySelector(".pop"), keepScroll=(L.querySelector(".pop")||{}).scrollTop||0;
   if(A.pop==="more"){
     L.innerHTML=`<div class="pop-back" id="popBack"></div><div class="pop menu" role="menu" aria-label="Más opciones">
-      <button role="menuitem" id="mnBack">${icon("grid")}<span>Tus talleres</span></button>
-      <button role="menuitem" id="mnAuthors">${icon(A.showAuthors?"eyeoff":"eye")}<span>${A.showAuthors?"Ocultar autores":"Mostrar autores"}</span></button>
-      <button role="menuitem" id="mnQR">${icon("qr")}<span>QR para entrar</span></button>
-      <hr><button role="menuitem" class="danger" id="mnDel">${icon("trash")}<span>Borrar taller</span></button></div>`;
+      <button role="menuitem" id="mnShare">${icon("share")}<span><b>Compartir resultados</b><small>Excel, CSV o PDF</small></span></button>
+      <button role="menuitem" id="mnAuthors" aria-pressed="${!!A.showAuthors}">${icon(A.showAuthors?"eye":"eyeoff")}<span><b>Autores</b><small>${A.showAuthors?"Visibles en tarjetas e ideas":"Ocultos en pantalla"}</small></span><i class="mn-tg${A.showAuthors?" on":""}" aria-hidden="true"></i></button>
+      <hr>
+      <button role="menuitem" id="mnBack">${icon("grid")}<span><b>Tus talleres</b></span></button>
+      <button role="menuitem" class="danger" id="mnDel">${icon("trash")}<span><b>Borrar taller</b></span></button></div>`;
     $("#mnBack").onclick=leaveAdmin; $("#mnDel").onclick=deleteWorkshop;
-    $("#mnAuthors").onclick=()=>{ closePop(); A.showAuthors=!A.showAuthors; renderAdmin(); };
-    $("#mnQR").onclick=()=>{ closePop(); showQR(); };
+    $("#mnShare").onclick=e=>{ e.stopPropagation(); openPop("share"); };
+    $("#mnAuthors").onclick=()=>{ closePop(); A.showAuthors=!A.showAuthors; renderAdmin(); toast(A.showAuthors?"Autores visibles":"Autores ocultos"); };
   } else {
     const S=A.share, F=FMT[S.f], canF=shareCanFiles();
     L.innerHTML=`<div class="pop-back" id="popBack"></div><div class="pop share" role="dialog" aria-modal="false" aria-labelledby="shTitle">
