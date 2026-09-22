@@ -352,9 +352,9 @@ details.ah-sec[open]>summary{margin-bottom:4px}
 .leg i.m{background:var(--lk-m)}.leg i.a{background:var(--lk-a)}.leg i.p{background:var(--lk-p)}
 .leg .leg-help{font-weight:500;color:var(--ink-3);margin-left:auto}
 
-/* Indicadores */
+/* Indicadores: seis tarjetas con la misma estructura */
 .kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;padding-top:4px}
-.kpi{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:18px 18px 14px;box-shadow:0 1px 2px rgba(1,19,59,.04)}
+.kpi{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:18px 18px 16px;box-shadow:0 1px 2px rgba(1,19,59,.04)}
 .kpi.on{border-color:#8EC3EC;box-shadow:0 0 0 3px rgba(39,143,216,.12)}
 .kpi-h{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
 .kpi-l{font-size:13px;font-weight:600;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -362,20 +362,20 @@ details.ah-sec[open]>summary{margin-bottom:4px}
 .kpi-live i{width:6px;height:6px;border-radius:50%;background:#6FC0F5;animation:livepulse 1.6s ease-in-out infinite}
 @keyframes livepulse{0%,100%{opacity:1}50%{opacity:.3}}
 @media (prefers-reduced-motion:reduce){.kpi-live i{animation:none}}
-.kpi-b{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
-.kpi-v{display:flex;align-items:baseline;gap:6px;min-width:0}
-.kpi-v .n{font-family:var(--sans);font-weight:700;font-size:32px;line-height:1;color:var(--ink);letter-spacing:-.02em}
+.kpi-v{display:flex;align-items:baseline;gap:6px;min-width:0;margin:2px 0 4px}
+.kpi-v .n{font-family:var(--sans);font-weight:700;font-size:34px;line-height:1;color:var(--ink);letter-spacing:-.02em}
 .kpi-v .of{font-size:13px;font-weight:600;color:var(--ink-3);white-space:nowrap}
-.kpi-viz{flex:none;display:flex}
-.ring{width:60px;height:60px}
-.ring-t{font-family:var(--sans);font-size:12.5px;font-weight:700;fill:var(--ink)}
-.kpi-wide{display:flex;align-items:flex-end;height:44px}
-.spark{width:100%;height:44px;display:block}
-.cols{display:flex;align-items:flex-end;gap:5px;width:100%;height:40px}
-.cols .col{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;background:var(--c-track);border-radius:4px}
-.cols .col i{display:block;background:var(--c1);border-radius:4px;min-height:0}
-.kpi-f{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;color:var(--ink-3);line-height:1.35;margin-top:auto}
-.kpi-f svg{width:14px;height:14px;flex:none;color:var(--ink-2)}
+.kpi-f{display:flex;flex-direction:column;gap:3px;margin-top:auto;min-width:0}
+.kpi-f1{font-size:13px;font-weight:600;color:var(--ink);line-height:1.35}
+.kpi-f2{font-size:12.5px;font-weight:500;color:var(--ink-3);line-height:1.35}
+.kpi-f1,.kpi-f2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* Estado vacío */
+.empty-st{display:flex;flex-direction:column;align-items:center;gap:4px;padding:26px 12px 22px;text-align:center}
+.empty-st .glass{margin-bottom:6px}
+.empty-st b{font-size:14px;font-weight:600;color:var(--ink)}
+.empty-st span{font-size:13px;color:var(--ink-3);font-weight:500}
+.qwl.quiet{margin-top:6px}
+.qwl-idx.zero{color:var(--ink-3)}
 
 /* Columnas apiladas (dolores por etapa) */
 .bars-v{position:relative;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:clamp(6px,1.5vw,20px);height:240px;padding-top:22px}
@@ -490,8 +490,8 @@ details.ah-sec[open]>summary{margin-bottom:4px}
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .kpi{padding:14px 14px 12px;gap:10px}
   .kpi-v .n{font-size:28px}
-  .ring{width:52px;height:52px}
-  .panel{padding:18px 16px 14px}
+  .kpi-f1,.kpi-f2{-webkit-line-clamp:3}
+    .panel{padding:18px 16px 14px}
   .hb-row{grid-template-columns:minmax(0,1fr);gap:6px}
   .hb-bar{height:26px}
   .bars-v{height:200px}
@@ -1683,7 +1683,7 @@ function renderAdmin(){
 
   const panelParticipants = `
       <div class="panel">
-        ${head("Participantes","Entran escaneando el QR · "+nP+" registrado"+(nP===1?"":"s"))}
+        ${head("Participantes", nP? nP+" registrado"+(nP===1?"":"s")+" · entran escaneando el QR" : "Entran escaneando el QR desde su celular")}
         ${nP? `<div style="overflow-x:auto"><table class="ptable">
           <thead><tr><th></th><th>Nombre</th><th>Área</th><th>Rol</th><th>Etapas</th><th>Ánimo</th><th>Expectativa</th><th>Hora</th></tr></thead>
           <tbody>${A.participants.map(p=>{
@@ -1696,7 +1696,7 @@ function renderAdmin(){
               <td>${m? `<span class="who">${glass(m.ic,{size:"xs",tone:m.tone,tint:true})} ${m.t}</span>` : '<span class="hint">—</span>'}</td>
               <td>${esc(p.expectativa||"")}</td><td class="hint">${fmtTime(p.joined_at)}</td></tr>`;
           }).join("")}</tbody></table></div>`
-        : '<p class="empty">Aún no entra nadie. Proyecta el QR y espera a la colmena.</p>'}
+        : emptyState("users","Aún no entra nadie","Proyecta el QR y espera a la colmena")}
       </div>`;
 
   /* Ánimo del equipo: dona con el total al centro */
@@ -1738,20 +1738,20 @@ function renderAdmin(){
     </div>`;
   const panelWall = `
       <div class="panel">
-        ${head("Muro de dolores", `${A.cards.length} tarjetas, agrupadas por etapa`)}
+        ${head("Muro de dolores", A.cards.length? `${A.cards.length} tarjeta${A.cards.length===1?"":"s"}, agrupadas por etapa del proceso` : "Cada quien publica sus dolores por etapa del proceso")}
         ${A.cards.length? `<div class="wall">${
           orderStages(s,[...new Set(A.cards.map(c=>c.etapa))]).map(et=>{
             const cs=sorted(A.cards.filter(c=>c.etapa===et));
             return `<div class="wcol"><h3><span>${esc(et)}</span><b>${cs.length}</b></h3>${cs.map(wcard).join("")}</div>`;
           }).join("")}</div>`
-        : '<p class="empty">Las tarjetas aparecerán aquí en vivo conforme el equipo las publique.</p>'}
+        : emptyState("flame","Aún no hay tarjetas","Aparecerán aquí en vivo conforme el equipo las publique")}
       </div>`;
 
   const targets=topPains(A.cards, totals, s.idea_top||3);
   const panelRank = `
       <div class="panel">
-        ${head("Ranking de dolores", `${votesUsed} votos de ${voters} persona${voters===1?"":"s"} · ${s.votes_per_user} por persona`)}
-        ${votesUsed? renderRank(totals, targets) : '<p class="empty">Todavía no hay votos.</p>'}
+        ${head("Ranking de dolores", votesUsed? `${votesUsed} votos de ${voters} persona${voters===1?"":"s"} · ${s.votes_per_user} por persona` : `Cada quien reparte ${s.votes_per_user} votos entre los dolores`)}
+        ${votesUsed? renderRank(totals, targets) : emptyState("target","Todavía no hay votos",(A.cards.length? "El ranking se arma en vivo conforme el equipo vota" : "Primero hacen falta tarjetas de dolor"))}
         ${votesUsed? foot(`Los ${targets.length} más votados se vuelven los retos de la fase de ideas`, `El resto queda en el muro y en el CSV`, "target") : ""}
       </div>`;
 
@@ -1761,17 +1761,17 @@ function renderAdmin(){
   const best=byScore[0];
   const panelQW = (s.quickwins||[]).length ? `
       <div class="panel">
-        ${head("Quick wins · ¿cuánto ayudarían?", `${qwRaters} de ${nP} personas han calificado · columnas de mayor a menor índice`)}
-        ${renderQW(qwList, byScore, ph==="quickwins")}
+        ${head("Quick wins · ¿cuánto ayudarían?", A.qwRatings.length? `${qwRaters} de ${nP} personas han calificado · columnas de mayor a menor índice` : `${(s.quickwins||[]).length} quick wins por etapa · el equipo los califica desde su celular`)}
+        ${renderQW(qwList, byScore, ph==="quickwins", A.qwRatings.length>0)}
         ${best&&best.st.idx!==null? foot(`${esc(best.id)} es el que más ayudaría · índice ${best.st.idx}`, "Índice 0–100: mucho = 100 · algo = 50 · poco = 0 · «No aplica» no cuenta", "bolt") : ""}
       </div>` : "";
   const props=A.ideas.filter(i=>i.kind==="qw");
   const panelProps = `
       <div class="panel">
-        ${head("Quick wins propuestos por el equipo", `${props.length} propuesta${props.length===1?"":"s"}`)}
+        ${head("Quick wins propuestos por el equipo", props.length? `${props.length} propuesta${props.length===1?"":"s"}` : "Mejoras rápidas que el equipo agrega desde su celular")}
         ${props.length? `<div class="wall props">${props.map(i=>`<div class="wcard${fresh(i.id)}"><div class="wc-top"><span class="wc-kind">${icon("bolt")}Propuesta</span></div><div class="txt">${esc(i.texto)}</div>
           <div class="wc-foot">${i.etapa?`<span class="wc-tool">${esc(i.etapa)}</span>`:""}${who(i.participant_id)}</div></div>`).join("")}</div>`
-        : '<p class="empty">Las propuestas aparecerán aquí en vivo.</p>'}
+        : emptyState("bolt","Aún no hay propuestas","Aparecerán aquí en vivo")}
       </div>`;
 
   const iTot={}; A.ideaVotes.forEach(v=>iTot[v.idea_id]=(iTot[v.idea_id]||0)+1);
@@ -1780,43 +1780,42 @@ function renderAdmin(){
   const panelIdeas = `
       <div class="panel">
         ${head("Ideas · "+esc(s.q_idea||"¿Cómo podríamos resolverlo?"), `${ideasOnly.length} ideas · ${A.ideaVotes.length} apoyos · ${s.idea_votes||3} por persona`)}
-        ${targets.length? retos() : '<p class="empty">Primero hace falta la votación de dolores: los 3 más votados se vuelven los retos.</p>'}
+        ${targets.length? retos() : emptyState("bulb","Primero hace falta la votación de dolores",`Los ${s.idea_top||3} más votados se vuelven los retos`)}
         ${lead&&lead.v? foot(`La idea con más apoyo: ${esc(lead.texto)}`, `${lead.v} apoyo${lead.v===1?"":"s"}`, "bulb") : ""}
       </div>`;
   const panelTopIdeas = `
       <div class="panel">
         ${head("Ideas con más apoyo", `Por reto · ${A.ideaVotes.length} apoyos · ${s.idea_votes||3} por persona`)}
-        ${A.ideaVotes.length && targets.length? retos() : '<p class="empty">Todavía no hay apoyos.</p>'}
+        ${A.ideaVotes.length && targets.length? retos() : emptyState("bulb","Todavía no hay apoyos","Cada quien apoya las ideas que más le convencen")}
         ${lead&&lead.v? foot(`La idea con más apoyo: ${esc(lead.texto)}`, `${lead.v} apoyo${lead.v===1?"":"s"}`, "bulb") : ""}
       </div>`;
 
-  /* ---------- Indicadores: una tarjeta por fase ---------- */
+  /* ---------- Indicadores: las seis tarjetas con la misma estructura (etiqueta, número, dato, contexto) ---------- */
   const kOn = k => k.includes(ph);
-  const joins=A.participants.map(p=>+new Date(p.joined_at)).filter(Boolean).sort((a,b)=>a-b);
-  let spark=[]; if(joins.length){ const t0=Math.min(joins[0], +new Date(s.created_at)||joins[0]), t1=Math.max(Date.now(),joins[joins.length-1]); const B=12;
-    spark=Array.from({length:B},(_,i)=>{ const edge=t0+(t1-t0)*(i+1)/B; return joins.filter(t=>t<=edge).length; }); }
+  const joins=A.participants.map(p=>+new Date(p.joined_at)).filter(Boolean);
   const recent=joins.filter(t=>Date.now()-t<5*60000).length;
   const sevAvg=A.cards.length? (A.cards.reduce((a,c)=>a+(+c.severidad||0),0)/A.cards.length).toFixed(1).replace(".0","") : null;
+  const stWith=stN.filter(x=>x.n).length;
   const votesMax=nP*(s.votes_per_user||5), supMax=nP*(s.idea_votes||3);
   const kpis = `<div class="kpis">
     ${kpiTile({on:kOn(["lobby"]), icon:"users", label:"Participantes", value:nP,
-      wide: nP? sparkSVG(spark) : "",
-      foot: nP? (recent? `${recent} entraron en los últimos 5 min` : "Registrados en el taller") : "Proyecta el QR para que entren", fic:"trendup"})}
+      main: nP? (recent? `${recent} entraron en los últimos 5 min` : "Todos dentro, nadie nuevo en 5 min") : "Aún no entra nadie",
+      sub: nP? "Con nombre, área, rol y etapas" : "Proyecta el QR para que entren"})}
     ${kpiTile({on:kOn(["checkin"]), icon:"cloudsun", label:"Check-in", value:checkins, of:nP,
-      viz: ringSVG(checkins,nP),
-      foot: checkins? `Predomina: ${esc(topMood.t)}` : "Aún sin respuestas", fic: checkins? topMood.ic : "neutral"})}
+      main: checkins? `Predomina: ${esc(topMood.t)}` : "Aún sin respuestas",
+      sub: checkins? `${pctOf(checkins,nP)}% del equipo respondió` : "Ánimo y expectativa de cada quien"})}
     ${kpiTile({on:kOn(["pains"]), icon:"flame", label:"Dolores", value:A.cards.length,
-      wide: `<div class="cols" role="img" aria-label="Tarjetas por etapa">${stN.map(x=>`<div class="col" data-tip="${esc(x.st)} · ${x.n} tarjeta${x.n===1?"":"s"}"><i style="height:${x.n?Math.max(8,Math.round(x.n/stMax*100)):0}%"></i></div>`).join("")}</div>`,
-      foot: A.cards.length? `Más en ${esc(stageTag(topSt.st))} · dolor promedio ${sevAvg}/5` : "Tarjetas por etapa del proceso", fic:"flame"})}
+      main: A.cards.length? `Más en ${esc(stageTag(topSt.st))}` : "Aún sin tarjetas",
+      sub: A.cards.length? `Dolor promedio ${sevAvg}/5 · ${stWith} de ${stN.length} etapas` : "Tarjetas por etapa del proceso"})}
     ${kpiTile({on:kOn(["votes"]), icon:"target", label:"Votación", value:votesUsed, of:votesMax,
-      viz: ringSVG(votesUsed,votesMax),
-      foot: `${voters} de ${nP} personas votaron`, fic:"check"})}
+      main: votesUsed? `${voters} de ${nP} personas votaron` : "Aún sin votos",
+      sub: `${s.votes_per_user} votos por persona`})}
     ${kpiTile({on:kOn(["quickwins"]), icon:"bolt", label:"Quick wins", value:qwRaters, of:nP,
-      viz: ringSVG(qwRaters,nP),
-      foot: `${A.qwRatings.length} calificaciones · ${props.length} propuesta${props.length===1?"":"s"}`, fic:"bolt"})}
+      main: A.qwRatings.length? `${A.qwRatings.length} calificaciones` : "Aún sin calificaciones",
+      sub: `${(s.quickwins||[]).length} quick wins · ${props.length} propuesta${props.length===1?"":"s"} del equipo`})}
     ${kpiTile({on:kOn(["ideas","results","closed"]), icon:"bulb", label:"Ideas", value:ideasOnly.length,
-      viz: ringSVG(A.ideaVotes.length,supMax),
-      foot: `${A.ideaVotes.length} de ${supMax} apoyos usados`, fic:"bulb"})}
+      main: A.ideaVotes.length? `${A.ideaVotes.length} de ${supMax} apoyos usados` : (ideasOnly.length? "Aún sin apoyos" : "Aún sin ideas"),
+      sub: `${s.idea_votes||3} apoyos por persona · ${targets.length||s.idea_top||3} retos`})}
   </div>`;
 
   let panels="";
@@ -1882,24 +1881,6 @@ function stageTag(t){ const n=shortStage(t); return /^\d+$/.test(n) ? "Etapa "+n
 /* Etiqueta de eje: el número del paso, o la primera palabra */
 function stageX(t){ const n=shortStage(t); return /^\d+$/.test(n) ? n : String(t||"").split(/[ (/]/)[0]; }
 
-/* Anillo de avance (gráfica radial) con el porcentaje al centro */
-function ringSVG(v,max,size){ size=size||60; const st=7, pct=max?Math.min(1,v/max):0, r=(size-st)/2, c=2*Math.PI*r;
-  return `<svg class="ring" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img" aria-label="${Math.round(pct*100)} por ciento">
-    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--c-track)" stroke-width="${st}"/>
-    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--c1)" stroke-width="${st}" stroke-linecap="round" stroke-dasharray="${(c*pct).toFixed(2)} ${c.toFixed(2)}" transform="rotate(-90 ${size/2} ${size/2})"/>
-    <text x="50%" y="50%" dy=".36em" text-anchor="middle" class="ring-t">${Math.round(pct*100)}%</text></svg>`; }
-
-/* Área suavizada con degradado (tendencia) */
-function sparkSVG(vals){ const w=160,h=44; if(!vals||!vals.length) return "";
-  const max=Math.max(...vals,1), n=vals.length, P=vals.map((v,i)=>[n>1? i/(n-1)*w : w/2, 3+(1-v/max)*(h-6)]);
-  let d=`M${P[0][0].toFixed(1)},${P[0][1].toFixed(1)}`;
-  for(let i=0;i<P.length-1;i++){ const p0=P[i-1]||P[i], p1=P[i], p2=P[i+1], p3=P[i+2]||p2;
-    const c1=[p1[0]+(p2[0]-p0[0])/6, p1[1]+(p2[1]-p0[1])/6], c2=[p2[0]-(p3[0]-p1[0])/6, p2[1]-(p3[1]-p1[1])/6];
-    d+=` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`; }
-  const id="sg"+Math.random().toString(36).slice(2,8);
-  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#278FD8" stop-opacity=".42"/><stop offset="1" stop-color="#278FD8" stop-opacity=".03"/></linearGradient></defs>
-    <path d="${d} L${w},${h} L0,${h} Z" fill="url(#${id})"/><path d="${d}" fill="none" stroke="#278FD8" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round" stroke-linecap="round"/></svg>`; }
-
 /* Dona con el total al centro; cada gajo lleva su tooltip */
 function donutSVG(parts,o){ o=o||{}; const size=170, st=26, total=parts.reduce((a,p)=>a+p.v,0)||1, r=(size-st)/2, c=2*Math.PI*r; let off=0;
   const segs=parts.filter(p=>p.v>0).map(p=>{ const len=c*p.v/total, gap=parts.filter(x=>x.v>0).length>1?3:0;
@@ -1910,11 +1891,12 @@ function donutSVG(parts,o){ o=o||{}; const size=170, st=26, total=parts.reduce((
 function kpiTile(o){
   return `<div class="kpi${o.on?" on":""}">
     <div class="kpi-h"><span class="kpi-l">${o.label}</span><span class="ico-line">${icon(o.icon)}</span>${o.on?'<span class="kpi-live"><i></i>En curso</span>':""}</div>
-    <div class="kpi-b"><div class="kpi-v"><span class="n">${o.value}</span>${o.of!=null?`<span class="of">de ${o.of}</span>`:""}</div>${o.viz?`<div class="kpi-viz">${o.viz}</div>`:""}</div>
-    ${o.wide?`<div class="kpi-wide">${o.wide}</div>`:""}
-    <div class="kpi-f">${icon(o.fic||"trendup")}<span>${o.foot||""}</span></div>
+    <div class="kpi-v"><span class="n">${o.value}</span>${o.of!=null?`<span class="of">de ${o.of}</span>`:""}</div>
+    <div class="kpi-f"><span class="kpi-f1">${o.main||""}</span><span class="kpi-f2">${o.sub||""}</span></div>
   </div>`;
 }
+/* Estado vacío, igual en todas las tarjetas */
+function emptyState(ic,title,hint){ return `<div class="empty-st">${glass(ic,{size:"md",tone:"slate"})}<b>${title}</b>${hint?`<span>${hint}</span>`:""}</div>`; }
 /* Tooltip único para todo lo que tenga data-tip (texto plano, nunca HTML) */
 function installTips(){
   if(window.__tips) return; window.__tips=true;
@@ -1944,21 +1926,22 @@ function renderRank(totals, targets){
 }
 
 /* Quick wins: columnas apiladas al 100 % (Mucho abajo, Algo, Poco arriba), ordenadas por índice, y la lista con el texto de cada uno */
-function renderQW(list, byScore, groupByStage){
+function renderQW(list, byScore, groupByStage, hasData){
   const col = q => { const st=q.st, b=st.m+st.a+st.p;
     return `<div class="qwc-col" data-tip="${esc(q.id)} · ${esc(q.text)}\nMucho ${st.m} · Algo ${st.a} · Poco ${st.p}${st.na?` · No aplica ${st.na}`:""}">
       <span class="qwc-idx">${st.idx===null?"—":st.idx}</span>
       <div class="qwc-stack${b?"":" none"}">${b?`${st.p?`<i class="p" style="flex:${st.p}"></i>`:""}${st.a?`<i class="a" style="flex:${st.a}"></i>`:""}${st.m?`<i class="m" style="flex:${st.m}"></i>`:""}`:""}</div>
       <span class="qwc-id">${esc(q.id.replace(/^QW-/,""))}</span></div>`; };
-  const row = q => `<div class="qwl-row"><span class="qw-id">${esc(q.id)}</span><span class="qwl-t">${esc(q.text)}</span><span class="qwl-idx">${q.st.idx===null?'<span class="na">—</span>':q.st.idx}<small>${q.st.n} resp.</small></span></div>`;
+  const row = q => `<div class="qwl-row"><span class="qw-id">${esc(q.id)}</span><span class="qwl-t">${esc(q.text)}</span><span class="qwl-idx${q.st.n?"":" zero"}">${q.st.idx===null?'<span class="na">—</span>':q.st.idx}<small>${q.st.n?q.st.n+" resp.":"sin resp."}</small></span></div>`;
   let body="";
   if(groupByStage){
     const groups=[]; list.forEach(q=>{ let g=groups.find(x=>x.stage===q.stage); if(!g){ g={stage:q.stage,items:[]}; groups.push(g); } g.items.push(q); });
     body=groups.map(g=>`<div class="qwl-stage">${esc(g.stage||"Sin etapa")}</div>${g.items.map(row).join("")}`).join("");
   } else body=byScore.map(row).join("");
-  return `<div class="leg"><span><i class="m"></i>Mucho</span><span><i class="a"></i>Algo</span><span><i class="p"></i>Poco</span><span class="leg-help">El número arriba de cada columna es el índice; abajo, el número del quick win</span></div>
-    <div class="qwc-wrap"><div class="qwc" style="--n:${list.length}">${byScore.map(col).join("")}</div></div>
-    <div class="qwl">${body}</div>`;
+  const chart = hasData ? `<div class="leg"><span><i class="m"></i>Mucho</span><span><i class="a"></i>Algo</span><span><i class="p"></i>Poco</span><span class="leg-help">El número arriba de cada columna es el índice; abajo, el número del quick win</span></div>
+    <div class="qwc-wrap"><div class="qwc" style="--n:${list.length}">${byScore.map(col).join("")}</div></div>`
+    : emptyState("bolt","Aún no hay calificaciones","La gráfica aparecerá en vivo conforme el equipo responda");
+  return chart+`<div class="qwl${hasData?"":" quiet"}">${body}</div>`;
 }
 
 /* Retos e ideas: cada idea con su barra de apoyos (misma escala en los tres retos) */
