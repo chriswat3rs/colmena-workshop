@@ -460,7 +460,10 @@ details.more .chips{padding-top:4px}
 .pop.menu button svg{width:18px;height:18px;color:var(--ink-2)}
 .pop.menu button.danger,.pop.menu button.danger svg{color:var(--danger)}
 .pop.menu hr{border:0;border-top:1px solid var(--line);margin:6px 4px}
-.pop.share{width:420px;max-height:calc(100dvh - 90px);overflow:auto;padding:16px 18px 18px}
+.pop.share{width:440px;max-height:calc(100dvh - 90px);display:flex;flex-direction:column;overflow:hidden;padding:0}
+.pop.share .pop-h{padding:16px 18px 4px;margin:0}
+.pop-b{flex:1 1 auto;min-height:0;overflow:auto;padding:0 18px 16px}
+.pop-f{flex:none;padding:14px 18px 18px;border-top:1px solid var(--line);background:#FAFCFE}
 .pop-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .pop-h b{font-size:16px;font-weight:700}
 .pop-l{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin:12px 0 8px}
@@ -484,7 +487,7 @@ details.more .chips{padding-top:4px}
 .mailbox label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
 .mailbox .input{font-size:15px;padding:11px 12px}
 .pop-hint{font-size:12.5px;line-height:1.45;color:var(--ink-3);margin:8px 0 0}
-.tgl{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px;margin-top:14px;padding:10px 12px;border-radius:12px;background:#F7FAFD;cursor:pointer;position:relative}
+.tgl{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px;margin-top:0;padding:10px 12px;border-radius:12px;background:#F7FAFD;cursor:pointer;position:relative}
 .tgl input{position:absolute;opacity:0;pointer-events:none}
 .tgl-s{width:38px;height:22px;border-radius:999px;background:#C5D2E2;position:relative;transition:background .15s}
 .tgl-s::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .15s}
@@ -493,15 +496,18 @@ details.more .chips{padding-top:4px}
 .tgl input:focus-visible+.tgl-s{outline:3px solid rgba(39,143,216,.45);outline-offset:2px}
 .tgl-t b{display:block;font-size:14px;font-weight:600}
 .tgl-t small{font-size:12.5px;color:var(--ink-3)}
-.pop-sum{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.4;color:var(--ink-2);margin:14px 0 12px}
-.pop-sum svg{width:15px;height:15px;flex:none;margin-top:1px;color:#1E7A45}
+.pop-sum{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 12px;font-size:12.5px;color:var(--ink-2)}
+.pop-sum .ps-l{font-weight:700;color:var(--ink-3);margin-right:2px}
+.pop-sum .ps-v{padding:3px 9px;border-radius:999px;background:#EDF3FA;white-space:nowrap}
+.pop-sum .ps-v b{color:var(--ink);font-weight:800}
 .pop .go{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:48px;border-radius:12px;background:var(--primary);color:#fff;font-weight:700;font-size:15.5px}
 .pop .go:hover{background:var(--primary-hover)}
 .pop .go:disabled{opacity:.6}
 .pop .go svg{width:19px;height:19px}
-.pop.sheet-pop{left:0!important;right:0;bottom:0;top:auto!important;width:auto;max-height:88dvh;border-radius:20px 20px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+.pop.sheet-pop{left:0!important;right:0;bottom:0;top:auto!important;width:auto;max-height:88dvh;border-radius:20px 20px 0 0}
+.pop.sheet-pop .pop-f{padding-bottom:calc(18px + env(safe-area-inset-bottom))}
 .pop.sheet-pop.anim{animation:sheetin .2s ease-out}
-.pop.share .go{position:sticky;bottom:0;box-shadow:0 -14px 0 6px var(--card)}
+
 .pop.menu.sheet-pop{padding:10px 10px calc(10px + env(safe-area-inset-bottom))}
 @keyframes sheetin{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
 @media (max-width:719px){ .pop-back{background:rgba(1,19,59,.35)} }
@@ -864,6 +870,25 @@ body.project .hxu i{width:18px;height:21px}
   .sc small{margin-left:auto}
   .ready{margin-left:0}
 }
+/* Pocas respuestas: columnas por respuesta */
+.bk{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;align-items:start}
+.bk-col{border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden}
+.bk-col header{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);background:#F7FAFD}
+.bk-col header b{font-size:14.5px;font-weight:700;color:var(--ink)}
+.bk-sw{width:12px;height:12px;border-radius:3px;flex:none}
+.bk-n{margin-left:auto;font-size:20px;font-weight:800;color:var(--ink);line-height:1}
+.v3 .bk-sw{background:var(--lk-m)} .v2 .bk-sw{background:var(--lk-a)} .v1 .bk-sw{background:var(--lk-p)} .v0 .bk-sw{background:#C5D0DE} .vs .bk-sw{background:repeating-linear-gradient(45deg,#8FA3BC 0 3px,#DDE5EF 3px 6px)}
+.bk-col ul{list-style:none;margin:0;padding:4px 14px 8px}
+.bk-col li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:9px 0;border-top:1px solid #EEF2F7;font-size:14px;line-height:1.35;color:var(--ink)}
+.bk-col li:first-child{border-top:0}
+.bk-st{display:inline-grid;place-items:center;min-width:22px;height:20px;padding:0 5px;border-radius:6px;background:#EDF3FA;color:var(--ink-2);font-size:11px;font-weight:700}
+.bk-c{font-style:normal;font-size:11.5px;font-weight:600;color:var(--ink-3);white-space:nowrap}
+.bk-more{margin:0;padding:0 14px 12px;font-size:12.5px;font-weight:600;color:var(--ink-3)}
+.bk-none{margin:0;padding:14px;font-size:13px;color:var(--ink-3)}
+.pres .bk{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.pres .bk-col li{font-size:17px}
+.pres .bk-col header b{font-size:17px}
+.pres .bk-n{font-size:26px}
 /* ===== Modo presentación (v1.6): pantalla completa, una sección por pantalla ===== */
 .pres{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;background:var(--surface)}
 .pres-stage{flex:1;min-height:0;overflow:hidden;display:flex;justify-content:center;align-items:center;padding:clamp(16px,3vh,40px) clamp(16px,3vw,56px)}
@@ -885,7 +910,7 @@ body.project .hxu i{width:18px;height:21px}
 .pres .tiles{gap:24px}
 .pres .tile{padding:26px 26px 22px}
 .pres .tile-l{font-size:14px}
-.pres .tile-v{font-size:26px}
+.pres .tile-v{font-size:26px;-webkit-line-clamp:4}
 .pres .tile-s{font-size:17px}
 .pres .ph.sec h2{font-size:34px}
 .pres .sec-n{font-size:48px}
@@ -2422,7 +2447,7 @@ function startAdmin(s){
   document.body.classList.add("admin-theme");
   A.session=s; A.participants=[]; A.cards=[]; A.votes=[]; A.qwRatings=[]; A.ideas=[]; A.ideaVotes=[]; A.seen=new Set();
   try{ history.replaceState(null,"",location.pathname+"?s="+encodeURIComponent(s.code)+"#admin"); }catch(e){}
-  const kick=()=>{ clearTimeout(A._t); A._t=setTimeout(async()=>{ await refetchAll(); if(!A.hold) renderAdmin(); },350); };
+  const kick=()=>{ clearTimeout(A._t); A._t=setTimeout(async()=>{ await refetchAll(); if(!A.hold) renderAdmin(); else { const sm=$("#shSum"); if(sm) sm.innerHTML=shareSummary(); } },350); };
   A.unsub=Store.subscribe(s.id, kick);
   A.poll=setInterval(kick, 8000);
   kick();
@@ -2549,7 +2574,7 @@ function renderAdmin(){
   const panelQW = qwList.length ? `
       <div class="panel" id="sec-3">
         ${head("Quick wins que más ayudarían", hasData("qw")? `${nQ} de ${nP} persona${nQ===1?"":"s"} calificaron ${qwList.length} quick wins: mucho, algo o poco` : `${qwList.length} quick wins por etapa · el equipo los califica desde su celular`)}
-        ${renderLikert(qwList, "qw", {raters:nQ, nP, top: live?0:5, k:"qw-all"})}
+        ${renderLikert(qwList, "qw", {raters:nQ, nP, top: live?0:5, k:"qw-all", max: A.project?6:0})}
         ${qwFoot()}
       </div>` : "";
   const gByScore=[...gateList].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1));
@@ -2562,7 +2587,7 @@ function renderAdmin(){
   const panelGates = gateList.length ? `
       <div class="panel" id="sec-4">
         ${head("Reglas del nuevo flujo: acuerdo y fricción", hasData("gate")? `${gateList.length} reglas de LOCFY24 calificadas por quienes las van a vivir · a la derecha, ayuda; a la izquierda, estorba` : `${gateList.length} candados del nuevo flujo · el equipo dice si le ayudan o le estorban`)}
-        ${renderDiverging(gateList, {raters:nG, nP, all: live, k:"gate-all"})}
+        ${renderDiverging(gateList, {raters:nG, nP, all: live, k:"gate-all", max: A.project?6:0})}
         ${gFoot()}
       </div>` : "";
   const tSorted=[...timeList].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1));
@@ -2776,8 +2801,13 @@ const FMT = {
   csv: {ic:"filecsv", t:"CSV",    ext:".zip",  d:"Un CSV por tabla (UTF-8), para Power BI, Python o R"},
   pdf: {ic:"filepdf", t:"PDF",    ext:".pdf",  d:"Reporte con gráficas, listo para presentar o enviar"}
 };
+function shareSummary(){
+  const n=A.participants.length, v=A.votes.reduce((a,x)=>a+(x.points||0),0), i=A.ideas.filter(x=>x.kind==="idea").length;
+  const pl=(k,s,p)=>`<b>${k}</b> ${k===1?s:p}`;
+  return `<span class="ps-l">Incluye</span><span class="ps-v">${pl(n,"participante","participantes")}</span><span class="ps-v">${pl(A.cards.length,"dolor","dolores")}</span><span class="ps-v">${pl(v,"voto","votos")}</span><span class="ps-v">${pl(A.qwRatings.length,"respuesta","respuestas")}</span><span class="ps-v">${pl(i,"idea","ideas")}</span>`;
+}
 function shareCanFiles(){ try{ return !!(navigator.canShare && navigator.canShare({files:[new File(["x"],"x.txt",{type:"text/plain"})]})); }catch(e){ return false; } }
-function openPop(kind){ A.pop=kind; A.hold=true; renderPop(); const b=$(kind==="share"?"#btnShare":"#btnMore"); if(b){ b.classList.add("on"); b.setAttribute("aria-expanded","true"); } }
+function openPop(kind){ A.pop=kind; A.hold=true; renderPop(); if(kind==="share") refetchAll().then(()=>{ const sm=$("#shSum"); if(sm) sm.innerHTML=shareSummary(); }).catch(()=>{}); const b=$(kind==="share"?"#btnShare":"#btnMore"); if(b){ b.classList.add("on"); b.setAttribute("aria-expanded","true"); } }
 function closePop(){ const L=$("#popLayer"); if(L) L.innerHTML=""; A.pop=null; A.hold=false; $$("#btnShare,#btnMore").forEach(b=>{ b.classList.remove("on"); b.setAttribute("aria-expanded","false"); }); }
 function placePop(){
   const L=$("#popLayer"), el=L&&L.querySelector(".pop"), b=$(A.pop==="share"?"#btnShare":"#btnMore"); if(!el||!b) return;
@@ -2799,10 +2829,10 @@ function renderPop(){
     $("#mnAuthors").onclick=()=>{ closePop(); A.showAuthors=!A.showAuthors; renderAdmin(); };
     $("#mnQR").onclick=()=>{ closePop(); showQR(); };
   } else {
-    const S=A.share, F=FMT[S.f], n=(A.participants.length), canF=shareCanFiles();
-    const cnt=`${n} participante${n===1?"":"s"} · ${A.cards.length} dolores · ${A.votes.reduce((a,v)=>a+(v.points||0),0)} votos · ${A.qwRatings.length} respuestas · ${A.ideas.filter(i=>i.kind==="idea").length} ideas`;
+    const S=A.share, F=FMT[S.f], canF=shareCanFiles();
     L.innerHTML=`<div class="pop-back" id="popBack"></div><div class="pop share" role="dialog" aria-modal="false" aria-labelledby="shTitle">
       <div class="pop-h"><b id="shTitle">Compartir resultados</b><button class="ib sm" id="shX" aria-label="Cerrar">${icon("close")}</button></div>
+      <div class="pop-b">
       <p class="pop-l">1 · Formato</p>
       <div class="fmt" role="radiogroup" aria-label="Formato">${Object.entries(FMT).map(([k,o])=>`<button role="radio" aria-checked="${S.f===k}" class="fmt-o${S.f===k?" on":""}" data-f="${k}">
         <span class="fmt-ic">${icon(o.ic)}</span><span class="fmt-t"><b>${o.t}<em>${o.ext}</em></b><small>${o.d}</small></span><span class="fmt-r" aria-hidden="true"></span></button>`).join("")}</div>
@@ -2810,9 +2840,13 @@ function renderPop(){
       <div class="seg2" role="radiogroup" aria-label="Medio"><button role="radio" aria-checked="${S.h==="download"}" class="${S.h==="download"?"on":""}" data-h="download">${icon("download")}Descargar</button><button role="radio" aria-checked="${S.h==="mail"}" class="${S.h==="mail"?"on":""}" data-h="mail">${icon("mail")}Por correo</button></div>
       ${S.h==="mail"?`<div class="mailbox">${canF?"":`<label for="shTo">Para <span class="opt">(opcional)</span></label><input id="shTo" class="input" type="email" multiple autocomplete="email" placeholder="nombre@empresa.com, otra@empresa.com" value="${esc(S.to)}">`}
         <p class="pop-hint">${canF?"Se abre el menú de compartir de tu equipo: elige Correo u Outlook y el archivo va adjunto.":"Se descarga el archivo y se abre tu correo con el mensaje listo. Arrastra el archivo desde Descargas para adjuntarlo."}</p></div>`:""}
-      <label class="tgl"><input type="checkbox" id="shAnon" ${S.anon?"checked":""}><span class="tgl-s" aria-hidden="true"></span><span class="tgl-t"><b>Anonimizar participantes</b><small>Cambia nombres por P01, P02… (útil para enviarlo al cliente)</small></span></label>
-      <p class="pop-sum">${icon("check")}<span>Incluye ${cnt}</span></p>
-      <button class="go" id="shGo">${icon(S.h==="mail"?"mail":"download")}<span>${S.h==="mail"?"Enviar "+F.t+" por correo":"Descargar "+F.t}</span></button>
+      <p class="pop-l">3 · Privacidad</p>
+      <label class="tgl"><input type="checkbox" id="shAnon" ${S.anon?"checked":""}><span class="tgl-s" aria-hidden="true"></span><span class="tgl-t"><b>Anonimizar participantes</b><small>Nombres → P01, P02… para enviarlo al cliente</small></span></label>
+      </div>
+      <div class="pop-f">
+        <p class="pop-sum" id="shSum">${shareSummary()}</p>
+        <button class="go" id="shGo">${icon(S.h==="mail"?"mail":"download")}<span>${S.h==="mail"?"Enviar "+F.t+" por correo":"Descargar "+F.t}</span></button>
+      </div>
     </div>`;
     $$(".fmt-o").forEach(b=>b.onclick=()=>{ A.share.f=b.dataset.f; renderPop(); });
     $$(".seg2 button").forEach(b=>b.onclick=()=>{ A.share.h=b.dataset.h; renderPop(); });
@@ -2924,10 +2958,27 @@ function renderLikert(list, kind, o){
   const byStage=l=>{ const g=[]; l.forEach(q=>{ let x=g.find(y=>y.stage===q.stage); if(!x){ x={stage:q.stage,items:[]}; g.push(x); } x.items.push(q); }); return g.map(x=>`<div class="qwl-stage">${esc(x.stage||"Sin etapa")}</div>${x.items.map(row).join("")}`).join(""); };
   const byScore=[...list].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1) || b.st.m-a.st.m);
   const legend = small? "" : `<div class="leg"><span><i class="m"></i>${L(3)}</span><span><i class="a"></i>${L(2)}</span><span><i class="p"></i>${L(1)}</span></div>`;
-  if(small || !o.top) return legend+`<div class="lk">${byStage(list)}</div>`;
+  if(small) return renderBuckets(list, kind, o);
+  if(!o.top) return legend+`<div class="lk">${byStage(list)}</div>`;
   const shown=byScore.slice(0,o.top);
   return legend+`<div class="lk">${shown.map(row).join("")}</div>
     ${list.length>o.top?`<details class="more-a" data-k="${o.k||"lk-all"}"><summary>Ver los ${list.length}, por etapa</summary><div class="lk">${byStage(list)}</div></details>`:""}`;
+}
+
+/* Pocas respuestas (menos de 3 personas): en vez de 19 filas casi vacías, columnas por respuesta.
+   Cada pregunta va en la respuesta más dada; si hay empate, en «Opiniones divididas». */
+function renderBuckets(list, kind, o){
+  o=o||{}; const K=RATING_KINDS[kind], vals=[3,2,1,0], max=o.max||0;
+  const cnt=q=>[q.st.na,q.st.p,q.st.a,q.st.m];
+  const B=Object.fromEntries([...vals.map(v=>[v,[]]),["split",[]]]);
+  list.forEach(q=>{ const c=cnt(q), n=c.reduce((a,x)=>a+x,0); if(!n) return; const mx=Math.max(...c), top=vals.filter(v=>c[v]===mx);
+    (top.length>1 ? B.split : B[top[0]]).push({q, n, agree:mx}); });
+  const col=(key,label,cls)=>{ const items=B[key]; if(!items.length && (key===0||key==="split")) return "";
+    const shown=max?items.slice(0,max):items, rest=items.length-shown.length;
+    return `<section class="bk-col ${cls}"><header><i class="bk-sw"></i><b>${label}</b><span class="bk-n">${items.length}</span></header>
+      ${items.length?`<ul>${shown.map(({q,n,agree})=>`<li${q.help?` data-tip="${esc(q.help)}"`:""}><span class="bk-st" title="${esc(q.stage)}">${esc(/^\d+$/.test(stageX(q.stage))?stageX(q.stage):String(q.stage||"·").trim().charAt(0))}</span><span class="bk-t">${esc(q.text)}</span>${n>1?`<em class="bk-c">${agree} de ${n}</em>`:""}</li>`).join("")}</ul>${rest>0?`<p class="bk-more">y ${rest} más</p>`:""}`:`<p class="bk-none">Ninguna</p>`}</section>`; };
+  const L=v=>K.scale.find(x=>x.v===v).t;
+  return `<div class="bk">${col(3,L(3),"v3")}${col(2,L(2),"v2")}${col(1,L(1),"v1")}${col(0,L(0),"v0")}${col("split","Opiniones divididas","vs")}</div>`;
 }
 
 /* 4 · Reglas: barras divergentes centradas en «me da igual» (derecha ayuda, izquierda estorba).
@@ -2945,7 +2996,8 @@ function renderDiverging(list, o){
       <div class="lk-idx${st.n?"":" zero"}">${st.idx===null?"—":st.idx}<small>${st.n?st.n+" resp.":"sin resp."}</small></div></div>`; };
   const legend = small? "" : `<div class="leg dv-leg"><span><i class="p"></i>${L(1)}</span><span><i class="mid"></i>${L(2)}</span><span><i class="m"></i>${L(3)}</span></div>`;
   const byScore=[...list].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1));
-  if(small || o.all || list.length<=6) return legend+`<div class="dv">${(small?list:byScore).map(row).join("")}</div>`;
+  if(small) return renderBuckets(list, "gate", o);
+  if(o.all || list.length<=6) return legend+`<div class="dv">${byScore.map(row).join("")}</div>`;
   const rated=byScore.filter(q=>q.st.idx!==null), top=rated.slice(0,3), low=rated.slice(-3).filter(q=>!top.includes(q));
   const shownIds=new Set([...top,...low].map(q=>q.id)), rest=byScore.filter(q=>!shownIds.has(q.id));
   return legend+`<div class="dv"><div class="dv-h">Más acuerdo</div>${top.map(row).join("")}${low.length?`<div class="dv-h low">Menos acuerdo · hay que conversarlas</div>${low.map(row).join("")}`:""}</div>
