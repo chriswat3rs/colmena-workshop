@@ -9,7 +9,7 @@ Herramienta propia para workshops de design thinking en vivo.
   3. **Votación:** reparten sus votos entre los dolores.
   4. **Validación:** califican las mejoras que ya se habían identificado (quick wins), las reglas del nuevo flujo y cuánto tarda hoy cada etapa; proponen las mejoras que falten.
   5. **Ideas:** «¿Cómo podríamos…?» sobre los 3 dolores más votados, con apoyos.
-- **Tú, como facilitador:** proyectas un **panel en vivo** con participantes, muro, ranking, tabla de quick wins, ideas por reto y exportación a CSV.
+- **Tú, como facilitador:** proyectas un **panel en vivo** con participantes, muro, ranking, tabla de quick wins, ideas por reto y un menú **Compartir** (Excel, CSV o PDF, por descarga o correo).
 
 **Identidad:** imagotipo y logotipo de Quality & Knowledge, colores corporativos (azul `#278FD8`, marino `#01133B`), tipografía Montserrat y modo claro. Usa iconos planos propios (glifos SVG sobre un fondo suave) para estados de ánimo e indicadores. Los avatares son animales, y la abeja de Colmena acompaña al imagotipo de Quality & Knowledge en la portada y en el QR.
 
@@ -82,7 +82,13 @@ Desde entonces, cada vez que entres te pedirá contraseña + código de tu app.
 
 **Pocos datos.** Con menos de 3 personas votando o calificando, el panel muestra conteos y unidades (hexágonos) en lugar de índices, porcentajes o barras al 100 %, y declara los empates en vez de coronar un ganador.
 
-4. **Exportar CSV** descarga 4 archivos: participantes, dolores, quick wins e ideas (con autor, área, rol, votos y hora).
+4. **Compartir** (arriba a la derecha) arma los resultados en el formato que elijas:
+   - **Excel (.xlsx):** una hoja por tabla (Taller, Participantes, Etapas por participante, Dolores, Votos, Validación · respuestas, Validación · resumen, Ideas, Apoyos, Quick wins propuestos, Resumen por etapa) más una hoja «Léeme» con el diccionario de cada columna. Encabezado fijo, filtros y formato de tabla para tablas dinámicas.
+   - **CSV (.zip):** las mismas tablas, un CSV por tabla (UTF-8, coma, punto decimal, fechas `AAAA-MM-DD HH:MM:SS`, 1/0 para sí/no), con `LEEME.txt` y `00_diccionario.csv`.
+   - **PDF:** reporte con gráficas (titular, dolores, ideas, quick wins, reglas, tiempos y contexto).
+   - **Por correo:** en celulares y Mac con Safari abre el menú de compartir con el archivo adjunto; en los demás equipos descarga el archivo y abre tu correo con el mensaje listo para adjuntarlo.
+   - **Anonimizar participantes** cambia los nombres por P01, P02… (útil para enviarlo al cliente).
+   - Los IDs (P01, D01, I01, QW-01…) permiten cruzar las tablas. El PDF usa `jspdf.umd.min.js` (jsPDF, licencia MIT, en la raíz del repo) y solo se descarga al pedir un PDF.
 5. Al terminar, exporta y usa **Borrar taller** para no guardar datos del cliente más tiempo del necesario.
 
 ### Configurar un taller (formulario «Crear taller nuevo»)

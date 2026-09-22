@@ -69,15 +69,16 @@ a{color:var(--accent-strong)}
 .honeycell.full{background:var(--honey)}
 
 /* ---------- capa participante (móvil primero) ---------- */
-.p-shell{max-width:520px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:20px 20px calc(96px + env(safe-area-inset-bottom))}
+.p-shell{--pw:520px;max-width:var(--pw);margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:20px 20px calc(var(--cta-h,0px) + 32px + env(safe-area-inset-bottom))}
 .p-top{display:flex;align-items:center;gap:10px;padding-bottom:14px}
 .p-top .sname{font-weight:600;font-size:14px;color:var(--ink-2)}
 .p-kicker{color:var(--accent-strong);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
 .p-title{font-size:27px;font-weight:800;margin-bottom:10px}
 .p-sub{color:var(--ink-2);font-size:16px;margin-bottom:22px}
 .p-body{flex:1;display:flex;flex-direction:column}
-.p-cta{position:fixed;left:0;right:0;bottom:0;padding:14px 20px calc(14px + env(safe-area-inset-bottom));
-  background:linear-gradient(to top,rgba(244,247,251,.94) 58%,rgba(244,247,251,0));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);max-width:520px;margin:0 auto}
+.p-cta{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:18px 20px calc(14px + env(safe-area-inset-bottom));pointer-events:none;
+  background:linear-gradient(to top,rgba(244,247,251,.97) 70%,rgba(244,247,251,0));max-width:520px;margin:0 auto}
+.p-cta>*{pointer-events:auto}
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px 20px;
   border-radius:var(--r-card);font-weight:700;font-size:17px;transition:transform .08s, opacity .2s}
 .btn:active{transform:scale(.985)}
@@ -98,7 +99,6 @@ textarea.input{resize:vertical;min-height:110px}
 .chips-tall .chip{min-height:44px}
 .chip.chip-all{border-style:dashed;color:var(--accent-strong)}
 .chip.chip-all.on{border-style:solid;color:#fff}
-.p-shell.tall-cta{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
 .p-cta .btn+.btn{margin-top:6px}
 .cta-hint{font-size:13px;color:var(--ink-3);text-align:center;margin:8px 0 0;min-height:0;font-weight:500}
 .cta-hint:empty{display:none}
@@ -119,7 +119,7 @@ textarea.input{resize:vertical;min-height:110px}
 .pb-new{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--ink);color:#fff;font-size:14px;line-height:1.4;transition:opacity .4s,transform .4s}
 .pb-new b{font-weight:700}
 .pb-new.out{opacity:0;transform:translateY(-6px)}
-.p-top.pbar+.sticky-votes{top:0}
+.p-top.pbar~.sticky-votes{top:var(--pbar-h,0px)}
 .p-top.pbar~.p-body{padding-top:16px}
 .dn{background:var(--card);border:1.5px solid #BFE5CC;border-radius:var(--r-card);padding:16px;margin:0 0 18px;box-shadow:var(--shadow)}
 .done-h{display:flex;align-items:flex-start;gap:12px}
@@ -183,15 +183,12 @@ input[type=range]{width:100%;accent-color:var(--accent-strong);height:32px}
 
 /* ---------- capa admin ---------- */
 .a-shell{min-height:100dvh;display:flex;flex-direction:column}
-.a-top{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.a-top .brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:17px}
 .a-title{font-size:16px;font-weight:700}
 .a-code{font-family:var(--display);font-weight:800;font-size:21px;letter-spacing:.16em;color:#fff;background:var(--primary);padding:5px 14px;border-radius:10px}
 .a-actions{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .abtn{padding:10px 16px;border-radius:11px;font-weight:700;font-size:14px;border:1.5px solid var(--line);background:var(--card)}
 .abtn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
 .abtn.danger{color:var(--danger);border-color:var(--danger)}
-.phasebar{display:flex;gap:8px;padding:14px 22px;border-bottom:1px solid var(--line);overflow-x:auto}
 .phase{padding:10px 18px;border-radius:var(--r-chip);border:1.5px solid var(--line);font-weight:700;font-size:14px;white-space:nowrap;color:var(--ink-2);background:var(--card)}
 .phase.on{background:var(--primary);border-color:var(--primary);color:#fff}
 .phase.done{color:var(--ink);border-color:var(--accent)}
@@ -362,28 +359,190 @@ details.ah-sec[open]>summary{margin-bottom:4px}
   .ah-actions .hint{display:none}
   .ah-create{width:100%}
 }
-/* ---------- Panel del taller: encabezado y KPIs responsivos ---------- */
-.a-top{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px 20px;
-  padding:12px clamp(14px,2.5vw,28px);background:rgba(244,247,251,.85);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%)}
-.a-head{display:flex;align-items:center;gap:12px;min-width:0}
-.a-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.a-top .a-actions{margin-left:0;flex-wrap:nowrap;justify-content:flex-end}
-.a-actions .abtn{padding:9px 14px;font-size:13.5px;white-space:nowrap}
-.phasebar{padding:12px clamp(14px,2.5vw,28px)}
-.a-main{padding:clamp(14px,2.5vw,28px)}
-@media (max-width:1200px){
-  .a-top{grid-template-columns:auto minmax(0,1fr)}
-  .a-top .a-actions{grid-column:1/-1;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
-  .a-top .a-actions #btnQR{order:-1}
-  .a-top .a-actions::-webkit-scrollbar{display:none}
+
+/* ---------- Participante v1.5: severidad con botones, desplegables cómodos y escritorio ---------- */
+.sevpick{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.sevpick button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:64px;padding:8px 2px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink-2);transition:all .15s}
+.sevpick button b{font-size:19px;font-weight:800;color:var(--ink);line-height:1}
+.sevpick button span{font-size:11.5px;font-weight:600;line-height:1.15;text-align:center}
+.sevpick button:hover{border-color:#9CC9EE}
+.sevpick button.on{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff}
+.sevpick button.on b{color:#fff}
+.sevpick button span{hyphens:auto;overflow-wrap:anywhere}
+@media (max-width:420px){ .sevpick{gap:4px} .sevpick button{padding:8px 1px} .sevpick button span{font-size:10px} }
+.sev-hint{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);margin-top:6px;font-weight:600}
+details.more{margin-top:10px;border:1.5px solid var(--line);border-radius:12px;background:var(--card)}
+details.more>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px;padding:10px 14px;cursor:pointer;user-select:none}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:"";width:9px;height:9px;flex:none;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-2px,-2px);transition:transform .2s}
+details.more[open]>summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
+details.more>summary:hover{background:#F4F9FE;border-radius:11px}
+details.more[open]{padding-bottom:10px}
+details.more[open]>*:not(summary){margin-left:12px;margin-right:12px}
+details.more .chips{padding-top:4px}
+.qhelp summary{min-height:36px;padding:6px 0}
+.p-cta .cta-hint{margin-top:6px}
+@media (hover:hover){ .chip:hover{border-color:#9CC9EE} .mood-opt:hover{border-color:#9CC9EE} .seg button:hover{border-color:#9CC9EE} }
+@media (min-width:760px){
+  .p-shell{--pw:640px;padding-left:32px;padding-right:32px}
+  .p-cta{max-width:640px;padding-left:32px;padding-right:32px}
+  .p-top.pbar{margin:-20px -32px 0;padding:14px 32px 12px}
+  .sticky-votes{margin:0 -32px;padding:10px 32px}
+  .p-title{font-size:30px}
+  .p-cta .btn{max-width:none}
 }
-@media (max-width:720px){
-  .a-top{grid-template-columns:minmax(0,1fr)}
-  .a-top .brand .brand-by{display:none}
-  .a-head{justify-content:space-between}
-  .a-title{white-space:normal;font-size:15px;line-height:1.3}
-  .a-code{font-size:16px;padding:4px 10px;flex:none}
-  .a-top .a-actions{margin:0 calc(-1 * clamp(14px,2.5vw,28px));padding:0 clamp(14px,2.5vw,28px) 2px}
+@media (min-width:1200px){
+  .p-shell{--pw:720px}
+  .p-cta{max-width:720px}
+}
+/* ---------- Panel del taller v1.5: barra superior con iconos + fases en stepper ---------- */
+.a-top{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:10px clamp(14px,2.5vw,28px);background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid var(--line)}
+.at-l,.at-r{display:flex;align-items:center;gap:10px;min-width:0}
+.at-l{flex:1 1 auto}
+.at-r{flex:none;gap:8px}
+.at-sep{width:1px;height:28px;background:var(--line);flex:none}
+.at-div{width:1px;height:24px;background:var(--line);flex:none;margin:0 2px}
+.at-ses{display:flex;flex-direction:column;min-width:0;line-height:1.2}
+.at-k{font-size:11px;font-weight:600;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.at-n{font-size:15px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.at-code{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 12px 0 14px;border-radius:11px;background:var(--primary);color:#fff;
+  font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:.14em;flex:none}
+.at-code svg{width:15px;height:15px;opacity:.7}
+.at-code:hover svg{opacity:1}
+.ib{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:40px;min-width:40px;padding:0 10px;border-radius:11px;
+  border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:600;font-size:14px;white-space:nowrap;flex:none;transition:background .15s,border-color .15s,color .15s}
+.ib svg{width:18px;height:18px;flex:none}
+.ib.lbl{padding:0 14px 0 12px}
+.ib:hover{background:#F4F8FC;border-color:#C9D6E6}
+.ib.on{background:var(--accent-soft);border-color:#9CC9EE;color:var(--accent-strong)}
+.ib.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.ib.primary:hover{background:var(--primary-hover)}
+.ib .chev{display:inline-flex;margin-left:-2px;margin-right:-4px}
+.ib .chev svg{width:15px;height:15px;transition:transform .2s}
+.ib.on .chev svg{transform:rotate(180deg)}
+.ib.sm{height:32px;min-width:32px;padding:0 6px;border-color:transparent}
+.ib:focus-visible,.st-b:focus-visible,.at-code:focus-visible{outline:3px solid rgba(39,143,216,.45);outline-offset:2px}
+/* Stepper de fases: círculo con icono + nombre debajo; la fase en curso en marino */
+.stepper{position:sticky;top:61px;z-index:25;display:flex;align-items:center;gap:16px;padding:8px clamp(14px,2.5vw,28px);
+  background:rgba(247,250,253,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.st-list{list-style:none;margin:0;padding:2px;display:flex;align-items:flex-start;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+.st-list::-webkit-scrollbar{display:none}
+.st{display:flex;align-items:flex-start;flex:none}
+.st+.st::before{content:"";width:clamp(10px,1.6vw,34px);height:2px;border-radius:1px;background:var(--line);margin-top:21px;flex:none}
+.st.done+.st::before{background:var(--accent)}
+.st-b{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:62px;padding:5px 6px 4px;border-radius:10px;background:transparent;color:var(--ink-3);transition:background .15s,color .15s}
+.st-b:hover{background:#EAF1F9;color:var(--ink)}
+.st-ic{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--card);border:1.5px solid #CBD6E4;color:var(--ink-3);flex:none;transition:all .15s}
+.st-ic svg{width:16px;height:16px}
+.st-tx{font-size:12px;font-weight:600;line-height:1.1;white-space:nowrap}
+.st-tx small{display:none}
+.st.done .st-ic{background:var(--accent);border-color:var(--accent);color:#fff}
+.st.done .st-b{color:var(--ink-2)}
+.st.on .st-ic{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 0 0 4px rgba(1,19,59,.12)}
+.st.on .st-tx{color:var(--ink);font-weight:800}
+.st-side{display:flex;align-items:center;gap:10px;flex:none}
+.st-now{display:none;font-size:13.5px;color:var(--ink-2);font-weight:600}
+.st-now b{color:var(--ink);font-weight:800}
+.st-side .ready{margin:0;padding:0;gap:10px}
+.st-side .ready-t{font-size:13px}
+.st-side .ready-bar{width:90px}
+.st-next svg{width:16px;height:16px}
+/* Menús flotantes */
+#popLayer{position:relative;z-index:80}
+.pop-back{position:fixed;inset:0;z-index:80;background:transparent}
+.pop{position:fixed;z-index:81;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(1,19,59,.18),0 2px 6px rgba(1,19,59,.06)}
+.pop.anim{animation:popin .16s ease-out}
+@keyframes popin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.pop.menu{width:240px;padding:6px}
+.pop.menu button{display:flex;align-items:center;gap:10px;width:100%;height:42px;padding:0 12px;border-radius:10px;font-weight:600;font-size:14px;color:var(--ink);text-align:left}
+.pop.menu button:hover,.pop.menu button:focus-visible{background:#F1F5FA;outline:none}
+.pop.menu button svg{width:18px;height:18px;color:var(--ink-2)}
+.pop.menu button.danger,.pop.menu button.danger svg{color:var(--danger)}
+.pop.menu hr{border:0;border-top:1px solid var(--line);margin:6px 4px}
+.pop.share{width:420px;max-height:calc(100dvh - 90px);overflow:auto;padding:16px 18px 18px}
+.pop-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.pop-h b{font-size:16px;font-weight:700}
+.pop-l{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin:12px 0 8px}
+.fmt{display:flex;flex-direction:column;gap:8px}
+.fmt-o{display:grid;grid-template-columns:40px minmax(0,1fr) 20px;align-items:center;gap:12px;width:100%;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);text-align:left;transition:border-color .15s,background .15s}
+.fmt-o:hover{border-color:#B7CCE3}
+.fmt-o.on{border-color:var(--accent);background:#F4F9FE}
+.fmt-ic{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;background:#EDF3FA;color:var(--accent-strong)}
+.fmt-o.on .fmt-ic{background:var(--accent-strong);color:#fff}
+.fmt-ic svg{width:21px;height:21px}
+.fmt-t b{display:flex;align-items:baseline;gap:6px;font-size:14.5px;font-weight:700;color:var(--ink)}
+.fmt-t em{font-style:normal;font-size:12px;font-weight:600;color:var(--ink-3)}
+.fmt-t small{display:block;font-size:12.5px;line-height:1.35;color:var(--ink-2);margin-top:2px}
+.fmt-r{width:18px;height:18px;border-radius:50%;border:2px solid #B7C4D6}
+.fmt-o.on .fmt-r{border:5px solid var(--accent-strong)}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:12px;background:#EDF3FA}
+.seg2 button{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;border-radius:9px;font-weight:600;font-size:14px;color:var(--ink-2)}
+.seg2 button svg{width:17px;height:17px}
+.seg2 button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(1,19,59,.12)}
+.mailbox{margin-top:10px}
+.mailbox label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.mailbox .input{font-size:15px;padding:11px 12px}
+.pop-hint{font-size:12.5px;line-height:1.45;color:var(--ink-3);margin:8px 0 0}
+.tgl{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px;margin-top:14px;padding:10px 12px;border-radius:12px;background:#F7FAFD;cursor:pointer;position:relative}
+.tgl input{position:absolute;opacity:0;pointer-events:none}
+.tgl-s{width:38px;height:22px;border-radius:999px;background:#C5D2E2;position:relative;transition:background .15s}
+.tgl-s::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .15s}
+.tgl input:checked+.tgl-s{background:var(--accent-strong)}
+.tgl input:checked+.tgl-s::after{transform:translateX(16px)}
+.tgl input:focus-visible+.tgl-s{outline:3px solid rgba(39,143,216,.45);outline-offset:2px}
+.tgl-t b{display:block;font-size:14px;font-weight:600}
+.tgl-t small{font-size:12.5px;color:var(--ink-3)}
+.pop-sum{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.4;color:var(--ink-2);margin:14px 0 12px}
+.pop-sum svg{width:15px;height:15px;flex:none;margin-top:1px;color:#1E7A45}
+.pop .go{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:48px;border-radius:12px;background:var(--primary);color:#fff;font-weight:700;font-size:15.5px}
+.pop .go:hover{background:var(--primary-hover)}
+.pop .go:disabled{opacity:.6}
+.pop .go svg{width:19px;height:19px}
+.pop.sheet-pop{left:0!important;right:0;bottom:0;top:auto!important;width:auto;max-height:88dvh;border-radius:20px 20px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+.pop.sheet-pop.anim{animation:sheetin .2s ease-out}
+.pop.share .go{position:sticky;bottom:0;box-shadow:0 -14px 0 6px var(--card)}
+.pop.menu.sheet-pop{padding:10px 10px calc(10px + env(safe-area-inset-bottom))}
+@keyframes sheetin{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+@media (max-width:719px){ .pop-back{background:rgba(1,19,59,.35)} }
+.a-main{padding:clamp(14px,2.5vw,28px)}
+@media (max-width:1180px){ .st:not(.on) .st-tx{display:none} .st-b{min-width:40px} .st+.st::before{width:clamp(8px,1.2vw,18px)} }
+@media (max-width:1280px){ .st-side .ready-ok{display:none} }
+@media (max-width:1100px){
+  .at-k{display:none}
+  .ib.lbl span{display:none} .ib.lbl{padding:0 10px} .ib .chev{display:none}
+  .ib.lbl.primary span,.st-next span{display:inline}
+  .st-side .ready-t{white-space:nowrap}
+}
+@media (max-width:900px){
+  .a-top{flex-wrap:wrap;gap:8px;padding:8px clamp(14px,2.5vw,28px)}
+  .at-l{flex:1 1 100%}
+  .at-r{flex:1 1 100%;justify-content:flex-end}
+  .at-code{margin-right:auto}
+  .at-div{display:none}
+  .at-n{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .stepper{top:0;position:relative;flex-wrap:wrap;gap:8px}
+  .st-list{flex:1 1 100%;justify-content:space-between}
+  .st-side{flex:1 1 100%;justify-content:space-between;flex-wrap:wrap}
+  .st-side .ready{flex:1 1 auto}
+}
+@media (max-width:719px){
+  .a-top{padding:8px 14px}
+  .a-top .lockup,.at-sep{display:none}
+  .at-code{height:38px;font-size:15px}
+  .ib{height:38px;min-width:38px}
+  .ib.lbl.primary span{display:none}
+  .at-n{font-size:14.5px}
+  .stepper{padding:8px 14px}
+  .st-list{justify-content:space-between;overflow:visible}
+  .st{flex:1 1 auto}
+  .st:first-child{flex:0 0 auto}
+  .st+.st::before{flex:1 1 auto;width:auto;min-width:4px;margin:16px 2px 0}
+  .st-tx,.st.on .st-tx{display:none}
+  .st-b{min-width:0;padding:0}
+  .st-ic{width:30px;height:30px}
+  .st-now{display:block;flex:1 1 100%}
+  .st-next{flex:1 1 100%;justify-content:center}
   .panel{padding:16px}
 }
 /* ================= Panel: tarjetas y gráficas (v1.4) =================
@@ -703,8 +862,7 @@ body.project .hxu i{width:18px;height:21px}
   .sc-t{flex:1;-webkit-line-clamp:1}
   .sc-d{margin:0;padding:0}
   .sc small{margin-left:auto}
-  .ready{margin-left:0;width:100%;justify-content:flex-start}
-  .phasebar{flex-wrap:wrap}
+  .ready{margin-left:0}
 }
 /* Tooltip de las gráficas */
 .vtip{position:fixed;z-index:1000;left:0;top:0;max-width:300px;padding:8px 11px;border-radius:9px;background:var(--card);color:var(--ink);border:1px solid var(--line);font:600 12.5px/1.4 var(--sans);
@@ -771,6 +929,7 @@ body.project .hxu i{width:18px;height:21px}
 <div id="banner"></div>
 <div id="app"></div>
 <div id="qrModal"></div>
+<div id="popLayer"></div>
 <div id="toast" class="toast" role="status"></div>
 <script>
 /* ============================================================
@@ -928,7 +1087,27 @@ const GLYPHS = {
   sweat:'<circle cx="11.2" cy="12.7" r="8.2"/><circle cx="8.4" cy="11.1" r="1.05" fill="currentColor" stroke="none"/><circle cx="14" cy="11.1" r="1.05" fill="currentColor" stroke="none"/><path d="M7.4 16.2c.8-.9 1.4-.9 2.1 0s1.3.9 2.1 0 1.3-.9 2.1 0 1.3.9 2.1 0"/><path d="M19.5 2.6s1.8 2 1.8 3.2a1.8 1.8 0 0 1-3.6 0c0-1.2 1.8-3.2 1.8-3.2z"/>',
   explode:'<path d="M4.9 12.4c0 4.4 3.2 8.2 7.1 8.2s7.1-3.8 7.1-8.2"/><path d="M4.9 12.4l1.9-1.3 1.6 1.3 1.8-1.5 1.7 1.5 1.8-1.5 1.7 1.5 1.6-1.3 1.9 1.3"/><circle cx="9.3" cy="14.6" r="1" fill="currentColor" stroke="none"/><circle cx="14.7" cy="14.6" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="17.8" r="1.2"/><path d="M12 2.4v3.4M7.3 3.9l1.5 2.7M16.7 3.9l-1.5 2.7M4.1 7.4l2.7 1.4M19.9 7.4l-2.7 1.4"/>',
   bulb:'<path d="M9.3 17.7h5.4M10.3 20.7h3.4"/><path d="M12 3.2a5.9 5.9 0 0 0-3.6 10.6c.6.5.9 1.2.9 1.9v.3h5.4v-.3c0-.7.3-1.4.9-1.9A5.9 5.9 0 0 0 12 3.2z"/>',
-  flag:'<path d="M5.5 21V3.8"/><path d="M5.5 4.3h11.5l-2.3 4.1 2.3 4.1H5.5"/>'
+  flag:'<path d="M5.5 21V3.8"/><path d="M5.5 4.3h11.5l-2.3 4.1 2.3 4.1H5.5"/>',
+  arrowleft:'<path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/>',
+  arrowright:'<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',
+  share:'<circle cx="17.5" cy="5.5" r="2.7"/><circle cx="6.5" cy="12" r="2.7"/><circle cx="17.5" cy="18.5" r="2.7"/><path d="M8.9 13.4l6.2 3.7M15.1 6.9l-6.2 3.7"/>',
+  download:'<path d="M12 3.8v11.4"/><path d="M7.2 10.6l4.8 4.8 4.8-4.8"/><path d="M4.5 20.2h15"/>',
+  mail:'<rect x="3" y="5.2" width="18" height="13.6" rx="2.4"/><path d="M3.6 7.2l8.4 6.1 8.4-6.1"/>',
+  qr:'<rect x="3.5" y="3.5" width="6.6" height="6.6" rx="1.3"/><rect x="13.9" y="3.5" width="6.6" height="6.6" rx="1.3"/><rect x="3.5" y="13.9" width="6.6" height="6.6" rx="1.3"/><path d="M13.9 13.9h2.6v2.6h-2.6zM17.9 17.9h2.6v2.6h-2.6zM13.9 18.6v1.9M18.6 13.9h1.9"/>',
+  eye:'<path d="M2.6 12S6 5.6 12 5.6 21.4 12 21.4 12 18 18.4 12 18.4 2.6 12 2.6 12z"/><circle cx="12" cy="12" r="2.9"/>',
+  eyeoff:'<path d="M4 4l16 16"/><path d="M10 5.8a9.6 9.6 0 0 1 2-.2c6 0 9.4 6.4 9.4 6.4a16.6 16.6 0 0 1-2.7 3.5M6.5 7.3C4 9 2.6 12 2.6 12S6 18.4 12 18.4a8.8 8.8 0 0 0 4.2-1.1"/><path d="M9.9 9.9a2.9 2.9 0 0 0 4.2 4.2"/>',
+  monitor:'<rect x="3" y="4" width="18" height="12.4" rx="2.1"/><path d="M8.6 20.4h6.8M12 16.4v4"/>',
+  more:'<circle cx="5.5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="1.5" fill="currentColor" stroke="none"/>',
+  trash:'<path d="M4.5 7h15"/><path d="M9.6 7V4.6h4.8V7"/><path d="M6.6 7l.9 13h9l.9-13"/><path d="M10.2 11v5.4M13.8 11v5.4"/>',
+  copy:'<rect x="8.6" y="8.6" width="11.8" height="11.8" rx="2.1"/><path d="M15.4 8.6V5.7a2.1 2.1 0 0 0-2.1-2.1H5.7a2.1 2.1 0 0 0-2.1 2.1v7.6a2.1 2.1 0 0 0 2.1 2.1h2.9"/>',
+  grid:'<rect x="3.6" y="3.6" width="7" height="7" rx="1.6"/><rect x="13.4" y="3.6" width="7" height="7" rx="1.6"/><rect x="3.6" y="13.4" width="7" height="7" rx="1.6"/><rect x="13.4" y="13.4" width="7" height="7" rx="1.6"/>',
+  chevdown:'<path d="M6.5 9.5l5.5 5.5 5.5-5.5"/>',
+  chart:'<path d="M4 20.5h16.5"/><path d="M6.5 17V11M11.2 17V5.5M15.9 17v-8.2M20.5 17v-4"/>',
+  clipboard:'<rect x="5" y="4.6" width="14" height="16.4" rx="2.2"/><path d="M9 3.2h6v3H9z"/><path d="M8.6 12.3l2.1 2.1 4.6-4.6M8.6 17.4h6.8"/>',
+  sheet:'<path d="M14 3.4H6.6a2.1 2.1 0 0 0-2.1 2.1v13a2.1 2.1 0 0 0 2.1 2.1h10.8a2.1 2.1 0 0 0 2.1-2.1V8.9z"/><path d="M14 3.4v5.5h5.5"/><path d="M8 12.2h8M8 16.2h8M12 12.2v6.4"/>',
+  filecsv:'<path d="M14 3.4H6.6a2.1 2.1 0 0 0-2.1 2.1v13a2.1 2.1 0 0 0 2.1 2.1h10.8a2.1 2.1 0 0 0 2.1-2.1V8.9z"/><path d="M14 3.4v5.5h5.5"/><path d="M8.3 12.6h7.4M8.3 16.4h5"/>',
+  filepdf:'<path d="M14 3.4H6.6a2.1 2.1 0 0 0-2.1 2.1v13a2.1 2.1 0 0 0 2.1 2.1h10.8a2.1 2.1 0 0 0 2.1-2.1V8.9z"/><path d="M14 3.4v5.5h5.5"/><path d="M9 17.6v-3M12 17.6v-5M15 17.6v-2"/>',
+  close:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>'
 };
 function icon(name){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${GLYPHS[name]||GLYPHS.hexagon}</svg>`; }
 function glass(name, o){ o=o||{}; return `<span class="glass t-${o.tone||"blue"}${o.size?" "+o.size:""}${o.tint?" tint":""}"${o.label?` role="img" aria-label="${o.label}"`:' aria-hidden="true"'}>${icon(name)}</span>`; }
@@ -1408,7 +1587,7 @@ function refreshCTA(){ const st=obSteps()[P.step]; const b=$("#obNext"); if(b &&
 
 function renderOnboarding(){
   const steps=obSteps(), st=steps[P.step];
-  $("#app").innerHTML = `<div class="p-shell${st.title.includes("etapas")?" tall-cta":""}">${pTop(true, steps.length, P.step)}
+  $("#app").innerHTML = `<div class="p-shell">${pTop(true, steps.length, P.step)}
     <div class="p-body">
       <p class="p-kicker">Paso ${P.step+1} de ${steps.length}</p>
       <h1 class="p-title">${st.title}</h1>
@@ -1536,7 +1715,7 @@ async function renderPains(){
   const mine=new Set(P.me.etapas||[]);
   const own=s.stages.filter(t=>mine.has(t)), rest=s.stages.filter(t=>!mine.has(t));
   const chip=t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`;
-  $("#app").innerHTML = `<div class="p-shell tall-cta">${pTop(false,0,0,done?"listo":"curso")}
+  $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,done?"listo":"curso")}
     <div class="p-body">
       ${done?doneBlock({title:"Terminaste Dolores", sub:`Publicaste ${P.myCards.length} tarjeta${P.myCards.length===1?"":"s"}. Si recuerdas otra, agrégala abajo.`}):""}
       <div id="mine">${renderMyCards()}</div>
@@ -1552,12 +1731,9 @@ async function renderPains(){
         <div class="chips chips-tasks" id="f-task"></div></div>
       <div class="field" id="toolField" style="display:none"><label>¿Con qué herramienta o archivo? <span class="opt">(opcional)</span></label>
         <div class="chips" id="f-tool"></div></div>
-      <div class="field"><label for="f-sev">¿Qué tanto duele?</label>
-        <div class="slider-wrap">
-          <input type="range" id="f-sev" min="1" max="5" step="1" value="3">
-          <div class="slider-labels"><span>Molesta</span><span>Insoportable</span></div>
-          <div class="sev-now" id="sevNow">3 · ${SEV_LABELS[3]}</div>
-        </div></div>
+      <div class="field"><label id="sevL">¿Qué tanto duele?</label>
+        <div class="sevpick" id="f-sev" role="radiogroup" aria-labelledby="sevL">${[1,2,3,4,5].map(v=>`<button type="button" role="radio" data-v="${v}" aria-checked="${v===3}" class="${v===3?"on":""}"><b>${v}</b><span>${SEV_LABELS[v]}</span></button>`).join("")}</div>
+        <div class="sev-hint"><span>Menos</span><span>Más</span></div></div>
     </div>
     <div class="p-cta">
       <button class="btn btn-primary" id="painGo" disabled>Publicar tarjeta</button>
@@ -1583,7 +1759,7 @@ async function renderPains(){
   };
   $$("#f-stage .chip, #stageMore .chip").forEach(ch=>ch.onclick=()=>{ stage=ch.dataset.t; tool=""; task=""; $$("#f-stage .chip, #stageMore .chip").forEach(x=>x.classList.toggle("on",x===ch)); drawTasks(); drawTools(); val(); });
   $("#f-pain").addEventListener("input",val);
-  $("#f-sev").addEventListener("input",e=>{ sev=+e.target.value; $("#sevNow").textContent=sev+" · "+SEV_LABELS[sev]; });
+  $$("#f-sev button").forEach(b=>b.onclick=()=>{ sev=+b.dataset.v; $$("#f-sev button").forEach(x=>{ const on=x===b; x.classList.toggle("on",on); x.setAttribute("aria-checked",on); }); });
   $("#painGo").onclick=async()=>{ if(P.sending)return; P.sending=true; $("#painGo").disabled=true;
     try{
       await Store.addCard({session_id:s.id, participant_id:P.me.id, texto:$("#f-pain").value.trim(), etapa:stage, actividad:task||null, herramienta:tool||null, severidad:sev});
@@ -1716,7 +1892,7 @@ async function renderQuickwins(){
     const f=$("#qwFinish"); if(f) f.onclick=async()=>{ await setDone("quickwins",true); window.scrollTo(0,0); renderQuickwins(); };
     return;
   }
-  $("#app").innerHTML = `<div class="p-shell tall-cta">${pTop(false,0,0,isDone("quickwins")?"listo":"curso")}
+  $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,isDone("quickwins")?"listo":"curso")}
     <div class="sticky-votes qw-band"><span>Paso ${P.qw.step+1} de ${steps.length} · <b>${KIND_SHORT[k]}</b></span><span class="qw-n"><b id="qwDone">${answered(list)}</b> de ${list.length}</span></div>
     <div class="p-body">
       ${P.qw.step===0?`<p class="p-sub" style="margin:0 0 4px">${steps.length} paso${steps.length===1?"":"s"}: ${steps.map(x=>KIND_SHORT[x].toLowerCase()).join(", ").replace(/, ([^,]*)$/," y $1")}. Contesta desde tu experiencia; son unos minutos.</p>`:""}
@@ -1773,7 +1949,7 @@ async function renderIdeas(){
     armBanner(); return;
   }
   const done=isDone("ideas");
-  $("#app").innerHTML = `<div class="p-shell tall-cta">${pTop(false,0,0,done?"listo":"curso")}
+  $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,done?"listo":"curso")}
     <div class="sticky-votes" id="supBar"></div>
     <div class="p-body">
       <div id="ideasDone">${done?doneBlock({title:"Terminaste Ideas", sub:"Puedes seguir proponiendo o mover tus apoyos mientras la actividad siga abierta.", next:"Resultados"}):""}</div>
@@ -1905,6 +2081,19 @@ async function startParticipant(code){
   if(P.me) renderPhase(); else screenWelcome();
 }
 function setOffline(on){ let b=$("#offline"); if(on && !b){ b=document.createElement("div"); b.id="offline"; b.className="offline"; b.textContent="Sin conexión. Lo que contestes se enviará cuando vuelva."; document.body.appendChild(b); } if(!on && b) b.remove(); }
+
+/* El botón fijo de abajo nunca tapa contenido: el alto real del botón y de la barra superior se pasa a CSS */
+(function fitChrome(){
+  if(!window.ResizeObserver || !window.MutationObserver) return;
+  const root=document.documentElement, ro=new ResizeObserver(()=>measure());
+  let seen=[];
+  function measure(){ const c=document.querySelector(".p-cta"), b=document.querySelector(".p-top.pbar");
+    root.style.setProperty("--cta-h", (c?Math.ceil(c.getBoundingClientRect().height):0)+"px");
+    root.style.setProperty("--pbar-h", (b?Math.ceil(b.getBoundingClientRect().height):0)+"px"); }
+  function watch(){ seen.forEach(el=>ro.unobserve(el)); seen=[...document.querySelectorAll(".p-cta,.p-top.pbar")]; seen.forEach(el=>ro.observe(el)); measure(); }
+  const start=()=>{ const app=document.getElementById("app"); if(!app) return; new MutationObserver(watch).observe(app,{childList:true,subtree:false}); watch(); };
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",start); else start();
+})();
 
 </script>
 <script>
@@ -2052,7 +2241,7 @@ async function adminHome(email){
           <ol class="ah-steps">
             <li><strong>Crea el taller</strong> con una plantilla y ajusta lo que necesites.</li>
             <li><strong>Proyecta el QR</strong>: la sala entra desde su celular.</li>
-            <li><strong>Lleva el ritmo</strong> con la barra de fases y exporta el CSV al final.</li>
+            <li><strong>Lleva el ritmo</strong> con la barra de fases y, al final, usa <strong>Compartir</strong> para bajar Excel, CSV o el PDF.</li>
           </ol>
         </div>
       </aside>
@@ -2161,7 +2350,8 @@ function parseQws(v){ let kind="qw"; const n={qw:0,gate:0,time:0}; const out=[];
     n[kind]++; const it={id:RATING_KINDS[kind].id+"-"+String(n[kind]).padStart(2,"0"), kind, stage, text}; if(help) it.help=help; out.push(it); });
   return out; }
 
-function stopAdmin(){ if(A.unsub) A.unsub(); if(A.poll) clearInterval(A.poll); clearTimeout(A._t); A.unsub=null; A.poll=null; }
+function stopAdmin(){ closePopSafe(); if(A.unsub) A.unsub(); if(A.poll) clearInterval(A.poll); clearTimeout(A._t); A.unsub=null; A.poll=null; }
+function closePopSafe(){ try{ closePop(); }catch(e){} }
 function currentCode(){ return (new URLSearchParams(location.search).get("s")||"").trim().toUpperCase(); }
 
 async function refetchAll(){
@@ -2178,7 +2368,7 @@ function startAdmin(s){
   document.body.classList.add("admin-theme");
   A.session=s; A.participants=[]; A.cards=[]; A.votes=[]; A.qwRatings=[]; A.ideas=[]; A.ideaVotes=[]; A.seen=new Set();
   try{ history.replaceState(null,"",location.pathname+"?s="+encodeURIComponent(s.code)+"#admin"); }catch(e){}
-  const kick=()=>{ clearTimeout(A._t); A._t=setTimeout(async()=>{ await refetchAll(); renderAdmin(); },350); };
+  const kick=()=>{ clearTimeout(A._t); A._t=setTimeout(async()=>{ await refetchAll(); if(!A.hold) renderAdmin(); },350); };
   A.unsub=Store.subscribe(s.id, kick);
   A.poll=setInterval(kick, 8000);
   kick();
@@ -2283,7 +2473,7 @@ function renderAdmin(){
         ${head("Ranking de dolores", votesUsed? `${votesUsed} votos de ${voters} persona${voters===1?"":"s"} · ${vpp} por persona` : `Cada quien reparte ${vpp} votos entre los dolores`)}
         ${votesUsed? renderRank(totals, targets, {voters, top:5}) : emptyState("target","Todavía no hay votos",(A.cards.length? "El ranking se arma en vivo conforme el equipo vota" : "Primero hacen falta tarjetas de dolor"))}
         ${votesUsed? (smallV? foot(`${votesUsed} voto${votesUsed===1?"":"s"} de ${voters} persona${voters===1?"":"s"}`, "El ranking se afina conforme vote el equipo; los retos se definen con 3 o más votantes", "target")
-                     : foot(`Los ${targets.length} más votados se vuelven los retos de la fase de ideas`, `El resto queda en el muro y en el CSV`, "target")) : ""}
+                     : foot(`Los ${targets.length} más votados se vuelven los retos de la fase de ideas`, `El resto queda en el muro y en el Excel`, "target")) : ""}
       </div>`;
 
   const qwT=qwCount(A.qwRatings);
@@ -2445,22 +2635,36 @@ function renderAdmin(){
   else panels=resultsView;
   document.body.classList.toggle("project", !!(A.project && isResults));
 
+  const PH_ICON={lobby:"users",checkin:"cloudsun",pains:"flame",votes:"target",quickwins:"clipboard",ideas:"bulb",results:"chart",closed:"flag"};
+  const nextPh = PHASES[phaseIdx+1];
   $("#app").innerHTML = `<div class="a-shell">
-    <div class="a-top">
-      <span class="brand">${brandLockup("xs")} <span>${esc(s.brand||CONFIG.BRAND)} <span class="brand-by">· ${BRAND_ORG}</span></span></span>
-      <div class="a-head"><span class="a-title" title="${esc(s.name)}">${esc(s.name)}</span><span class="a-code" title="Código de la sesión">${esc(s.code)}</span></div>
-      <div class="a-actions">
-        <button class="abtn" id="btnAuthors">${A.showAuthors?"Ocultar autores":"Mostrar autores"}</button>
-        <button class="abtn" id="btnCSV">Exportar CSV</button>
-        <button class="abtn primary" id="btnQR">QR para entrar</button>
-        <button class="abtn" id="btnBack">Tus talleres</button>
-        <button class="abtn danger" id="btnDel">Borrar taller</button>
+    <header class="a-top">
+      <div class="at-l">
+        <button class="ib" id="btnBack" data-tip="Tus talleres" aria-label="Volver a tus talleres">${icon("arrowleft")}</button>
+        ${brandLockup("xs")}
+        <span class="at-sep" aria-hidden="true"></span>
+        <div class="at-ses"><span class="at-k">${esc(s.brand||CONFIG.BRAND)} · ${BRAND_ORG}</span><span class="at-n" title="${esc(s.name)}">${esc(s.name)}</span></div>
       </div>
-    </div>
-    <div class="phasebar" role="tablist" aria-label="Fase de la sesión">
-      ${PHASES.map((p,i)=>`<button class="phase ${p.id===ph?"on":i<phaseIdx?"done":""}" data-ph="${p.id}">${i+1}. ${p.t}</button>`).join("")}
-      ${ready}${isResults?`<div class="ready"><button class="abtn${A.project?" on":""}" id="btnProject" data-tip="Letra ×1,25, sin metadatos ni contexto: para la pantalla de la sala">${A.project?"Salir de proyección":"Proyectar"}</button></div>`:""}
-    </div>
+      <div class="at-r">
+        <button class="at-code" id="btnCode" data-tip="Código para entrar · clic para copiar" aria-label="Código ${esc(s.code)}, copiar">${esc(s.code)}${icon("copy")}</button>
+        <span class="at-div" aria-hidden="true"></span>
+        <button class="ib lbl${A.showAuthors?" on":""}" id="btnAuthors" aria-pressed="${!!A.showAuthors}" data-tip="${A.showAuthors?"Ocultar":"Mostrar"} quién escribió cada tarjeta e idea">${icon(A.showAuthors?"eye":"eyeoff")}<span>Autores</span></button>
+        <button class="ib lbl${A.pop==="share"?" on":""}" id="btnShare" aria-haspopup="dialog" aria-expanded="${A.pop==="share"}">${icon("share")}<span>Compartir</span><i class="chev">${icon("chevdown")}</i></button>
+        <button class="ib lbl primary" id="btnQR">${icon("qr")}<span>QR para entrar</span></button>
+        <button class="ib${A.pop==="more"?" on":""}" id="btnMore" aria-haspopup="menu" aria-expanded="${A.pop==="more"}" aria-label="Más opciones" data-tip="Más opciones">${icon("more")}</button>
+      </div>
+    </header>
+    <nav class="stepper" aria-label="Fases del taller">
+      <ol class="st-list">${PHASES.map((p,i)=>{ const st=p.id===ph?"on":i<phaseIdx?"done":"todo";
+        return `<li class="st ${st}"><button class="st-b" data-ph="${p.id}"${st==="on"?' aria-current="step"':""} data-tip="${i+1}. ${p.t}${st==="on"?" · en curso":st==="done"?" · hecha":" · clic para abrir"}">
+          <span class="st-ic">${icon(st==="done"?"check":PH_ICON[p.id])}</span><span class="st-tx"><small>${i+1}</small>${p.t}</span></button></li>`; }).join("")}</ol>
+      <div class="st-side">
+        <span class="st-now">Fase ${phaseIdx+1} de ${PHASES.length} · <b>${(PHASES[phaseIdx]||{}).t||""}</b></span>
+        ${ready}
+        ${isResults?`<button class="ib lbl${A.project?" on":""}" id="btnProject" aria-pressed="${!!A.project}" data-tip="Letra ×1,25, sin metadatos ni contexto: para la pantalla de la sala">${icon("monitor")}<span>${A.project?"Salir de proyección":"Proyectar"}</span></button>`:""}
+        ${nextPh?`<button class="ib lbl primary st-next" id="btnNext" data-ph="${nextPh.id}">${nextPh.id==="closed"?"Cerrar taller":"Siguiente: "+nextPh.t}${icon("arrowright")}</button>`:""}
+      </div>
+    </nav>
     <div class="a-main${isResults?" results":""}">
       ${isResults?"":kpis}
       ${panels}
@@ -2469,26 +2673,107 @@ function renderAdmin(){
 
   installTips();
   A.cards.forEach(c=>A.seen.add(c.id)); A.ideas.forEach(i=>A.seen.add(i.id));
-  $$(".phase").forEach(b=>b.onclick=async()=>{
-    const ph=b.dataset.ph;
+  const goPhase=async ph=>{
+    if(ph===s.phase) return;
     if(ph==="closed" && !confirm("¿Cerrar la sesión para todos?")) return;
-    try{ await Store.updateSession(s.id,{phase:ph}); A.session.phase=ph; await refetchAll(); renderAdmin(); }
+    try{ await Store.updateSession(s.id,{phase:ph}); A.session.phase=ph; await refetchAll(); renderAdmin(); window.scrollTo(0,0); }
     catch(e){ console.error(e); toast("No se pudo cambiar la fase: "+friendlyAuthError(e)); }
-  });
-  $("#btnBack").onclick=()=>{ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); adminBoot(); };
-  $("#btnDel").onclick=async()=>{
-    if(!confirm("¿Borrar este taller y TODO lo capturado (participantes, tarjetas, votos, quick wins e ideas)? Exporta el CSV antes si lo necesitas. No se puede deshacer.")) return;
-    try{ await Store.deleteSession(s.id); stopAdmin(); toast("Taller borrado"); history.replaceState(null,"",location.pathname+"#admin"); adminBoot(); }
-    catch(e){ toast("No se pudo borrar: "+friendlyAuthError(e)); }
   };
+  $$(".st-b").forEach(b=>b.onclick=()=>goPhase(b.dataset.ph));
+  const nx=$("#btnNext"); if(nx) nx.onclick=()=>goPhase(nx.dataset.ph);
+  const cur=$(".st.on"); if(cur && cur.scrollIntoView && window.innerWidth<1100){ const l=$(".st-list"); if(l) l.scrollLeft = cur.offsetLeft - l.clientWidth/2 + cur.clientWidth/2; }
+  $("#btnBack").onclick=leaveAdmin;
+  $("#btnCode").onclick=async()=>{ try{ await navigator.clipboard.writeText(s.code); toast("Código copiado: "+s.code); }catch(e){ toast("Código: "+s.code); } };
   $("#btnAuthors").onclick=()=>{ A.showAuthors=!A.showAuthors; renderAdmin(); };
   const bp=$("#btnProject"); if(bp) bp.onclick=()=>{ A.project=!A.project; renderAdmin(); };
   /* «Ver todos» y «Contexto» recuerdan si estaban abiertos (el panel se redibuja cada pocos segundos) */
   $$("details[data-k]").forEach(d=>{ d.open=A.open.has(d.dataset.k); d.addEventListener("toggle",()=>{ if(d.open) A.open.add(d.dataset.k); else A.open.delete(d.dataset.k); }); });
   $$("[data-go]").forEach(a=>a.onclick=e=>{ e.preventDefault(); const t=$(a.dataset.go); if(t) t.scrollIntoView({behavior:"smooth",block:"start"}); });
   $("#btnQR").onclick=showQR;
-  $("#btnCSV").onclick=exportAll;
+  $("#btnShare").onclick=e=>{ e.stopPropagation(); A.pop==="share" ? closePop() : openPop("share"); };
+  $("#btnMore").onclick=e=>{ e.stopPropagation(); A.pop==="more" ? closePop() : openPop("more"); };
+  if(A.pop) placePop();
 }
+
+function leaveAdmin(){ closePop(); stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); adminBoot(); }
+async function deleteWorkshop(){
+  const s=A.session; closePop();
+  if(!confirm("¿Borrar este taller y TODO lo capturado (participantes, tarjetas, votos, validación e ideas)? Descarga el Excel antes si lo necesitas. No se puede deshacer.")) return;
+  try{ await Store.deleteSession(s.id); stopAdmin(); toast("Taller borrado"); history.replaceState(null,"",location.pathname+"#admin"); adminBoot(); }
+  catch(e){ toast("No se pudo borrar: "+friendlyAuthError(e)); }
+}
+
+/* ---------- Menús flotantes (Compartir y ⋯): viven fuera de #app para no cerrarse con el refresco del panel ---------- */
+A.share = {f:"xlsx", h:"download", anon:false, to:""};
+const FMT = {
+  xlsx:{ic:"sheet",   t:"Excel",  ext:".xlsx", d:"Todas las tablas en un libro, con filtros y listas para tablas dinámicas"},
+  csv: {ic:"filecsv", t:"CSV",    ext:".zip",  d:"Un CSV por tabla (UTF-8), para Power BI, Python o R"},
+  pdf: {ic:"filepdf", t:"PDF",    ext:".pdf",  d:"Reporte con gráficas, listo para presentar o enviar"}
+};
+function shareCanFiles(){ try{ return !!(navigator.canShare && navigator.canShare({files:[new File(["x"],"x.txt",{type:"text/plain"})]})); }catch(e){ return false; } }
+function openPop(kind){ A.pop=kind; A.hold=true; renderPop(); const b=$(kind==="share"?"#btnShare":"#btnMore"); if(b){ b.classList.add("on"); b.setAttribute("aria-expanded","true"); } }
+function closePop(){ const L=$("#popLayer"); if(L) L.innerHTML=""; A.pop=null; A.hold=false; $$("#btnShare,#btnMore").forEach(b=>{ b.classList.remove("on"); b.setAttribute("aria-expanded","false"); }); }
+function placePop(){
+  const L=$("#popLayer"), el=L&&L.querySelector(".pop"), b=$(A.pop==="share"?"#btnShare":"#btnMore"); if(!el||!b) return;
+  if(window.innerWidth<720){ el.classList.add("sheet-pop"); el.style.left=el.style.top=""; return; }
+  el.classList.remove("sheet-pop");
+  const r=b.getBoundingClientRect(), w=el.offsetWidth;
+  el.style.top=(r.bottom+8)+"px"; el.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px";
+}
+function renderPop(){
+  const L=$("#popLayer"); if(!L) return;
+  const fresh=!L.querySelector(".pop"), keepScroll=(L.querySelector(".pop")||{}).scrollTop||0;
+  if(A.pop==="more"){
+    L.innerHTML=`<div class="pop-back" id="popBack"></div><div class="pop menu" role="menu" aria-label="Más opciones">
+      <button role="menuitem" id="mnBack">${icon("grid")}<span>Tus talleres</span></button>
+      <button role="menuitem" id="mnAuthors">${icon(A.showAuthors?"eyeoff":"eye")}<span>${A.showAuthors?"Ocultar autores":"Mostrar autores"}</span></button>
+      <button role="menuitem" id="mnQR">${icon("qr")}<span>QR para entrar</span></button>
+      <hr><button role="menuitem" class="danger" id="mnDel">${icon("trash")}<span>Borrar taller</span></button></div>`;
+    $("#mnBack").onclick=leaveAdmin; $("#mnDel").onclick=deleteWorkshop;
+    $("#mnAuthors").onclick=()=>{ closePop(); A.showAuthors=!A.showAuthors; renderAdmin(); };
+    $("#mnQR").onclick=()=>{ closePop(); showQR(); };
+  } else {
+    const S=A.share, F=FMT[S.f], n=(A.participants.length), canF=shareCanFiles();
+    const cnt=`${n} participante${n===1?"":"s"} · ${A.cards.length} dolores · ${A.votes.reduce((a,v)=>a+(v.points||0),0)} votos · ${A.qwRatings.length} respuestas · ${A.ideas.filter(i=>i.kind==="idea").length} ideas`;
+    L.innerHTML=`<div class="pop-back" id="popBack"></div><div class="pop share" role="dialog" aria-modal="false" aria-labelledby="shTitle">
+      <div class="pop-h"><b id="shTitle">Compartir resultados</b><button class="ib sm" id="shX" aria-label="Cerrar">${icon("close")}</button></div>
+      <p class="pop-l">1 · Formato</p>
+      <div class="fmt" role="radiogroup" aria-label="Formato">${Object.entries(FMT).map(([k,o])=>`<button role="radio" aria-checked="${S.f===k}" class="fmt-o${S.f===k?" on":""}" data-f="${k}">
+        <span class="fmt-ic">${icon(o.ic)}</span><span class="fmt-t"><b>${o.t}<em>${o.ext}</em></b><small>${o.d}</small></span><span class="fmt-r" aria-hidden="true"></span></button>`).join("")}</div>
+      <p class="pop-l">2 · ¿Cómo lo compartes?</p>
+      <div class="seg2" role="radiogroup" aria-label="Medio"><button role="radio" aria-checked="${S.h==="download"}" class="${S.h==="download"?"on":""}" data-h="download">${icon("download")}Descargar</button><button role="radio" aria-checked="${S.h==="mail"}" class="${S.h==="mail"?"on":""}" data-h="mail">${icon("mail")}Por correo</button></div>
+      ${S.h==="mail"?`<div class="mailbox">${canF?"":`<label for="shTo">Para <span class="opt">(opcional)</span></label><input id="shTo" class="input" type="email" multiple autocomplete="email" placeholder="nombre@empresa.com, otra@empresa.com" value="${esc(S.to)}">`}
+        <p class="pop-hint">${canF?"Se abre el menú de compartir de tu equipo: elige Correo u Outlook y el archivo va adjunto.":"Se descarga el archivo y se abre tu correo con el mensaje listo. Arrastra el archivo desde Descargas para adjuntarlo."}</p></div>`:""}
+      <label class="tgl"><input type="checkbox" id="shAnon" ${S.anon?"checked":""}><span class="tgl-s" aria-hidden="true"></span><span class="tgl-t"><b>Anonimizar participantes</b><small>Cambia nombres por P01, P02… (útil para enviarlo al cliente)</small></span></label>
+      <p class="pop-sum">${icon("check")}<span>Incluye ${cnt}</span></p>
+      <button class="go" id="shGo">${icon(S.h==="mail"?"mail":"download")}<span>${S.h==="mail"?"Enviar "+F.t+" por correo":"Descargar "+F.t}</span></button>
+    </div>`;
+    $$(".fmt-o").forEach(b=>b.onclick=()=>{ A.share.f=b.dataset.f; renderPop(); });
+    $$(".seg2 button").forEach(b=>b.onclick=()=>{ A.share.h=b.dataset.h; renderPop(); });
+    const to=$("#shTo"); if(to) to.oninput=()=>A.share.to=to.value;
+    $("#shAnon").onchange=e=>{ A.share.anon=e.target.checked; };
+    $("#shX").onclick=closePop;
+    $("#shGo").onclick=runShare;
+  }
+  $("#popBack").onclick=closePop;
+  const pop=L.querySelector(".pop"); if(fresh) pop.classList.add("anim"); else pop.scrollTop=keepScroll;
+  placePop();
+  if(fresh){ const first=L.querySelector(".pop button"); if(first) first.focus({preventScroll:true}); }
+}
+async function runShare(){
+  const S=A.share, go=$("#shGo"); if(!go||go.disabled) return;
+  go.disabled=true; const lbl=go.querySelector("span").textContent; go.querySelector("span").textContent="Generando…";
+  try{
+    const ds=buildExport({anon:S.anon});
+    const f = S.f==="xlsx" ? await exportXLSX(ds) : S.f==="csv" ? await exportCSVZip(ds) : await exportPDF(ds);
+    const r=await deliver(f, S.h, S.to);
+    if(r==="cancel"){ go.disabled=false; go.querySelector("span").textContent=lbl; return; }
+    closePop();
+    toast(r==="download" ? `Descargado: ${f.name}` : r==="shared" ? "Listo, compartido" : `Descargado ${f.name} · se abrió tu correo para adjuntarlo`);
+  }catch(e){ console.error(e); toast("No se pudo generar el archivo: "+(e&&e.message||e)); go.disabled=false; go.querySelector("span").textContent=lbl; }
+}
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && A.pop) closePop(); });
+window.addEventListener("resize",()=>{ if(A.pop) placePop(); });
 
 /* Etapas del muro en el orden del proceso (las no configuradas van al final) */
 function orderStages(s, list){
@@ -2660,33 +2945,6 @@ function showQR(){
   $("#qrCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(url); toast("Liga copiada"); }catch(e){ toast(url); } };
 }
 
-function exportAll(){
-  const s=A.session, byId=Object.fromEntries(A.participants.map(p=>[p.id,p]));
-  const totals={}; A.votes.forEach(v=>totals[v.card_id]=(totals[v.card_id]||0)+(v.points||0));
-  const cardById=Object.fromEntries(A.cards.map(c=>[c.id,c]));
-  const iTot={}; A.ideaVotes.forEach(v=>iTot[v.idea_id]=(iTot[v.idea_id]||0)+1);
-  const name = p => ((p.nombre||"")+" "+(p.apellido||"")).trim();
-  downloadCSV(`colmena_${s.code}_participantes.csv`,
-    [["nombre","apellido","area","rol","etapas","avatar","animo","expectativa","hora_entrada"],
-     ...A.participants.map(p=>[p.nombre,p.apellido,p.area,p.rol,(p.etapas||[]).join(" | "),p.emoji,p.mood,p.expectativa,p.joined_at])]);
-  downloadCSV(`colmena_${s.code}_dolores.csv`,
-    [["dolor","etapa","actividad","herramienta","severidad","votos","autor","area_autor","rol_autor","hora"],
-     ...A.cards.map(c=>{const a=byId[c.participant_id]||{};return [c.texto,c.etapa,c.actividad||"",c.herramienta||"",c.severidad,totals[c.id]||0,name(a),a.area||"",a.rol||"",c.created_at];})]);
-  if((s.quickwins||[]).length || A.ideas.some(i=>i.kind==="qw")){
-    const t=qwCount(A.qwRatings);
-    const lab=(k,v)=>scaleLabel(k,v);
-    downloadCSV(`colmena_${s.code}_quickwins.csv`,
-      [["id","tipo","etapa","texto","origen","puntaje_3","puntaje_2","puntaje_1","puntaje_0","escala_3_2_1_0","indice_0_100","lo_mas_comun","autor","area_autor"],
-       ...(s.quickwins||[]).map(q=>{const k=kindOf(q), st=qwStats(t[q.id],k);return [q.id,RATING_KINDS[k].t,q.stage,q.text,k==="qw"?"lámina del cliente":"LOCFY24",st.m,st.a,st.p,st.na,[3,2,1,0].map(v=>lab(k,v)).join(" / "),st.idx??"",k==="time"&&st.mode!==null?lab(k,st.mode):"","",""];}),
-       ...A.ideas.filter(i=>i.kind==="qw").map(i=>{const a=byId[i.participant_id]||{};return ["","Propuesta del equipo",i.etapa||"",i.texto,"propuesto en el workshop","","","","","","","",name(a),a.area||""];})]);
-  }
-  if(A.ideas.some(i=>i.kind==="idea")){
-    downloadCSV(`colmena_${s.code}_ideas.csv`,
-      [["reto_dolor","etapa_reto","idea","apoyos","autor","area_autor","rol_autor","hora"],
-       ...A.ideas.filter(i=>i.kind==="idea").map(i=>{const a=byId[i.participant_id]||{}, c=cardById[i.card_id]||{};return [c.texto||"",c.etapa||"",i.texto,iTot[i.id]||0,name(a),a.area||"",a.rol||"",i.created_at];})]);
-  }
-  toast("CSV descargados: participantes, dolores, validación (quick wins, reglas, tiempos) e ideas");
-}
 
 /* ============================================================
    Arranque
@@ -2716,6 +2974,602 @@ async function boot(){
 }
 window.addEventListener("hashchange",()=>location.reload());
 boot();
+
+</script>
+<script>
+/* ============================================================
+   Exportación v1.5: un solo conjunto de tablas para Excel, CSV y PDF
+   - Todas las tablas salen de los datos crudos del facilitador (A.*).
+   - IDs estables y legibles (P01, D01, I01…) para cruzar tablas.
+   - Tipos: texto, entero, decimal, fecha-hora (hora local) y 1/0.
+   ============================================================ */
+const ANIMALS = {"🦁":"León","🦊":"Zorro","🐼":"Panda","🐸":"Rana","🦉":"Búho","🐙":"Pulpo","🦄":"Unicornio","🐝":"Abeja","🐬":"Delfín","🦋":"Mariposa","🐨":"Koala","🐯":"Tigre","🐧":"Pingüino","🐢":"Tortuga","🦩":"Flamenco","🐰":"Conejo"};
+const PHASE_DONE = [["checkin","termino_checkin"],["pains","termino_dolores"],["votes","termino_votacion"],["quickwins","termino_validacion"],["ideas","termino_ideas"]];
+const pad2 = n => String(n).padStart(2,"0");
+const ymd = d => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+/* Texto limpio: sin saltos de línea ni espacios dobles (así ningún CSV se rompe al abrirlo) */
+const clean = v => v==null ? "" : String(v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g,"").replace(/\s*[\r\n]+\s*/g," / ").replace(/\s{2,}/g," ").trim();
+const toDate = v => { if(!v) return null; const d=new Date(v); return isNaN(d) ? null : d; };
+const round1 = x => x==null||isNaN(x) ? null : Math.round(x*10)/10;
+const stageNum = t => { const m=String(t||"").match(/^(\d+)\b/); return m ? +m[1] : null; };
+const taskNum  = t => { const m=String(t||"").match(/^(\d+(?:\.\d+)*)\s+/); return m ? m[1] : ""; };
+const taskText = t => String(t||"").replace(/^\d+(?:\.\d+)*\s+/,"");
+
+/* Arma todas las tablas. opts.anon = true cambia nombres por su ID (P01…) */
+function buildExport(opts){
+  opts=opts||{};
+  const s=A.session, stages=s.stages||[], qws=s.quickwins||[];
+  const P=[...A.participants].sort((a,b)=>String(a.joined_at).localeCompare(String(b.joined_at)));
+  const pid={}; P.forEach((p,i)=>pid[p.id]="P"+pad2(i+1));
+  const pById=Object.fromEntries(P.map(p=>[p.id,p]));
+  const who = id => { const p=pById[id]; if(!p) return ""; return opts.anon ? pid[id] : clean(((p.nombre||"")+" "+(p.apellido||"")).trim()); };
+  const areaOf = id => clean((pById[id]||{}).area), rolOf = id => clean((pById[id]||{}).rol);
+  const mine = (id, etapa) => ((pById[id]||{}).etapas||[]).includes(etapa) ? 1 : 0;
+
+  const C=[...A.cards].sort((a,b)=>String(a.created_at).localeCompare(String(b.created_at)));
+  const did={}; C.forEach((c,i)=>did[c.id]="D"+pad2(i+1));
+  const votes=A.votes.filter(v=>(v.points||0)>0);
+  const vTot={}, vPeople={}; votes.forEach(v=>{ vTot[v.card_id]=(vTot[v.card_id]||0)+v.points; (vPeople[v.card_id]=vPeople[v.card_id]||new Set()).add(v.participant_id); });
+  const ranked=[...C].filter(c=>vTot[c.id]).sort((a,b)=> vTot[b.id]-vTot[a.id] || String(a.created_at).localeCompare(String(b.created_at)));
+  const rankOf={}; ranked.forEach((c,i)=>rankOf[c.id]=i+1);
+  const targets=topPains(A.cards, vTot, s.idea_top||3); const retoOf={}; targets.forEach((c,i)=>retoOf[c.id]=i+1);
+
+  const ideasAll=[...A.ideas].sort((a,b)=>String(a.created_at).localeCompare(String(b.created_at)));
+  const IDEAS=ideasAll.filter(i=>i.kind==="idea"), PROPS=ideasAll.filter(i=>i.kind==="qw");
+  const iid={}; IDEAS.forEach((x,i)=>iid[x.id]="I"+pad2(i+1));
+  const prid={}; PROPS.forEach((x,i)=>prid[x.id]="PR"+pad2(i+1));
+  const iTot={}; A.ideaVotes.forEach(v=>iTot[v.idea_id]=(iTot[v.idea_id]||0)+1);
+  const ideaRank={}; targets.forEach(c=>{ IDEAS.filter(x=>x.card_id===c.id).sort((a,b)=>(iTot[b.id]||0)-(iTot[a.id]||0)||String(a.created_at).localeCompare(String(b.created_at))).forEach((x,i)=>ideaRank[x.id]=i+1); });
+
+  const qById=Object.fromEntries(qws.map(q=>[q.id,q]));
+  const qT=qwCount(A.qwRatings);
+  const KT = k => ({qw:"Quick win",gate:"Regla del nuevo flujo",time:"Tiempo de la etapa"}[k]);
+  const scaleTxt = k => RATING_KINDS[k].scale.map(o=>`${o.v} = ${o.t}`).join(" · ");
+  const statOf = q => qwStats(qT[q.id], kindOf(q));
+
+  const T=[];   /* {key, title, desc, cols:[{k,h,t,w,d}], rows:[{}]} */
+  const table=(key,title,desc,cols,rows)=>{ T.push({key,title,desc,cols,rows}); };
+
+  /* 1 · Taller */
+  const exp=new Date();
+  table("taller","Taller","Datos generales del taller y de la exportación (una fila por dato).",
+    [{k:"campo",h:"campo",t:"s",w:30,d:"Nombre del dato"},{k:"valor",h:"valor",t:"s",w:70,d:"Valor"}],
+    [["Taller",s.name],["Código",s.code],["Facilita",s.facilitator],["Marca",s.brand||CONFIG.BRAND],["Creado",toDate(s.created_at)],["Fase al exportar",(PHASES.find(p=>p.id===s.phase)||{}).t||s.phase],
+     ["Exportado",exp],["Zona horaria",(Intl.DateTimeFormat().resolvedOptions().timeZone||"")+" (todas las horas están en hora local)"],
+     ["Nombres",opts.anon?"Anonimizados: cada persona aparece con su ID (P01, P02…)":"Con nombre y apellido"],
+     ["Votos por persona",s.votes_per_user],["Apoyos a ideas por persona",s.idea_votes||3],["Retos para ideas",s.idea_top||3],
+     ["Etapas del proceso",stages.length+" · "+stages.join(" | ")],["Áreas configuradas",(s.areas||[]).join(" | ")],["Roles configurados",(s.roles||[]).join(" | ")],
+     ["Pregunta de check-in",s.q_checkin],["Pregunta de expectativa",s.q_expect],["Pregunta de dolores",s.q_pain],["Pregunta de ideas",s.q_idea],
+     ["Participantes",P.length],["Dolores",C.length],["Votos emitidos",votes.reduce((a,v)=>a+v.points,0)],["Respuestas de validación",A.qwRatings.length],
+     ["Ideas",IDEAS.length],["Apoyos a ideas",A.ideaVotes.length],["Quick wins propuestos",PROPS.length]
+    ].map(([campo,valor])=>({campo, valor: valor instanceof Date ? valor : (typeof valor==="number" ? valor : clean(valor))})));
+
+  /* 2 · Participantes */
+  const pCols=[{k:"participante_id",h:"participante_id",t:"s",w:14,d:"ID del participante en esta exportación (orden de llegada)"},
+    {k:"nombre",h:"nombre",t:"s",w:16,d:"Nombre (o ID si se anonimizó)"},{k:"apellido",h:"apellido",t:"s",w:16,d:"Apellido (vacío si se anonimizó)"},
+    {k:"area",h:"area",t:"s",w:18,d:"Área elegida en el registro"},{k:"rol",h:"rol",t:"s",w:24,d:"Rol elegido en el registro"},
+    {k:"etapas",h:"etapas",t:"s",w:40,d:"Etapas en las que participa, separadas por « | »"},{k:"n_etapas",h:"n_etapas",t:"n",w:10,d:"Cuántas etapas marcó"},
+    {k:"participa_todas",h:"participa_todas",t:"b",w:14,d:"1 si marcó todas las etapas"},{k:"avatar",h:"avatar",t:"s",w:12,d:"Animal elegido como avatar"},
+    {k:"animo",h:"animo",t:"s",w:20,d:"Ánimo del check-in"},{k:"animo_codigo",h:"animo_codigo",t:"s",w:13,d:"Código del ánimo (pila, bien, neutral, saturado, rebasado)"},
+    {k:"expectativa",h:"expectativa",t:"s",w:44,d:"Expectativa escrita en el check-in"},{k:"hora_entrada",h:"hora_entrada",t:"d",w:18,d:"Fecha y hora de registro"},
+    ...PHASE_DONE.map(([ph,k])=>({k,h:k,t:"b",w:12,d:`1 si marcó «terminé» en ${(PHASES.find(x=>x.id===ph)||{}).t}`})),
+    {k:"dolores_publicados",h:"dolores_publicados",t:"n",w:12,d:"Tarjetas de dolor que publicó"},{k:"votos_emitidos",h:"votos_emitidos",t:"n",w:12,d:"Votos que repartió"},
+    {k:"respuestas_validacion",h:"respuestas_validacion",t:"n",w:12,d:"Preguntas de validación que contestó"},{k:"ideas_publicadas",h:"ideas_publicadas",t:"n",w:12,d:"Ideas que publicó"},
+    {k:"apoyos_dados",h:"apoyos_dados",t:"n",w:12,d:"Apoyos que dio a ideas de otros"},{k:"apoyos_recibidos",h:"apoyos_recibidos",t:"n",w:12,d:"Apoyos que recibieron sus ideas"},
+    {k:"propuestas",h:"propuestas",t:"n",w:12,d:"Quick wins nuevos que propuso"}];
+  table("participantes","Participantes","Una fila por persona registrada.",pCols, P.map(p=>{
+    const m=MOODS.find(x=>x.v===p.mood), et=p.etapas||[], dn=p.done_phases||[];
+    const r={participante_id:pid[p.id], nombre:opts.anon?pid[p.id]:clean(p.nombre), apellido:opts.anon?"":clean(p.apellido), area:clean(p.area), rol:clean(p.rol),
+      etapas:et.map(clean).join(" | "), n_etapas:et.length, participa_todas: stages.length && et.length===stages.length ? 1 : 0,
+      avatar:ANIMALS[p.emoji]||clean(p.emoji), animo:m?m.t:"", animo_codigo:p.mood||"", expectativa:clean(p.expectativa), hora_entrada:toDate(p.joined_at),
+      dolores_publicados:C.filter(c=>c.participant_id===p.id).length, votos_emitidos:votes.filter(v=>v.participant_id===p.id).reduce((a,v)=>a+v.points,0),
+      respuestas_validacion:A.qwRatings.filter(x=>x.participant_id===p.id).length, ideas_publicadas:IDEAS.filter(x=>x.participant_id===p.id).length,
+      apoyos_dados:A.ideaVotes.filter(x=>x.participant_id===p.id).length, apoyos_recibidos:IDEAS.filter(x=>x.participant_id===p.id).reduce((a,x)=>a+(iTot[x.id]||0),0),
+      propuestas:PROPS.filter(x=>x.participant_id===p.id).length};
+    PHASE_DONE.forEach(([ph,k])=>r[k]=dn.includes(ph)?1:0);
+    return r; }));
+
+  /* 3 · Etapas por participante (formato largo, para cruzar con dolores y validación) */
+  table("participante_etapas","Etapas por participante","Una fila por persona y etapa en la que dijo participar.",
+    [{k:"participante_id",h:"participante_id",t:"s",w:14,d:"ID del participante"},{k:"participante",h:"participante",t:"s",w:22,d:"Nombre (o ID)"},
+     {k:"area",h:"area",t:"s",w:18,d:"Área"},{k:"rol",h:"rol",t:"s",w:24,d:"Rol"},{k:"etapa_num",h:"etapa_num",t:"n",w:10,d:"Número de la etapa (vacío en etapas sin número)"},{k:"etapa",h:"etapa",t:"s",w:40,d:"Etapa"}],
+    P.flatMap(p=>(p.etapas||[]).map(e=>({participante_id:pid[p.id], participante:who(p.id), area:areaOf(p.id), rol:rolOf(p.id), etapa_num:stageNum(e), etapa:clean(e)}))));
+
+  /* 4 · Dolores */
+  table("dolores","Dolores","Una fila por tarjeta de dolor, con sus votos y si se volvió reto.",
+    [{k:"dolor_id",h:"dolor_id",t:"s",w:10,d:"ID de la tarjeta (orden de publicación)"},{k:"texto",h:"texto",t:"s",w:60,d:"Lo que escribió la persona"},
+     {k:"etapa_num",h:"etapa_num",t:"n",w:10,d:"Número de la etapa"},{k:"etapa",h:"etapa",t:"s",w:32,d:"Etapa del proceso"},
+     {k:"actividad_num",h:"actividad_num",t:"s",w:12,d:"Número de la actividad LOCFY24 como texto (p. ej. 3.10). Para ordenar usa actividad_etapa y actividad_orden"},
+     {k:"actividad_etapa",h:"actividad_etapa",t:"n",w:12,d:"Primer número de la actividad (la etapa), p. ej. 3 en 3.10"},{k:"actividad_orden",h:"actividad_orden",t:"n",w:12,d:"Segundo número de la actividad, p. ej. 10 en 3.10"},{k:"actividad",h:"actividad",t:"s",w:40,d:"Actividad del proceso (opcional)"},
+     {k:"herramienta",h:"herramienta",t:"s",w:26,d:"Herramienta o archivo (opcional)"},{k:"severidad",h:"severidad",t:"n",w:10,d:"Qué tanto duele, de 1 a 5"},
+     {k:"severidad_texto",h:"severidad_texto",t:"s",w:16,d:"Etiqueta de la severidad"},{k:"votos",h:"votos",t:"n",w:9,d:"Votos recibidos"},
+     {k:"votantes",h:"votantes",t:"n",w:10,d:"Personas distintas que votaron por ella"},{k:"lugar_ranking",h:"lugar_ranking",t:"n",w:12,d:"Lugar en el ranking por votos (vacío si no tuvo votos)"},
+     {k:"es_reto",h:"es_reto",t:"b",w:9,d:"1 si fue uno de los retos de la fase de ideas"},{k:"reto_num",h:"reto_num",t:"n",w:9,d:"Número de reto"},
+     {k:"ideas",h:"ideas",t:"n",w:9,d:"Ideas propuestas para esta tarjeta"},
+     {k:"participante_id",h:"participante_id",t:"s",w:14,d:"ID de quien la escribió"},{k:"autor",h:"autor",t:"s",w:22,d:"Quien la escribió (o ID)"},
+     {k:"area_autor",h:"area_autor",t:"s",w:18,d:"Área de quien la escribió"},{k:"rol_autor",h:"rol_autor",t:"s",w:24,d:"Rol de quien la escribió"},
+     {k:"autor_participa_en_etapa",h:"autor_participa_en_etapa",t:"b",w:14,d:"1 si la etapa está entre las que la persona dijo trabajar"},
+     {k:"hora",h:"hora",t:"d",w:18,d:"Fecha y hora de publicación"}],
+    C.map(c=>({dolor_id:did[c.id], texto:clean(c.texto), etapa_num:stageNum(c.etapa), etapa:clean(c.etapa), actividad_num:taskNum(c.actividad), actividad_etapa:(taskNum(c.actividad).split(".")[0]||null)&&+taskNum(c.actividad).split(".")[0], actividad_orden:taskNum(c.actividad).split(".")[1]?+taskNum(c.actividad).split(".")[1]:null, actividad:clean(taskText(c.actividad)),
+      herramienta:clean(c.herramienta), severidad:+c.severidad||null, severidad_texto:SEV_LABELS[c.severidad]||"", votos:vTot[c.id]||0, votantes:(vPeople[c.id]||new Set()).size,
+      lugar_ranking:rankOf[c.id]||null, es_reto:retoOf[c.id]?1:0, reto_num:retoOf[c.id]||null, ideas:IDEAS.filter(x=>x.card_id===c.id).length,
+      participante_id:pid[c.participant_id]||"", autor:who(c.participant_id), area_autor:areaOf(c.participant_id), rol_autor:rolOf(c.participant_id),
+      autor_participa_en_etapa:mine(c.participant_id,c.etapa), hora:toDate(c.created_at)})));
+
+  /* 5 · Votos (detalle) */
+  table("votos","Votos","Una fila por persona y tarjeta que votó (con los puntos que le dio).",
+    [{k:"participante_id",h:"participante_id",t:"s",w:14,d:"ID de quien votó"},{k:"votante",h:"votante",t:"s",w:22,d:"Quien votó (o ID)"},{k:"area",h:"area",t:"s",w:18,d:"Área de quien votó"},{k:"rol",h:"rol",t:"s",w:24,d:"Rol de quien votó"},
+     {k:"dolor_id",h:"dolor_id",t:"s",w:10,d:"Tarjeta votada"},{k:"dolor",h:"dolor",t:"s",w:50,d:"Texto de la tarjeta"},{k:"etapa",h:"etapa",t:"s",w:32,d:"Etapa de la tarjeta"},
+     {k:"puntos",h:"puntos",t:"n",w:8,d:"Votos que le dio a esa tarjeta"},{k:"voto_propio",h:"voto_propio",t:"b",w:11,d:"1 si votó por su propia tarjeta"},
+     {k:"es_su_etapa",h:"es_su_etapa",t:"b",w:11,d:"1 si la etapa está entre las suyas"},{k:"hora",h:"hora",t:"d",w:18,d:"Fecha y hora del voto"}],
+    votes.map(v=>{ const c=A.cards.find(x=>x.id===v.card_id)||{}; return {participante_id:pid[v.participant_id]||"", votante:who(v.participant_id), area:areaOf(v.participant_id), rol:rolOf(v.participant_id),
+      dolor_id:did[v.card_id]||"", dolor:clean(c.texto), etapa:clean(c.etapa), puntos:v.points, voto_propio:c.participant_id===v.participant_id?1:0, es_su_etapa:mine(v.participant_id,c.etapa), hora:toDate(v.created_at)}; })
+      .sort((a,b)=>a.participante_id.localeCompare(b.participante_id)||a.dolor_id.localeCompare(b.dolor_id)));
+
+  /* 6 · Validación: respuestas una por una */
+  table("validacion_respuestas","Validación · respuestas","Una fila por persona y pregunta contestada (quick wins, reglas y tiempos).",
+    [{k:"participante_id",h:"participante_id",t:"s",w:14,d:"ID de quien contestó"},{k:"participante",h:"participante",t:"s",w:22,d:"Quien contestó (o ID)"},{k:"area",h:"area",t:"s",w:18,d:"Área"},{k:"rol",h:"rol",t:"s",w:24,d:"Rol"},
+     {k:"tipo",h:"tipo",t:"s",w:20,d:"Quick win, Regla del nuevo flujo o Tiempo de la etapa"},{k:"item_id",h:"item_id",t:"s",w:9,d:"ID de la pregunta (QW-01, RG-01, TM-01…)"},
+     {k:"etapa",h:"etapa",t:"s",w:32,d:"Etapa de la pregunta"},{k:"texto",h:"texto",t:"s",w:56,d:"Texto de la pregunta"},
+     {k:"valor",h:"valor",t:"n",w:8,d:"Respuesta en número (ver columna escala)"},{k:"respuesta",h:"respuesta",t:"s",w:18,d:"Respuesta en texto"},
+     {k:"escala",h:"escala",t:"s",w:44,d:"Significado de cada valor para ese tipo de pregunta"},
+     {k:"cuenta_para_indice",h:"cuenta_para_indice",t:"b",w:12,d:"0 si contestó «No aplica» / «No me toca» (no entra al índice)"},
+     {k:"es_su_etapa",h:"es_su_etapa",t:"b",w:11,d:"1 si la etapa de la pregunta está entre las suyas"},{k:"hora",h:"hora",t:"d",w:18,d:"Fecha y hora de la última respuesta"}],
+    A.qwRatings.map(r=>{ const q=qById[r.qw_id]||{id:r.qw_id,stage:"",text:"(pregunta ya no está en la lista)"}; const k=kindOf(q);
+      return {participante_id:pid[r.participant_id]||"", participante:who(r.participant_id), area:areaOf(r.participant_id), rol:rolOf(r.participant_id), tipo:KT(k), item_id:r.qw_id,
+        etapa:clean(q.stage), texto:clean(q.text), valor:r.score, respuesta:scaleLabel(k,r.score), escala:scaleTxt(k), cuenta_para_indice: k==="time"||r.score>0 ? 1 : 0,
+        es_su_etapa:mine(r.participant_id,q.stage), hora:toDate(r.created_at)}; })
+      .sort((a,b)=>a.participante_id.localeCompare(b.participante_id)||a.item_id.localeCompare(b.item_id)));
+
+  /* 7 · Validación: resumen por pregunta */
+  const lugar={}; ["qw","gate","time"].forEach(k=>{ qws.filter(q=>kindOf(q)===k).map(q=>({q,st:statOf(q)})).filter(x=>x.st.idx!==null)
+      .sort((a,b)=>b.st.idx-a.st.idx || b.st.m-a.st.m).forEach((x,i)=>lugar[x.q.id]=i+1); });
+  table("validacion_resumen","Validación · resumen","Una fila por pregunta con el conteo de cada respuesta, el índice y lo más común.",
+    [{k:"item_id",h:"item_id",t:"s",w:9,d:"ID de la pregunta"},{k:"tipo",h:"tipo",t:"s",w:20,d:"Tipo de pregunta"},{k:"etapa_num",h:"etapa_num",t:"n",w:10,d:"Número de la etapa"},{k:"etapa",h:"etapa",t:"s",w:32,d:"Etapa"},
+     {k:"texto",h:"texto",t:"s",w:56,d:"Texto de la pregunta"},{k:"explicacion",h:"explicacion",t:"s",w:50,d:"Explicación «¿Qué significa?» que vio el participante"},
+     {k:"respuestas",h:"respuestas",t:"n",w:11,d:"Personas que contestaron"},
+     {k:"n_3",h:"n_3",t:"n",w:7,d:"Cuántos contestaron el valor 3 (Mucho · Ayuda · Más de 2 semanas)"},{k:"n_2",h:"n_2",t:"n",w:7,d:"Cuántos contestaron el valor 2 (Algo · Me da igual · 1 a 2 semanas)"},
+     {k:"n_1",h:"n_1",t:"n",w:7,d:"Cuántos contestaron el valor 1 (Poco · Estorba · 1 a 5 días)"},{k:"n_0",h:"n_0",t:"n",w:7,d:"Cuántos contestaron el valor 0 (No aplica · No me toca · Menos de 1 día)"},
+     {k:"pct_3",h:"pct_3",t:"f",w:8,d:"% de las respuestas con valor 3 (0–100)"},{k:"pct_2",h:"pct_2",t:"f",w:8,d:"% con valor 2"},{k:"pct_1",h:"pct_1",t:"f",w:8,d:"% con valor 1"},{k:"pct_0",h:"pct_0",t:"f",w:8,d:"% con valor 0"},
+     {k:"escala",h:"escala",t:"s",w:44,d:"Significado de cada valor"},
+     {k:"indice_0_100",h:"indice_0_100",t:"n",w:12,d:"Quick wins y reglas: 3 = 100, 2 = 50, 1 = 0 (el 0 no cuenta). Tiempos: duración promedio en escala 0–100"},
+     {k:"lo_mas_comun",h:"lo_mas_comun",t:"s",w:18,d:"Respuesta más frecuente"},{k:"acuerdo_pct",h:"acuerdo_pct",t:"f",w:11,d:"% de personas que dieron la respuesta más frecuente"},
+     {k:"lugar_en_su_tipo",h:"lugar_en_su_tipo",t:"n",w:12,d:"Lugar por índice dentro de su tipo (1 = más alto)"},
+     {k:"pocas_respuestas",h:"pocas_respuestas",t:"b",w:12,d:"1 si contestaron menos de 3 personas (tomar con cautela)"}],
+    qws.map(q=>{ const k=kindOf(q), st=statOf(q), n=st.m+st.a+st.p+st.na, cnt=[st.na,st.p,st.a,st.m];
+      const mx=Math.max(...cnt), modeV = n ? (k==="time" ? st.mode : [3,2,1,0].find(v=>cnt[v]===mx)) : null;
+      const pc = x => n ? round1(x/n*100) : null;
+      return {item_id:q.id, tipo:KT(k), etapa_num:stageNum(q.stage), etapa:clean(q.stage), texto:clean(q.text), explicacion:clean(q.help), respuestas:n,
+        n_3:st.m, n_2:st.a, n_1:st.p, n_0:st.na, pct_3:pc(st.m), pct_2:pc(st.a), pct_1:pc(st.p), pct_0:pc(st.na), escala:scaleTxt(k),
+        indice_0_100:st.idx, lo_mas_comun: modeV==null?"":scaleLabel(k,modeV), acuerdo_pct: n?round1(mx/n*100):null, lugar_en_su_tipo:lugar[q.id]||null, pocas_respuestas: n<3?1:0}; }));
+
+  /* 8 · Ideas */
+  table("ideas","Ideas","Una fila por idea «¿Cómo podríamos…?», con el reto al que responde y sus apoyos.",
+    [{k:"idea_id",h:"idea_id",t:"s",w:9,d:"ID de la idea"},{k:"texto",h:"texto",t:"s",w:56,d:"La idea"},{k:"reto_num",h:"reto_num",t:"n",w:9,d:"Número de reto"},
+     {k:"dolor_id",h:"dolor_id",t:"s",w:10,d:"Tarjeta de dolor a la que responde"},{k:"reto",h:"reto",t:"s",w:50,d:"Texto del reto"},{k:"etapa",h:"etapa",t:"s",w:32,d:"Etapa del reto"},
+     {k:"apoyos",h:"apoyos",t:"n",w:9,d:"Apoyos recibidos"},{k:"lugar_en_reto",h:"lugar_en_reto",t:"n",w:12,d:"Lugar por apoyos dentro de su reto"},
+     {k:"participante_id",h:"participante_id",t:"s",w:14,d:"ID de quien la propuso"},{k:"autor",h:"autor",t:"s",w:22,d:"Quien la propuso (o ID)"},{k:"area_autor",h:"area_autor",t:"s",w:18,d:"Área"},{k:"rol_autor",h:"rol_autor",t:"s",w:24,d:"Rol"},
+     {k:"hora",h:"hora",t:"d",w:18,d:"Fecha y hora"}],
+    IDEAS.map(x=>{ const c=A.cards.find(y=>y.id===x.card_id)||{}; return {idea_id:iid[x.id], texto:clean(x.texto), reto_num:retoOf[x.card_id]||null, dolor_id:did[x.card_id]||"", reto:clean(c.texto), etapa:clean(c.etapa),
+      apoyos:iTot[x.id]||0, lugar_en_reto:ideaRank[x.id]||null, participante_id:pid[x.participant_id]||"", autor:who(x.participant_id), area_autor:areaOf(x.participant_id), rol_autor:rolOf(x.participant_id), hora:toDate(x.created_at)}; }));
+
+  /* 9 · Apoyos (detalle) */
+  table("apoyos","Apoyos a ideas","Una fila por apoyo: quién apoyó qué idea.",
+    [{k:"participante_id",h:"participante_id",t:"s",w:14,d:"ID de quien apoyó"},{k:"quien_apoya",h:"quien_apoya",t:"s",w:22,d:"Quien apoyó (o ID)"},{k:"area",h:"area",t:"s",w:18,d:"Área"},{k:"rol",h:"rol",t:"s",w:24,d:"Rol"},
+     {k:"idea_id",h:"idea_id",t:"s",w:9,d:"Idea apoyada"},{k:"idea",h:"idea",t:"s",w:50,d:"Texto de la idea"},{k:"reto_num",h:"reto_num",t:"n",w:9,d:"Reto de la idea"},
+     {k:"autor_idea_id",h:"autor_idea_id",t:"s",w:14,d:"ID de quien propuso la idea"},{k:"hora",h:"hora",t:"d",w:18,d:"Fecha y hora"}],
+    A.ideaVotes.map(v=>{ const x=IDEAS.find(y=>y.id===v.idea_id)||{}; return {participante_id:pid[v.participant_id]||"", quien_apoya:who(v.participant_id), area:areaOf(v.participant_id), rol:rolOf(v.participant_id),
+      idea_id:iid[v.idea_id]||"", idea:clean(x.texto), reto_num:retoOf[x.card_id]||null, autor_idea_id:pid[x.participant_id]||"", hora:toDate(v.created_at)}; })
+      .sort((a,b)=>a.participante_id.localeCompare(b.participante_id)||a.idea_id.localeCompare(b.idea_id)));
+
+  /* 10 · Quick wins propuestos */
+  table("propuestas","Quick wins propuestos","Mejoras rápidas nuevas que propuso el equipo en la validación.",
+    [{k:"propuesta_id",h:"propuesta_id",t:"s",w:12,d:"ID de la propuesta"},{k:"texto",h:"texto",t:"s",w:60,d:"La propuesta"},{k:"etapa_num",h:"etapa_num",t:"n",w:10,d:"Número de la etapa"},{k:"etapa",h:"etapa",t:"s",w:32,d:"Etapa (opcional)"},
+     {k:"participante_id",h:"participante_id",t:"s",w:14,d:"ID de quien la propuso"},{k:"autor",h:"autor",t:"s",w:22,d:"Quien la propuso (o ID)"},{k:"area_autor",h:"area_autor",t:"s",w:18,d:"Área"},{k:"rol_autor",h:"rol_autor",t:"s",w:24,d:"Rol"},
+     {k:"hora",h:"hora",t:"d",w:18,d:"Fecha y hora"}],
+    PROPS.map(x=>({propuesta_id:prid[x.id], texto:clean(x.texto), etapa_num:stageNum(x.etapa), etapa:clean(x.etapa), participante_id:pid[x.participant_id]||"", autor:who(x.participant_id), area_autor:areaOf(x.participant_id), rol_autor:rolOf(x.participant_id), hora:toDate(x.created_at)})));
+
+  /* 11 · Resumen por etapa */
+  const avg = a => a.length ? round1(a.reduce((x,y)=>x+y,0)/a.length) : null;
+  table("resumen_etapas","Resumen por etapa","Una fila por etapa del proceso: gente, dolores, votos, validación, tiempos e ideas.",
+    [{k:"etapa_num",h:"etapa_num",t:"n",w:10,d:"Número de la etapa"},{k:"etapa",h:"etapa",t:"s",w:36,d:"Etapa"},{k:"participantes",h:"participantes",t:"n",w:12,d:"Personas que dijeron participar en la etapa"},
+     {k:"dolores",h:"dolores",t:"n",w:9,d:"Tarjetas de dolor"},{k:"dolores_4_5",h:"dolores_4_5",t:"n",w:11,d:"Tarjetas con severidad 4 o 5"},{k:"severidad_promedio",h:"severidad_promedio",t:"f",w:12,d:"Severidad promedio (1–5)"},
+     {k:"votos",h:"votos",t:"n",w:9,d:"Votos a tarjetas de la etapa"},{k:"retos",h:"retos",t:"n",w:8,d:"Retos que salieron de la etapa"},
+     {k:"quick_wins",h:"quick_wins",t:"n",w:10,d:"Quick wins de la etapa"},{k:"qw_indice_promedio",h:"qw_indice_promedio",t:"f",w:14,d:"Índice promedio de sus quick wins"},
+     {k:"reglas",h:"reglas",t:"n",w:8,d:"Reglas del nuevo flujo de la etapa"},{k:"reglas_indice_promedio",h:"reglas_indice_promedio",t:"f",w:14,d:"Índice de acuerdo promedio de sus reglas"},
+     {k:"tiempo_lo_mas_comun",h:"tiempo_lo_mas_comun",t:"s",w:18,d:"Duración más respondida"},{k:"tiempo_respuestas",h:"tiempo_respuestas",t:"n",w:12,d:"Personas que estimaron el tiempo"},
+     {k:"ideas",h:"ideas",t:"n",w:8,d:"Ideas para retos de la etapa"},{k:"propuestas",h:"propuestas",t:"n",w:11,d:"Quick wins propuestos para la etapa"}],
+    stages.map(e=>{ const cs=C.filter(c=>c.etapa===e), qq=qws.filter(q=>q.stage===e), tq=qq.find(q=>kindOf(q)==="time"), tst=tq?statOf(tq):null;
+      const idx = k => avg(qq.filter(q=>kindOf(q)===k).map(q=>statOf(q).idx).filter(v=>v!=null));
+      return {etapa_num:stageNum(e), etapa:clean(e), participantes:P.filter(p=>(p.etapas||[]).includes(e)).length, dolores:cs.length, dolores_4_5:cs.filter(c=>+c.severidad>=4).length,
+        severidad_promedio:avg(cs.map(c=>+c.severidad)), votos:cs.reduce((a,c)=>a+(vTot[c.id]||0),0), retos:cs.filter(c=>retoOf[c.id]).length,
+        quick_wins:qq.filter(q=>kindOf(q)==="qw").length, qw_indice_promedio:idx("qw"), reglas:qq.filter(q=>kindOf(q)==="gate").length, reglas_indice_promedio:idx("gate"),
+        tiempo_lo_mas_comun: tst&&tst.mode!=null ? scaleLabel("time",tst.mode) : "", tiempo_respuestas: tst?tst.n:0,
+        ideas:IDEAS.filter(x=>cs.some(c=>c.id===x.card_id)).length, propuestas:PROPS.filter(x=>x.etapa===e).length}; }));
+
+  const meta={code:s.code, name:s.name, date:exp, anon:!!opts.anon,
+    counts:{participantes:P.length, dolores:C.length, votos:votes.reduce((a,v)=>a+v.points,0), respuestas:A.qwRatings.length, ideas:IDEAS.length, apoyos:A.ideaVotes.length, propuestas:PROPS.length}};
+  return {meta, tables:T};
+}
+
+/* Diccionario de datos (se agrega a Excel y CSV) */
+function dictionaryRows(tables){
+  return tables.flatMap(t=>t.cols.map(c=>({tabla:t.key, columna:c.h, tipo:{s:"texto",n:"entero",f:"decimal",d:"fecha y hora",b:"1 / 0"}[c.t], descripcion:c.d})));
+}
+const fileBase = meta => `colmena_${meta.code}_${ymd(meta.date)}${meta.anon?"_anonimo":""}`;
+
+/* ---------- ZIP sin compresión (lo usan el .xlsx y el paquete de CSV) ---------- */
+const CRC_T = (()=>{ const t=new Uint32Array(256); for(let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c = c&1 ? 0xEDB88320^(c>>>1) : c>>>1; t[n]=c>>>0; } return t; })();
+function crc32(u8){ let c=0xFFFFFFFF; for(let i=0;i<u8.length;i++) c=CRC_T[(c^u8[i])&0xFF]^(c>>>8); return (c^0xFFFFFFFF)>>>0; }
+async function deflateRaw(u8){ try{ if(typeof CompressionStream!=="function") return null; const out=await new Response(new Blob([u8]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer(); return new Uint8Array(out); }catch(e){ return null; } }
+async function zipFiles(files){   /* files: [{name, data:string|Uint8Array}] → Blob (deflate si el navegador lo permite) */
+  const enc=new TextEncoder(), d=new Date();
+  const dosT=(d.getHours()<<11)|(d.getMinutes()<<5)|(Math.floor(d.getSeconds()/2)), dosD=((d.getFullYear()-1980)<<9)|((d.getMonth()+1)<<5)|d.getDate();
+  const parts=[], central=[]; let off=0;
+  for(const f of files){
+    const name=enc.encode(f.name), raw= typeof f.data==="string" ? enc.encode(f.data) : f.data, crc=crc32(raw);
+    const z=await deflateRaw(raw), method= z && z.length<raw.length ? 8 : 0, data= method ? z : raw;
+    const h=new DataView(new ArrayBuffer(30));
+    h.setUint32(0,0x04034b50,true); h.setUint16(4,20,true); h.setUint16(6,0x0800,true); h.setUint16(8,method,true);
+    h.setUint16(10,dosT,true); h.setUint16(12,dosD,true); h.setUint32(14,crc,true); h.setUint32(18,data.length,true); h.setUint32(22,raw.length,true);
+    h.setUint16(26,name.length,true); h.setUint16(28,0,true);
+    parts.push(new Uint8Array(h.buffer), name, data);
+    const c=new DataView(new ArrayBuffer(46));
+    c.setUint32(0,0x02014b50,true); c.setUint16(4,20,true); c.setUint16(6,20,true); c.setUint16(8,0x0800,true); c.setUint16(10,method,true);
+    c.setUint16(12,dosT,true); c.setUint16(14,dosD,true); c.setUint32(16,crc,true); c.setUint32(20,data.length,true); c.setUint32(24,raw.length,true);
+    c.setUint16(28,name.length,true); c.setUint16(30,0,true); c.setUint16(32,0,true); c.setUint16(34,0,true); c.setUint16(36,0,true); c.setUint32(38,0,true); c.setUint32(42,off,true);
+    central.push(new Uint8Array(c.buffer), name);
+    off += 30+name.length+data.length;
+  }
+  const csize=central.reduce((a,x)=>a+x.length,0);
+  const e=new DataView(new ArrayBuffer(22));
+  e.setUint32(0,0x06054b50,true); e.setUint16(8,files.length,true); e.setUint16(10,files.length,true); e.setUint32(12,csize,true); e.setUint32(16,off,true);
+  return new Blob([...parts,...central,new Uint8Array(e.buffer)]);
+}
+
+/* ---------- CSV: UTF-8 con BOM, coma, CRLF, comillas cuando hace falta ---------- */
+const csvDate = d => d ? `${ymd(d)} ${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}` : "";
+function csvField(v, t){
+  if(v==null || v==="") return "";
+  if(v instanceof Date) return csvDate(v);
+  if(typeof v==="number") return isFinite(v) ? String(v) : "";
+  let x=String(v);
+  if(/^[=+@\t\r]/.test(x) || /^-[^\d\s.]/.test(x)) x="'"+x;          /* evita que Excel lo ejecute como fórmula */
+  return /[",\r\n]|^\s|\s$/.test(x) ? '"'+x.replace(/"/g,'""')+'"' : x;
+}
+function toCSV(t){ return "﻿"+[t.cols.map(c=>c.h).join(","), ...t.rows.map(r=>t.cols.map(c=>csvField(r[c.k],c.t)).join(","))].join("\r\n")+"\r\n"; }
+async function exportCSVZip(ds){
+  const base=fileBase(ds.meta);
+  const dict={key:"diccionario",cols:[{k:"tabla",h:"tabla"},{k:"columna",h:"columna"},{k:"tipo",h:"tipo"},{k:"descripcion",h:"descripcion"}],rows:dictionaryRows(ds.tables)};
+  const readme = [`Colmena · ${BRAND_ORG}`, `Taller: ${ds.meta.name} (${ds.meta.code})`, `Exportado: ${csvDate(ds.meta.date)} (hora local)`, "",
+    "Cada archivo es una tabla. Todos usan UTF-8, coma como separador, punto decimal y la primera fila como encabezado.",
+    "Las fechas vienen como AAAA-MM-DD HH:MM:SS. Las columnas 1/0 significan sí/no. Los saltos de línea dentro de un texto se cambiaron por « / ».",
+    "Las tablas se cruzan con los IDs: participante_id (P01…), dolor_id (D01…), idea_id (I01…), item_id (QW-01, RG-01, TM-01…).",
+    "El diccionario (00_diccionario.csv) explica cada columna. Las columnas de tipo texto que parecen números (actividad_num = 3.10) deben leerse como texto; para ordenar usa actividad_etapa y actividad_orden.",
+    "Si un texto empezaba con = + - @ se le antepuso un apóstrofo ('), para que Excel no lo ejecute como fórmula.", "",
+    ...ds.tables.map((t,i)=>`${pad2(i+1)}_${t.key}.csv · ${t.title}: ${t.desc} (${t.rows.length} filas)`)].join("\r\n");
+  const files=[{name:"LEEME.txt",data:"﻿"+readme+"\r\n"},{name:"00_diccionario.csv",data:toCSV(dict)},
+    ...ds.tables.map((t,i)=>({name:`${pad2(i+1)}_${t.key}.csv`, data:toCSV(t)}))];
+  return {blob: await zipFiles(files), name: base+"_csv.zip", type:"application/zip"};
+}
+
+/* ---------- Excel (.xlsx) propio: una hoja por tabla, encabezado fijo, filtros y formato de tabla ---------- */
+const xesc = s => String(s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F￾￿]/g,"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const colL = n => { let s=""; n++; while(n){ const m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); } return s; };
+const xDate = d => (d.getTime() - d.getTimezoneOffset()*60000)/86400000 + 25569;   /* hora local → número de serie de Excel */
+/* estilos: 0 normal · 1 encabezado · 2 texto largo · 3 fecha-hora · 4 entero · 5 decimal · 6 título · 7 etiqueta · 8 nota */
+const XSTYLES = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+<numFmts count="2"><numFmt numFmtId="164" formatCode="yyyy-mm-dd hh:mm:ss"/><numFmt numFmtId="165" formatCode="0.0"/></numFmts>
+<fonts count="5"><font><sz val="11"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="16"/><color rgb="FF01133B"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="11"/><color rgb="FF01133B"/><name val="Calibri"/><family val="2"/></font><font><i/><sz val="10"/><color rgb="FF616D87"/><name val="Calibri"/><family val="2"/></font></fonts>
+<fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF01133B"/><bgColor indexed="64"/></patternFill></fill></fills>
+<borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders>
+<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
+<cellXfs count="9">
+<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment vertical="top"/></xf>
+<xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1" applyAlignment="1"><alignment vertical="center" wrapText="1"/></xf>
+<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf>
+<xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyAlignment="1"><alignment vertical="top"/></xf>
+<xf numFmtId="1" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyAlignment="1"><alignment vertical="top"/></xf>
+<xf numFmtId="165" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyAlignment="1"><alignment vertical="top"/></xf>
+<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/>
+<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0" applyFont="1" applyAlignment="1"><alignment vertical="top"/></xf>
+<xf numFmtId="0" fontId="4" fillId="0" borderId="0" xfId="0" applyFont="1" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf>
+</cellXfs>
+<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>
+</styleSheet>`;
+function xCell(ref, v, t, sOverride){
+  if(v==null || v==="" || (typeof v==="number" && !isFinite(v))) return "";
+  if(v instanceof Date) return `<c r="${ref}" s="3"><v>${xDate(v)}</v></c>`;
+  if(typeof v==="number") return `<c r="${ref}" s="${sOverride ?? (t==="f"?5:(Number.isInteger(v)?4:5))}"><v>${v}</v></c>`;
+  return `<c r="${ref}" t="inlineStr" s="${sOverride ?? (String(v).length>40?2:0)}"><is><t xml:space="preserve">${xesc(v)}</t></is></c>`;
+}
+function xSheet(rowsXml, cols, opts){
+  opts=opts||{};
+  const colsXml = cols&&cols.length ? `<cols>${cols.map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join("")}</cols>` : "";
+  const pane = opts.freeze ? `<pane ySplit="${opts.freeze}" topLeftCell="A${opts.freeze+1}" activePane="bottomLeft" state="frozen"/><selection pane="bottomLeft" activeCell="A${opts.freeze+1}" sqref="A${opts.freeze+1}"/>` : "";
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+<sheetViews><sheetView workbookViewId="0"${opts.tab?' tabSelected="1"':""}>${pane}</sheetView></sheetViews><sheetFormatPr defaultRowHeight="15"/>${colsXml}<sheetData>${rowsXml}</sheetData>${opts.autoFilter?`<autoFilter ref="${opts.autoFilter}"/>`:""}${opts.table?'<tableParts count="1"><tablePart r:id="rId1"/></tableParts>':""}</worksheet>`;
+}
+async function exportXLSX(ds){
+  const base=fileBase(ds.meta), sheets=[], tables=[];
+  /* Hoja «Léeme»: qué es cada hoja + diccionario de columnas */
+  const L=[]; let r=1; const row=(cells)=>{ L.push(`<row r="${r}">${cells.map(([v,s],i)=>xCell(colL(i)+r,v,null,s)).join("")}</row>`); r++; };
+  row([["Resultados del workshop",6]]); row([[`${ds.meta.name} · código ${ds.meta.code}`,7]]);
+  row([[`Exportado el ${csvDate(ds.meta.date)} (hora local) desde Colmena · ${BRAND_ORG}`,8]]); r++;
+  row([["Cómo leer este libro",7]]);
+  ["Cada hoja es una tabla con encabezado fijo, filtros y formato de tabla (lista para tablas dinámicas).",
+   "Las tablas se cruzan con los IDs: participante_id (P01…), dolor_id (D01…), idea_id (I01…), item_id (QW-01, RG-01, TM-01…).",
+   "Columnas 1 / 0 = sí / no. Fechas en hora local. Los porcentajes van de 0 a 100.",
+   ds.meta.anon ? "Nombres anonimizados: cada persona aparece con su ID." : "Incluye nombres de participantes: compártelo solo con quien corresponda."].forEach(t=>row([[t,0]]));
+  r++; row([["Hoja",1],["Qué contiene",1],["Filas",1]]);
+  ds.tables.forEach(t=>row([[t.title,7],[t.desc,2],[t.rows.length,4]]));
+  r++; row([["Diccionario de columnas",7]]); row([["Hoja",1],["Columna",1],["Tipo",1],["Descripción",1]]);
+  dictionaryRows(ds.tables).forEach(d=>row([[ds.tables.find(t=>t.key===d.tabla).title,0],[d.columna,0],[d.tipo,0],[d.descripcion,2]]));
+  sheets.push({name:"Léeme", xml:xSheet(L.join(""),[34,70,14,70],{tab:true})});
+  /* Una hoja por tabla */
+  const used=new Set(["Léeme"]);
+  ds.tables.forEach((t,ti)=>{
+    let name=t.title.replace(/[\[\]\*\?\/\\:]/g," ").slice(0,31); while(used.has(name)) name=name.slice(0,29)+"_"+ti; used.add(name);
+    const head=`<row r="1" ht="30" customHeight="1">${t.cols.map((c,i)=>xCell(colL(i)+"1",c.h,null,1)).join("")}</row>`;
+    const body=t.rows.map((row,ri)=>`<row r="${ri+2}">${t.cols.map((c,i)=>xCell(colL(i)+(ri+2),row[c.k],c.t)).join("")}</row>`).join("");
+    const ref=`A1:${colL(t.cols.length-1)}${Math.max(1,t.rows.length)+1}`;
+    const hasTable=t.rows.length>0;
+    if(hasTable) tables.push({sheet:sheets.length+1, id:tables.length+1, name:"tbl_"+t.key, ref, cols:t.cols.map(c=>c.h)});
+    sheets.push({name, xml:xSheet(head+body, t.cols.map(c=>c.w||14), {freeze:1, table:hasTable, autoFilter: hasTable?null:`A1:${colL(t.cols.length-1)}1`}), table: hasTable ? tables[tables.length-1] : null});
+  });
+  const files=[];
+  files.push({name:"[Content_Types].xml", data:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>
+<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>
+<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/><Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/>
+${sheets.map((s,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join("")}
+${tables.map(t=>`<Override PartName="/xl/tables/table${t.id}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"/>`).join("")}</Types>`});
+  files.push({name:"_rels/.rels", data:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/></Relationships>`});
+  const iso=ds.meta.date.toISOString().replace(/\.\d+Z$/,"Z");
+  files.push({name:"docProps/core.xml", data:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title>${xesc("Resultados · "+ds.meta.name)}</dc:title><dc:creator>Colmena · ${xesc(BRAND_ORG)}</dc:creator><dcterms:created xsi:type="dcterms:W3CDTF">${iso}</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">${iso}</dcterms:modified></cp:coreProperties>`});
+  files.push({name:"docProps/app.xml", data:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"><Application>Colmena</Application></Properties>`});
+  files.push({name:"xl/workbook.xml", data:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><bookViews><workbookView activeTab="0"/></bookViews><sheets>${sheets.map((s,i)=>`<sheet name="${xesc(s.name)}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join("")}</sheets></workbook>`});
+  files.push({name:"xl/_rels/workbook.xml.rels", data:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">${sheets.map((s,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join("")}<Relationship Id="rId${sheets.length+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`});
+  files.push({name:"xl/styles.xml", data:XSTYLES});
+  sheets.forEach((s,i)=>{
+    files.push({name:`xl/worksheets/sheet${i+1}.xml`, data:s.xml});
+    if(s.table) files.push({name:`xl/worksheets/_rels/sheet${i+1}.xml.rels`, data:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/table" Target="../tables/table${s.table.id}.xml"/></Relationships>`});
+  });
+  tables.forEach(t=>files.push({name:`xl/tables/table${t.id}.xml`, data:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<table xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" id="${t.id}" name="${t.name}" displayName="${t.name}" ref="${t.ref}" totalsRowShown="0"><autoFilter ref="${t.ref}"/><tableColumns count="${t.cols.length}">${t.cols.map((c,i)=>`<tableColumn id="${i+1}" name="${xesc(c)}"/>`).join("")}</tableColumns><tableStyleInfo name="TableStyleLight9" showFirstColumn="0" showLastColumn="0" showRowStripes="1" showColumnStripes="0"/></table>`}));
+  return {blob: (await zipFiles(files)).slice(0, undefined, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"), name: base+".xlsx", type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
+}
+
+/* ---------- PDF gráfico (jsPDF, se carga solo al pedirlo desde vendor/) ---------- */
+function loadJsPDF(){
+  if(window.jspdf && window.jspdf.jsPDF) return Promise.resolve(window.jspdf.jsPDF);
+  return new Promise((ok,ko)=>{ const sc=document.createElement("script"); sc.src="jspdf.umd.min.js"; sc.async=true;
+    sc.onload=()=> window.jspdf&&window.jspdf.jsPDF ? ok(window.jspdf.jsPDF) : ko(new Error("jsPDF no cargó"));
+    sc.onerror=()=>ko(new Error("No se pudo cargar el generador de PDF")); document.head.appendChild(sc); });
+}
+/* Las fuentes estándar del PDF solo traen Latin-1: se cambian los signos que no existen */
+const pdfSafe = s => String(s??"").replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/…/g,"...").replace(/[–—]/g,"-")
+  .replace(/→/g,"->").replace(/≤/g,"<=").replace(/≥/g,">=").replace(/[✓✔]/g,"").replace(/~/g,"aprox. ")
+  .replace(/[^\u0009\u000A -~ -ÿ]/g,"").replace(/\s{2,}/g," ").trim();
+async function exportPDF(ds){
+  const jsPDF = await loadJsPDF();
+  const doc=new jsPDF({unit:"mm", format:"a4", compress:true});
+  const W=210, H=297, M=14, CW=W-2*M, BOTTOM=H-16;
+  const C_={navy:[1,19,59], blue:[39,143,216], deep:[21,88,143], mid:[58,151,220], light:[127,186,236], pale:[169,211,243], track:[237,243,250],
+    ink:[1,19,59], ink2:[70,83,110], ink3:[97,109,135], line:[220,227,238], green:[31,169,113], amber:[138,75,0], white:[255,255,255], soft:[230,242,251]};
+  const fill=c=>doc.setFillColor(...c), stroke=c=>doc.setDrawColor(...c), color=c=>doc.setTextColor(...c);
+  const font=(sz,st)=>{ doc.setFont("helvetica",st||"normal"); doc.setFontSize(sz); };
+  const T=k=>ds.tables.find(t=>t.key===k).rows;
+  const s=A.session, meta=ds.meta;
+  let y=0;
+  const text=(str,x,yy,o)=>doc.text(pdfSafe(str),x,yy,o||{});
+  const wrap=(str,w,sz,st)=>{ font(sz,st); return doc.splitTextToSize(pdfSafe(str), w); };
+  const lh = sz => sz*0.3528*1.28;   /* alto de línea en mm */
+  const ensure = h => { if(y+h>BOTTOM){ doc.addPage(); y=M+4; } };
+  const hexU = (x,yy,r,on) => { const pts=[]; for(let i=0;i<6;i++){ const a=Math.PI/180*(60*i-90); pts.push([x+r*Math.cos(a), yy+r*Math.sin(a)]); }
+    fill(on?C_.blue:C_.track); doc.lines(pts.slice(1).map((p,i)=>[p[0]-pts[i][0], p[1]-pts[i][1]]), pts[0][0], pts[0][1], [1,1], "F", true); };
+  const section=(n,title,desc)=>{
+    ensure(26); y+=4;
+    font(20,"bold"); color(C_.blue); text(String(n), M, y+6);
+    font(13,"bold"); color(C_.ink); text(title, M+10, y+3.5);
+    const d=wrap(desc, CW-10, 8.5); color(C_.ink3); doc.text(d, M+10, y+8.5);
+    y+=8.5+d.length*lh(8.5)+3;
+  };
+  const note=(str)=>{ const l=wrap(str, CW, 8.5, "bold"); ensure(l.length*lh(8.5)+4); color(C_.ink); doc.text(l, M, y+3); y+=l.length*lh(8.5)+4; };
+
+  /* ===== Portada ===== */
+  fill(C_.navy); doc.rect(0,0,W,38,"F");
+  font(7.5,"bold"); color(C_.pale); text("COLMENA  ·  "+BRAND_ORG.toUpperCase(), M, 11);
+  font(21,"bold"); color(C_.white); text("Resultados del workshop", M, 22);
+  const nm=wrap(meta.name, CW-50, 10); color([214,232,247]); doc.text(nm.slice(0,2), M, 29);
+  font(9,"bold"); fill(C_.blue); doc.roundedRect(W-M-34, 12, 34, 9, 2, 2, "F"); color(C_.white); text(meta.code, W-M-17, 18, {align:"center"});
+  font(8); color(C_.pale); text(meta.date.toLocaleDateString("es-MX",{day:"numeric",month:"long",year:"numeric"}), W-M, 28, {align:"right"});
+  if(s.facilitator){ text("Facilita: "+s.facilitator, W-M, 33, {align:"right"}); }
+  y=46;
+  const k=meta.counts, kp=[["Personas",k.participantes],["Dolores",k.dolores],["Votos",k.votos],["Respuestas",k.respuestas],["Ideas",k.ideas]];
+  const kw=(CW-4*4)/5;
+  kp.forEach(([l,v],i)=>{ const x=M+i*(kw+4); fill(C_.track); doc.roundedRect(x,y,kw,19,2.5,2.5,"F");
+    font(17,"bold"); color(C_.ink); text(String(v), x+4, y+10); font(7.5,"bold"); color(C_.ink3); text(l.toUpperCase(), x+4, y+15.5); });
+  y+=27;
+
+  const dol=T("dolores"), rankd=[...dol].filter(d=>d.votos>0).sort((a,b)=>a.lugar_ranking-b.lugar_ranking);
+  const voters=new Set(T("votos").map(v=>v.participante_id)).size;
+  const top=rankd[0];
+  font(8,"bold"); color(C_.blue); text("EL DOLOR MÁS VOTADO"+(top&&voters<3?"  ·  "+voters+" VOTANTE"+(voters===1?"":"S"):""), M, y); y+=3;
+  if(top){ const l=wrap(top.texto, CW, 15, "bold").slice(0,3); color(C_.ink); doc.text(l, M, y+5.5); y+=l.length*lh(15)+3.5;
+    font(9); color(C_.ink2); text(`${top.votos} de ${k.votos} votos  ·  ${top.etapa}${top.actividad?"  ·  "+(top.actividad_num?top.actividad_num+" ":"")+top.actividad:""}  ·  ${top.severidad_texto.toLowerCase()} (${top.severidad}/5)`, M, y+2, {maxWidth:CW}); y+=9; }
+  else { font(15,"bold"); color(C_.ink3); text("Sin votos todavía", M, y+6); y+=13; }
+
+  /* Cuatro datos clave */
+  const vr=T("validacion_resumen");
+  const best=(tipo,dir)=>{ const l=vr.filter(r=>r.tipo===tipo && r.indice_0_100!=null); if(!l.length) return null; return l.sort((a,b)=>dir*(b.indice_0_100-a.indice_0_100))[0]; };
+  const bq=best("Quick win",1), lg=best("Regla del nuevo flujo",-1), lt=best("Tiempo de la etapa",1);
+  const ideasT=T("ideas"), li=[...ideasT].sort((a,b)=>b.apoyos-a.apoyos)[0];
+  const tiles=[["QUICK WIN CON MÁS APOYO", bq&&bq.texto, bq&&(bq.respuestas<3?`${bq.respuestas} respuesta${bq.respuestas===1?"":"s"}`:`Índice ${bq.indice_0_100} · ${bq.respuestas} respuestas`)],
+    ["REGLA CON MENOS ACUERDO", lg&&lg.texto, lg&&(lg.respuestas<3?`${lg.respuestas} respuesta${lg.respuestas===1?"":"s"}`:`Índice ${lg.indice_0_100} · ${lg.respuestas} respuestas${lg.indice_0_100<50?" · hay que conversarla":""}`)],
+    ["ETAPA QUE MÁS TARDA", lt&&lt.etapa, lt&&`${lt.lo_mas_comun} para ${Math.round(lt.acuerdo_pct*lt.respuestas/100)} de ${lt.respuestas}`],
+    ["IDEA CON MÁS APOYO", li&&li.apoyos?li.texto:null, li&&li.apoyos?`${li.apoyos} apoyo${li.apoyos===1?"":"s"} · reto ${li.reto_num||"-"}`:null]];
+  const tw=(CW-5)/2, th=27;
+  tiles.forEach(([l,v,sub],i)=>{ const x=M+(i%2)*(tw+5), yy=y+Math.floor(i/2)*(th+5);
+    stroke(C_.line); doc.setLineWidth(.3); fill(C_.white); doc.roundedRect(x,yy,tw,th,2.5,2.5,"FD");
+    font(7,"bold"); color(C_.ink3); text(l, x+5, yy+6.5);
+    if(v){ const vl=wrap(v, tw-10, 10.5, "bold").slice(0,2); color(C_.ink); doc.text(vl, x+5, yy+12.5); font(8); color(C_.ink2); text(sub||"", x+5, yy+th-4.5, {maxWidth:tw-10}); }
+    else { font(10,"normal"); color(C_.ink3); text("Sin datos aún", x+5, yy+13); } });
+  y+=2*th+5+6;
+
+  /* ===== 1 · Dolores ===== */
+  section(1, "Dolores que más pesan", rankd.length ? `${k.votos} votos de ${voters} persona${voters===1?"":"s"} · ${s.votes_per_user} por persona · los ${Math.min(rankd.length, s.idea_top||3)} primeros fueron los retos de la fase de ideas` : "No hubo votación.");
+  const rmax=Math.max(1,...rankd.map(d=>d.votos));
+  rankd.slice(0,10).forEach((d,i)=>{
+    const l=wrap(d.texto, CW-24, 9.5, "bold").slice(0,2); const h=l.length*lh(9.5)+11; ensure(h);
+    fill(d.es_reto?C_.navy:C_.track); doc.roundedRect(M, y, 6, 6, 1.2, 1.2, "F"); font(8,"bold"); color(d.es_reto?C_.white:C_.ink2); text(String(i+1), M+3, y+4.2, {align:"center"});
+    font(9.5,"bold"); color(C_.ink); doc.text(l, M+9, y+4.3);
+    if(d.es_reto){ const tx=M+9+Math.min(doc.getTextWidth(l[l.length-1]), CW-40)+3; if(l.length===1){ font(6.5,"bold"); fill(C_.soft); doc.roundedRect(tx, y+1.2, 13, 4.2, 2, 2, "F"); color(C_.deep); text("RETO "+d.reto_num, tx+6.5, y+4.2, {align:"center"}); } }
+    let yy=y+4.3+(l.length-1)*lh(9.5)+3.6;
+    font(7.5); color(C_.ink3); text(`${d.etapa}${d.actividad?" · "+(d.actividad_num?d.actividad_num+" ":"")+d.actividad:""} · dolor ${d.severidad}/5`, M+9, yy, {maxWidth:CW-12}); yy+=1.8;
+    const bw=(CW-24)*d.votos/rmax; fill(d.es_reto?C_.blue:C_.pale); doc.roundedRect(M+9, yy, Math.max(2,bw), 3.8, 1, 1, "F");
+    font(10,"bold"); color(C_.ink); text(String(d.votos), M+9+Math.max(2,bw)+2.5, yy+3.4);
+    y=yy+7;
+  });
+  if(rankd.length>10){ font(8); color(C_.ink3); text(`y ${rankd.length-10} tarjeta${rankd.length-10===1?"":"s"} más con votos (ver Excel)`, M+9, y+1); y+=6; }
+  if(rankd.length){ const rv=rankd.filter(d=>d.es_reto).reduce((a,d)=>a+d.votos,0); note(`Los retos concentran ${rv} de ${k.votos} votos (${Math.round(rv/Math.max(1,k.votos)*100)} %).`); }
+
+  /* ===== 2 · Ideas ===== */
+  const retos=rankd.filter(d=>d.es_reto).sort((a,b)=>a.reto_num-b.reto_num);
+  section(2, `Ideas para los ${retos.length||s.idea_top||3} retos`, `${ideasT.length} idea${ideasT.length===1?"":"s"} · ${k.apoyos} apoyo${k.apoyos===1?"":"s"} · ${s.idea_votes||3} por persona · un hexágono = un apoyo`);
+  if(!retos.length){ font(9); color(C_.ink3); text("Sin retos: primero hace falta la votación.", M, y+2); y+=8; }
+  retos.forEach(rt=>{
+    const list=ideasT.filter(x=>x.dolor_id===rt.dolor_id).sort((a,b)=>b.apoyos-a.apoyos||a.idea_id.localeCompare(b.idea_id));
+    const mx=Math.max(1,...list.map(x=>x.apoyos));
+    const hl=wrap(rt.texto, CW-30, 10, "bold").slice(0,2);
+    ensure(hl.length*lh(10)+14);
+    fill(C_.navy); doc.roundedRect(M, y, 16, 5.2, 2.6, 2.6, "F"); font(7,"bold"); color(C_.white); text("RETO "+rt.reto_num, M+8, y+3.6, {align:"center"});
+    font(7.5); color(C_.ink3); text(`${rt.etapa} · ${rt.votos} votos`, W-M, y+3.6, {align:"right"});
+    font(10,"bold"); color(C_.ink); doc.text(hl, M, y+10.5); y+=10.5+(hl.length-1)*lh(10)+4;
+    if(!list.length){ font(8.5); color(C_.ink3); text("Aún sin ideas", M, y+1); y+=6; }
+    list.forEach((x,i)=>{
+      const il=wrap(x.texto, CW-8, 9, i===0&&x.apoyos?"bold":"normal").slice(0,3); const h=il.length*lh(9)+8; ensure(h);
+      if(i===0&&x.apoyos){ fill(C_.soft); doc.roundedRect(M-1.5, y-1, CW+3, h, 2, 2, "F"); }
+      color(C_.ink); doc.text(il, M+2, y+3.4);
+      const uy=y+3.4+(il.length-1)*lh(9)+3.4;
+      if(x.apoyos>20 || mx>20){ fill(C_.blue); doc.roundedRect(M+2, uy-1.6, Math.max(2,(CW-30)*x.apoyos/mx), 3, 1, 1, "F"); }
+      else for(let u=0;u<mx;u++) hexU(M+3.4+u*3.4, uy, 1.5, u<x.apoyos);
+      font(9,"bold"); color(C_.ink); text(String(x.apoyos), M+4+Math.min(mx,20)*3.4+1.5, uy+1.2);
+      y+=h;
+    });
+    y+=4;
+  });
+
+  /* ===== 3 · Quick wins (Likert) y 4 · Reglas (divergente) ===== */
+  const likert=(tipo, n, title, desc, labels, diverging)=>{
+    const rows=vr.filter(r=>r.tipo===tipo); if(!rows.length) return;
+    const raters=new Set(T("validacion_respuestas").filter(r=>r.tipo===tipo).map(r=>r.participante_id)).size;
+    section(n, title, desc+(raters&&raters<3?" · pocas respuestas: se muestran conteos, sin índice":""));
+    if(!raters){ font(9); color(C_.ink3); text("Nadie contestó esta lista.", M, y+2); y+=8; return; }
+    /* leyenda */
+    let lx=M; font(7.5,"bold");
+    labels.forEach(([t,c])=>{ fill(c); doc.roundedRect(lx, y-2.6, 3.2, 3.2, .6, .6, "F"); color(C_.ink2); text(t, lx+4.5, y); lx+=doc.getTextWidth(pdfSafe(t))+10; });
+    y+=5;
+    const sorted=[...rows].sort((a,b)=>(b.indice_0_100??-1)-(a.indice_0_100??-1) || b.n_3-a.n_3);
+    const BW=CW-22;
+    sorted.forEach(r=>{
+      const l=wrap(r.texto, CW-18, 8.8).slice(0,2); const h=l.length*lh(8.8)+9.5; ensure(h);
+      font(7,"bold"); color(C_.ink3); text(r.item_id, M, y+3.2);
+      font(8.8); color(C_.ink); doc.text(l, M+13, y+3.2);
+      const by=y+3.2+(l.length-1)*lh(8.8)+2.4, b=r.n_3+r.n_2+r.n_1;
+      if(!diverging){
+        let x=M; const seg=(v,c,tc)=>{ if(!v) return; const w=BW*v/Math.max(1,b); fill(c); doc.rect(x, by, w-.4, 4.4, "F"); if(v>=2&&w>5){ font(7,"bold"); color(tc); text(String(v), x+w/2, by+3.2, {align:"center"}); } x+=w; };
+        if(b){ seg(r.n_3,C_.deep,C_.white); seg(r.n_2,C_.mid,C_.white); seg(r.n_1,C_.light,C_.ink); } else { fill(C_.track); doc.rect(M,by,BW,4.4,"F"); }
+      } else {
+        const half=(BW-8)/2, cx=M+half+4;
+        if(b){ const wl=half*r.n_1/b, wr=half*r.n_3/b;
+          if(r.n_1){ fill(C_.light); doc.rect(cx-4-wl, by, wl, 4.4, "F"); if(r.n_1>=2&&wl>5){ font(7,"bold"); color(C_.ink); text(String(r.n_1), cx-4-wl/2, by+3.2, {align:"center"}); } }
+          if(r.n_3){ fill(C_.deep); doc.rect(cx+4, by, wr, 4.4, "F"); if(r.n_3>=2&&wr>5){ font(7,"bold"); color(C_.white); text(String(r.n_3), cx+4+wr/2, by+3.2, {align:"center"}); } } }
+        stroke(C_.ink2); doc.setLineWidth(.45); doc.line(cx, by-.8, cx, by+5.2);
+        if(r.n_2){ font(6.5,"bold"); color(C_.ink2); fill(C_.white); doc.circle(cx, by+2.2, 2.3, "FD"); text(String(r.n_2), cx, by+3.1, {align:"center"}); }
+      }
+      font(11,"bold"); color(r.indice_0_100==null?C_.ink3:C_.ink);
+      text(raters<3 ? "" : (r.indice_0_100==null?"-":String(r.indice_0_100)), W-M, by+3.4, {align:"right"});
+      font(6.5); color(C_.ink3); text(`${r.respuestas} resp.`, W-M, by+7.3, {align:"right"});
+      y=by+8.2;
+      stroke(C_.line); doc.setLineWidth(.2); doc.line(M, y-1.2, W-M, y-1.2);
+    });
+    y+=2;
+  };
+  const over70=vr.filter(r=>r.tipo==="Quick win"&&r.indice_0_100>=70).length;
+  likert("Quick win", 3, "Quick wins que más ayudarían", `Mucho · algo · poco por quick win, de mayor a menor índice (mucho = 100, algo = 50, poco = 0; «No aplica» no cuenta) · ${over70} pasan de 70`,
+    [["Mucho",C_.deep],["Algo",C_.mid],["Poco",C_.light]], false);
+  const under50=vr.filter(r=>r.tipo==="Regla del nuevo flujo"&&r.indice_0_100!=null&&r.indice_0_100<50).length;
+  likert("Regla del nuevo flujo", 4, "Reglas del nuevo flujo: acuerdo y fricción", `A la derecha, cuántos dicen que ayuda; a la izquierda, que estorba; en el centro, «me da igual» · ${under50} regla${under50===1?"":"s"} por debajo de 50 merece${under50===1?"":"n"} conversación`,
+    [["Estorba",C_.light],["Me da igual (centro)",C_.white],["Ayuda",C_.deep]], true);
+
+  /* ===== 5 · Tiempos ===== */
+  const tm=vr.filter(r=>r.tipo==="Tiempo de la etapa");
+  if(tm.length){
+    const tRaters=new Set(T("validacion_respuestas").filter(r=>r.tipo==="Tiempo de la etapa").map(r=>r.participante_id)).size;
+    section(5, "Cuánto tarda hoy cada etapa", `Duración según el equipo, en el orden del proceso · ${tRaters} persona${tRaters===1?"":"s"} estimaron · la etiqueta es lo más común`);
+    const TC=[[207,229,247],[143,195,238],C_.mid,C_.deep];
+    let lx=M; font(7.5,"bold"); ["Menos de 1 día","1 a 5 días","1 a 2 semanas","Más de 2 semanas"].forEach((t,i)=>{ fill(TC[i]); doc.roundedRect(lx, y-2.6, 3.2, 3.2, .6, .6, "F"); color(C_.ink2); text(t, lx+4.5, y); lx+=doc.getTextWidth(t)+10; }); y+=5;
+    tm.forEach(r=>{ ensure(11);
+      const l=wrap(r.etapa||r.texto, 58, 8.8, "bold").slice(0,2);
+      color(C_.ink); doc.text(l, M, y+3.4);
+      const bx=M+62, BW=CW-62-34, n=r.respuestas;
+      if(n){ let x=bx; [[r.n_0,0],[r.n_1,1],[r.n_2,2],[r.n_3,3]].forEach(([v,i])=>{ if(!v) return; const w=BW*v/n; fill(TC[i]); doc.rect(x, y+.6, w-.4, 5, "F"); if(v>=2&&w>5){ font(7,"bold"); color(i>=2?C_.white:C_.ink); text(String(v), x+w/2, y+4, {align:"center"}); } x+=w; }); }
+      else { fill(C_.track); doc.rect(bx, y+.6, BW, 5, "F"); }
+      font(9,"bold"); color(C_.ink); text(r.lo_mas_comun||"-", W-M, y+3.6, {align:"right"});
+      font(6.5); color(C_.ink3); text(`${n} resp.${n>=3&&r.acuerdo_pct<50?" · dividido":""}`, W-M, y+7.2, {align:"right"});
+      y+=Math.max(10, l.length*lh(8.8)+5);
+      stroke(C_.line); doc.setLineWidth(.2); doc.line(M, y-1.5, W-M, y-1.5);
+    });
+    y+=2;
+  }
+
+  /* ===== Contexto ===== */
+  const bars=(title, items, max)=>{ ensure(12+items.length*7); font(10,"bold"); color(C_.ink); text(title, M, y+3); y+=7;
+    const mx=max||Math.max(1,...items.map(x=>x[1]));
+    items.forEach(([t,v,v2])=>{ ensure(7); font(8.5); color(C_.ink2); text(t, M, y+3.3, {maxWidth:64});
+      const BW=CW-70-10; if(v2!=null){ fill(C_.deep); doc.rect(M+68, y, BW*v2/mx, 4.4, "F"); fill(C_.pale); doc.rect(M+68+BW*v2/mx, y, BW*(v-v2)/mx, 4.4, "F"); }
+      else { fill(C_.blue); doc.rect(M+68, y, Math.max(v?1:0, BW*v/mx), 4.4, "F"); }
+      font(8.5,"bold"); color(C_.ink); text(String(v), W-M, y+3.4, {align:"right"}); y+=6.6; }); y+=4; };
+  ensure(40); y+=4; font(15,"bold"); color(C_.ink); text("Contexto del taller", M, y+4); y+=11;
+  const ps=T("participantes");
+  const cnt = (arr,key) => { const m=new Map(); arr.forEach(r=>{ const v=r[key]||"(sin dato)"; m.set(v,(m.get(v)||0)+1); }); return [...m].sort((a,b)=>b[1]-a[1]); };
+  if(ps.some(p=>p.animo)) bars("Ánimo al empezar", MOODS.map(m=>[m.t, ps.filter(p=>p.animo_codigo===m.v).length]));
+  const et=T("resumen_etapas"); if(dol.length) bars("Dolores por etapa (oscuro = severidad 4 o 5)", et.map(e=>[e.etapa, e.dolores, e.dolores_4_5]));
+  if(ps.length){ bars("Participantes por área", cnt(ps,"area")); bars("Participantes por rol", cnt(ps,"rol")); }
+  const pr=T("propuestas"); if(pr.length){ ensure(14); font(10,"bold"); color(C_.ink); text(`Quick wins propuestos por el equipo (${pr.length})`, M, y+3); y+=7;
+    pr.forEach(p=>{ const l=wrap("• "+p.texto+(p.etapa?"  ("+p.etapa+")":""), CW, 8.8); ensure(l.length*lh(8.8)+2); color(C_.ink2); doc.text(l, M, y+3); y+=l.length*lh(8.8)+2; }); }
+
+  /* Pie en todas las páginas */
+  const np=doc.getNumberOfPages();
+  for(let i=1;i<=np;i++){ doc.setPage(i); stroke(C_.line); doc.setLineWidth(.2); doc.line(M, H-11, W-M, H-11);
+    font(7); color(C_.ink3); text(`Colmena · ${BRAND_ORG} · ${meta.name} · ${meta.code}${meta.anon?" · anonimizado":""}`, M, H-7, {maxWidth:CW-30}); text(`Página ${i} de ${np}`, W-M, H-7, {align:"right"}); }
+  doc.setProperties({title:"Resultados · "+pdfSafe(meta.name), subject:"Workshop "+meta.code, creator:"Colmena · "+BRAND_ORG});
+  return {blob: doc.output("blob"), name: fileBase(meta)+"_reporte.pdf", type:"application/pdf"};
+}
+
+/* ---------- Entregar: descarga o correo ---------- */
+function saveBlob(f){ const a=document.createElement("a"); a.href=URL.createObjectURL(f.blob); a.download=f.name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),8000); }
+function canShareFile(f){ try{ const file=new File([f.blob], f.name, {type:f.type}); return !!(navigator.canShare && navigator.canShare({files:[file]})) ? file : null; }catch(e){ return null; } }
+function mailBody(f){ const s=A.session; return `Hola:\n\nTe comparto los resultados del workshop «${s.name}» (código ${s.code}).\nArchivo: ${f.name}\n\nSi no viene adjunto, lo tienes en tu carpeta de Descargas.\n\n— Enviado desde Colmena · ${BRAND_ORG}`; }
+async function deliver(f, how, to){
+  if(how==="download"){ saveBlob(f); return "download"; }
+  const file=canShareFile(f);
+  if(file){ try{ await navigator.share({files:[file], title:"Resultados · "+A.session.name, text:mailBody(f)}); return "shared"; }
+    catch(e){ if(e && e.name==="AbortError") return "cancel"; } }
+  saveBlob(f);
+  const href=`mailto:${encodeURIComponent((to||"").trim()).replace(/%40/g,"@").replace(/%2C/g,",")}?subject=${encodeURIComponent("Resultados del workshop · "+A.session.name)}&body=${encodeURIComponent(mailBody(f))}`;
+  setTimeout(()=>{ const a=document.createElement("a"); a.href=href; a.rel="noopener"; document.body.appendChild(a); a.click(); a.remove(); }, 400);
+  return "mailto";
+}
 
 </script>
 </body>
