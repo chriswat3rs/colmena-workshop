@@ -257,12 +257,19 @@ details.more>summary{cursor:pointer;font-weight:700;color:var(--accent-strong);p
 .cm-mark span{position:relative;z-index:1;text-shadow:0 1px 3px rgba(1,19,59,.35);transform:translateY(-2%)}
 .cm-wrap.sm{filter:drop-shadow(0 2px 5px rgba(1,19,59,.18))}.cm-wrap.sm .cm-mark{--s:28px}
 .cm-wrap.md .cm-mark{--s:40px}
-.lockup{display:flex;align-items:center;justify-content:center;gap:18px}
-.lockup-plus{font-family:var(--display);font-weight:300;font-size:44px;line-height:1;color:var(--ink-3);transform:translateY(-2px)}
-.lockup .brand-mark.lg{width:92px;height:92px}
-.bee-mark{width:80px;height:88px;font-size:42px;background:var(--accent-soft)}
-.lockup.sm .bee-mark{width:38px;height:42px;font-size:20px}
-.lockup.sm{gap:10px}.lockup.sm .lockup-plus{font-size:24px}.lockup.sm .brand-mark{width:40px;height:40px}
+/* Lockup abeja + imagotipo: misma jerarquía visual.
+   Un hexágono de igual alto que un círculo tiene ~13% menos área y su relleno claro pesa menos,
+   así que el hexágono va un 13% más alto que el diámetro del imagotipo y con relleno y borde más firmes. */
+.lockup{--lk:92px;display:flex;align-items:center;justify-content:center;gap:calc(var(--lk)*.2)}
+.lockup.sm{--lk:40px}
+.lockup.xs{--lk:30px;justify-content:flex-start}
+.lockup .brand-mark{width:var(--lk);height:var(--lk)}
+.bee-mark{position:relative;width:var(--lk);height:calc(var(--lk)*1.13);font-size:calc(var(--lk)*.64);line-height:1;
+  background:linear-gradient(160deg,#EAF4FC 0%,#CFE5F7 55%,#B5D7F2 100%)}
+.bee-mark::after{content:"";position:absolute;inset:0;clip-path:inherit;pointer-events:none;
+  background:linear-gradient(160deg,rgba(255,255,255,.55),rgba(255,255,255,0) 45%);mix-blend-mode:soft-light}
+.lockup-plus{font-family:var(--display);font-weight:300;font-size:calc(var(--lk)*.46);line-height:1;color:var(--ink-3)}
+.lockup.xs .lockup-plus{font-weight:400}
 /* ---------- Iconos «liquid glass» (reemplazan a los emojis) ----------
    Vidrio translúcido con brillo especular arriba, luz de borde y refracción
    inferior en el color de la marca. Glifos SVG propios, trazo 1.9 px. */
@@ -278,12 +285,12 @@ details.more>summary{cursor:pointer;font-weight:700;color:var(--accent-strong);p
 .glass::after{content:"";position:absolute;left:10%;right:10%;top:5%;height:42%;border-radius:40% 40% 50% 50%/60% 60% 40% 40%;
   background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,0));pointer-events:none}
 .glass svg{position:relative;z-index:1;width:50%;height:50%;overflow:visible;filter:drop-shadow(0 1px 1.5px color-mix(in srgb,var(--g) 35%,transparent))}
-.glass.tint,.avatar-pick.on .glass,.mood-opt.on .glass{color:#fff;border-color:rgba(255,255,255,.6);
+.glass.tint,.avatar-pick.on .glass:not(.ava),.mood-opt.on .glass{color:#fff;border-color:rgba(255,255,255,.6);
   background:
     radial-gradient(120% 85% at 28% 6%,rgba(255,255,255,.62) 0%,rgba(255,255,255,.14) 42%,rgba(255,255,255,0) 62%),
     linear-gradient(165deg,color-mix(in srgb,var(--g) 68%,#fff) 0%,var(--g) 68%,color-mix(in srgb,var(--g) 84%,#000) 100%);
   box-shadow:inset 0 1px 1px rgba(255,255,255,.7),inset 0 -8px 16px rgba(1,19,59,.22),0 10px 22px color-mix(in srgb,var(--g) 32%,transparent),0 1px 2px rgba(1,19,59,.14)}
-.glass.tint::after,.avatar-pick.on .glass::after,.mood-opt.on .glass::after{background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0))}
+.glass.tint::after,.avatar-pick.on .glass:not(.ava)::after,.mood-opt.on .glass::after{background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0))}
 .glass.tint svg,.avatar-pick.on .glass svg,.mood-opt.on .glass svg{filter:drop-shadow(0 1px 1.5px rgba(1,19,59,.35))}
 .glass.xl{width:104px;height:104px}.glass.lg{width:76px;height:76px}.glass.md{width:44px;height:44px}
 .glass.sm{width:36px;height:36px}.glass.xs{width:22px;height:22px;border-radius:30%}
@@ -293,6 +300,14 @@ details.more>summary{cursor:pointer;font-weight:700;color:var(--accent-strong);p
 .avatar-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;justify-items:center}
 .avatar-pick{width:100%;max-width:84px;padding:5px;border-radius:24px;border:2px solid transparent;background:none;transition:transform .12s;display:grid;place-items:center}
 .avatar-pick .glass{width:100%;height:auto;aspect-ratio:1}
+/* Avatares de animales dentro de vidrio claro */
+.glass.ava .ava-emoji{position:relative;z-index:1;line-height:1;font-size:28px;filter:drop-shadow(0 2px 3px rgba(1,19,59,.18))}
+.glass.ava.xl .ava-emoji{font-size:56px}.glass.ava.lg .ava-emoji{font-size:40px}.glass.ava.md .ava-emoji{font-size:23px}
+.glass.ava.sm .ava-emoji{font-size:19px}.glass.ava.xs .ava-emoji{font-size:12px;filter:none}
+.avatar-pick .glass.ava .ava-emoji{font-size:clamp(26px,9.5vw,42px)}
+.avatar-pick.on .glass.ava{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent),inset 0 1px 1px rgba(255,255,255,.95),0 10px 22px rgba(39,143,216,.30);
+  background:radial-gradient(120% 85% at 28% 6%,rgba(255,255,255,.96) 0%,rgba(255,255,255,.4) 40%,rgba(255,255,255,0) 62%),linear-gradient(165deg,#DCEEFB 0%,#A9D3F3 100%)}
+.avatar-pick.on{border-color:transparent;background:none;transform:scale(1.04)}
 .avatar-pick:active{transform:scale(.96)}
 .avatar-pick.on{border-color:var(--accent-strong);background:rgba(39,143,216,.06)}
 .mood-opt .glass{width:50px;height:50px}
@@ -301,6 +316,94 @@ details.more>summary{cursor:pointer;font-weight:700;color:var(--accent-strong);p
 .mood-opt.on{box-shadow:0 0 0 2px var(--accent-strong) inset}
 .who{display:inline-flex;align-items:center;gap:6px}
 .wait-hero .glass{margin-bottom:6px}
+/* ---------- Inicio del facilitador: tablero responsivo ---------- */
+.ah-shell{min-height:100dvh;display:flex;flex-direction:column}
+.ah-top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;
+  padding:12px clamp(16px,3vw,36px);background:rgba(244,247,251,.82);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid var(--line)}
+.ah-top .brand-name{font-size:17px}
+.ah-user{display:flex;align-items:center;gap:12px;min-width:0}
+.ah-mail{font-size:13px;color:var(--ink-2);font-weight:500;max-width:36vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ah-main{width:100%;max-width:1320px;margin:0 auto;padding:clamp(16px,3vw,36px);display:grid;grid-template-columns:minmax(280px,360px) minmax(0,1fr);gap:clamp(16px,2.2vw,28px);align-items:start}
+.ah-side{position:sticky;top:84px;display:flex;flex-direction:column;gap:clamp(16px,2vw,22px);min-width:0}
+.ah-form{padding:clamp(18px,2.6vw,32px);min-width:0}
+.ah-form-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin-bottom:6px}
+.ah-form-head .chip{padding:9px 14px;font-size:14px}
+.ah-sec{border-top:1px solid var(--line);padding:20px 0 6px;margin-top:14px}
+.ah-sec-t{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:15.5px;font-weight:800;margin-bottom:14px;color:var(--ink)}
+.ah-sec-t span{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent-strong);font-size:12.5px;font-weight:800;flex:none}
+details.ah-sec>summary{cursor:pointer;list-style:none;margin-bottom:0}
+details.ah-sec>summary::-webkit-details-marker{display:none}
+details.ah-sec>summary::after{content:"";margin-left:auto;width:9px;height:9px;border-right:2px solid var(--ink-3);border-bottom:2px solid var(--ink-3);transform:rotate(45deg);transition:transform .2s}
+details.ah-sec[open]>summary::after{transform:rotate(-135deg)}
+details.ah-sec[open]>summary{margin-bottom:4px}
+.ah-sec-t em{font-style:normal}
+.ah-form .field label .opt{font-weight:500;font-size:12.5px;margin-left:4px}
+.admin-theme .ah-form .input{font-size:15px;padding:12px 14px;border-radius:11px}
+.admin-theme .ah-form textarea.input{font-size:14px;line-height:1.55;min-height:0}
+.ah-form .input.mono{font-size:13.5px}
+.g3{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);gap:12px 14px}
+.ah-form .grid2{gap:12px 14px}
+.ah-actions{position:sticky;bottom:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;
+  margin:18px calc(-1 * clamp(18px,2.6vw,32px)) calc(-1 * clamp(18px,2.6vw,32px));padding:16px clamp(18px,2.6vw,32px);
+  background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--line);border-radius:0 0 var(--r-card) var(--r-card)}
+.ah-create{padding:13px 28px;font-size:15px}
+.tl-list{display:flex;flex-direction:column;gap:10px}
+.tl-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.tl-name{grid-column:1/-1;font-weight:700;font-size:14.5px;line-height:1.35}
+.tl-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-3);font-weight:600}
+.tl-code{font-family:var(--display);font-weight:800;letter-spacing:.12em;font-size:12.5px;color:#fff;background:var(--primary);padding:3px 8px;border-radius:7px}
+.tl-item .abtn{padding:8px 14px;font-size:13.5px}
+.tl-empty{display:flex;align-items:center;gap:14px;padding:6px 0;color:var(--ink-2);font-size:14px}
+.ah-how h2{margin-bottom:10px}
+.ah-steps{margin:0 0 0 18px;display:grid;gap:8px;color:var(--ink-2);font-size:13.5px;line-height:1.45}
+.ah-steps strong{color:var(--ink)}
+@media (max-width:1024px){
+  .ah-main{grid-template-columns:1fr}
+  .ah-side{position:static;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+}
+@media (max-width:720px){
+  .g3{grid-template-columns:1fr}
+  .g3 .field[style*="span 2"]{grid-column:auto!important}
+  .ah-how{display:none}
+  .ah-mail{max-width:48vw}
+  .ah-actions .hint{display:none}
+  .ah-create{width:100%}
+}
+/* ---------- Panel del taller: encabezado y KPIs responsivos ---------- */
+.a-top{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px 20px;
+  padding:12px clamp(14px,2.5vw,28px);background:rgba(244,247,251,.85);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%)}
+.a-head{display:flex;align-items:center;gap:12px;min-width:0}
+.a-title{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.a-top .a-actions{margin-left:0;flex-wrap:nowrap;justify-content:flex-end}
+.a-actions .abtn{padding:9px 14px;font-size:13.5px;white-space:nowrap}
+.phasebar{padding:12px clamp(14px,2.5vw,28px)}
+.a-main{padding:clamp(14px,2.5vw,28px)}
+.kpis{grid-template-columns:repeat(6,minmax(0,1fr))}
+@media (max-width:1200px){
+  .a-top{grid-template-columns:auto minmax(0,1fr)}
+  .a-top .a-actions{grid-column:1/-1;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+  .a-top .a-actions #btnQR{order:-1}
+  .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .a-top .a-actions::-webkit-scrollbar{display:none}
+}
+@media (max-width:720px){
+  .a-top{grid-template-columns:minmax(0,1fr)}
+  .a-top .brand .brand-by{display:none}
+  .a-head{justify-content:space-between}
+  .a-title{white-space:normal;font-size:15px;line-height:1.3}
+  .a-code{font-size:16px;padding:4px 10px;flex:none}
+  .a-top .a-actions{margin:0 calc(-1 * clamp(14px,2.5vw,28px));padding:0 clamp(14px,2.5vw,28px) 2px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .kpi{padding:14px 16px}
+  .kpi .n{font-size:26px}
+  .kpi .l{font-size:12.5px}
+  .panel{padding:16px}
+  .rrow{grid-template-columns:minmax(0,1fr) 40px;gap:4px 10px}
+  .rrow .rtrack{grid-column:1/-1;grid-row:2}
+  .qwt-row{grid-template-columns:minmax(0,1fr) 36px 44px;gap:6px 10px}
+  .qwt-row .sbar{grid-column:1/-1;grid-row:2}
+  .qwt-row.head span:nth-child(2){display:none}
+}
 /* ---------- acceso del facilitador ---------- */
 .steps{margin:0 0 14px 20px;color:var(--ink-2);font-size:14.5px;display:grid;gap:6px}
 .mfa-qr{display:flex;justify-content:center;background:#fff;border-radius:14px;padding:12px;width:max-content;margin:4px auto 14px}
@@ -433,11 +536,11 @@ const GLYPHS = {
 };
 function icon(name){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${GLYPHS[name]||GLYPHS.hexagon}</svg>`; }
 function glass(name, o){ o=o||{}; return `<span class="glass t-${o.tone||"blue"}${o.size?" "+o.size:""}${o.tint?" tint":""}"${o.label?` role="img" aria-label="${o.label}"`:' aria-hidden="true"'}>${icon(name)}</span>`; }
-/* Avatares: 16 glifos en 4 tonos de la marca. Se guarda el id (p. ej. «compass») en la columna emoji. */
-const AVATARS = ["star","bolt","leaf","moon","sun","flame","drop","gem","compass","heart","cloud","mountain","wave","target","sparkle","hexagon"]
-  .map((id,i)=>({id, tone:["blue","navy","sky","deep"][i%4]}));
-function avatarOf(id){ return AVATARS.find(a=>a.id===id) || AVATARS[15]; }
-function avatar(id, size){ const a=avatarOf(id); return glass(a.id,{tone:a.tone,size:size||"",tint:true}); }
+/* Avatares: 16 animales dentro de vidrio claro (se guarda el propio animal en la columna emoji) */
+const AVATARS = ["🦁","🦊","🐼","🐸","🦉","🐙","🦄","🐝","🐬","🦋","🐨","🐯","🐧","🐢","🦩","🐰"]
+  .map((id,i)=>({id, tone:["blue","sky","deep","navy"][i%4]}));
+function avatarOf(id){ return AVATARS.find(a=>a.id===id) || AVATARS[7]; }
+function avatar(id, size){ const a=avatarOf(id); return `<span class="glass ava t-${a.tone}${size?" "+size:""}" aria-hidden="true"><span class="ava-emoji">${a.id}</span></span>`; }
 const MOODS = [
   {v:"pila",     ic:"battery", tone:"green", t:"Con toda la pila"},
   {v:"bien",     ic:"smile",   tone:"blue",  t:"Bien, con ánimo"},
@@ -447,7 +550,7 @@ const MOODS = [
 ];
 /* Logo de Colmena y lockup «Colmena + Quality & Knowledge» */
 function colmenaMark(size){ return `<span class="cm-wrap${size?" "+size:""}" aria-hidden="true"><span class="cm-mark"><span>C</span></span></span>`; }
-function brandLockup(size){ return `<div class="lockup${size?" "+size:""}" role="img" aria-label="Colmena + ${BRAND_ORG}"><span class="hex hex-avatar bee-mark" aria-hidden="true">🐝</span><span class="lockup-plus" aria-hidden="true">+</span><img class="brand-mark${size==="sm"?"":" lg"}" src="${BRAND_IMG.imagotipo}" alt=""></div>`; }
+function brandLockup(size){ return `<div class="lockup${size?" "+size:""}" role="img" aria-label="Colmena + ${BRAND_ORG}"><span class="hex hex-avatar bee-mark" aria-hidden="true">🐝</span><span class="lockup-plus" aria-hidden="true">+</span><img class="brand-mark${size?"":" lg"}" src="${BRAND_IMG.imagotipo}" alt=""></div>`; }
 const PHASES = [
   {id:"lobby",   t:"Lobby"},
   {id:"checkin", t:"Check-in"},
@@ -715,7 +818,7 @@ const P = { session:null, me:null, step:0,
 function pTop(withDots, totalDots, onDot){
   const s=P.session;
   return `<div class="p-top">
-    ${colmenaMark("sm")}
+    ${brandLockup("xs")}
     <span class="sname">${esc(s? s.name : CONFIG.BRAND)}</span>
     ${withDots?`<span class="dots">${Array.from({length:totalDots},(_,i)=>`<span class="dot ${i<=onDot?"on":""}"></span>`).join("")}</span>`:""}
   </div>`;
@@ -807,7 +910,7 @@ function obSteps(){
   }
   steps.push({
     title:"Elige tu avatar", sub:"Tu celda en la colmena.",
-    body:()=>`<div class="avatar-grid">${AVATARS.map(a=>`<button class="avatar-pick ${P.form.emoji===a.id?"on":""}" data-e="${a.id}" aria-label="Avatar ${a.id}" aria-pressed="${P.form.emoji===a.id}">${glass(a.id,{tone:a.tone,size:"lg"})}</button>`).join("")}</div>`,
+    body:()=>`<div class="avatar-grid">${AVATARS.map(a=>`<button class="avatar-pick ${P.form.emoji===a.id?"on":""}" data-e="${a.id}" aria-label="Avatar ${a.id}" aria-pressed="${P.form.emoji===a.id}">${avatar(a.id,"lg")}</button>`).join("")}</div>`,
     wire:()=>{ $$(".avatar-pick").forEach(b=>b.onclick=()=>{ P.form.emoji=b.dataset.e; $$(".avatar-pick").forEach(x=>{ x.classList.toggle("on",x===b); x.setAttribute("aria-pressed",x===b); }); refreshCTA(); }); },
     read:()=>{}, valid:()=>!!P.form.emoji
   });
@@ -1195,7 +1298,7 @@ function aShell(inner){
   document.body.classList.add("admin-theme");
   $("#app").innerHTML = `<div class="a-login">
     <div class="brand-row">
-      ${colmenaMark("md")}
+      ${brandLockup("sm")}
       <div><h1 style="font-size:23px;font-weight:800">${esc(CONFIG.BRAND)} · Facilitador</h1><div class="brand-by">by ${BRAND_ORG}</div></div>
     </div>${inner}
     <div class="qk-by" style="margin-top:6px">Una plataforma de<img class="qk-logo" src="${BRAND_IMG.qk}" alt="${BRAND_ORG}"></div></div>`;
@@ -1304,63 +1407,106 @@ async function adminHome(email){
   const pre = CONFIG.PRESETS.lockton;
   let mine=[]; try{ mine = await Store.listMySessions(); }catch(e){ console.error(e); }
   const phaseName = id => (PHASES.find(p=>p.id===id)||{t:id}).t;
-  aShell(`
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-      <span class="hint">Sesión iniciada: ${esc(email||"")}</span>
-      <button class="abtn" id="outBtn" style="margin-left:auto">Cerrar sesión</button>
-    </div>
-    <div class="panel">
-      <h2>Tus talleres</h2>
-      ${mine.length ? `<div class="slist">${mine.map(m=>`
-        <div class="srow">
-          <span class="a-code" style="font-size:15px;padding:3px 10px">${esc(m.code)}</span>
-          <span class="sname2">${esc(m.name)}</span>
-          <span class="hint">${esc(phaseName(m.phase))} · ${new Date(m.created_at).toLocaleDateString("es-MX")}</span>
+  document.body.classList.add("admin-theme");
+  const talleres = mine.length ? `<div class="tl-list">${mine.map(m=>`
+        <div class="tl-item">
+          <div class="tl-name">${esc(m.name)}</div>
+          <div class="tl-meta"><span class="tl-code">${esc(m.code)}</span><span>${esc(phaseName(m.phase))}</span><span>·</span><span>${new Date(m.created_at).toLocaleDateString("es-MX",{day:"numeric",month:"short"})}</span></div>
           <button class="abtn" data-open="${esc(m.code)}">Abrir</button>
         </div>`).join("")}</div>`
-      : '<p class="empty">Aún no tienes talleres. Crea el primero abajo.</p>'}
-    </div>
-    <div class="panel">
-      <h2>Crear taller nuevo <span class="sub">se llena solo con la plantilla</span></h2>
-      <div class="chips" style="margin-bottom:16px">
-        <button class="chip" id="pre-lockton">Plantilla Lockton · Actua</button>
-        <button class="chip" id="pre-generic">Plantilla genérica</button>
-      </div>
-      <div class="grid2">
-        <div class="field"><label for="c-name">Nombre del taller</label><input id="c-name" class="input" value="${esc(pre.name)}"></div>
-        <div class="field"><label for="c-fac">Facilita</label><input id="c-fac" class="input" value="${esc(pre.facilitator)}"></div>
-        <div class="field"><label for="c-votes">Votos por persona</label><input id="c-votes" class="input" type="number" min="1" max="20" value="${pre.votes_per_user}"></div>
-      </div>
-      <div class="grid2">
-        <div class="field"><label for="c-areas">Áreas (una por línea)</label><textarea id="c-areas" class="input" rows="6">${pre.areas.join("\n")}</textarea></div>
-        <div class="field"><label for="c-stages">Etapas del proceso (una por línea)</label><textarea id="c-stages" class="input" rows="6">${pre.stages.join("\n")}</textarea></div>
-      </div>
-      <div class="field"><label for="c-qpain">Pregunta de dolores</label><textarea id="c-qpain" class="input" rows="2">${esc(pre.q_pain)}</textarea></div>
-      <details style="margin-bottom:14px"><summary class="hint" style="cursor:pointer;font-weight:600">Perfil, herramientas y quick wins</summary>
-        <div class="grid2" style="margin-top:10px">
-          <div class="field"><label for="c-roles">Roles para el registro (uno por línea; vacío = texto libre)</label><textarea id="c-roles" class="input" rows="6">${(pre.roles||[]).join("\n")}</textarea></div>
-          <div class="field"><label for="c-tools">Herramientas por etapa (Etapa | herr1, herr2)</label><textarea id="c-tools" class="input" rows="6">${toolsText(pre.tools)}</textarea></div>
+    : `<div class="tl-empty">${glass("hexagon",{size:"md"})}<p><strong>Aún no tienes talleres.</strong><br>Crea el primero con el formulario.</p></div>`;
+  $("#app").innerHTML = `<div class="ah-shell">
+    <header class="ah-top">
+      <div class="brand-row">${brandLockup("xs")}
+        <div><div class="brand-name">Colmena · Facilitador</div><div class="brand-by">by ${BRAND_ORG}</div></div></div>
+      <div class="ah-user"><span class="ah-mail" title="${esc(email||"")}">${esc(email||"")}</span><button class="abtn" id="outBtn">Cerrar sesión</button></div>
+    </header>
+    <main class="ah-main">
+      <aside class="ah-side">
+        <div class="panel">
+          <h2>Tus talleres <span class="sub">${mine.length}</span></h2>
+          ${talleres}
         </div>
-        <div class="field"><label for="c-qws">Quick wins a validar (Etapa | mejora). Se numeran solos: QW-01, QW-02…</label><textarea id="c-qws" class="input" rows="8">${qwsText(pre.quickwins)}</textarea></div>
-        <div class="grid2">
-          <div class="field"><label for="c-qidea">Pregunta de ideas</label><input id="c-qidea" class="input" value="${esc(pre.q_idea||"")}"></div>
-          <div class="field"><label for="c-ivotes">Apoyos por persona en Ideas</label><input id="c-ivotes" class="input" type="number" min="1" max="10" value="${pre.idea_votes||3}"></div>
+        <div class="panel ah-how">
+          <h2>Cómo funciona</h2>
+          <ol class="ah-steps">
+            <li><strong>Crea el taller</strong> con una plantilla y ajusta lo que necesites.</li>
+            <li><strong>Proyecta el QR</strong>: la sala entra desde su celular.</li>
+            <li><strong>Lleva el ritmo</strong> con la barra de fases y exporta el CSV al final.</li>
+          </ol>
         </div>
-      </details>
-      <details style="margin-bottom:14px"><summary class="hint" style="cursor:pointer;font-weight:600">Preguntas del check-in</summary>
-        <div class="field" style="margin-top:10px"><label for="c-qcheck">Estado de ánimo</label><input id="c-qcheck" class="input" value="${esc(pre.q_checkin)}"></div>
-        <div class="field"><label for="c-qexp">Expectativa</label><input id="c-qexp" class="input" value="${esc(pre.q_expect)}"></div>
-      </details>
-      <button class="abtn primary" id="c-create" style="width:100%;padding:13px">Crear taller</button>
-      <p class="hint" style="margin-top:10px">Se genera un código de 6 caracteres y el QR para proyectar.</p>
-    </div>`);
+      </aside>
+      <section class="panel ah-form">
+        <div class="ah-form-head">
+          <div><h2 style="margin:0">Crear taller nuevo</h2><p class="hint" id="c-summary" style="margin-top:4px"></p></div>
+          <div class="chips">
+            <button class="chip on" id="pre-lockton">Plantilla Lockton · Actua</button>
+            <button class="chip" id="pre-generic">Plantilla genérica</button>
+          </div>
+        </div>
+
+        <div class="ah-sec">
+          <h3 class="ah-sec-t"><span>1</span> Datos del taller</h3>
+          <div class="g3">
+            <div class="field"><label for="c-name">Nombre del taller</label><input id="c-name" class="input" value="${esc(pre.name)}"></div>
+            <div class="field"><label for="c-fac">Facilita</label><input id="c-fac" class="input" value="${esc(pre.facilitator)}"></div>
+            <div class="field"><label for="c-votes">Votos por persona</label><input id="c-votes" class="input" type="number" min="1" max="20" value="${pre.votes_per_user}"></div>
+          </div>
+        </div>
+
+        <div class="ah-sec">
+          <h3 class="ah-sec-t"><span>2</span> Registro de participantes</h3>
+          <div class="grid2">
+            <div class="field"><label for="c-areas">Áreas <span class="opt">una por línea</span></label><textarea id="c-areas" class="input" rows="7">${pre.areas.join("\n")}</textarea></div>
+            <div class="field"><label for="c-roles">Roles <span class="opt">uno por línea · vacío = texto libre</span></label><textarea id="c-roles" class="input" rows="7">${(pre.roles||[]).join("\n")}</textarea></div>
+          </div>
+        </div>
+
+        <div class="ah-sec">
+          <h3 class="ah-sec-t"><span>3</span> Proceso y herramientas</h3>
+          <div class="grid2">
+            <div class="field"><label for="c-stages">Etapas del proceso <span class="opt">una por línea</span></label><textarea id="c-stages" class="input" rows="10">${pre.stages.join("\n")}</textarea></div>
+            <div class="field"><label for="c-tools">Herramientas por etapa <span class="opt">Etapa | herr1, herr2</span></label><textarea id="c-tools" class="input mono" rows="10">${toolsText(pre.tools)}</textarea></div>
+          </div>
+        </div>
+
+        <details class="ah-sec" id="sec-qw">
+          <summary class="ah-sec-t"><span>4</span> Quick wins e ideas <em class="opt" id="c-qwcount"></em></summary>
+          <div class="field" style="margin-top:12px"><label for="c-qws">Quick wins a validar <span class="opt">Etapa | mejora · se numeran solos (QW-01…)</span></label><textarea id="c-qws" class="input mono" rows="10">${qwsText(pre.quickwins)}</textarea></div>
+          <div class="g3">
+            <div class="field" style="grid-column:span 2"><label for="c-qidea">Pregunta de ideas</label><input id="c-qidea" class="input" value="${esc(pre.q_idea||"")}"></div>
+            <div class="field"><label for="c-ivotes">Apoyos por persona</label><input id="c-ivotes" class="input" type="number" min="1" max="10" value="${pre.idea_votes||3}"></div>
+          </div>
+        </details>
+
+        <details class="ah-sec">
+          <summary class="ah-sec-t"><span>5</span> Preguntas a la sala</summary>
+          <div class="field" style="margin-top:12px"><label for="c-qpain">Pregunta de dolores</label><textarea id="c-qpain" class="input" rows="2">${esc(pre.q_pain)}</textarea></div>
+          <div class="grid2">
+            <div class="field"><label for="c-qcheck">Check-in: estado de ánimo</label><input id="c-qcheck" class="input" value="${esc(pre.q_checkin)}"></div>
+            <div class="field"><label for="c-qexp">Check-in: expectativa</label><input id="c-qexp" class="input" value="${esc(pre.q_expect)}"></div>
+          </div>
+        </details>
+
+        <div class="ah-actions">
+          <p class="hint">Al crearlo se genera un código de 6 caracteres y el QR para proyectar.</p>
+          <button class="abtn primary ah-create" id="c-create">Crear taller</button>
+        </div>
+      </section>
+    </main>
+  </div>`;
+  const summary=()=>{ const st=linesOf($("#c-stages").value).length, ar=linesOf($("#c-areas").value).length, ro=linesOf($("#c-roles").value).length, qw=parseQws($("#c-qws").value).length;
+    $("#c-summary").textContent=`${st} etapas · ${ar} áreas · ${ro||"sin"} roles · ${qw} quick wins`; $("#c-qwcount").textContent=qw?`· ${qw}`:""; };
+  $$(".ah-form .input").forEach(i=>i.addEventListener("input",summary));
   const fill = p => { $("#c-name").value=p.name; $("#c-fac").value=p.facilitator; $("#c-votes").value=p.votes_per_user;
     $("#c-areas").value=p.areas.join("\n"); $("#c-stages").value=p.stages.join("\n");
     $("#c-qpain").value=p.q_pain; $("#c-qcheck").value=p.q_checkin; $("#c-qexp").value=p.q_expect;
     $("#c-roles").value=(p.roles||[]).join("\n"); $("#c-tools").value=toolsText(p.tools); $("#c-qws").value=qwsText(p.quickwins);
     $("#c-qidea").value=p.q_idea||""; $("#c-ivotes").value=p.idea_votes||3; };
-  $("#pre-lockton").onclick=()=>fill(CONFIG.PRESETS.lockton);
-  $("#pre-generic").onclick=()=>fill(CONFIG.PRESETS.generic);
+  const pick=(id,p)=>{ fill(p); $$(".ah-form-head .chip").forEach(x=>x.classList.toggle("on",x.id===id)); summary(); };
+  $("#pre-lockton").onclick=()=>pick("pre-lockton",CONFIG.PRESETS.lockton);
+  $("#pre-generic").onclick=()=>pick("pre-generic",CONFIG.PRESETS.generic);
+  summary();
   $("#outBtn").onclick=async()=>{ await Store.signOut(); adminBoot(); };
   $$("[data-open]").forEach(b=>b.onclick=async()=>{ const s=await Store.getMySession(b.dataset.open).catch(()=>null); if(s) startAdmin(s); else toast("No se pudo abrir el taller"); });
   $("#c-create").onclick=async()=>{
@@ -1516,9 +1662,8 @@ function renderAdmin(){
 
   $("#app").innerHTML = `<div class="a-shell">
     <div class="a-top">
-      <span class="brand">${colmenaMark("sm")} <span>${esc(s.brand||CONFIG.BRAND)} <span class="brand-by">· ${BRAND_ORG}</span></span></span>
-      <span class="a-title">${esc(s.name)}</span>
-      <span class="a-code" title="Código de la sesión">${esc(s.code)}</span>
+      <span class="brand">${brandLockup("xs")} <span>${esc(s.brand||CONFIG.BRAND)} <span class="brand-by">· ${BRAND_ORG}</span></span></span>
+      <div class="a-head"><span class="a-title" title="${esc(s.name)}">${esc(s.name)}</span><span class="a-code" title="Código de la sesión">${esc(s.code)}</span></div>
       <div class="a-actions">
         <button class="abtn" id="btnAuthors">${A.showAuthors?"Ocultar autores":"Mostrar autores"}</button>
         <button class="abtn" id="btnCSV">Exportar CSV</button>
