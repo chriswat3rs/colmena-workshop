@@ -7,7 +7,7 @@ Herramienta propia para workshops de design thinking en vivo.
   1. **Check-in.**
   2. **Dolores:** cada quien los publica por etapa del proceso y herramienta.
   3. **Votación:** reparten sus votos entre los dolores.
-  4. **Quick wins:** califican las mejoras que ya se habían identificado y proponen las que falten.
+  4. **Validación:** califican las mejoras que ya se habían identificado (quick wins), las reglas del nuevo flujo y cuánto tarda hoy cada etapa; proponen las mejoras que falten.
   5. **Ideas:** «¿Cómo podríamos…?» sobre los 3 dolores más votados, con apoyos.
 - **Tú, como facilitador:** proyectas un **panel en vivo** con participantes, muro, ranking, tabla de quick wins, ideas por reto y exportación a CSV.
 
@@ -73,7 +73,7 @@ Desde entonces, cada vez que entres te pedirá contraseña + código de tu app.
 | 2. Check-in | Ánimo y expectativa | Misma tabla con respuestas |
 | 3. Dolores | Tarjetas con etapa, herramienta (opcional) y qué tanto duele | Muro en vivo agrupado por etapa |
 | 4. Votación | Reparte sus votos (tope validado en el servidor) | Ranking en vivo |
-| 5. Quick wins | Califica cada mejora: Mucho / Algo / Poco / No aplica (primero las de sus etapas) y propone nuevas | Barra por quick win + índice 0–100, propuestas nuevas |
+| 5. Validación | Tres listas: quick wins (Mucho / Algo / Poco / No aplica), reglas del nuevo flujo (Ayuda / Me da igual / Estorba / No me toca) y tiempos por etapa (4 rangos); primero lo de sus etapas; propone mejoras nuevas | Barra por quick win + índice 0–100, propuestas nuevas |
 | 6. Ideas | «¿Cómo podríamos…?» para los 3 dolores más votados; apoya hasta 3 ideas ajenas | Ideas por reto con sus apoyos |
 | 7. Resultados | Top de dolores, quick wins e ideas | Todo junto para la conversación final |
 | 8. Cierre | Agradecimiento | — |
@@ -87,7 +87,8 @@ Desde entonces, cada vez que entres te pedirá contraseña + código de tu app.
 - En **Perfil, herramientas y quick wins**:
   - **Roles**: uno por línea (vacío = el participante escribe su puesto).
   - **Herramientas por etapa**: `Etapa | herramienta 1, herramienta 2`. La etapa debe escribirse igual que en la lista de etapas. Siempre se agregan «Correo / Teams», «Excel propio» y «Otra».
-  - **Quick wins a validar**: `Etapa | mejora`, uno por línea. Se numeran solos (QW-01, QW-02…).
+  - **Listas a validar**: `Etapa | texto`, uno por línea, en secciones `## Quick wins` (QW-01…), `## Reglas` (RG-01…) y `## Tiempos` (TM-01…). Se numeran solos.
+  - **Actividades por etapa** (opcional): `Etapa | actividad; actividad`. Cada dolor puede señalar la actividad exacta.
   - **Pregunta de ideas** y **apoyos por persona**.
 - La plantilla **Lockton · Actua** ya trae las 8 etapas, herramientas y 19 quick wins de la lámina «Proceso de Valuación Actuarial» del cliente.
 

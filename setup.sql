@@ -1,5 +1,5 @@
 -- ============================================================
--- COLMENA v1.2 · esquema seguro para Supabase
+-- COLMENA v1.3 · esquema seguro para Supabase
 --
 -- Pega TODO este archivo en Supabase → SQL Editor → Run.
 -- Es re-ejecutable: puedes correrlo las veces que quieras.
@@ -10,6 +10,10 @@
 -- participa), herramienta en cada dolor, fase «Quick wins» (calificar
 -- mejoras propuestas y sugerir nuevas) y fase «Ideas» («¿Cómo
 -- podríamos…?» sobre los dolores más votados, con apoyos limitados).
+-- Novedades v1.3: actividades por etapa (cada dolor puede señalar la
+-- actividad exacta del proceso) y listas a validar con distintas escalas
+-- (quick wins, reglas del nuevo flujo y tiempos por etapa) dentro de la
+-- misma fase; se guardan en la columna quickwins con un campo «kind».
 --
 -- Cómo protege los datos (todo se valida aquí, en la base de datos,
 -- no en la página, porque el código de una página se puede alterar):
@@ -114,6 +118,12 @@ alter table ws_sessions add column if not exists quickwins jsonb not null defaul
   check (jsonb_typeof(quickwins) = 'array');
 alter table ws_sessions add column if not exists q_idea text
   check (char_length(q_idea) <= 280);
+-- v1.3 · actividades por etapa: {"3 Revisar información": ["3.7 Validación de bajas", …]}
+alter table ws_sessions add column if not exists tasks jsonb not null default '{}'
+  check (jsonb_typeof(tasks) = 'object');
+-- v1.3 · cada dolor puede señalar la actividad del proceso donde ocurre
+alter table ws_cards add column if not exists actividad text
+  check (char_length(actividad) <= 160);
 alter table ws_sessions add column if not exists idea_votes int not null default 3
   check (idea_votes between 1 and 10);
 alter table ws_sessions add column if not exists idea_top int not null default 3
@@ -210,11 +220,11 @@ returns table (id uuid, code text, name text, facilitator text, phase text,
                votes_per_user int, areas jsonb, stages jsonb,
                q_checkin text, q_expect text, q_pain text, brand text,
                roles jsonb, tools jsonb, quickwins jsonb, q_idea text,
-               idea_votes int, idea_top int)
+               idea_votes int, idea_top int, tasks jsonb)
 language sql stable security definer set search_path = public as $$
   select s.id, s.code, s.name, s.facilitator, s.phase, s.votes_per_user, s.areas, s.stages,
          s.q_checkin, s.q_expect, s.q_pain, s.brand,
-         s.roles, s.tools, s.quickwins, s.q_idea, s.idea_votes, s.idea_top
+         s.roles, s.tools, s.quickwins, s.q_idea, s.idea_votes, s.idea_top, s.tasks
   from ws_sessions s
   where auth.uid() is not null and s.code = upper(trim(p_code));
 $$;

@@ -419,6 +419,9 @@ details.ah-sec[open]>summary{margin-bottom:4px}
 .qwc-stack.none{background:var(--c-track)}
 .qwc-stack i{display:block;min-height:0}
 .qwc-stack .p{background:var(--lk-p)}.qwc-stack .a{background:var(--lk-a)}.qwc-stack .m{background:var(--lk-m)}
+.qwc-stack .t0,.leg i.t0{background:#B9D9F3}.qwc-stack .t1,.leg i.t1{background:#7FBAEC}.qwc-stack .t2,.leg i.t2{background:#3A97DC}.qwc-stack .t3,.leg i.t3{background:#15588F}
+.qwc-stack.tm{flex-direction:column-reverse}
+.wc-tool.act{background:var(--accent-soft);border-color:transparent;color:var(--accent-strong)}
 .qwc-id{text-align:center;font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.03em}
 .qwl{columns:2 380px;column-gap:28px;margin-top:20px}
 .qwl-row,.qwl-stage{break-inside:avoid}
@@ -503,6 +506,10 @@ details.ah-sec[open]>summary{margin-bottom:4px}
   .dleg{width:100%}
 }
 
+.chips-tasks .chip{font-size:12.5px;padding:8px 11px;text-align:left}
+.rsec+.rsec{border-top:1px solid var(--line);margin-top:22px;padding-top:4px}
+.qwcard.seg4 .seg button{font-size:12px;padding:9px 4px}
+.qwcard.seg4 .seg button[data-v="0"].on{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff}
 /* ---------- acceso del facilitador ---------- */
 .steps{margin:0 0 14px 20px;color:var(--ink-2);font-size:14.5px;display:grid;gap:6px}
 .mfa-qr{display:flex;justify-content:center;background:#fff;border-radius:14px;padding:12px;width:max-content;margin:4px auto 14px}
@@ -543,39 +550,82 @@ const CONFIG = {
       idea_votes: 3,
       idea_top: 3,
       areas: ["Valuación actuarial","Control Facturación Actuarial","Compliance","Finanzas (alta, timbrado, cobranza)","Legal","TI / Sistemas","Enlace / Productores"],
-      roles: ["Director","Gerente / Subdirector","Subgerente","Asesor Sr","Asesor","Becario"],
-      stages: ["1 Preparar propuesta","2 Solicitar / recibir información","3 Revisar información","4 Preparar base definitiva","5 Analizar supuestos","6 Determinación de pasivos","7 Anexo contable","8 Reportes","Alta de cliente / Facturación","Transversal (comunicación, seguimiento)"],
-      tools: {
-        "1 Preparar propuesta": ["Generador de propuestas"],
-        "2 Solicitar / recibir información": ["Layout (XLS)"],
-        "3 Revisar información": ["Base de datos (XLS)","SICI (cruce BD)","Papeles de trabajo preliminares (XLS)"],
-        "4 Preparar base definitiva": ["Base de datos definitiva (XLS)","Insumo para SACS"],
-        "5 Analizar supuestos": ["Papeles de trabajo definitivos (XLS)","SACS (carrera salarial)","Tasa de descuento (XLS)","Carta de supuestos (PDF)"],
-        "6 Determinación de pasivos": ["ProVal","Resultados y listados individuales (XLS)"],
-        "7 Anexo contable": ["Anexo por norma contable (XLS)"],
-        "8 Reportes": ["Reporte por norma e idioma (DOC)"],
-        "Alta de cliente / Facturación": ["Formulario de facturación","Opera","Oracle","Robot de Compliance"]
+      /* Perfiles de la matriz RACI (LOCFY24) */
+      roles: ["Director","Gerente / Subdirector","Subgerente","Asesor Sr","Asesor / Analista Jr","Becario","Control Facturación Actuarial","Otra área (Finanzas, Compliance, Legal, TI)"],
+      /* Los 8 pasos de la lámina del equipo (su lenguaje) + el cierre de LOCFY24, Alta/Facturación y lo transversal */
+      stages: ["1 Preparar propuesta","2 Solicitar / recibir información","3 Revisar información","4 Preparar base definitiva","5 Analizar supuestos","6 Determinación de pasivos","7 Anexo contable","8 Reportes","9 Cierre de la valuación","Alta de cliente / Facturación / Cobranza","Transversal (seguimiento, preventivas, tasa de descuento)"],
+      /* Actividades de cada paso, con el número de tarea de LOCFY24 para cruzarlas con el tracking */
+      tasks: {
+        "1 Preparar propuesta": ["1.2 Identificar cliente y revisar historial (Opera, resumen empresa)","1.3 Pedir información para cotizar (formulario)","1.4 Revisar si cambió el alcance (renovación)","1.6 Propuesta manual","1.7 Layout de propuesta","1.8 Ejecutar SIGER","1.9 Afinar y enviar la propuesta","1.11 Carta o correo de aceptación","Asignar valuador"],
+        "2 Solicitar / recibir información": ["2.1 Cronograma y solicitud de información","2.1 Datos de facturación y CSF (formulario)","2.1 Clave económica SCIAN","2.1 NDA o contrato con Legal","2.3 Aviso a Control Facturación","2.4 Recordatorios al cliente (5 + 3 + 3 días)","3.1 Recepción y cotejo de la información (48 h)"],
+        "3 Revisar información": ["3.2 Archivo base empresa","3.3 Layouts para SICI","3.4 Ejecutar SICI","3.5 Estadísticas","3.6 Preguntas del cruce (CONSAR)","3.7 Validación y consistencia de bajas","3.8 Actualizar AnalisisSup","3.9 Análisis de fondo","3.10 Revisión contable","3.11 Archivo de dudas y bitácora","3.12 Resolver dudas con el cliente","3.13 Integrar información"],
+        "4 Preparar base definitiva": ["3.14 Archivo base definitiva","Insumo para SACS"],
+        "5 Analizar supuestos": ["4.1 Carrera salarial (SACS)","4.2 Gráficos y estadísticas (SIGEE)","4.3 Datos para AnalisisSup","4.4 Cuadro de hipótesis y carta","5.2 Tasa de descuento"],
+        "6 Determinación de pasivos": ["5.1 Corrida preliminar en ProVal","5.3 Enviar carta de hipótesis y confirmación del cliente","5.4 Determinación de pasivos"],
+        "7 Anexo contable": ["6.1 Validar supuestos cargados en ProVal","6.1 Corridas (base actual, anterior, sensibilidades, P&G, fiscal)","6.1 Inputs, Results y listados","6.1 Armar el anexo por norma (PDF)"],
+        "8 Reportes": ["7.1 Enviar anexos al cliente","7.2 Puntos no aprobados y reproceso","7.3.1 Elaborar el reporte","7.3.2 Notas a estados financieros","7.3.3 Desglose por centro de costos","7.3.4 Otros requerimientos","7.3.5 Firma de balance","7.4 Entrega digital y física"],
+        "9 Cierre de la valuación": ["8.1 Estatus para factura (archivo compartido)","8.2 Documentar el reporte","8.3 Resumen empresa y correos en PDF","Cargos extras y adeudos"],
+        "Alta de cliente / Facturación / Cobranza": ["Alta de cliente (CSF, Compliance, Opera)","Proyectos y honorarios","Solicitud de factura y timbrado","Entrega de factura (PDF, XML, portal)","Cobranza y escalación","Control de ingresos contra budget"],
+        "Transversal (seguimiento, preventivas, tasa de descuento)": ["Actividades preventivas (clientes cíclicos)","Actualizar curva y tasa de descuento (calendario)","Correos y plantillas","Seguimiento del estatus de las valuaciones","Coordinación con el consultor o gerente"]
       },
+      /* Herramientas y archivos reales de cada paso (lámina + RACI LOCFY24) */
+      tools: {
+        "1 Preparar propuesta": ["Generador de propuestas (SIGER)","Layout de propuesta (XLS)","Formulario de cotización","Opera (consulta de cliente)"],
+        "2 Solicitar / recibir información": ["Layout InfoPersonal / InfoContable (XLS)","Formulario de facturación (Forms)","Cronograma","CSF (PDF)"],
+        "3 Revisar información": ["Base empresa (XLS)","SICI (cruce BD)","Archivo de preguntas / Cruce (XLS)","Estadísticas (Graphics)","Archivo de dudas y bitácora (XLS)","Info contable (XLS)"],
+        "4 Preparar base definitiva": ["Base de datos definitiva (XLS)","Insumo para SACS"],
+        "5 Analizar supuestos": ["AnalisisSup&CartaHip (XLS)","SACS (carrera salarial)","SIGEE (estadísticas)","Tasa de descuento (XLSM) e histórico de curva","Carta de supuestos (PDF)"],
+        "6 Determinación de pasivos": ["ProVal","Results y listados individuales (XLS)","Tasa de descuento (XLSM)"],
+        "7 Anexo contable": ["Anexo por norma contable (XLS)","Macros del anexo","PDFs de ProVal"],
+        "8 Reportes": ["Reporte por norma e idioma (DOC)","Balance","Notas a estados financieros"],
+        "9 Cierre de la valuación": ["Archivo de estatus de valuación (compartido)","Resumen empresa","Reporte final"],
+        "Alta de cliente / Facturación / Cobranza": ["Formulario de facturación","Opera","Oracle","Robot de Compliance","Layout de screening","Portal del cliente"],
+        "Transversal (seguimiento, preventivas, tasa de descuento)": ["Calendario de tasa de descuento","Plantillas de correo"]
+      },
+      /* Tres listas a validar en la fase «Validación»: quick wins de la lámina, reglas del nuevo flujo (LOCFY24) y tiempos por etapa */
       quickwins: [
-        {id:"QW-01", stage:"1 Preparar propuesta", text:"Generar propuestas de manera masiva desde el sistema (cubriría ~90% de las renovaciones)"},
-        {id:"QW-02", stage:"2 Solicitar / recibir información", text:"Versiones de layout por alcance del servicio, homologadas con el procesamiento de la información"},
-        {id:"QW-03", stage:"3 Revisar información", text:"Parametrizar la formulación de la base de datos"},
-        {id:"QW-04", stage:"3 Revisar información", text:"Homologar la base de datos para los sistemas internos y ProVal"},
-        {id:"QW-05", stage:"3 Revisar información", text:"Plantilla estandarizada de dudas para enviar al cliente"},
-        {id:"QW-06", stage:"5 Analizar supuestos", text:"Concentrar las bajas históricas en una sola base para analizar rotación y despido más rápido"},
-        {id:"QW-07", stage:"5 Analizar supuestos", text:"Generar automáticamente la Carta de Supuestos"},
-        {id:"QW-08", stage:"5 Analizar supuestos", text:"Incorporar al proveedor de precios"},
-        {id:"QW-09", stage:"5 Analizar supuestos", text:"Incorporar análisis adicionales estándar"},
-        {id:"QW-10", stage:"6 Determinación de pasivos", text:"Parametrizar beneficios y criterios de programación"},
-        {id:"QW-11", stage:"6 Determinación de pasivos", text:"Estandarizar las salidas del sistema"},
-        {id:"QW-12", stage:"7 Anexo contable", text:"Mejorar las macros para sacar PDF y XLS en bulk"},
-        {id:"QW-13", stage:"7 Anexo contable", text:"Versiones cortas del formato del anexo"},
-        {id:"QW-14", stage:"7 Anexo contable", text:"Estandarizar criterios para insumos"},
-        {id:"QW-15", stage:"7 Anexo contable", text:"Automatizar insumos (ya en curso)"},
-        {id:"QW-16", stage:"7 Anexo contable", text:"Estandarizar el análisis de variaciones"},
-        {id:"QW-17", stage:"8 Reportes", text:"Versiones cortas del formato del reporte"},
-        {id:"QW-18", stage:"8 Reportes", text:"Estandarizar insumos parametrizados en BD y anexos contables"},
-        {id:"QW-19", stage:"8 Reportes", text:"Automatizar insumos (ya en curso)"}
+        {id:"QW-01", kind:"qw", stage:"1 Preparar propuesta", text:"Generar propuestas de manera masiva desde el sistema (cubriría ~90% de las renovaciones)"},
+        {id:"QW-02", kind:"qw", stage:"2 Solicitar / recibir información", text:"Versiones de layout por alcance del servicio, homologadas con el procesamiento de la información"},
+        {id:"QW-03", kind:"qw", stage:"3 Revisar información", text:"Parametrizar la formulación de la base de datos"},
+        {id:"QW-04", kind:"qw", stage:"3 Revisar información", text:"Homologar la base de datos para los sistemas internos y ProVal"},
+        {id:"QW-05", kind:"qw", stage:"3 Revisar información", text:"Plantilla estandarizada de dudas para enviar al cliente"},
+        {id:"QW-06", kind:"qw", stage:"5 Analizar supuestos", text:"Concentrar las bajas históricas en una sola base para analizar rotación y despido más rápido"},
+        {id:"QW-07", kind:"qw", stage:"5 Analizar supuestos", text:"Generar automáticamente la Carta de Supuestos"},
+        {id:"QW-08", kind:"qw", stage:"5 Analizar supuestos", text:"Incorporar al proveedor de precios"},
+        {id:"QW-09", kind:"qw", stage:"5 Analizar supuestos", text:"Incorporar análisis adicionales estándar"},
+        {id:"QW-10", kind:"qw", stage:"6 Determinación de pasivos", text:"Parametrizar beneficios y criterios de programación"},
+        {id:"QW-11", kind:"qw", stage:"6 Determinación de pasivos", text:"Estandarizar las salidas del sistema"},
+        {id:"QW-12", kind:"qw", stage:"7 Anexo contable", text:"Mejorar las macros para sacar PDF y XLS en bulk"},
+        {id:"QW-13", kind:"qw", stage:"7 Anexo contable", text:"Versiones cortas del formato del anexo"},
+        {id:"QW-14", kind:"qw", stage:"7 Anexo contable", text:"Estandarizar criterios para insumos"},
+        {id:"QW-15", kind:"qw", stage:"7 Anexo contable", text:"Automatizar insumos (ya en curso)"},
+        {id:"QW-16", kind:"qw", stage:"7 Anexo contable", text:"Estandarizar el análisis de variaciones"},
+        {id:"QW-17", kind:"qw", stage:"8 Reportes", text:"Versiones cortas del formato del reporte"},
+        {id:"QW-18", kind:"qw", stage:"8 Reportes", text:"Estandarizar insumos parametrizados en BD y anexos contables"},
+        {id:"QW-19", kind:"qw", stage:"8 Reportes", text:"Automatizar insumos (ya en curso)"},
+        {id:"RG-01", kind:"gate", stage:"1 Preparar propuesta", text:"No se puede cerrar una oportunidad como ganada sin asignar valuador"},
+        {id:"RG-02", kind:"gate", stage:"2 Solicitar / recibir información", text:"Recordatorios automáticos al cliente a los 5, +3 y +3 días; sin respuesta no arranca la valuación"},
+        {id:"RG-03", kind:"gate", stage:"2 Solicitar / recibir información", text:"48 horas para marcar la información recibida como completa o incompleta"},
+        {id:"RG-04", kind:"gate", stage:"2 Solicitar / recibir información", text:"No se llega a facturación sin cerrar la tarea de Legal (NDA o contrato)"},
+        {id:"RG-05", kind:"gate", stage:"3 Revisar información", text:"El Becario debe marcar el checklist de cada tarea; los perfiles Sr no"},
+        {id:"RG-06", kind:"gate", stage:"3 Revisar información", text:"La etapa se cierra solo con todas las tareas marcadas y el archivo base definitiva generado"},
+        {id:"RG-07", kind:"gate", stage:"5 Analizar supuestos", text:"Análisis de supuestos se cierra solo con la carta de hipótesis aprobada"},
+        {id:"RG-08", kind:"gate", stage:"6 Determinación de pasivos", text:"Determinación de pasivos se cierra cuando el cliente confirma que recibió la carta de hipótesis"},
+        {id:"RG-09", kind:"gate", stage:"8 Reportes", text:"El reproceso por puntos no aprobados regresa como máximo al cuadro de hipótesis (4.4)"},
+        {id:"RG-10", kind:"gate", stage:"8 Reportes", text:"Sin firma de balance no se avanza a la entrega"},
+        {id:"RG-11", kind:"gate", stage:"8 Reportes", text:"La valuación no se finaliza sin confirmar la entrega física"},
+        {id:"RG-12", kind:"gate", stage:"9 Cierre de la valuación", text:"Al cerrar, el estatus para factura se actualiza solo y avisa a Control Facturación"},
+        {id:"RG-13", kind:"gate", stage:"Transversal (seguimiento, preventivas, tasa de descuento)", text:"Tarea preventiva automática meses después del mes de valuación para clientes cíclicos"},
+        {id:"RG-14", kind:"gate", stage:"Transversal (seguimiento, preventivas, tasa de descuento)", text:"Actualización de curva y tasa de descuento asignada por calendario"},
+        {id:"TM-01", kind:"time", stage:"1 Preparar propuesta", text:"Preparar propuesta"},
+        {id:"TM-02", kind:"time", stage:"2 Solicitar / recibir información", text:"Solicitar y recibir información"},
+        {id:"TM-03", kind:"time", stage:"3 Revisar información", text:"Revisar información"},
+        {id:"TM-04", kind:"time", stage:"4 Preparar base definitiva", text:"Preparar base definitiva"},
+        {id:"TM-05", kind:"time", stage:"5 Analizar supuestos", text:"Analizar supuestos"},
+        {id:"TM-06", kind:"time", stage:"6 Determinación de pasivos", text:"Determinación de pasivos"},
+        {id:"TM-07", kind:"time", stage:"7 Anexo contable", text:"Anexo contable"},
+        {id:"TM-08", kind:"time", stage:"8 Reportes", text:"Reportes"},
+        {id:"TM-09", kind:"time", stage:"9 Cierre de la valuación", text:"Cierre de la valuación"}
       ],
       q_checkin: "¿Cómo llegas a esta sesión?",
       q_expect: "En una frase: ¿qué esperas de este workshop?",
@@ -657,7 +707,7 @@ const PHASES = [
   {id:"checkin", t:"Check-in"},
   {id:"pains",   t:"Dolores"},
   {id:"votes",   t:"Votación"},
-  {id:"quickwins", t:"Quick wins"},
+  {id:"quickwins", t:"Validación"},
   {id:"ideas",   t:"Ideas"},
   {id:"results", t:"Resultados"},
   {id:"closed",  t:"Cierre"}
@@ -665,6 +715,18 @@ const PHASES = [
 const SEV_LABELS = {1:"Molesta poco",2:"Incomoda",3:"Duele",4:"Duele mucho",5:"Insoportable"};
 /* Escala para calificar quick wins: ¿cuánto te ayudaría en tu día a día? */
 const QW_SCALE = [{v:3,t:"Mucho"},{v:2,t:"Algo"},{v:1,t:"Poco"},{v:0,t:"No aplica"}];
+/* Listas a validar en la fase «Validación». Cada tipo (kind) tiene su escala; el puntaje 3–0 se guarda igual.
+   El índice 0–100 se calcula con los puntajes 3/2/1 (el 0 no cuenta), salvo en tiempos, donde el 0 sí es un dato. */
+const RATING_KINDS = {
+  qw:   {id:"QW", t:"Quick wins", q:"¿Cuánto te ayudaría cada mejora?", h:"Son mejoras rápidas que el equipo ya identificó. Si alguna no tiene que ver con tu trabajo, marca «No aplica».",
+         scale: QW_SCALE, na:0, idxLabel:"Índice de ayuda"},
+  gate: {id:"RG", t:"Reglas del nuevo flujo", q:"¿Cada regla te ayuda o te estorba?", h:"Son candados que el nuevo flujo hará obligatorios (no se puede avanzar sin cumplirlos). Si no te toca, marca «No me toca».",
+         scale:[{v:3,t:"Ayuda"},{v:2,t:"Me da igual"},{v:1,t:"Estorba"},{v:0,t:"No me toca"}], na:0, idxLabel:"Índice de acuerdo"},
+  time: {id:"TM", t:"Tiempos", q:"¿Cuánto tarda hoy cada etapa?", h:"Piensa en una valuación típica, de que arranca la etapa a que termina, contando las esperas.",
+         scale:[{v:0,t:"Menos de 1 día"},{v:1,t:"1 a 5 días"},{v:2,t:"1 a 2 semanas"},{v:3,t:"Más de 2 semanas"}], na:null, idxLabel:"Duración típica"}
+};
+function kindOf(q){ return (q && q.kind && RATING_KINDS[q.kind]) ? q.kind : "qw"; }
+function scaleLabel(kind, v){ const sc=RATING_KINDS[kind]||RATING_KINDS.qw; const o=sc.scale.find(x=>x.v===v); return o?o.t:String(v); }
 /* Herramientas que aparecen en cualquier etapa, además de las propias de cada una */
 const COMMON_TOOLS = ["Correo / Teams","Excel propio","Otra"];
 </script>
@@ -697,9 +759,13 @@ function topPains(cards, totals, n){
     .sort((a,b)=> b.pts-a.pts || String(a.created_at).localeCompare(String(b.created_at)) || String(a.id).localeCompare(String(b.id)))
     .slice(0, n||3);
 }
-/* Índice de ayuda de un quick win: 0–100 (mucho = 100, algo = 50, poco = 0). «No aplica» no cuenta. */
-function qwStats(t){
-  const m=t&&t.m||0, a=t&&t.a||0, p=t&&t.p||0, na=t&&t.na||0, base=m+a+p;
+/* Índice 0–100 de un elemento calificado (puntaje 3 = 100, 2 = 50, 1 = 0; el 0 no cuenta).
+   Para «tiempos» el 0 sí es un dato (menos de 1 día) y el índice es la duración típica: 0 = menos de 1 día … 100 = más de 2 semanas. */
+function qwStats(t, kind){
+  const m=t&&t.m||0, a=t&&t.a||0, p=t&&t.p||0, na=t&&t.na||0;
+  if(kind==="time"){ const n=m+a+p+na; const counts=[na,p,a,m]; const mode=n? counts.indexOf(Math.max(...counts)) : null;
+    return {m,a,p,na,n, idx: n? Math.round((m*100+a*66.7+p*33.3)/n) : null, mode}; }
+  const base=m+a+p;
   return {m,a,p,na,n:base+na, idx: base ? Math.round((m*100+a*50)/base) : null};
 }
 /* Cuenta calificaciones crudas → {qw_id:{m,a,p,na}} */
@@ -714,6 +780,8 @@ function toolsFor(session, stage){
   const own = (session && session.tools && session.tools[stage]) || [];
   return [...new Set([...own, ...COMMON_TOOLS])];
 }
+/* Actividades configuradas para una etapa (v1.3); vacío si el taller no las define */
+function tasksFor(session, stage){ return (session && session.tasks && session.tasks[stage]) || []; }
 function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
 
 </script>
@@ -1112,7 +1180,7 @@ async function renderPhase(){
           const m=my[c.id]||0;
           return `<div class="votecard">
             <div class="txt">${esc(c.texto)}</div>
-            <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span></div>
+            <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.actividad?`<span class="tag tool">${esc(c.actividad)}</span>`:""}${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span></div>
             <div class="vote-ctrl">
               <button class="vbtn" data-id="${c.id}" data-d="-1" ${m<=0?"disabled":""} aria-label="quitar voto">−</button>
               <span class="vcount">${m>0?`<span class="vhex"></span> ${m}`:`<span style="color:var(--ink-3);font-weight:600">Sin votos</span>`}</span>
@@ -1144,7 +1212,7 @@ async function renderPhase(){
 async function renderPains(){
   const s=P.session;
   P.myCards = (await Store.listCards(s.id)).filter(c=>c.participant_id===P.me.id);
-  let sev=3, stage="", tool="";
+  let sev=3, stage="", tool="", task="";
   $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
     <div class="p-body">
       <p class="p-kicker">Dolores</p>
@@ -1154,7 +1222,9 @@ async function renderPains(){
         <textarea id="f-pain" class="input" maxlength="240" placeholder="Ej. Capturo la misma información en tres archivos distintos…"></textarea></div>
       <div class="field"><label>¿En qué parte del proceso pasa?</label>
         <div class="chips" id="f-stage">${s.stages.map(t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>
-      <div class="field" id="toolField" style="display:none"><label>¿Con qué herramienta? <span class="opt">(opcional)</span></label>
+      <div class="field" id="taskField" style="display:none"><label>¿En qué actividad? <span class="opt">(opcional)</span></label>
+        <div class="chips chips-tasks" id="f-task"></div></div>
+      <div class="field" id="toolField" style="display:none"><label>¿Con qué herramienta o archivo? <span class="opt">(opcional)</span></label>
         <div class="chips" id="f-tool"></div></div>
       <div class="field"><label for="f-sev">¿Qué tanto duele?</label>
         <div class="slider-wrap">
@@ -1167,18 +1237,24 @@ async function renderPains(){
     <div class="p-cta"><button class="btn btn-primary" id="painGo" disabled>Publicar tarjeta</button></div>
   </div>`;
   const val=()=>{ $("#painGo").disabled = !($("#f-pain").value.trim().length>=8 && stage); };
+  const drawTasks=()=>{
+    const opts=tasksFor(s, stage);
+    $("#taskField").style.display = stage && opts.length ? "block" : "none";
+    $("#f-task").innerHTML = opts.map(t=>`<button class="chip ${task===t?"on":""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
+    $$("#f-task .chip").forEach(ch=>ch.onclick=()=>{ task = task===ch.dataset.t ? "" : ch.dataset.t; $$("#f-task .chip").forEach(x=>x.classList.toggle("on",x.dataset.t===task)); });
+  };
   const drawTools=()=>{
     const opts=toolsFor(s, stage);
     $("#toolField").style.display = stage ? "block" : "none";
     $("#f-tool").innerHTML = opts.map(t=>`<button class="chip ${tool===t?"on":""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
     $$("#f-tool .chip").forEach(ch=>ch.onclick=()=>{ tool = tool===ch.dataset.t ? "" : ch.dataset.t; $$("#f-tool .chip").forEach(x=>x.classList.toggle("on",x.dataset.t===tool)); });
   };
-  $$("#f-stage .chip").forEach(ch=>ch.onclick=()=>{ stage=ch.dataset.t; tool=""; $$("#f-stage .chip").forEach(x=>x.classList.toggle("on",x===ch)); drawTools(); val(); });
+  $$("#f-stage .chip").forEach(ch=>ch.onclick=()=>{ stage=ch.dataset.t; tool=""; task=""; $$("#f-stage .chip").forEach(x=>x.classList.toggle("on",x===ch)); drawTasks(); drawTools(); val(); });
   $("#f-pain").addEventListener("input",val);
   $("#f-sev").addEventListener("input",e=>{ sev=+e.target.value; $("#sevNow").textContent=sev+" · "+SEV_LABELS[sev]; });
   $("#painGo").onclick=async()=>{ if(P.sending)return; P.sending=true; $("#painGo").disabled=true;
     try{
-      await Store.addCard({session_id:s.id, participant_id:P.me.id, texto:$("#f-pain").value.trim(), etapa:stage, herramienta:tool||null, severidad:sev});
+      await Store.addCard({session_id:s.id, participant_id:P.me.id, texto:$("#f-pain").value.trim(), etapa:stage, actividad:task||null, herramienta:tool||null, severidad:sev});
       toast("Tarjeta publicada"); P.sending=false; renderPhase();
     }catch(e){ toast("No se pudo publicar"); P.sending=false; val(); }
   };
@@ -1195,16 +1271,32 @@ function renderMyCards(){
 
 /* ---------- Quick wins: calificar mejoras propuestas + proponer las que falten ---------- */
 function qwCard(q){
-  const cur=P.qw.ratings[q.id];
-  return `<div class="qwcard ${cur!==undefined?"done":""}" data-q="${esc(q.id)}">
-    <span class="qw-id">${esc(q.id)}</span>
+  const cur=P.qw.ratings[q.id], K=RATING_KINDS[kindOf(q)];
+  return `<div class="qwcard ${cur!==undefined?"done":""}${K.scale.length===4&&K.na===null?" seg4":""}" data-q="${esc(q.id)}">
+    ${kindOf(q)==="time"?"":`<span class="qw-id">${esc(q.id)}</span>`}
     <div class="txt">${esc(q.text)}</div>
-    <div class="seg" role="group" aria-label="¿Cuánto te ayudaría?">${QW_SCALE.map(o=>`<button data-v="${o.v}" class="${cur===o.v?"on":""}" aria-pressed="${cur===o.v}">${o.t}</button>`).join("")}</div>
+    <div class="seg" role="group" aria-label="${esc(K.q)}">${K.scale.map(o=>`<button data-v="${o.v}" class="${cur===o.v?"on":""}" aria-pressed="${cur===o.v}">${o.t}</button>`).join("")}</div>
   </div>`;
 }
 function qwGroup(list){
   const byStage=[]; list.forEach(q=>{ let g=byStage.find(x=>x.stage===q.stage); if(!g){ g={stage:q.stage,items:[]}; byStage.push(g); } g.items.push(q); });
-  return byStage.map(g=>`<p class="stage-h">${esc(g.stage)}</p>${g.items.map(qwCard).join("")}`).join("");
+  const oneKind=new Set(list.map(kindOf)).size===1 && kindOf(list[0])==="time";
+  return byStage.map(g=>`${oneKind?"":`<p class="stage-h">${esc(g.stage)}</p>`}${g.items.map(qwCard).join("")}`).join("");
+}
+/* Una sección por tipo de lista (quick wins, reglas, tiempos): primero lo de tus etapas, lo demás plegado */
+function ratingSection(kind, items, et){
+  if(!items.length) return "";
+  const K=RATING_KINDS[kind];
+  const hasMine = et.size && items.some(q=>et.has(q.stage));
+  const mine = hasMine ? items.filter(q=>et.has(q.stage)) : items;
+  const other = hasMine ? items.filter(q=>!et.has(q.stage)) : [];
+  return `<section class="rsec" data-kind="${kind}">
+    <p class="p-kicker" style="margin-top:18px">${esc(K.t)}</p>
+    <h2 class="p-title" style="font-size:22px">${esc(K.q)}</h2>
+    <p class="p-sub">${esc(K.h)}${hasMine&&kind!=="time"?" Te mostramos primero lo de tus etapas.":""}</p>
+    ${qwGroup(mine)}
+    ${other.length?`<details class="more"><summary>Ver ${kind==="time"?"otras etapas":"lo de otras etapas"} (${other.length})</summary>${qwGroup(other)}</details>`:""}
+  </section>`;
 }
 async function renderQuickwins(){
   const s=P.session, qws=s.quickwins||[];
@@ -1212,21 +1304,23 @@ async function renderQuickwins(){
   P.qw.ratings = Object.fromEntries(mine.map(r=>[r.qw_id, r.score]));
   const myProps = ideas.filter(i=>i.kind==="qw" && i.participant_id===P.me.id);
   const et=new Set(P.me.etapas||[]);
-  const hasMine = et.size && qws.some(q=>et.has(q.stage));
-  const mineQ = hasMine ? qws.filter(q=>et.has(q.stage)) : qws;
-  const otherQ = hasMine ? qws.filter(q=>!et.has(q.stage)) : [];
-  const doneCount=()=>mineQ.filter(q=>P.qw.ratings[q.id]!==undefined).length;
+  /* lo que te toca calificar: lo de tus etapas (si marcaste etapas), de las tres listas */
+  const anyMine = et.size && qws.some(q=>et.has(q.stage));
+  const mineAll = anyMine ? qws.filter(q=>et.has(q.stage)) : qws;
+  const doneCount=()=>mineAll.filter(q=>P.qw.ratings[q.id]!==undefined).length;
+  const byKind = k => qws.filter(q=>kindOf(q)===k);
   let pStage="";
   $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-    ${qws.length?`<div class="sticky-votes"><span>Calificaste</span><span id="qwDone">${doneCount()}</span><span style="color:var(--ink-2);font-weight:600">de ${mineQ.length}</span></div>`:""}
+    ${qws.length?`<div class="sticky-votes"><span>Calificaste</span><span id="qwDone">${doneCount()}</span><span style="color:var(--ink-2);font-weight:600">de ${mineAll.length}</span></div>`:""}
     <div class="p-body">
-      <p class="p-kicker">Quick wins</p>
       ${qws.length?`
-      <h1 class="p-title" style="font-size:26px">¿Cuánto te ayudaría cada mejora?</h1>
-      <p class="p-sub">Son mejoras rápidas que el equipo ya identificó. ${hasMine?"Te mostramos primero las de tus etapas.":""} Si alguna no tiene que ver con tu trabajo, marca «No aplica».</p>
-      ${qwGroup(mineQ)}
-      ${otherQ.length?`<details class="more"><summary>Ver quick wins de otras etapas (${otherQ.length})</summary>${qwGroup(otherQ)}</details>`:""}
-      <h2 class="sec-title">¿Falta alguna mejora rápida?</h2>`
+      <p class="p-kicker">Validación</p>
+      <h1 class="p-title" style="font-size:26px">Tu opinión sobre lo que ya está sobre la mesa</h1>
+      <p class="p-sub">${[byKind("qw").length?"las mejoras rápidas":"",byKind("gate").length?"las reglas del nuevo flujo":"",byKind("time").length?"los tiempos de cada etapa":""].filter(Boolean).join(", ").replace(/, ([^,]*)$/," y $1").replace(/^./,c=>c.toUpperCase())}. Son unos minutos; contesta desde tu experiencia.</p>
+      ${ratingSection("qw", byKind("qw"), et)}
+      ${ratingSection("gate", byKind("gate"), et)}
+      ${ratingSection("time", byKind("time"), et)}
+      <h2 class="sec-title" style="margin-top:22px">¿Falta alguna mejora rápida?</h2>`
       :`<h1 class="p-title" style="font-size:26px">¿Qué mejora rápida propones?</h1>`}
       <p class="p-sub" style="margin-bottom:14px">Propón la que más te ayudaría en tu día a día. Solo la ve quien facilita.</p>
       <div class="field"><label for="f-qwnew">Tu propuesta</label>
@@ -1338,8 +1432,11 @@ async function renderResults(){
   const safe = p => p.catch(()=>null);
   const [cards,totals,qwT,ideas,ideaT] = await Promise.all([Store.listCards(s.id), Store.cardTotals(s.id), safe(Store.qwTotals(s.id)), safe(Store.listIdeas(s.id)), safe(Store.ideaTotals(s.id))]);
   const top=topPains(cards, totals, 5);
-  const qws=(s.quickwins||[]).map(q=>({...q, st:qwStats((qwT||{})[q.id])})).filter(q=>q.st.idx!==null)
-    .sort((a,b)=>b.st.idx-a.st.idx || b.st.m-a.st.m).slice(0,5);
+  const rated=(s.quickwins||[]).map(q=>({...q, st:qwStats((qwT||{})[q.id], kindOf(q))})).filter(q=>q.st.idx!==null);
+  const qws=rated.filter(q=>kindOf(q)==="qw").sort((a,b)=>b.st.idx-a.st.idx || b.st.m-a.st.m).slice(0,5);
+  const gates=rated.filter(q=>kindOf(q)==="gate").sort((a,b)=>b.st.idx-a.st.idx);
+  const gTop=gates.slice(0,3), gLow=gates.filter(g=>g.st.idx<50).slice(-3).reverse();
+  const times=rated.filter(q=>kindOf(q)==="time").sort((a,b)=>b.st.idx-a.st.idx).slice(0,3);
   const topIdeas=(ideas||[]).filter(i=>i.kind==="idea").map(i=>({...i, v:(ideaT||{})[i.id]||0})).filter(i=>i.v>0)
     .sort((a,b)=>b.v-a.v).slice(0,5);
   const card = (n,txt,tags) => `<div class="mycard"><div class="txt"><strong>${n}.</strong> ${esc(txt)}</div><div class="meta-row">${tags}</div></div>`;
@@ -1354,6 +1451,11 @@ async function renderResults(){
         ${qws.map((q,i)=>card(i+1,q.text,`<span class="tag">${esc(q.stage)}</span><span class="tag sev">Índice ${q.st.idx}/100</span>`)).join("")}`:""}
       ${topIdeas.length?`<h2 class="sec-title">Ideas con más apoyo</h2>
         ${topIdeas.map((x,i)=>card(i+1,x.texto,`<span class="tag sev">${x.v} apoyo${x.v===1?"":"s"}</span>`)).join("")}`:""}
+      ${gTop.length?`<h2 class="sec-title">Reglas del nuevo flujo con más acuerdo</h2>
+        ${gTop.map((q,i)=>card(i+1,q.text,`<span class="tag">${esc(q.stage)}</span><span class="tag sev">Acuerdo ${q.st.idx}/100</span>`)).join("")}
+        ${gLow.length?`<p class="p-sub" style="margin-top:6px">Con menos acuerdo: ${gLow.map(q=>esc(q.id)+" ("+q.st.idx+")").join(" · ")}</p>`:""}`:""}
+      ${times.length?`<h2 class="sec-title">Las etapas que más tardan hoy</h2>
+        ${times.map((q,i)=>card(i+1,q.text,`<span class="tag sev">Lo más común: ${esc(scaleLabel("time",q.st.mode))}</span>`)).join("")}`:""}
     </div>
   </div>`;
 }
@@ -1569,11 +1671,12 @@ async function adminHome(email){
             <div class="field"><label for="c-stages">Etapas del proceso <span class="opt">una por línea</span></label><textarea id="c-stages" class="input" rows="10">${pre.stages.join("\n")}</textarea></div>
             <div class="field"><label for="c-tools">Herramientas por etapa <span class="opt">Etapa | herr1, herr2</span></label><textarea id="c-tools" class="input mono" rows="10">${toolsText(pre.tools)}</textarea></div>
           </div>
+          <div class="field"><label for="c-tasks">Actividades por etapa <span class="opt">opcional · Etapa | actividad; actividad · cada dolor podrá señalar la actividad exacta</span></label><textarea id="c-tasks" class="input mono" rows="8">${tasksText(pre.tasks)}</textarea></div>
         </div>
 
         <details class="ah-sec" id="sec-qw">
-          <summary class="ah-sec-t"><span>4</span> Quick wins e ideas <em class="opt" id="c-qwcount"></em></summary>
-          <div class="field" style="margin-top:12px"><label for="c-qws">Quick wins a validar <span class="opt">Etapa | mejora · se numeran solos (QW-01…)</span></label><textarea id="c-qws" class="input mono" rows="10">${qwsText(pre.quickwins)}</textarea></div>
+          <summary class="ah-sec-t"><span>4</span> Validación e ideas <em class="opt" id="c-qwcount"></em></summary>
+          <div class="field" style="margin-top:12px"><label for="c-qws">Listas a validar <span class="opt">Etapa | texto · secciones «## Quick wins», «## Reglas» y «## Tiempos» · se numeran solos</span></label><textarea id="c-qws" class="input mono" rows="12">${qwsText(pre.quickwins)}</textarea></div>
           <div class="g3">
             <div class="field" style="grid-column:span 2"><label for="c-qidea">Pregunta de ideas</label><input id="c-qidea" class="input" value="${esc(pre.q_idea||"")}"></div>
             <div class="field"><label for="c-ivotes">Apoyos por persona</label><input id="c-ivotes" class="input" type="number" min="1" max="10" value="${pre.idea_votes||3}"></div>
@@ -1596,13 +1699,13 @@ async function adminHome(email){
       </section>
     </main>
   </div>`;
-  const summary=()=>{ const st=linesOf($("#c-stages").value).length, ar=linesOf($("#c-areas").value).length, ro=linesOf($("#c-roles").value).length, qw=parseQws($("#c-qws").value).length;
-    $("#c-summary").textContent=`${st} etapas · ${ar} áreas · ${ro||"sin"} roles · ${qw} quick wins`; $("#c-qwcount").textContent=qw?`· ${qw}`:""; };
+  const summary=()=>{ const st=linesOf($("#c-stages").value).length, ar=linesOf($("#c-areas").value).length, ro=linesOf($("#c-roles").value).length, all=parseQws($("#c-qws").value), qw=all.filter(q=>q.kind==="qw").length, ex=all.length-qw;
+    $("#c-summary").textContent=`${st} etapas · ${ar} áreas · ${ro||"sin"} roles · ${qw} quick wins${ex?` · ${ex} reglas y tiempos`:""}`; $("#c-qwcount").textContent=all.length?`· ${all.length}`:""; };
   $$(".ah-form .input").forEach(i=>i.addEventListener("input",summary));
   const fill = p => { $("#c-name").value=p.name; $("#c-fac").value=p.facilitator; $("#c-votes").value=p.votes_per_user;
     $("#c-areas").value=p.areas.join("\n"); $("#c-stages").value=p.stages.join("\n");
     $("#c-qpain").value=p.q_pain; $("#c-qcheck").value=p.q_checkin; $("#c-qexp").value=p.q_expect;
-    $("#c-roles").value=(p.roles||[]).join("\n"); $("#c-tools").value=toolsText(p.tools); $("#c-qws").value=qwsText(p.quickwins);
+    $("#c-roles").value=(p.roles||[]).join("\n"); $("#c-tools").value=toolsText(p.tools); $("#c-tasks").value=tasksText(p.tasks); $("#c-qws").value=qwsText(p.quickwins);
     $("#c-qidea").value=p.q_idea||""; $("#c-ivotes").value=p.idea_votes||3; };
   const pick=(id,p)=>{ fill(p); $$(".ah-form-head .chip").forEach(x=>x.classList.toggle("on",x.id===id)); summary(); };
   $("#pre-lockton").onclick=()=>pick("pre-lockton",CONFIG.PRESETS.lockton);
@@ -1619,7 +1722,7 @@ async function adminHome(email){
       stages:$("#c-stages").value.split("\n").map(x=>x.trim()).filter(Boolean),
       q_checkin:$("#c-qcheck").value.trim(), q_expect:$("#c-qexp").value.trim(), q_pain:$("#c-qpain").value.trim(),
       brand:CONFIG.BRAND,
-      roles:linesOf($("#c-roles").value), tools:parseTools($("#c-tools").value), quickwins:parseQws($("#c-qws").value),
+      roles:linesOf($("#c-roles").value), tools:parseTools($("#c-tools").value), tasks:parseTasks($("#c-tasks").value), quickwins:parseQws($("#c-qws").value),
       q_idea:$("#c-qidea").value.trim()||"¿Cómo podríamos resolverlo?", idea_votes:Math.max(1,Math.min(10,+$("#c-ivotes").value||3)), idea_top:3
     };
     try{ const created=await Store.createSession(s); startAdmin(created); toast("Taller creado: "+created.code); }
@@ -1628,10 +1731,18 @@ async function adminHome(email){
 }
 
 function toolsText(t){ return Object.entries(t||{}).map(([k,v])=>k+" | "+(v||[]).join(", ")).join("\n"); }
-function qwsText(q){ return (q||[]).map(x=>(x.stage?x.stage+" | ":"")+x.text).join("\n"); }
+/* Listas a validar ↔ texto: secciones «## Quick wins» (QW), «## Reglas» (RG) y «## Tiempos» (TM); cada línea «Etapa | texto» */
+const KIND_HEAD={qw:"## Quick wins",gate:"## Reglas",time:"## Tiempos"};
+function qwsText(q){ q=q||[]; const kinds=["qw","gate","time"].filter(k=>q.some(x=>kindOf(x)===k)); const multi=kinds.length>1 || (kinds[0]&&kinds[0]!=="qw");
+  return kinds.map(k=>(multi?KIND_HEAD[k]+"\n":"")+q.filter(x=>kindOf(x)===k).map(x=>(x.stage?x.stage+" | ":"")+x.text).join("\n")).join("\n"); }
+function tasksText(t){ return Object.entries(t||{}).map(([k,v])=>k+" | "+(v||[]).join("; ")).join("\n"); }
+function parseTasks(v){ const o={}; linesOf(v).forEach(l=>{ const i=l.indexOf("|"); if(i<0) return; const k=l.slice(0,i).trim(); const ts=l.slice(i+1).split(";").map(x=>x.trim()).filter(Boolean); if(k&&ts.length) o[k]=ts; }); return o; }
 function parseTools(v){ const o={}; linesOf(v).forEach(l=>{ const i=l.indexOf("|"); if(i<0) return; const k=l.slice(0,i).trim(); const tools=l.slice(i+1).split(",").map(x=>x.trim()).filter(Boolean); if(k&&tools.length) o[k]=tools; }); return o; }
-function parseQws(v){ return linesOf(v).map((l,n)=>{ const i=l.indexOf("|"); const stage=i<0?"":l.slice(0,i).trim(); const text=(i<0?l:l.slice(i+1)).trim();
-  return {id:"QW-"+String(n+1).padStart(2,"0"), stage, text}; }).filter(x=>x.text); }
+function parseQws(v){ let kind="qw"; const n={qw:0,gate:0,time:0}; const out=[];
+  linesOf(v).forEach(l=>{ const m=l.match(/^##\s*(.+)$/); if(m){ const h=m[1].toLowerCase(); kind = /regla|candado|gate/.test(h)?"gate" : /tiempo|time|duraci/.test(h)?"time" : "qw"; return; }
+    const i=l.indexOf("|"); const stage=i<0?"":l.slice(0,i).trim(); const text=(i<0?l:l.slice(i+1)).trim(); if(!text) return;
+    n[kind]++; out.push({id:RATING_KINDS[kind].id+"-"+String(n[kind]).padStart(2,"0"), kind, stage, text}); });
+  return out; }
 
 function stopAdmin(){ if(A.unsub) A.unsub(); if(A.poll) clearInterval(A.poll); clearTimeout(A._t); A.unsub=null; A.poll=null; }
 function currentCode(){ return (new URLSearchParams(location.search).get("s")||"").trim().toUpperCase(); }
@@ -1734,7 +1845,7 @@ function renderAdmin(){
       <div class="wc-top">${sevPips(c.severidad)}<span class="wc-sev">${esc(SEV_LABELS[c.severidad]||"")}</span>
         ${totals[c.id]?`<span class="wc-votes" data-tip="${totals[c.id]} voto${totals[c.id]===1?"":"s"} en la votación">${hexIco()}${totals[c.id]}</span>`:""}</div>
       <div class="txt">${esc(c.texto)}</div>
-      ${c.herramienta||A.showAuthors?`<div class="wc-foot">${c.herramienta?`<span class="wc-tool">${esc(c.herramienta)}</span>`:""}${who(c.participant_id)}</div>`:""}
+      ${c.actividad||c.herramienta||A.showAuthors?`<div class="wc-foot">${c.actividad?`<span class="wc-tool act">${esc(c.actividad)}</span>`:""}${c.herramienta?`<span class="wc-tool">${esc(c.herramienta)}</span>`:""}${who(c.participant_id)}</div>`:""}
     </div>`;
   const panelWall = `
       <div class="panel">
@@ -1756,14 +1867,34 @@ function renderAdmin(){
       </div>`;
 
   const qwT=qwCount(A.qwRatings);
-  const qwList=(s.quickwins||[]).map(q=>({...q, st:qwStats(qwT[q.id])}));
+  const allRated=(s.quickwins||[]).map(q=>({...q, kind:kindOf(q), st:qwStats(qwT[q.id], kindOf(q))}));
+  const ratedIds=new Set(A.qwRatings.map(r=>r.qw_id));
+  const listOf = k => allRated.filter(q=>q.kind===k);
+  const hasData = k => listOf(k).some(q=>ratedIds.has(q.id));
+  const qwList=listOf("qw"), gateList=listOf("gate"), timeList=listOf("time");
   const byScore=[...qwList].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1) || b.st.m-a.st.m);
   const best=byScore[0];
-  const panelQW = (s.quickwins||[]).length ? `
+  const panelQW = qwList.length ? `
       <div class="panel">
-        ${head("Quick wins · ¿cuánto ayudarían?", A.qwRatings.length? `${qwRaters} de ${nP} personas han calificado · columnas de mayor a menor índice` : `${(s.quickwins||[]).length} quick wins por etapa · el equipo los califica desde su celular`)}
-        ${renderQW(qwList, byScore, ph==="quickwins", A.qwRatings.length>0)}
+        ${head("Quick wins · ¿cuánto ayudarían?", hasData("qw")? `${qwRaters} de ${nP} personas han calificado · columnas de mayor a menor índice` : `${qwList.length} quick wins por etapa · el equipo los califica desde su celular`)}
+        ${renderQW(qwList, byScore, ph==="quickwins", hasData("qw"))}
         ${best&&best.st.idx!==null? foot(`${esc(best.id)} es el que más ayudaría · índice ${best.st.idx}`, "Índice 0–100: mucho = 100 · algo = 50 · poco = 0 · «No aplica» no cuenta", "bolt") : ""}
+      </div>` : "";
+  const gByScore=[...gateList].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1));
+  const gTop=gByScore[0], gLow=[...gByScore].reverse().find(g=>g.st.idx!==null);
+  const panelGates = gateList.length ? `
+      <div class="panel">
+        ${head("Reglas del nuevo flujo · ¿ayudan o estorban?", hasData("gate")? `Candados de LOCFY24 calificados por quienes los van a vivir · de mayor a menor acuerdo` : `${gateList.length} candados del nuevo flujo · el equipo dice si le ayudan o le estorban`)}
+        ${renderQW(gateList, gByScore, ph==="quickwins", hasData("gate"), "gate")}
+        ${gTop&&gTop.st.idx!==null? foot(`Más acuerdo: ${esc(gTop.id)} (${gTop.st.idx}) · menos: ${esc(gLow.id)} (${gLow.st.idx})`, "Índice 0–100: ayuda = 100 · me da igual = 50 · estorba = 0 · «No me toca» no cuenta", "check") : ""}
+      </div>` : "";
+  const tSorted=[...timeList].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1));
+  const tTop=tSorted[0];
+  const panelTimes = timeList.length ? `
+      <div class="panel">
+        ${head("Tiempos · ¿cuánto tarda hoy cada etapa?", hasData("time")? `Duración típica según el equipo, en el orden del proceso · sirve de base para los semáforos` : `${timeList.length} etapas · cada quien estima las suyas`)}
+        ${renderTimes(timeList, hasData("time"))}
+        ${tTop&&tTop.st.idx!==null? foot(`La que más tarda: ${esc(tTop.text)} · lo más común: ${esc(scaleLabel("time",tTop.st.mode))}`, "Cada columna reparte las respuestas: de «menos de 1 día» (claro) a «más de 2 semanas» (oscuro)", "target") : ""}
       </div>` : "";
   const props=A.ideas.filter(i=>i.kind==="qw");
   const panelProps = `
@@ -1810,9 +1941,9 @@ function renderAdmin(){
     ${kpiTile({on:kOn(["votes"]), icon:"target", label:"Votación", value:votesUsed, of:votesMax,
       main: votesUsed? `${voters} de ${nP} personas votaron` : "Aún sin votos",
       sub: `${s.votes_per_user} votos por persona`})}
-    ${kpiTile({on:kOn(["quickwins"]), icon:"bolt", label:"Quick wins", value:qwRaters, of:nP,
+    ${kpiTile({on:kOn(["quickwins"]), icon:"bolt", label:"Validación", value:qwRaters, of:nP,
       main: A.qwRatings.length? `${A.qwRatings.length} calificaciones` : "Aún sin calificaciones",
-      sub: `${(s.quickwins||[]).length} quick wins · ${props.length} propuesta${props.length===1?"":"s"} del equipo`})}
+      sub: `${qwList.length} quick wins${gateList.length?` · ${gateList.length} reglas`:""}${timeList.length?` · ${timeList.length} tiempos`:""} · ${props.length} propuesta${props.length===1?"":"s"}`})}
     ${kpiTile({on:kOn(["ideas","results","closed"]), icon:"bulb", label:"Ideas", value:ideasOnly.length,
       main: A.ideaVotes.length? `${A.ideaVotes.length} de ${supMax} apoyos usados` : (ideasOnly.length? "Aún sin apoyos" : "Aún sin ideas"),
       sub: `${s.idea_votes||3} apoyos por persona · ${targets.length||s.idea_top||3} retos`})}
@@ -1822,9 +1953,9 @@ function renderAdmin(){
   if(ph==="lobby"||ph==="checkin") panels= panelMood ? `<div class="duo">${panelMood}${panelParticipants}</div>` : panelParticipants;
   else if(ph==="pains") panels=panelStages+panelWall;
   else if(ph==="votes") panels=panelRank+panelStages+panelWall;
-  else if(ph==="quickwins") panels=panelQW+panelProps+panelRank;
+  else if(ph==="quickwins") panels=panelQW+panelGates+panelTimes+panelProps+panelRank;
   else if(ph==="ideas") panels=panelIdeas;
-  else panels=panelRank+panelQW+panelTopIdeas+panelProps+(panelMood?`<div class="duo">${panelMood}${panelStages}</div>`:panelStages)+panelWall;
+  else panels=panelRank+panelQW+panelTopIdeas+panelGates+panelTimes+panelProps+(panelMood?`<div class="duo">${panelMood}${panelStages}</div>`:panelStages)+panelWall;
 
   $("#app").innerHTML = `<div class="a-shell">
     <div class="a-top">
@@ -1919,29 +2050,44 @@ function renderRank(totals, targets){
   return `<div class="hb">${rows.map(({c,pts},i)=>{ const r=retoOf(c.id);
     return `<div class="hb-row${r?" top":""}">
       <div class="hb-lbl"><span class="hb-pos" aria-label="Lugar ${i+1}">${i+1}</span>
-        <div class="hb-t"><div class="hb-txt">${esc(c.texto)}</div><div class="hb-meta">${r?`<span class="hb-reto">Reto ${r}</span>`:""}<span>${esc(c.etapa)} · dolor ${c.severidad}/5</span></div></div></div>
+        <div class="hb-t"><div class="hb-txt">${esc(c.texto)}</div><div class="hb-meta">${r?`<span class="hb-reto">Reto ${r}</span>`:""}<span>${esc(c.etapa)}${c.actividad?` · ${esc(c.actividad)}`:""} · dolor ${c.severidad}/5</span></div></div></div>
       <div class="hb-track" data-tip="${pts} voto${pts===1?"":"s"} · ${esc(c.etapa)}"><span class="hb-rail"><i class="hb-bar" style="width:${Math.max(2,pts/max*100).toFixed(1)}%"></i></span><b class="hb-val">${pts}</b></div>
     </div>`; }).join("")}</div>
     ${rest>0?`<p class="hb-more">y ${rest} tarjeta${rest===1?"":"s"} más con votos</p>`:""}`;
 }
 
 /* Quick wins: columnas apiladas al 100 % (Mucho abajo, Algo, Poco arriba), ordenadas por índice, y la lista con el texto de cada uno */
-function renderQW(list, byScore, groupByStage, hasData){
+function renderQW(list, byScore, groupByStage, hasData, kind){
+  kind=kind||"qw"; const K=RATING_KINDS[kind], L=v=>K.scale.find(o=>o.v===v).t;
   const col = q => { const st=q.st, b=st.m+st.a+st.p;
-    return `<div class="qwc-col" data-tip="${esc(q.id)} · ${esc(q.text)}\nMucho ${st.m} · Algo ${st.a} · Poco ${st.p}${st.na?` · No aplica ${st.na}`:""}">
+    return `<div class="qwc-col" data-tip="${esc(q.id)} · ${esc(q.text)}\n${L(3)} ${st.m} · ${L(2)} ${st.a} · ${L(1)} ${st.p}${st.na?` · ${L(0)} ${st.na}`:""}">
       <span class="qwc-idx">${st.idx===null?"—":st.idx}</span>
       <div class="qwc-stack${b?"":" none"}">${b?`${st.p?`<i class="p" style="flex:${st.p}"></i>`:""}${st.a?`<i class="a" style="flex:${st.a}"></i>`:""}${st.m?`<i class="m" style="flex:${st.m}"></i>`:""}`:""}</div>
-      <span class="qwc-id">${esc(q.id.replace(/^QW-/,""))}</span></div>`; };
+      <span class="qwc-id">${esc(q.id.replace(/^[A-Z]+-/,""))}</span></div>`; };
   const row = q => `<div class="qwl-row"><span class="qw-id">${esc(q.id)}</span><span class="qwl-t">${esc(q.text)}</span><span class="qwl-idx${q.st.n?"":" zero"}">${q.st.idx===null?'<span class="na">—</span>':q.st.idx}<small>${q.st.n?q.st.n+" resp.":"sin resp."}</small></span></div>`;
   let body="";
   if(groupByStage){
     const groups=[]; list.forEach(q=>{ let g=groups.find(x=>x.stage===q.stage); if(!g){ g={stage:q.stage,items:[]}; groups.push(g); } g.items.push(q); });
     body=groups.map(g=>`<div class="qwl-stage">${esc(g.stage||"Sin etapa")}</div>${g.items.map(row).join("")}`).join("");
   } else body=byScore.map(row).join("");
-  const chart = hasData ? `<div class="leg"><span><i class="m"></i>Mucho</span><span><i class="a"></i>Algo</span><span><i class="p"></i>Poco</span><span class="leg-help">El número arriba de cada columna es el índice; abajo, el número del quick win</span></div>
+  const chart = hasData ? `<div class="leg"><span><i class="m"></i>${L(3)}</span><span><i class="a"></i>${L(2)}</span><span><i class="p"></i>${L(1)}</span><span class="leg-help">El número arriba de cada columna es el ${kind==="gate"?"índice de acuerdo":"índice"}; abajo, el número ${kind==="gate"?"de la regla":"del quick win"}</span></div>
     <div class="qwc-wrap"><div class="qwc" style="--n:${list.length}">${byScore.map(col).join("")}</div></div>`
-    : emptyState("bolt","Aún no hay calificaciones","La gráfica aparecerá en vivo conforme el equipo responda");
+    : emptyState(kind==="gate"?"check":"bolt","Aún no hay calificaciones","La gráfica aparecerá en vivo conforme el equipo responda");
   return chart+`<div class="qwl${hasData?"":" quiet"}">${body}</div>`;
+}
+
+/* Tiempos por etapa: columnas al 100 % en el orden del proceso; 4 tonos de claro (menos de 1 día) a oscuro (más de 2 semanas) */
+function renderTimes(list, hasData){
+  const K=RATING_KINDS.time, L=v=>K.scale.find(o=>o.v===v).t;
+  if(!hasData) return emptyState("target","Aún no hay estimaciones","Cada quien estima las etapas en las que participa");
+  const col = q => { const st=q.st, n=st.n;
+    return `<div class="qwc-col" data-tip="${esc(q.text)}\n${L(0)} ${st.na} · ${L(1)} ${st.p} · ${L(2)} ${st.a} · ${L(3)} ${st.m}">
+      <span class="qwc-idx">${st.mode===null?"—":esc(L(st.mode).replace("Menos de 1 día","< 1 día").replace("1 a 5 días","1–5 d").replace("1 a 2 semanas","1–2 sem").replace("Más de 2 semanas","> 2 sem"))}</span>
+      <div class="qwc-stack tm${n?"":" none"}">${n?`${st.na?`<i class="t0" style="flex:${st.na}"></i>`:""}${st.p?`<i class="t1" style="flex:${st.p}"></i>`:""}${st.a?`<i class="t2" style="flex:${st.a}"></i>`:""}${st.m?`<i class="t3" style="flex:${st.m}"></i>`:""}`:""}</div>
+      <span class="qwc-id" title="${esc(q.stage)}">${esc(stageX(q.stage))}</span></div>`; };
+  return `<div class="leg"><span><i class="t0"></i>${L(0)}</span><span><i class="t1"></i>${L(1)}</span><span><i class="t2"></i>${L(2)}</span><span><i class="t3"></i>${L(3)}</span><span class="leg-help">Arriba, lo más respondido; abajo, el paso del proceso</span></div>
+    <div class="qwc-wrap"><div class="qwc" style="--n:${list.length}">${list.map(col).join("")}</div></div>
+    <div class="qwl quiet">${list.map(q=>`<div class="qwl-row"><span class="qw-id">${esc(stageX(q.stage))}</span><span class="qwl-t">${esc(q.text)}</span><span class="qwl-idx${q.st.n?"":" zero"}">${q.st.mode===null?'<span class="na">—</span>':esc(L(q.st.mode))}<small>${q.st.n?q.st.n+" resp.":"sin resp."}</small></span></div>`).join("")}</div>`;
 }
 
 /* Retos e ideas: cada idea con su barra de apoyos (misma escala en los tres retos) */
@@ -1995,21 +2141,22 @@ function exportAll(){
     [["nombre","apellido","area","rol","etapas","avatar","animo","expectativa","hora_entrada"],
      ...A.participants.map(p=>[p.nombre,p.apellido,p.area,p.rol,(p.etapas||[]).join(" | "),p.emoji,p.mood,p.expectativa,p.joined_at])]);
   downloadCSV(`colmena_${s.code}_dolores.csv`,
-    [["dolor","etapa","herramienta","severidad","votos","autor","area_autor","rol_autor","hora"],
-     ...A.cards.map(c=>{const a=byId[c.participant_id]||{};return [c.texto,c.etapa,c.herramienta||"",c.severidad,totals[c.id]||0,name(a),a.area||"",a.rol||"",c.created_at];})]);
+    [["dolor","etapa","actividad","herramienta","severidad","votos","autor","area_autor","rol_autor","hora"],
+     ...A.cards.map(c=>{const a=byId[c.participant_id]||{};return [c.texto,c.etapa,c.actividad||"",c.herramienta||"",c.severidad,totals[c.id]||0,name(a),a.area||"",a.rol||"",c.created_at];})]);
   if((s.quickwins||[]).length || A.ideas.some(i=>i.kind==="qw")){
     const t=qwCount(A.qwRatings);
+    const lab=(k,v)=>scaleLabel(k,v);
     downloadCSV(`colmena_${s.code}_quickwins.csv`,
-      [["id","etapa","quick_win","origen","mucho","algo","poco","no_aplica","indice_0_100","autor","area_autor"],
-       ...(s.quickwins||[]).map(q=>{const st=qwStats(t[q.id]);return [q.id,q.stage,q.text,"lámina del cliente",st.m,st.a,st.p,st.na,st.idx??"","",""];}),
-       ...A.ideas.filter(i=>i.kind==="qw").map(i=>{const a=byId[i.participant_id]||{};return ["",i.etapa||"",i.texto,"propuesto en el workshop","","","","","",name(a),a.area||""];})]);
+      [["id","tipo","etapa","texto","origen","puntaje_3","puntaje_2","puntaje_1","puntaje_0","escala_3_2_1_0","indice_0_100","lo_mas_comun","autor","area_autor"],
+       ...(s.quickwins||[]).map(q=>{const k=kindOf(q), st=qwStats(t[q.id],k);return [q.id,RATING_KINDS[k].t,q.stage,q.text,k==="qw"?"lámina del cliente":"LOCFY24",st.m,st.a,st.p,st.na,[3,2,1,0].map(v=>lab(k,v)).join(" / "),st.idx??"",k==="time"&&st.mode!==null?lab(k,st.mode):"","",""];}),
+       ...A.ideas.filter(i=>i.kind==="qw").map(i=>{const a=byId[i.participant_id]||{};return ["","Propuesta del equipo",i.etapa||"",i.texto,"propuesto en el workshop","","","","","","","",name(a),a.area||""];})]);
   }
   if(A.ideas.some(i=>i.kind==="idea")){
     downloadCSV(`colmena_${s.code}_ideas.csv`,
       [["reto_dolor","etapa_reto","idea","apoyos","autor","area_autor","rol_autor","hora"],
        ...A.ideas.filter(i=>i.kind==="idea").map(i=>{const a=byId[i.participant_id]||{}, c=cardById[i.card_id]||{};return [c.texto||"",c.etapa||"",i.texto,iTot[i.id]||0,name(a),a.area||"",a.rol||"",i.created_at];})]);
   }
-  toast("CSV descargados: participantes, dolores, quick wins e ideas");
+  toast("CSV descargados: participantes, dolores, validación (quick wins, reglas, tiempos) e ideas");
 }
 
 /* ============================================================
