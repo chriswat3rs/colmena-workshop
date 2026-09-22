@@ -1,5 +1,5 @@
 -- ============================================================
--- COLMENA v1.3 · esquema seguro para Supabase
+-- COLMENA v1.4 · esquema seguro para Supabase
 --
 -- Pega TODO este archivo en Supabase → SQL Editor → Run.
 -- Es re-ejecutable: puedes correrlo las veces que quieras.
@@ -14,6 +14,8 @@
 -- actividad exacta del proceso) y listas a validar con distintas escalas
 -- (quick wins, reglas del nuevo flujo y tiempos por etapa) dentro de la
 -- misma fase; se guardan en la columna quickwins con un campo «kind».
+-- Novedades v1.4: cada participante marca cuándo terminó cada actividad
+-- (done_phases) y todos ven «X de N ya terminaron» sin ver a los demás.
 --
 -- Cómo protege los datos (todo se valida aquí, en la base de datos,
 -- no en la página, porque el código de una página se puede alterar):
@@ -124,6 +126,9 @@ alter table ws_sessions add column if not exists tasks jsonb not null default '{
 -- v1.3 · cada dolor puede señalar la actividad del proceso donde ocurre
 alter table ws_cards add column if not exists actividad text
   check (char_length(actividad) <= 160);
+-- v1.4 · actividades que el participante dio por terminadas (p. ej. ["checkin","pains"])
+alter table ws_participants add column if not exists done_phases jsonb not null default '[]'
+  check (jsonb_typeof(done_phases) = 'array');
 alter table ws_sessions add column if not exists idea_votes int not null default 3
   check (idea_votes between 1 and 10);
 alter table ws_sessions add column if not exists idea_top int not null default 3
@@ -227,6 +232,18 @@ language sql stable security definer set search_path = public as $$
          s.roles, s.tools, s.quickwins, s.q_idea, s.idea_votes, s.idea_top, s.tasks
   from ws_sessions s
   where auth.uid() is not null and s.code = upper(trim(p_code));
+$$;
+
+-- v1.4 · Avance de la fase en curso: cuántos van y cuántos ya terminaron.
+-- Solo números (nunca nombres): lo ven los miembros del taller y el facilitador.
+create or replace function ws_phase_progress(p_session uuid)
+returns table (phase text, total int, listos int)
+language sql stable security definer set search_path = public as $$
+  select s.phase,
+         (select count(*)::int from ws_participants p where p.session_id = s.id),
+         (select count(*)::int from ws_participants p where p.session_id = s.id and p.done_phases ? s.phase)
+  from ws_sessions s
+  where s.id = p_session and (ws_is_owner(p_session) or ws_is_member(p_session));
 $$;
 
 -- Totales de votos por tarjeta: el facilitador siempre; participantes cuando
@@ -492,11 +509,11 @@ grant select, insert, update, delete on ws_sessions, ws_participants, ws_cards, 
 
 revoke execute on function ws_is_admin(), ws_is_owner(uuid), ws_my_participant(uuid), ws_is_member(uuid),
   ws_session_phase(uuid), ws_join_lookup(text), ws_card_totals(uuid), ws_claim_admin(),
-  ws_qw_totals(uuid), ws_idea_totals(uuid)
+  ws_qw_totals(uuid), ws_idea_totals(uuid), ws_phase_progress(uuid)
   from public, anon;
 grant execute on function ws_is_admin(), ws_is_owner(uuid), ws_my_participant(uuid), ws_is_member(uuid),
   ws_session_phase(uuid), ws_join_lookup(text), ws_card_totals(uuid), ws_claim_admin(),
-  ws_qw_totals(uuid), ws_idea_totals(uuid)
+  ws_qw_totals(uuid), ws_idea_totals(uuid), ws_phase_progress(uuid)
   to authenticated;
 
 -- ------------------------------------------------------------

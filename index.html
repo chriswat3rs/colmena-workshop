@@ -94,6 +94,61 @@ textarea.input{resize:vertical;min-height:110px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{padding:10px 16px;border-radius:var(--r-chip);border:1.5px solid var(--line);background:var(--card);font-weight:600;font-size:15px;transition:all .15s}
 .chip.on{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff}
+/* Participante v1.4: barra de actividad, estados «listo», borradores, ergonomía */
+.chips-tall .chip{min-height:44px}
+.chip.chip-all{border-style:dashed;color:var(--accent-strong)}
+.chip.chip-all.on{border-style:solid;color:#fff}
+.p-shell.tall-cta{padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+.p-cta .btn+.btn{margin-top:6px}
+.cta-hint{font-size:13px;color:var(--ink-3);text-align:center;margin:8px 0 0;min-height:0;font-weight:500}
+.cta-hint:empty{display:none}
+.p-top.pbar{display:block;position:sticky;top:0;z-index:6;background:rgba(244,247,251,.9);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);margin:-20px -20px 0;padding:14px 20px 10px;border-bottom:1px solid rgba(220,227,238,.7)}
+.pb-row{display:flex;align-items:center;gap:10px}
+.pb-t{font-size:15px;color:var(--ink-2);font-weight:600;margin:8px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pb-t b{color:var(--ink);font-weight:800}
+.pb-pill{margin-left:auto;flex:none;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent-strong);letter-spacing:.02em}
+.pb-pill.listo{background:#E3F5EA;color:#1E7A45}
+.pb-pill.espera{background:#EEF1F6;color:var(--ink-3)}
+.pb-segs{display:flex;gap:4px;margin-top:8px}
+.pb-seg{flex:1;min-width:0}
+.pb-seg i{display:block;height:5px;border-radius:3px;background:var(--line)}
+.pb-seg.done i{background:var(--accent)}
+.pb-seg.cur i{background:var(--accent-strong)}
+.pb-seg em{display:block;font-style:normal;font-size:10px;font-weight:600;color:var(--ink-3);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pb-seg.cur em{color:var(--ink);font-weight:700}
+.pb-new{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--ink);color:#fff;font-size:14px;line-height:1.4;transition:opacity .4s,transform .4s}
+.pb-new b{font-weight:700}
+.pb-new.out{opacity:0;transform:translateY(-6px)}
+.p-top.pbar+.sticky-votes{top:0}
+.p-top.pbar~.p-body{padding-top:16px}
+.dn{background:var(--card);border:1.5px solid #BFE5CC;border-radius:var(--r-card);padding:16px;margin:0 0 18px;box-shadow:var(--shadow)}
+.done-h{display:flex;align-items:flex-start;gap:12px}
+.done-h h2{font-size:19px;font-weight:800;margin:0 0 3px;line-height:1.2}
+.done-peers{margin:0;font-size:14.5px;color:var(--ink-2);font-weight:600}
+.done-sub{margin:12px 0 0;font-size:14.5px;color:var(--ink-2);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.done-next{margin:10px 0 0;font-size:13.5px;color:var(--ink-3);line-height:1.45}
+.done-next b{color:var(--ink)}
+.done-act{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.done-act .btn{width:auto;flex:1}
+.btn.btn-sm{padding:11px 14px;font-size:15px}
+.dn.end{border-color:var(--line);margin-top:22px}
+.mine-h{font-weight:700;font-size:14px;color:var(--ink-2);margin:8px 0 10px}
+.mycard{position:relative}
+.mycard.just{border-color:#5BBE84;animation:justin .5s ease-out}
+@keyframes justin{from{transform:translateY(-6px);opacity:0}to{transform:none;opacity:1}}
+.pubok{position:absolute;top:10px;right:12px;font-size:12px;font-weight:700;color:#1E7A45;background:#E3F5EA;padding:3px 8px;border-radius:999px}
+.mycard.just .txt{padding-right:92px}
+.votecard.voted{border-color:var(--accent)}
+.qw-band{justify-content:space-between}
+.qw-band .qw-n{color:var(--ink-2);font-weight:600}
+.qw-band .qw-n b{color:var(--ink);font-weight:800}
+.qwcard.focus{box-shadow:0 0 0 3px rgba(39,143,216,.35)}
+.sheet{position:fixed;inset:0;background:rgba(1,19,59,.45);z-index:70;display:flex;align-items:flex-end;justify-content:center;padding:16px}
+.sheet-card{background:var(--card);border-radius:18px;padding:20px;max-width:480px;width:100%;box-shadow:0 16px 40px rgba(1,19,59,.3)}
+.sheet-card h3{font-size:18px;font-weight:800;margin:0 0 6px}
+.sheet-card p{color:var(--ink-2);font-size:14.5px;margin:0 0 8px}
+.sheet-card blockquote{margin:0;padding:10px 12px;border-left:3px solid var(--accent);background:var(--surface);border-radius:8px;font-size:15px;white-space:pre-wrap}
+.offline{position:fixed;top:0;left:0;right:0;z-index:80;background:#8A4B00;color:#fff;font-size:13.5px;font-weight:600;text-align:center;padding:8px 12px}
 .dots{display:flex;gap:6px;margin-left:auto}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--line)}
 .dot.on{background:var(--accent-strong)}
@@ -482,6 +537,175 @@ details.ah-sec[open]>summary{margin-bottom:4px}
 .wc-tool{font-size:11.5px;font-weight:600;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);padding:3px 8px;border-radius:6px}
 .wcard .who{font-size:12px;color:var(--ink-3);font-weight:600}
 
+/* ===== Resultados v1.4: titular, cinco secciones numeradas, una forma por sección, contexto plegado ===== */
+.a-main.results{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+.a-main.results>.panel,.a-main.results .duo2>.panel{padding:28px 28px 24px}
+.hero{padding:8px 4px 0}
+.hero-ctx{font-size:16px;font-weight:600;color:var(--ink-3);margin:0 0 22px}
+.hero-l{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-strong);margin:0 0 8px}
+.hero-t{font-family:var(--sans);font-size:32px;line-height:1.2;font-weight:800;color:var(--ink);margin:0 0 10px;max-width:34ch;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.hero-t.muted{color:var(--ink-3)}
+.hero-s{font-size:16px;font-weight:600;color:var(--ink-2);margin:0 0 26px}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.tile{display:flex;flex-direction:column;gap:8px;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:20px 20px 18px;box-shadow:0 1px 2px rgba(1,19,59,.04);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}
+a.tile:hover{border-color:#8EC3EC;transform:translateY(-1px)}
+.tile.nodata{background:transparent;border-style:dashed}
+.tile-l{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-3)}
+.tile-v{font-size:20px;font-weight:700;line-height:1.25;color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.tile.nodata .tile-v{color:var(--ink-3);font-weight:600;font-size:18px}
+.tile-s{font-size:14px;font-weight:600;color:var(--ink-2);margin-top:auto}
+.ph.sec{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}
+.sec-n{flex:none;font-family:var(--display);font-size:32px;line-height:1;font-weight:700;color:var(--accent);min-width:28px}
+.ph.sec h2{font-size:22px;line-height:1.2;margin-bottom:6px}
+.ph.sec .pdesc{font-size:15px}
+.a-main.results .pf-main{font-size:16px}
+.a-main.results .pf-sub{font-size:14px}
+.duo2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+.more-a{margin-top:14px}
+.more-a>summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--accent-strong);padding:8px 0}
+.more-a>summary::-webkit-details-marker{display:none}
+.more-a>summary::before{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-45deg);transition:transform .2s;margin-right:2px}
+.more-a[open]>summary::before{transform:rotate(45deg)}
+.more-a>div{margin-top:8px}
+details.ctx{border-top:1px solid var(--line);padding-top:18px}
+details.ctx>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;gap:12px;padding:6px 4px}
+details.ctx>summary::-webkit-details-marker{display:none}
+details.ctx>summary::before{content:"";align-self:center;width:9px;height:9px;border-right:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:rotate(-45deg);transition:transform .2s}
+details.ctx[open]>summary::before{transform:rotate(45deg)}
+.ctx-t{font-size:18px;font-weight:700;color:var(--ink)}
+.ctx-s{font-size:14px;font-weight:500;color:var(--ink-3)}
+.ctx-body{display:flex;flex-direction:column;gap:20px;margin-top:20px}
+.ctx-line{display:flex;align-items:center;gap:10px;font-size:16px;color:var(--ink-2);margin:0}
+/* Unidades (hexágonos) */
+.hxu{display:inline-flex;flex-wrap:wrap;gap:3px;align-items:center;max-width:100%}
+.hxu i{display:block;width:14px;height:16px;background:var(--c-track);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.hxu i.on{background:var(--c1)}
+.hxu.m i.on{background:var(--lk-m)}.hxu.a i.on{background:var(--lk-a)}.hxu.p i.on{background:var(--lk-p)}
+/* 1 · Ranking: etiqueta encima de la barra */
+.rk{display:flex;flex-direction:column;gap:16px}
+.rk-row{display:flex;flex-direction:column;gap:6px;min-width:0}
+.rk-h{display:flex;align-items:center;gap:10px;min-width:0}
+.rk-pos{flex:none;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:12px;font-weight:700;background:var(--navy-soft);color:var(--ink-2)}
+.rk-row.top .rk-pos{background:var(--primary);color:#fff}
+.rk-txt{font-size:16px;font-weight:600;color:var(--ink);line-height:1.3;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rk-meta{font-size:13px;font-weight:600;color:var(--ink-3);padding-left:36px}
+.rk-bar{display:flex;align-items:center;gap:12px;padding-left:36px}
+.rk-bar i{display:block;height:20px;border-radius:6px;background:var(--c-light);min-width:6px;flex:0 1 auto;transition:width .5s ease}
+.rk-row.top .rk-bar i{background:var(--c1)}
+.rk-bar b{font-size:22px;font-weight:700;color:var(--ink);line-height:1}
+.rk-units{display:flex;align-items:center;gap:10px;padding-left:36px}
+.rk-units b{font-size:15px;font-weight:700;color:var(--ink)}
+.a-main.results .rk-txt{font-size:18px}
+/* 3 · Likert horizontal */
+.lk{display:flex;flex-direction:column}
+.lk-row{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:6px 16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.lk-row .lk-t{grid-column:1/-1}
+.lk-row.small{grid-template-columns:minmax(0,1fr)}
+.panel{container-type:inline-size}
+@container (min-width:900px){ .lk-row:not(.small),.dv-row:not(.small){grid-template-columns:minmax(0,1fr) minmax(300px,44%) 64px} .lk-row:not(.small) .lk-t,.dv-row:not(.small) .lk-t{grid-column:auto} }
+.lk-t{font-size:15px;font-weight:600;color:var(--ink);line-height:1.35;min-width:0}
+.lk-id{display:inline-block;font-size:12px;font-weight:700;color:var(--ink-3);letter-spacing:.03em;margin-right:8px}
+.lk-few{display:inline-block;margin-left:8px;font-size:11px;font-weight:700;color:var(--ink-3);background:var(--surface);border:1px solid var(--line);padding:1px 7px;border-radius:999px;vertical-align:1px}
+.lk-bar{display:flex;height:24px;border-radius:7px;overflow:hidden;background:var(--c-track);gap:2px}
+.lk-bar i{display:flex;align-items:center;justify-content:center;min-width:0;font-size:12px;font-weight:700;color:#fff;font-style:normal}
+.lk-bar .m{background:var(--lk-m)}.lk-bar .a{background:var(--lk-a)}.lk-bar .p{background:var(--lk-p);color:var(--ink)}
+.lk-bar .none{flex:1;background:var(--c-track)}
+.lk-idx{text-align:right;font-weight:700;font-size:22px;color:var(--ink);line-height:1}
+.lk-idx small{display:block;font-size:12px;font-weight:600;color:var(--ink-3);margin-top:3px}
+.lk-idx.zero{color:var(--ink-3)}
+.lk-u{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.lk-na{font-size:13px;font-weight:600;color:var(--ink-3)}
+/* 4 · Divergente */
+.dv{display:flex;flex-direction:column}
+.dv-h{font-size:12px;font-weight:800;color:var(--ink-2);text-transform:uppercase;letter-spacing:.05em;padding:14px 0 4px}
+.dv-h.low{color:#8A4B00}
+.dv-row{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:6px 16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.dv-row .lk-t{grid-column:1/-1}
+.dv-row.small{grid-template-columns:minmax(0,1fr)}
+.dv-bar{display:grid;grid-template-columns:1fr 34px 1fr;align-items:center;height:24px}
+.dv-bar .l,.dv-bar .r{display:flex;height:100%;min-width:0}
+.dv-bar .l{justify-content:flex-end}
+.dv-bar .l i,.dv-bar .r i{display:flex;align-items:center;justify-content:center;height:100%;font-size:12px;font-weight:700;font-style:normal;min-width:0}
+.dv-bar .l i{background:var(--lk-p);color:var(--ink);border-radius:7px 0 0 7px}
+.dv-bar .r i{background:var(--lk-m);color:#fff;border-radius:0 7px 7px 0}
+.dv-bar .c{position:relative;height:100%;display:grid;place-items:center}
+.dv-bar .c::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--ink-2);transform:translateX(-50%)}
+.dv-bar .c em{position:relative;font-style:normal;font-size:11.5px;font-weight:700;color:var(--ink-2);background:var(--card);border:1.5px solid var(--ink-2);padding:1px 6px;border-radius:999px;line-height:1.3}
+.leg i.mid{background:var(--card);border:2px solid var(--ink-2);box-sizing:border-box}
+.dv-u{display:grid;grid-template-columns:1fr 22px 1fr;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.dv-u .l{display:flex;justify-content:flex-end;gap:6px;align-items:center}
+.dv-u .r{display:flex;gap:6px;align-items:center}
+.dv-u .c{height:22px;border-left:2px solid var(--ink-2);justify-self:center}
+.dv-u .dv-mid,.dv-u .lk-na{grid-column:1/-1;text-align:center;font-size:12.5px;color:var(--ink-3)}
+/* 5 · Tira de proceso */
+.strip{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:8px}
+.sc{display:flex;flex-direction:column;gap:2px;min-height:96px;padding:12px 12px 10px;border-radius:12px;background:var(--c-track);color:var(--ink);min-width:0}
+.sc.t0{background:#CFE5F7}.sc.t1{background:#8FC3EE}.sc.t2{background:#3A97DC;color:#fff}.sc.t3{background:#15588F;color:#fff}
+.sc.dis{outline:2px dashed rgba(1,19,59,.35);outline-offset:-4px}
+.sc.none{background:transparent;border:1.5px dashed var(--line);color:var(--ink-3)}
+.sc-n{font-size:12px;font-weight:700;opacity:.75}
+.sc-t{font-size:13px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.sc-d{font-size:17px;font-weight:800;margin-top:auto;padding-top:6px}
+.sc small{font-size:12px;font-weight:600;opacity:.8}
+/* 2 · Ideas con unidades */
+.idea-u{display:flex;align-items:center;gap:10px}
+.idea-u b{font-size:20px;font-weight:700;color:var(--ink);line-height:1}
+.idea.lead{background:var(--accent-soft);margin:0 -10px;padding:11px 10px;border-radius:10px;border-top-color:transparent}
+.idea.lead .idea-t{font-size:16px}
+.idea.lead+.idea{border-top-color:transparent}
+.idea-none{font-size:13px;color:var(--ink-3);margin:6px 0 0}
+/* «X de N listos» en la barra de fases */
+.ready{margin-left:auto;display:flex;align-items:center;gap:12px;flex:none;padding:0 4px}
+.ready-t{font-size:13.5px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.ready-t b{font-size:16px;color:var(--ink)}
+.ready-bar{display:block;width:120px;height:8px;border-radius:4px;background:var(--c-track);overflow:hidden}
+.ready-bar span{display:block;height:100%;background:var(--c1);transition:width .5s}
+.ready.all .ready-bar span{background:#1FA971}
+.ready-ok{font-size:12.5px;font-weight:700;color:#1E7A45;background:#E3F5EA;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.abtn.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* Modo proyección: ×1,25, sin metadatos ni contexto */
+body.project .a-main.results{max-width:1280px}
+body.project .hero-t{font-size:40px;max-width:26ch}
+body.project .hero-ctx,body.project .hero-s{font-size:18px}
+body.project .tile-v{font-size:28px}
+body.project .tile-s{font-size:16px}
+body.project .ph.sec h2{font-size:28px}
+body.project .sec-n{font-size:40px}
+body.project .ph.sec .pdesc{font-size:18px}
+body.project .rk-txt,body.project .lk-t,body.project .idea-t{font-size:20px}
+body.project .rk-bar b,body.project .lk-idx{font-size:26px}
+body.project .pf-main{font-size:20px}
+body.project .pf-sub{font-size:16px}
+body.project .sc-t{font-size:15px}
+body.project .sc-d{font-size:20px}
+body.project .rk-meta,body.project .lk-few,body.project .lk-id,body.project details.ctx,body.project .kpi-live{display:none}
+body.project .rk-bar,body.project .rk-units{padding-left:0}
+body.project .rk-bar i{height:26px}
+body.project .lk-bar,body.project .dv-bar{height:30px}
+body.project .hxu i{width:18px;height:21px}
+@media (max-width:1100px){
+  .tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .duo2{grid-template-columns:minmax(0,1fr)}
+  .a-main.results{gap:28px}
+}
+@media (max-width:720px){
+  .tiles{grid-template-columns:minmax(0,1fr);gap:12px}
+  .hero-t{font-size:26px}
+  .tile-v{font-size:20px}
+  .a-main.results>.panel,.a-main.results .duo2>.panel{padding:18px 16px 14px}
+  .ph.sec h2{font-size:19px}
+  .sec-n{font-size:26px;min-width:22px}
+  .rk-txt{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .lk-row,.dv-row{grid-template-columns:minmax(0,1fr) 56px}
+  .lk-row.small,.dv-row.small{grid-template-columns:minmax(0,1fr)}
+  .strip{grid-template-columns:minmax(0,1fr);gap:6px}
+  .sc{flex-direction:row;align-items:center;gap:10px;min-height:0;padding:10px 12px}
+  .sc-t{flex:1;-webkit-line-clamp:1}
+  .sc-d{margin:0;padding:0}
+  .sc small{margin-left:auto}
+  .ready{margin-left:0;width:100%;justify-content:flex-start}
+  .phasebar{flex-wrap:wrap}
+}
 /* Tooltip de las gráficas */
 .vtip{position:fixed;z-index:1000;left:0;top:0;max-width:300px;padding:8px 11px;border-radius:9px;background:var(--card);color:var(--ink);border:1px solid var(--line);font:600 12.5px/1.4 var(--sans);
   box-shadow:0 8px 24px rgba(1,19,59,.14);pointer-events:none;opacity:0;transform:translateY(2px);transition:opacity .12s,transform .12s;white-space:pre-line}
@@ -510,6 +734,27 @@ details.ah-sec[open]>summary{margin-bottom:4px}
 .rsec+.rsec{border-top:1px solid var(--line);margin-top:22px;padding-top:4px}
 .qwcard.seg4 .seg button{font-size:12px;padding:9px 4px}
 .qwcard.seg4 .seg button[data-v="0"].on{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff}
+/* Actividades: número LOCFY24 discreto */
+.tnum{font-size:10.5px;font-weight:700;color:var(--ink-3);letter-spacing:.02em;margin-right:6px;vertical-align:1px}
+.chip .tnum{color:inherit;opacity:.55}
+/* «¿Qué significa?» en cada tarjeta a calificar */
+.qhelp{margin:-4px 0 10px}
+.qhelp summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent-strong);padding:4px 0}
+.qhelp summary::-webkit-details-marker{display:none}
+.qhelp summary::before{content:"?";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--accent-soft);font-size:12px}
+.qhelp[open] summary::before{content:"–"}
+.qhelp p{margin:6px 0 0;font-size:13.5px;line-height:1.5;color:var(--ink-2);background:var(--surface);border-radius:10px;padding:10px 12px}
+/* Mapa del proceso en el lobby */
+.pmap{padding:0 20px 28px;max-width:520px;width:100%;margin:0 auto}
+.pm-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.pm-list li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.pm-list li.mine{border-color:#8EC3EC;background:#F4F9FE}
+.pm-n{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:12.5px;font-weight:700;background:var(--navy-soft);color:var(--ink-2)}
+.pm-list li.mine .pm-n{background:var(--primary);color:#fff}
+.pm-t{flex:1;font-size:14px;font-weight:600;color:var(--ink);min-width:0}
+.pm-you{font-size:11px;font-weight:700;color:var(--accent-strong);background:var(--accent-soft);padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pm-other{margin:12px 0 0;font-size:13px;color:var(--ink-3);font-weight:500;line-height:1.6}
+.pm-other .mine{color:var(--accent-strong);font-weight:700}
 /* ---------- acceso del facilitador ---------- */
 .steps{margin:0 0 14px 20px;color:var(--ink-2);font-size:14.5px;display:grid;gap:6px}
 .mfa-qr{display:flex;justify-content:center;background:#fff;border-radius:14px;padding:12px;width:max-content;margin:4px auto 14px}
@@ -584,39 +829,39 @@ const CONFIG = {
       },
       /* Tres listas a validar en la fase «Validación»: quick wins de la lámina, reglas del nuevo flujo (LOCFY24) y tiempos por etapa */
       quickwins: [
-        {id:"QW-01", kind:"qw", stage:"1 Preparar propuesta", text:"Generar propuestas de manera masiva desde el sistema (cubriría ~90% de las renovaciones)"},
-        {id:"QW-02", kind:"qw", stage:"2 Solicitar / recibir información", text:"Versiones de layout por alcance del servicio, homologadas con el procesamiento de la información"},
-        {id:"QW-03", kind:"qw", stage:"3 Revisar información", text:"Parametrizar la formulación de la base de datos"},
-        {id:"QW-04", kind:"qw", stage:"3 Revisar información", text:"Homologar la base de datos para los sistemas internos y ProVal"},
-        {id:"QW-05", kind:"qw", stage:"3 Revisar información", text:"Plantilla estandarizada de dudas para enviar al cliente"},
-        {id:"QW-06", kind:"qw", stage:"5 Analizar supuestos", text:"Concentrar las bajas históricas en una sola base para analizar rotación y despido más rápido"},
-        {id:"QW-07", kind:"qw", stage:"5 Analizar supuestos", text:"Generar automáticamente la Carta de Supuestos"},
-        {id:"QW-08", kind:"qw", stage:"5 Analizar supuestos", text:"Incorporar al proveedor de precios"},
-        {id:"QW-09", kind:"qw", stage:"5 Analizar supuestos", text:"Incorporar análisis adicionales estándar"},
-        {id:"QW-10", kind:"qw", stage:"6 Determinación de pasivos", text:"Parametrizar beneficios y criterios de programación"},
-        {id:"QW-11", kind:"qw", stage:"6 Determinación de pasivos", text:"Estandarizar las salidas del sistema"},
-        {id:"QW-12", kind:"qw", stage:"7 Anexo contable", text:"Mejorar las macros para sacar PDF y XLS en bulk"},
-        {id:"QW-13", kind:"qw", stage:"7 Anexo contable", text:"Versiones cortas del formato del anexo"},
-        {id:"QW-14", kind:"qw", stage:"7 Anexo contable", text:"Estandarizar criterios para insumos"},
-        {id:"QW-15", kind:"qw", stage:"7 Anexo contable", text:"Automatizar insumos (ya en curso)"},
-        {id:"QW-16", kind:"qw", stage:"7 Anexo contable", text:"Estandarizar el análisis de variaciones"},
-        {id:"QW-17", kind:"qw", stage:"8 Reportes", text:"Versiones cortas del formato del reporte"},
-        {id:"QW-18", kind:"qw", stage:"8 Reportes", text:"Estandarizar insumos parametrizados en BD y anexos contables"},
-        {id:"QW-19", kind:"qw", stage:"8 Reportes", text:"Automatizar insumos (ya en curso)"},
-        {id:"RG-01", kind:"gate", stage:"1 Preparar propuesta", text:"No se puede cerrar una oportunidad como ganada sin asignar valuador"},
-        {id:"RG-02", kind:"gate", stage:"2 Solicitar / recibir información", text:"Recordatorios automáticos al cliente a los 5, +3 y +3 días; sin respuesta no arranca la valuación"},
-        {id:"RG-03", kind:"gate", stage:"2 Solicitar / recibir información", text:"48 horas para marcar la información recibida como completa o incompleta"},
-        {id:"RG-04", kind:"gate", stage:"2 Solicitar / recibir información", text:"No se llega a facturación sin cerrar la tarea de Legal (NDA o contrato)"},
-        {id:"RG-05", kind:"gate", stage:"3 Revisar información", text:"El Becario debe marcar el checklist de cada tarea; los perfiles Sr no"},
-        {id:"RG-06", kind:"gate", stage:"3 Revisar información", text:"La etapa se cierra solo con todas las tareas marcadas y el archivo base definitiva generado"},
-        {id:"RG-07", kind:"gate", stage:"5 Analizar supuestos", text:"Análisis de supuestos se cierra solo con la carta de hipótesis aprobada"},
-        {id:"RG-08", kind:"gate", stage:"6 Determinación de pasivos", text:"Determinación de pasivos se cierra cuando el cliente confirma que recibió la carta de hipótesis"},
-        {id:"RG-09", kind:"gate", stage:"8 Reportes", text:"El reproceso por puntos no aprobados regresa como máximo al cuadro de hipótesis (4.4)"},
-        {id:"RG-10", kind:"gate", stage:"8 Reportes", text:"Sin firma de balance no se avanza a la entrega"},
-        {id:"RG-11", kind:"gate", stage:"8 Reportes", text:"La valuación no se finaliza sin confirmar la entrega física"},
-        {id:"RG-12", kind:"gate", stage:"9 Cierre de la valuación", text:"Al cerrar, el estatus para factura se actualiza solo y avisa a Control Facturación"},
-        {id:"RG-13", kind:"gate", stage:"Transversal (seguimiento, preventivas, tasa de descuento)", text:"Tarea preventiva automática meses después del mes de valuación para clientes cíclicos"},
-        {id:"RG-14", kind:"gate", stage:"Transversal (seguimiento, preventivas, tasa de descuento)", text:"Actualización de curva y tasa de descuento asignada por calendario"},
+        {id:"QW-01", kind:"qw", stage:"1 Preparar propuesta", text:"Generar propuestas de manera masiva desde el sistema (cubriría ~90% de las renovaciones)", help:"Hoy cada propuesta de renovación se arma una por una en SIGER con su layout. La idea es cargar un solo archivo con muchas renovaciones y que el sistema genere todas las propuestas de una vez. Según la lámina cubriría cerca del 90 % de las renovaciones."},
+        {id:"QW-02", kind:"qw", stage:"2 Solicitar / recibir información", text:"Versiones de layout por alcance del servicio, homologadas con el procesamiento de la información", help:"El layout que se manda al cliente para pedir información sería distinto según lo contratado (solo prima de antigüedad, con plan de jubilación, con CONSAR…) y con los mismos campos que después usa el procesamiento, para no volver a acomodar los datos."},
+        {id:"QW-03", kind:"qw", stage:"3 Revisar información", text:"Parametrizar la formulación de la base de datos", help:"Que las fórmulas del archivo base (antigüedad, edad, salario integrado…) estén definidas una vez y se apliquen igual en todas las empresas, en lugar de que cada quien las escriba en su propio Excel."},
+        {id:"QW-04", kind:"qw", stage:"3 Revisar información", text:"Homologar la base de datos para los sistemas internos y ProVal", help:"Un mismo formato de base de datos que sirva tal cual para SICI, SACS y ProVal, sin convertir columnas ni renombrar campos al pasar de un sistema a otro."},
+        {id:"QW-05", kind:"qw", stage:"3 Revisar información", text:"Plantilla estandarizada de dudas para enviar al cliente", help:"Un formato único para el archivo de dudas que se envía al cliente (mismas columnas, misma bitácora, misma redacción), en vez de que cada valuador arme el suyo."},
+        {id:"QW-06", kind:"qw", stage:"5 Analizar supuestos", text:"Concentrar las bajas históricas en una sola base para analizar rotación y despido más rápido", help:"Hoy las bajas de cada año viven en archivos separados. Si todas estuvieran en una sola base, el análisis de rotación y despido (cuántos se van y por qué) saldría más rápido y con más años de historia."},
+        {id:"QW-07", kind:"qw", stage:"5 Analizar supuestos", text:"Generar automáticamente la Carta de Supuestos", help:"La carta que se manda al cliente con las hipótesis (tasa, rotación, incrementos salariales) se llenaría sola desde el cuadro de hipótesis, en vez de redactarla a mano cada vez."},
+        {id:"QW-08", kind:"qw", stage:"5 Analizar supuestos", text:"Incorporar al proveedor de precios", help:"Traer las curvas de tasas de un proveedor de precios directamente al cálculo de la tasa de descuento, en lugar de bajarlas y pegarlas a mano en el archivo de tasa."},
+        {id:"QW-09", kind:"qw", stage:"5 Analizar supuestos", text:"Incorporar análisis adicionales estándar", help:"Tener listos, como parte del análisis de supuestos, los análisis que hoy se hacen solo cuando alguien los pide: distribuciones por edad y antigüedad, comparativos contra el año anterior, etc."},
+        {id:"QW-10", kind:"qw", stage:"6 Determinación de pasivos", text:"Parametrizar beneficios y criterios de programación", help:"Que los beneficios (prima de antigüedad, indemnizaciones, plan) y sus reglas se configuren eligiendo opciones, no programando cada caso en ProVal desde cero."},
+        {id:"QW-11", kind:"qw", stage:"6 Determinación de pasivos", text:"Estandarizar las salidas del sistema", help:"Que los resultados y listados que da ProVal salgan siempre con el mismo formato y columnas, para que el anexo y el reporte los tomen sin retrabajo."},
+        {id:"QW-12", kind:"qw", stage:"7 Anexo contable", text:"Mejorar las macros para sacar PDF y XLS en bulk", help:"Que las macros del anexo generen de un jalón los PDF y Excel de todas las empresas de un grupo, en vez de correrlas una por una."},
+        {id:"QW-13", kind:"qw", stage:"7 Anexo contable", text:"Versiones cortas del formato del anexo", help:"Un anexo contable resumido para los clientes que no necesitan el detalle completo: menos hojas que armar y revisar."},
+        {id:"QW-14", kind:"qw", stage:"7 Anexo contable", text:"Estandarizar criterios para insumos", help:"Definir de una vez qué datos y con qué reglas entran al anexo (qué cuenta, qué periodo, qué se concilia), para que no cambie según quién lo arma."},
+        {id:"QW-15", kind:"qw", stage:"7 Anexo contable", text:"Automatizar insumos (ya en curso)", help:"Que los datos que alimentan el anexo (resultados de ProVal, cifras del año anterior) se carguen solos en lugar de copiarlos a mano. Ya se está trabajando en esto."},
+        {id:"QW-16", kind:"qw", stage:"7 Anexo contable", text:"Estandarizar el análisis de variaciones", help:"Un mismo método para explicar por qué cambió el pasivo respecto al año anterior (por tasa, por rotación, por salarios…), igual en todas las empresas."},
+        {id:"QW-17", kind:"qw", stage:"8 Reportes", text:"Versiones cortas del formato del reporte", help:"Un reporte más breve para los clientes que no requieren el documento completo, en vez de recortar el largo a mano cada vez."},
+        {id:"QW-18", kind:"qw", stage:"8 Reportes", text:"Estandarizar insumos parametrizados en BD y anexos contables", help:"Que el reporte tome sus cifras y tablas directamente de la base de datos y del anexo contable, con campos fijos, en lugar de copiarlas de varios archivos."},
+        {id:"QW-19", kind:"qw", stage:"8 Reportes", text:"Automatizar insumos (ya en curso)", help:"Que tablas, gráficas y cifras del reporte se llenen solas desde el anexo y las estadísticas. Ya se está trabajando en esto."},
+        {id:"RG-01", kind:"gate", stage:"1 Preparar propuesta", text:"No se puede cerrar una oportunidad como ganada sin asignar valuador", help:"Hoy una oportunidad se puede marcar como ganada aunque nadie sepa quién la va a valuar. Con la regla, el sistema pide elegir al valuador antes de cerrarla, para que la valuación arranque sin esperar."},
+        {id:"RG-02", kind:"gate", stage:"2 Solicitar / recibir información", text:"Recordatorios automáticos al cliente a los 5, +3 y +3 días; sin respuesta no arranca la valuación", help:"Cuando el cliente no manda la información, el sistema le enviaría recordatorios automáticos a los 5 días y luego a los 3 y 3 siguientes. Si después de esos tres avisos no responde, la valuación no se puede iniciar."},
+        {id:"RG-03", kind:"gate", stage:"2 Solicitar / recibir información", text:"48 horas para marcar la información recibida como completa o incompleta", help:"Cuando llega la información del cliente, quien la recibe tendría 48 horas para revisarla y marcarla como completa o incompleta. Si se pasa el tiempo, se avisa al actuario responsable."},
+        {id:"RG-04", kind:"gate", stage:"2 Solicitar / recibir información", text:"No se llega a facturación sin cerrar la tarea de Legal (NDA o contrato)", help:"Si el cliente pidió NDA o contrato, Legal tiene una tarea abierta. La valuación puede avanzar, pero no se puede facturar hasta que Legal cierre esa tarea."},
+        {id:"RG-05", kind:"gate", stage:"3 Revisar información", text:"El Becario debe marcar el checklist de cada tarea; los perfiles Sr no", help:"Cada tarea trae una lista de puntos a revisar. Un Asesor Sr puede cerrar la tarea sin marcar la lista; un Becario tiene que marcar cada punto para poder cerrarla."},
+        {id:"RG-06", kind:"gate", stage:"3 Revisar información", text:"La etapa se cierra solo con todas las tareas marcadas y el archivo base definitiva generado", help:"La etapa de revisión de información solo se puede cerrar cuando todas sus tareas (base empresa, SICI, bajas, dudas…) están marcadas y ya existe el archivo base definitiva."},
+        {id:"RG-07", kind:"gate", stage:"5 Analizar supuestos", text:"Análisis de supuestos se cierra solo con la carta de hipótesis aprobada", help:"El análisis de supuestos no se puede cerrar hasta que el gerente haya aprobado la carta de hipótesis. Sin esa aprobación no se pasa a calcular pasivos."},
+        {id:"RG-08", kind:"gate", stage:"6 Determinación de pasivos", text:"Determinación de pasivos se cierra cuando el cliente confirma que recibió la carta de hipótesis", help:"Después de enviar la carta de hipótesis, la etapa de pasivos solo se cierra cuando el cliente confirma que la recibió."},
+        {id:"RG-09", kind:"gate", stage:"8 Reportes", text:"El reproceso por puntos no aprobados regresa como máximo al cuadro de hipótesis (4.4)", help:"Si el cliente no aprueba algo de los anexos y hay que rehacer, el sistema permite regresar hasta el cuadro de hipótesis (tarea 4.4), no más atrás. Lo que se rehaga queda marcado como reproceso."},
+        {id:"RG-10", kind:"gate", stage:"8 Reportes", text:"Sin firma de balance no se avanza a la entrega", help:"El reporte no se puede entregar mientras el balance no esté firmado."},
+        {id:"RG-11", kind:"gate", stage:"8 Reportes", text:"La valuación no se finaliza sin confirmar la entrega física", help:"Aunque el reporte digital ya se haya entregado, la valuación no se da por terminada hasta que se confirme la entrega física."},
+        {id:"RG-12", kind:"gate", stage:"9 Cierre de la valuación", text:"Al cerrar, el estatus para factura se actualiza solo y avisa a Control Facturación", help:"Al cerrar la valuación, el sistema cambia solo el estatus a «lista para factura» y le avisa a Control Facturación, sin correo ni archivo compartido."},
+        {id:"RG-13", kind:"gate", stage:"Transversal (seguimiento, preventivas, tasa de descuento)", text:"Tarea preventiva automática meses después del mes de valuación para clientes cíclicos", help:"Para los clientes que se valúan cada año, el sistema crearía sola una tarea preventiva unos meses después del mes de valuación (preparar bases, carrera salarial, bajas, anexo), asignada al último valuador."},
+        {id:"RG-14", kind:"gate", stage:"Transversal (seguimiento, preventivas, tasa de descuento)", text:"Actualización de curva y tasa de descuento asignada por calendario", help:"Las actualizaciones del histórico de curva y de la tasa de descuento se asignarían automáticamente según un calendario, en lugar de que cada quien recuerde cuándo le toca."},
         {id:"TM-01", kind:"time", stage:"1 Preparar propuesta", text:"Preparar propuesta"},
         {id:"TM-02", kind:"time", stage:"2 Solicitar / recibir información", text:"Solicitar y recibir información"},
         {id:"TM-03", kind:"time", stage:"3 Revisar información", text:"Revisar información"},
@@ -780,6 +1025,8 @@ function toolsFor(session, stage){
   const own = (session && session.tools && session.tools[stage]) || [];
   return [...new Set([...own, ...COMMON_TOOLS])];
 }
+/* «3.7 Validación de bajas» → número LOCFY24 chico y gris + texto (el número es para cruzar con el tracking, no para el equipo) */
+function taskHTML(t){ const m=String(t||"").match(/^(\d+(?:\.\d+)*)\s+(.+)$/); return m ? `<small class="tnum">${esc(m[1])}</small>${esc(m[2])}` : esc(t); }
 /* Actividades configuradas para una etapa (v1.3); vacío si el taller no las define */
 function tasksFor(session, stage){ return (session && session.tasks && session.tasks[stage]) || []; }
 function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
@@ -891,6 +1138,7 @@ const SupaStore = {
 
   /* ---- v1.2 · Quick wins ---- */
   async setQwRating(r){ const {error}=await this.client.from("ws_qw_ratings").upsert(r,{onConflict:"session_id,participant_id,qw_id"}); if(error) throw error; },
+  async phaseProgress(sid){ const {data,error}=await this.client.rpc("ws_phase_progress",{p_session:sid}); if(error) throw error; return (data&&data[0])||null; },
   async listMyQwRatings(sid,pid){ const {data,error}=await this.client.from("ws_qw_ratings").select("qw_id,score").eq("session_id",sid).eq("participant_id",pid); if(error) throw error; return data||[]; },
   async listQwRatings(sid){ const {data,error}=await this.client.from("ws_qw_ratings").select("*").eq("session_id",sid); if(error) throw error; return data||[]; },
   async qwTotals(sid){ const {data,error}=await this.client.rpc("ws_qw_totals",{p_session:sid}); if(error) throw error; const t={}; (data||[]).forEach(r=>t[r.qw_id]={m:+r.mucho||0,a:+r.algo||0,p:+r.poco||0,na:+r.no_aplica||0}); return t; },
@@ -950,6 +1198,7 @@ const DemoStore = {
   async cardTotals(sid){ const t={}; this.db().votes.filter(v=>v.session_id===sid).forEach(v=>t[v.card_id]=(t[v.card_id]||0)+(v.points||0)); return t; },
 
   async setQwRating(r){ const db=this.db(); const i=db.qw.findIndex(x=>x.session_id===r.session_id&&x.participant_id===r.participant_id&&x.qw_id===r.qw_id); if(i>=0) db.qw[i].score=r.score; else db.qw.push({id:uid(),created_at:now(),...r}); this.save(db); },
+  async phaseProgress(sid){ const db=this.db(); const s=db.sessions.find(x=>x.id===sid); if(!s) return null; const ps=db.participants.filter(p=>p.session_id===sid); return {phase:s.phase,total:ps.length,listos:ps.filter(p=>(p.done_phases||[]).includes(s.phase)).length}; },
   async listMyQwRatings(sid,pid){ return this.db().qw.filter(r=>r.session_id===sid&&r.participant_id===pid); },
   async listQwRatings(sid){ return this.db().qw.filter(r=>r.session_id===sid); },
   async qwTotals(sid){ return qwCount(this.db().qw.filter(r=>r.session_id===sid)); },
@@ -982,15 +1231,84 @@ if(!HAS_SUPA){
 const P = { session:null, me:null, step:0,
   form:{nombre:"",apellido:"",area:"",rol:"",etapas:[],emoji:""},
   cards:[], votes:[], myCards:[], unsub:null, poll:null, sending:false,
-  qw:{ratings:{}}, ideas:{targets:[], reto:0, list:[], mine:new Set()} };
+  qw:{ratings:{}, step:0}, ideas:{targets:[], reto:0, list:[], mine:new Set()},
+  progress:null, banner:null };
 
-function pTop(withDots, totalDots, onDot){
-  const s=P.session;
-  return `<div class="p-top">
-    ${brandLockup("xs")}
-    <span class="sname">${esc(s? s.name : CONFIG.BRAND)}</span>
-    ${withDots?`<span class="dots">${Array.from({length:totalDots},(_,i)=>`<span class="dot ${i<=onDot?"on":""}"></span>`).join("")}</span>`:""}
+/* Las 5 actividades del taller tal como las vive el participante (lobby, resultados y cierre no cuentan) */
+const ACTS = [
+  {id:"checkin",   t:"Check-in",   intro:"Un toque y una frase."},
+  {id:"pains",     t:"Dolores",    intro:"Una idea por tarjeta, las que quieras."},
+  {id:"votes",     t:"Votación",   intro:s=>`Tienes ${s.votes_per_user||5} votos para repartir.`},
+  {id:"quickwins", t:"Validación", intro:s=>`${(s.quickwins||[]).length} preguntas de un toque.`},
+  {id:"ideas",     t:"Ideas",      intro:"Propón cómo resolver los dolores más votados y apoya ideas."}
+];
+const actIndex = ph => ACTS.findIndex(a=>a.id===ph);
+const facName = () => esc((P.session&&P.session.facilitator)||"quien facilita");
+function nextActOf(ph){ const i=actIndex(ph); return i>=0 && i<ACTS.length-1 ? ACTS[i+1].t : "Resultados"; }
+
+/* Barra superior: en las actividades dice «Actividad N de 5 · Nombre», con 5 segmentos y el estado */
+function pTop(withDots, totalDots, onDot, status){
+  const s=P.session, ph=s&&s.phase, i=actIndex(ph);
+  if(withDots || i<0 || !P.me){
+    return `<div class="p-top">
+      ${brandLockup("xs")}
+      <span class="sname">${esc(s? s.name : CONFIG.BRAND)}</span>
+      ${withDots?`<span class="dots">${Array.from({length:totalDots},(_,i)=>`<span class="dot ${i<=onDot?"on":""}"></span>`).join("")}</span>`:""}
+    </div>`;
+  }
+  const st=status||"curso";
+  return `<div class="p-top pbar">
+    <div class="pb-row">${brandLockup("xs")}<span class="pb-pill ${st}" id="pbPill">${st==="listo"?"Listo ✓":st==="espera"?"Esperando":"En curso"}</span></div>
+    <p class="pb-t">Actividad ${i+1} de ${ACTS.length} · <b>${ACTS[i].t}</b></p>
+    <div class="pb-segs" aria-hidden="true">${ACTS.map((a,k)=>`<span class="pb-seg ${k<i?"done":k===i?"cur":""}"><i></i><em>${a.t}</em></span>`).join("")}</div>
+    ${P.banner===ph?`<div class="pb-new" id="pbNew"><b>${i===ACTS.length-1?"Última actividad":"Nueva actividad"}: ${ACTS[i].t}.</b> ${typeof ACTS[i].intro==="function"?ACTS[i].intro(s):ACTS[i].intro}</div>`:""}
   </div>`;
+}
+function armBanner(){ const el=$("#pbNew"); if(el){ P.banner=null; setTimeout(()=>{ el.classList.add("out"); setTimeout(()=>el.remove(),400); },4500); } }
+function setPill(st){ const el=$("#pbPill"); if(!el) return; el.className="pb-pill "+st; el.textContent = st==="listo"?"Listo ✓":st==="espera"?"Esperando":"En curso"; }
+
+/* «X de N ya terminaron»: números de la base (nunca nombres), se refrescan con el sondeo */
+function peersText(){
+  const pr=P.progress; if(!pr || pr.phase!==(P.session&&P.session.phase)) return "Contando a tus compañeros…";
+  const me=(P.me.done_phases||[]).includes(pr.phase);
+  if(pr.total<=1) return "Eres la única persona registrada por ahora.";
+  if(pr.listos>=pr.total) return "Todos listos. En un momento cambia la pantalla.";
+  if(me && pr.listos===1) return `Eres la primera persona en terminar; van ${pr.listos} de ${pr.total}.`;
+  return `${pr.listos} de ${pr.total} ya terminaron.`;
+}
+async function loadProgress(){ try{ P.progress=await Store.phaseProgress(P.session.id); }catch(e){ return; } const el=$("#peers"); if(el) el.textContent=peersText(); }
+function isDone(ph){ return (P.me&&P.me.done_phases||[]).includes(ph); }
+async function setDone(ph,on){
+  const cur=new Set(P.me.done_phases||[]); if(on===cur.has(ph)) return;
+  if(on) cur.add(ph); else cur.delete(ph);
+  const arr=[...cur]; P.me.done_phases=arr;
+  try{ await Store.updateParticipant(P.me.id,{done_phases:arr}); }catch(e){ console.error(e); }
+  loadProgress();
+}
+/* Bloque «terminé»: va al tope del contenido; lo de abajo sigue editable */
+function doneBlock(o){
+  return `<section class="dn" id="doneBlock">
+    <div class="done-h">${glass("check",{size:"md",tone:"green",tint:true})}<div><h2>${o.title}</h2><p class="done-peers" id="peers">${peersText()}</p></div></div>
+    ${o.sub?`<p class="done-sub">${o.sub}</p>`:""}
+    ${o.next!==false?`<p class="done-next">Lo que sigue: <b>${o.next||nextActOf(P.session.phase)}</b>. ${facName()} abre la siguiente actividad cuando el grupo esté listo; tu pantalla cambia sola.</p>`:""}
+    ${o.actions&&o.actions.length?`<div class="done-act">${o.actions.map(a=>`<button class="btn ${a.primary?"btn-primary":"btn-line"} btn-sm" id="${a.id}">${a.label}</button>`).join("")}</div>`:""}
+  </section>`;
+}
+/* Borradores: lo que escribes sobrevive a la recarga y avisa si la fase se cierra */
+const draftKey = ph => `colmena_draft_${P.session.id}_${ph}`;
+const loadDraft = ph => storageGet(draftKey(ph))||"";
+const saveDraft = (ph,v) => storageSet(draftKey(ph), v||"");
+const clearDraft = ph => storageSet(draftKey(ph),"");
+function bindDraft(el, ph){ if(!el) return; const d=loadDraft(ph); if(d && !el.value) el.value=d; el.addEventListener("input",()=>saveDraft(ph, el.value)); }
+function lostDraftSheet(oldPh){
+  const names={pains:"Dolores",quickwins:"Validación",ideas:"Ideas"}; const d=loadDraft(oldPh); if(!names[oldPh] || d.trim().length<8) return;
+  clearDraft(oldPh);
+  const sheet=document.createElement("div"); sheet.className="sheet"; sheet.innerHTML=`<div class="sheet-card"><h3>${facName()} cerró ${names[oldPh]}</h3>
+    <p>Tu texto no se publicó:</p><blockquote>${esc(d)}</blockquote>
+    <div class="done-act"><button class="btn btn-line btn-sm" id="shCopy">Copiar texto</button><button class="btn btn-primary btn-sm" id="shOk">Entendido</button></div></div>`;
+  document.body.appendChild(sheet);
+  sheet.querySelector("#shOk").onclick=()=>sheet.remove();
+  sheet.querySelector("#shCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(d); toast("Texto copiado"); }catch(e){ toast("No se pudo copiar"); } };
 }
 
 function screenJoin(msg){
@@ -1016,7 +1334,7 @@ function screenWelcome(){
     <div class="p-body wait-hero">
       ${glass("hexagon",{size:"xl",tint:true})}
       <h1 class="p-title" style="margin:0">${esc(s.name)}</h1>
-      <p class="p-sub" style="margin:0">Facilita ${esc(s.facilitator||"el equipo")}. Tus respuestas se guardan al instante y se ven en la pantalla de la sala.</p>
+      <p class="p-sub" style="margin:0">${actIndex(s.phase)>0||["results","closed"].includes(s.phase)?`El taller ya va en ${s.phase==="results"?"los resultados":`la actividad ${actIndex(s.phase)+1} de ${ACTS.length}`}. Regístrate en un minuto y te unes donde va.`:`Facilita ${esc(s.facilitator||"el equipo")}. Tus respuestas se guardan al instante y se ven en la pantalla de la sala.`}</p>
     </div>
     <div class="p-cta"><button class="btn btn-primary" id="wgo">Comenzar</button></div>
   </div>`;
@@ -1063,16 +1381,15 @@ function obSteps(){
   }
   if(stages.length){
     steps.push({
-      title:"¿En qué etapas participas?", sub:"Elige todas las que apliquen. Así te mostramos lo que te toca.",
-      body:()=>`<button class="btn-link" id="f-etapas-all" style="margin:0 0 12px">${P.form.etapas.length===stages.length?"Quitar todas":"Participo en todas"}</button>
-        <div class="chips" id="f-etapas">${stages.map(t=>`<button class="chip ${P.form.etapas.includes(t)?"on":""}" data-t="${esc(t)}">${esc(t)}</button>`).join("")}</div>`,
+      title:"¿En qué etapas participas?", sub:`Elige todas las que apliquen (${stages.length} etapas). Así te mostramos solo lo que te toca.`,
+      body:()=>`<div class="chips chips-tall" id="f-etapas"><button class="chip chip-all ${P.form.etapas.length===stages.length?"on":""}" id="f-etapas-all">${P.form.etapas.length===stages.length?"Quitar todas":"Participo en todas"}</button>${stages.map(t=>`<button class="chip ${P.form.etapas.includes(t)?"on":""}" data-t="${esc(t)}">${esc(t)}</button>`).join("")}</div>`,
       wire:()=>{
-        const allBtn=()=>{ $("#f-etapas-all").textContent = P.form.etapas.length===stages.length ? "Quitar todas" : "Participo en todas"; };
-        $$("#f-etapas .chip").forEach(ch=>ch.onclick=()=>{ const t=ch.dataset.t;
+        const allBtn=()=>{ const b=$("#f-etapas-all"); const all=P.form.etapas.length===stages.length; b.textContent = all ? "Quitar todas" : "Participo en todas"; b.classList.toggle("on",all); };
+        $$("#f-etapas .chip[data-t]").forEach(ch=>ch.onclick=()=>{ const t=ch.dataset.t;
           P.form.etapas = P.form.etapas.includes(t) ? P.form.etapas.filter(x=>x!==t) : [...P.form.etapas, t];
           ch.classList.toggle("on", P.form.etapas.includes(t)); allBtn(); refreshCTA(); });
         $("#f-etapas-all").onclick=()=>{ P.form.etapas = P.form.etapas.length===stages.length ? [] : [...stages];
-          $$("#f-etapas .chip").forEach(x=>x.classList.toggle("on", P.form.etapas.length>0)); allBtn(); refreshCTA(); };
+          $$("#f-etapas .chip[data-t]").forEach(x=>x.classList.toggle("on", P.form.etapas.length>0)); allBtn(); refreshCTA(); };
       },
       read:()=>{}, valid:()=>P.form.etapas.length>=1
     });
@@ -1086,11 +1403,12 @@ function obSteps(){
   return steps;
 }
 
-function refreshCTA(){ const st=obSteps()[P.step]; const b=$("#obNext"); if(b && st) b.disabled = !st.valid(); }
+const OB_HINTS={"¿Cómo te llamas?":"Escribe tu nombre para continuar","¿En qué área trabajas?":"Elige un área para continuar","¿Cuál es tu rol?":"Elige tu rol para continuar","¿Cuál es tu puesto?":"Escribe tu puesto para continuar","¿En qué etapas participas?":"Elige al menos una etapa","Elige tu avatar":"Toca un avatar para continuar"};
+function refreshCTA(){ const st=obSteps()[P.step]; const b=$("#obNext"); if(b && st){ b.disabled = !st.valid(); const h=$("#obHint"); if(h) h.textContent = b.disabled ? (OB_HINTS[st.title]||"") : ""; } }
 
 function renderOnboarding(){
   const steps=obSteps(), st=steps[P.step];
-  $("#app").innerHTML = `<div class="p-shell">${pTop(true, steps.length, P.step)}
+  $("#app").innerHTML = `<div class="p-shell${st.title.includes("etapas")?" tall-cta":""}">${pTop(true, steps.length, P.step)}
     <div class="p-body">
       <p class="p-kicker">Paso ${P.step+1} de ${steps.length}</p>
       <h1 class="p-title">${st.title}</h1>
@@ -1099,6 +1417,7 @@ function renderOnboarding(){
     </div>
     <div class="p-cta">
       <button class="btn btn-primary" id="obNext">${P.step===steps.length-1?"Entrar a la colmena":"Continuar"}</button>
+      <p class="cta-hint" id="obHint"></p>
       ${P.step>0?'<button class="btn btn-ghost" id="obBack">Regresar</button>':""}
     </div>
   </div>`;
@@ -1113,14 +1432,26 @@ function renderOnboarding(){
     try{
       const me = await Store.joinParticipant({ session_id:P.session.id, nombre:P.form.nombre, apellido:P.form.apellido,
         area:P.form.area, rol:P.form.rol, etapas:P.form.etapas, emoji:P.form.emoji });
-      P.me=me;
-      toast("¡Ya estás dentro!");
+      P.me=me; P.banner=P.session.phase;
       renderPhase();
     }catch(e){ console.error(e); toast(friendlyAuthError(e).startsWith("No hay conexión")?friendlyAuthError(e):"No se pudo entrar. Intenta de nuevo."); }
     finally{ P.sending=false; }
   };
 }
 
+/* Mapa del proceso en el lobby: los pasos numerados en orden, con los tuyos resaltados; lo demás (Alta, Transversal) al final */
+function processMap(s){
+  const stages=s.stages||[]; if(stages.length<3) return "";
+  const mine=new Set(P.me.etapas||[]);
+  const num=stages.filter(t=>/^\d+\s/.test(t)), other=stages.filter(t=>!/^\d+\s/.test(t));
+  const item=t=>{ const m=t.match(/^(\d+)\s+(.+)$/); return `<li class="${mine.has(t)?"mine":""}"><span class="pm-n">${m?esc(m[1]):"·"}</span><span class="pm-t">${esc(m?m[2]:t)}</span>${mine.has(t)?'<span class="pm-you">participas</span>':""}</li>`; };
+  return `<section class="pmap">
+    <p class="p-kicker">Así vemos el proceso</p>
+    <p class="p-sub" style="margin:0 0 12px">En cada paso te vamos a preguntar qué duele, qué mejora ayudaría y cuánto tarda. Los marcados son en los que dijiste que participas.</p>
+    <ol class="pm-list">${num.map(item).join("")}</ol>
+    ${other.length?`<p class="pm-other">También: ${other.map(t=>`<span class="${mine.has(t)?"mine":""}">${esc(t.replace(/\s*\(.*\)$/,""))}</span>`).join(" · ")}</p>`:""}
+  </section>`;
+}
 function waitBlock(iconHtml, title, sub){
   return `<div class="p-body wait-hero">
     ${iconHtml}
@@ -1129,99 +1460,94 @@ function waitBlock(iconHtml, title, sub){
   </div>`;
 }
 
+/* Recordar dónde iba el scroll cuando se vuelve a pintar la misma actividad (votos, ideas, resultados) */
+function keepScroll(fn){ const y=window.scrollY; fn(); requestAnimationFrame(()=>window.scrollTo(0,y)); }
+
 async function renderPhase(){
   const s=P.session, ph=s.phase||"lobby";
   if(!P.me){ screenWelcome(); return; }
+  const changed = P.lastPh!==undefined && P.lastPh!==ph;
+  if(changed){
+    const old=P.lastPh; window.scrollTo(0,0);
+    if(actIndex(ph)>=0) P.banner=ph;
+    P.qw.step=0; P.qw.review=false;
+    setTimeout(()=>lostDraftSheet(old),300);
+  }
+  P.lastPh=ph;
+  if(actIndex(ph)>=0) loadProgress();
   if(ph==="lobby"){
     $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-      ${waitBlock(avatar(P.me.emoji,"xl"), "Ya estás dentro, "+esc(P.me.nombre), "Cuando "+esc(s.facilitator||"quien facilita")+" abra la primera actividad, tu pantalla cambiará sola.")}
+      ${waitBlock(avatar(P.me.emoji,"xl"), "Ya estás dentro, "+esc(P.me.nombre), "Son "+ACTS.length+" actividades cortas. Cuando "+facName()+" abra la primera, tu pantalla cambia sola.")}
+      ${processMap(s)}
     </div>`;
     return;
   }
-  if(ph==="checkin"){
-    if(P.me.mood){
-      $("#app").innerHTML = `<div class="p-shell">${pTop(false)}${waitBlock(glass("check",{size:"xl",tint:true}),"Check-in enviado","Espera a que "+esc(s.facilitator||"quien facilita")+" abra la siguiente actividad. Tu pantalla cambiará sola.")}</div>`;
-      return;
-    }
-    let mood="", expect="";
-    $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-      <div class="p-body">
-        <p class="p-kicker">Check-in</p>
-        <h1 class="p-title">${esc(s.q_checkin)}</h1>
-        <div class="mood-row" id="moods">${MOODS.map(m=>`<button class="mood-opt" data-v="${m.v}">${glass(m.ic,{tone:m.tone,tint:true})} ${m.t}</button>`).join("")}</div>
-        <div class="field" style="margin-top:20px"><label for="f-exp">${esc(s.q_expect)}</label>
-          <input id="f-exp" class="input" maxlength="140" placeholder="Escríbelo en corto…"></div>
-      </div>
-      <div class="p-cta"><button class="btn btn-primary" id="ckGo" disabled>Enviar check-in</button></div>
-    </div>`;
-    $$("#moods .mood-opt").forEach(b=>b.onclick=()=>{ mood=b.dataset.v; $$("#moods .mood-opt").forEach(x=>x.classList.toggle("on",x===b)); $("#ckGo").disabled=!mood; });
-    $("#f-exp").addEventListener("input",e=>expect=e.target.value.trim());
-    $("#ckGo").onclick=async()=>{ if(P.sending)return; P.sending=true;
-      try{ await Store.updateParticipant(P.me.id,{mood,expectativa:expect}); P.me.mood=mood; P.me.expectativa=expect; renderPhase(); toast("Gracias por tu check-in"); }
-      catch(e){ toast("No se pudo enviar, intenta otra vez"); } finally{ P.sending=false; } };
-    return;
-  }
+  if(ph==="checkin") return renderCheckin();
   if(ph==="pains") return renderPains();
-  if(ph==="votes"){
-    [P.cards,P.votes] = await Promise.all([Store.listCards(s.id), Store.listMyVotes(s.id, P.me.id)]);
-    const mine = P.votes;
-    const used = mine.reduce((a,v)=>a+(v.points||0),0);
-    const total = s.votes_per_user||5;
-    const left = Math.max(0,total-used);
-    const my = Object.fromEntries(mine.map(v=>[v.card_id,v.points||0]));
-    const cards=[...P.cards].sort((a,b)=>a.id<b.id?-1:1);
-    $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-      <div class="sticky-votes"><span>Tus votos:</span>
-        <span class="honeycells" aria-label="${left} de ${total} votos disponibles">${Array.from({length:total},(_,i)=>`<span class="honeycell ${i<left?"full":""}"></span>`).join("")}</span>
-        <span style="color:var(--ink-2);font-weight:600">${left} de ${total}</span></div>
-      <div class="p-body">
-        <p class="p-sub" style="margin-bottom:14px">Reparte tus votos entre los dolores que más te pesan a ti también. Puedes poner más de uno a la misma tarjeta.</p>
-        ${cards.length? cards.map(c=>{
-          const m=my[c.id]||0;
-          return `<div class="votecard">
-            <div class="txt">${esc(c.texto)}</div>
-            <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.actividad?`<span class="tag tool">${esc(c.actividad)}</span>`:""}${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span></div>
-            <div class="vote-ctrl">
-              <button class="vbtn" data-id="${c.id}" data-d="-1" ${m<=0?"disabled":""} aria-label="quitar voto">−</button>
-              <span class="vcount">${m>0?`<span class="vhex"></span> ${m}`:`<span style="color:var(--ink-3);font-weight:600">Sin votos</span>`}</span>
-              <button class="vbtn" data-id="${c.id}" data-d="1" ${left<=0?"disabled":""} aria-label="dar voto">+</button>
-            </div></div>`;
-        }).join("") : '<p class="empty">Aún no hay tarjetas para votar.</p>'}
-      </div>
-    </div>`;
-    $$(".vbtn").forEach(b=>b.onclick=async()=>{
-      if(P.sending) return; P.sending=true;
-      const id=b.dataset.id, d=+b.dataset.d, cur=my[id]||0, next=cur+d;
-      if(next<0 || (d>0 && left<=0)){ P.sending=false; return; }
-      try{ await Store.setVote({session_id:s.id, participant_id:P.me.id, card_id:id, points:next}); }
-      catch(e){ toast(/votos/.test(String(e&&e.message))?"Ya usaste todos tus votos":"No se pudo guardar el voto"); }
-      P.sending=false; renderPhase();
-    });
-    return;
-  }
+  if(ph==="votes") return renderVotes();
   if(ph==="quickwins") return renderQuickwins();
   if(ph==="ideas") return renderIdeas();
   if(ph==="results") return renderResults();
   /* closed */
   $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-    ${waitBlock(glass("sparkle",{size:"xl",tint:true}),"Gracias, "+esc(P.me.nombre),"La sesión terminó. Lo que aportaste ya quedó guardado y trabajaremos sobre ello.")}
+    ${waitBlock(glass("sparkle",{size:"xl",tint:true}),"Gracias, "+esc(P.me.nombre),"La sesión terminó. Lo que aportaste ya quedó guardado y trabajaremos sobre ello. Puedes cerrar esta pestaña.")}
   </div>`;
 }
 
-/* ---------- Dolores: texto + etapa + herramienta (opcional) + severidad ---------- */
+/* ---------- Check-in: ánimo + expectativa ---------- */
+function renderCheckin(){
+  const s=P.session;
+  if(P.me.mood && !P.editCheckin){
+    const m=MOODS.find(x=>x.v===P.me.mood);
+    $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,"listo")}
+      <div class="p-body">
+        ${doneBlock({title:"Check-in enviado", sub:`${m?`${glass(m.ic,{size:"sm",tone:m.tone,tint:true})} <b>${esc(m.t)}</b>`:""}${P.me.expectativa?` · «${esc(P.me.expectativa)}»`:""}`, actions:[{id:"ckEdit",label:"Cambiar mi respuesta"}]})}
+      </div></div>`;
+    armBanner();
+    $("#ckEdit").onclick=()=>{ P.editCheckin=true; renderCheckin(); };
+    return;
+  }
+  let mood=P.me.mood||"", expect=P.me.expectativa||"";
+  $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,mood&&!P.editCheckin?"listo":"curso")}
+    <div class="p-body">
+      <p class="p-kicker">Check-in</p>
+      <h1 class="p-title">${esc(s.q_checkin)}</h1>
+      <div class="mood-row" id="moods">${MOODS.map(m=>`<button class="mood-opt ${mood===m.v?"on":""}" data-v="${m.v}">${glass(m.ic,{tone:m.tone,tint:true})} ${m.t}</button>`).join("")}</div>
+      <div class="field" style="margin-top:20px"><label for="f-exp">${esc(s.q_expect)} <span class="opt">(opcional)</span></label>
+        <input id="f-exp" class="input" maxlength="140" placeholder="Escríbelo en corto…" value="${esc(expect)}"></div>
+    </div>
+    <div class="p-cta"><button class="btn btn-primary" id="ckGo" ${mood?"":"disabled"}>Enviar check-in</button><p class="cta-hint" id="ckHint">${mood?"":"Elige cómo llegas para continuar"}</p></div>
+  </div>`;
+  armBanner();
+  $$("#moods .mood-opt").forEach(b=>b.onclick=()=>{ mood=b.dataset.v; $$("#moods .mood-opt").forEach(x=>x.classList.toggle("on",x===b)); $("#ckGo").disabled=false; $("#ckHint").textContent=""; });
+  $("#f-exp").addEventListener("input",e=>expect=e.target.value.trim());
+  $("#ckGo").onclick=async()=>{ if(P.sending)return; P.sending=true; $("#ckGo").disabled=true;
+    try{ await Store.updateParticipant(P.me.id,{mood,expectativa:expect}); P.me.mood=mood; P.me.expectativa=expect; P.editCheckin=false; await setDone("checkin",true); window.scrollTo(0,0); renderCheckin(); }
+    catch(e){ toast("No se pudo enviar, intenta otra vez"); $("#ckGo").disabled=false; } finally{ P.sending=false; } };
+}
+
+/* ---------- Dolores: texto + etapa + actividad/herramienta (opcional) + severidad ---------- */
 async function renderPains(){
   const s=P.session;
-  P.myCards = (await Store.listCards(s.id)).filter(c=>c.participant_id===P.me.id);
+  P.myCards = (await Store.listCards(s.id)).filter(c=>c.participant_id===P.me.id).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)));
+  const done=isDone("pains") && P.myCards.length>0;
+  if(isDone("pains") && !P.myCards.length) setDone("pains",false);
   let sev=3, stage="", tool="", task="";
-  $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
+  const mine=new Set(P.me.etapas||[]);
+  const own=s.stages.filter(t=>mine.has(t)), rest=s.stages.filter(t=>!mine.has(t));
+  const chip=t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`;
+  $("#app").innerHTML = `<div class="p-shell tall-cta">${pTop(false,0,0,done?"listo":"curso")}
     <div class="p-body">
-      <p class="p-kicker">Dolores</p>
+      ${done?doneBlock({title:"Terminaste Dolores", sub:`Publicaste ${P.myCards.length} tarjeta${P.myCards.length===1?"":"s"}. Si recuerdas otra, agrégala abajo.`}):""}
+      <div id="mine">${renderMyCards()}</div>
+      <p class="p-kicker" ${done||P.myCards.length?'style="margin-top:18px"':""}>${P.myCards.length?"Otra tarjeta":"Dolores"}</p>
       <h1 class="p-title" style="font-size:24px">${esc(s.q_pain)}</h1>
-      <p class="p-sub">Una idea por tarjeta. Puedes publicar todas las que quieras.</p>
+      <p class="p-sub">Una idea por tarjeta. Publica todas las que quieras; cuando ya no tengas más, toca «No tengo más por ahora».</p>
       <div class="field"><label for="f-pain">Tu dolor</label>
         <textarea id="f-pain" class="input" maxlength="240" placeholder="Ej. Capturo la misma información en tres archivos distintos…"></textarea></div>
       <div class="field"><label>¿En qué parte del proceso pasa?</label>
-        <div class="chips" id="f-stage">${s.stages.map(t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>
+        <div class="chips chips-tall" id="f-stage">${(own.length?own:s.stages).map(chip).join("")}</div>
+        ${own.length&&rest.length?`<details class="more" id="stageMore"><summary>Otras etapas (${rest.length})</summary><div class="chips chips-tall">${rest.map(chip).join("")}</div></details>`:""}</div>
       <div class="field" id="taskField" style="display:none"><label>¿En qué actividad? <span class="opt">(opcional)</span></label>
         <div class="chips chips-tasks" id="f-task"></div></div>
       <div class="field" id="toolField" style="display:none"><label>¿Con qué herramienta o archivo? <span class="opt">(opcional)</span></label>
@@ -1232,15 +1558,21 @@ async function renderPains(){
           <div class="slider-labels"><span>Molesta</span><span>Insoportable</span></div>
           <div class="sev-now" id="sevNow">3 · ${SEV_LABELS[3]}</div>
         </div></div>
-      <div id="mine" style="margin-top:10px">${renderMyCards()}</div>
     </div>
-    <div class="p-cta"><button class="btn btn-primary" id="painGo" disabled>Publicar tarjeta</button></div>
+    <div class="p-cta">
+      <button class="btn btn-primary" id="painGo" disabled>Publicar tarjeta</button>
+      <p class="cta-hint" id="painHint">Escribe tu dolor y elige la etapa</p>
+      ${done?"":`<button class="btn btn-ghost" id="painDone" ${P.myCards.length?"":"disabled"}>No tengo más por ahora</button>${P.myCards.length?"":'<p class="cta-hint">Publica al menos una tarjeta para terminar</p>'}`}
+    </div>
   </div>`;
-  const val=()=>{ $("#painGo").disabled = !($("#f-pain").value.trim().length>=8 && stage); };
+  armBanner(); bindDraft($("#f-pain"),"pains");
+  const val=()=>{ const t=$("#f-pain").value.trim(); const ok=t.length>=8 && stage; $("#painGo").disabled=!ok;
+    $("#painHint").textContent = ok ? "" : t.length<8 ? (t.length?`Escribe un poco más (${8-t.length} caracteres)`:"Escribe tu dolor y elige la etapa") : "Elige en qué etapa pasa"; };
+  val();
   const drawTasks=()=>{
     const opts=tasksFor(s, stage);
     $("#taskField").style.display = stage && opts.length ? "block" : "none";
-    $("#f-task").innerHTML = opts.map(t=>`<button class="chip ${task===t?"on":""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
+    $("#f-task").innerHTML = opts.map(t=>`<button class="chip ${task===t?"on":""}" data-t="${esc(t)}">${taskHTML(t)}</button>`).join("");
     $$("#f-task .chip").forEach(ch=>ch.onclick=()=>{ task = task===ch.dataset.t ? "" : ch.dataset.t; $$("#f-task .chip").forEach(x=>x.classList.toggle("on",x.dataset.t===task)); });
   };
   const drawTools=()=>{
@@ -1249,32 +1581,79 @@ async function renderPains(){
     $("#f-tool").innerHTML = opts.map(t=>`<button class="chip ${tool===t?"on":""}" data-t="${esc(t)}">${esc(t)}</button>`).join("");
     $$("#f-tool .chip").forEach(ch=>ch.onclick=()=>{ tool = tool===ch.dataset.t ? "" : ch.dataset.t; $$("#f-tool .chip").forEach(x=>x.classList.toggle("on",x.dataset.t===tool)); });
   };
-  $$("#f-stage .chip").forEach(ch=>ch.onclick=()=>{ stage=ch.dataset.t; tool=""; task=""; $$("#f-stage .chip").forEach(x=>x.classList.toggle("on",x===ch)); drawTasks(); drawTools(); val(); });
+  $$("#f-stage .chip, #stageMore .chip").forEach(ch=>ch.onclick=()=>{ stage=ch.dataset.t; tool=""; task=""; $$("#f-stage .chip, #stageMore .chip").forEach(x=>x.classList.toggle("on",x===ch)); drawTasks(); drawTools(); val(); });
   $("#f-pain").addEventListener("input",val);
   $("#f-sev").addEventListener("input",e=>{ sev=+e.target.value; $("#sevNow").textContent=sev+" · "+SEV_LABELS[sev]; });
   $("#painGo").onclick=async()=>{ if(P.sending)return; P.sending=true; $("#painGo").disabled=true;
     try{
       await Store.addCard({session_id:s.id, participant_id:P.me.id, texto:$("#f-pain").value.trim(), etapa:stage, actividad:task||null, herramienta:tool||null, severidad:sev});
-      toast("Tarjeta publicada"); P.sending=false; renderPhase();
+      clearDraft("pains"); P.sending=false; P.flash="pub"; window.scrollTo(0,0); renderPhase();
     }catch(e){ toast("No se pudo publicar"); P.sending=false; val(); }
   };
-  $$("#mine .del").forEach(b=>b.onclick=async()=>{ await Store.deleteCard(b.dataset.id); renderPhase(); });
+  const dn=$("#painDone"); if(dn) dn.onclick=async()=>{ await setDone("pains",true); window.scrollTo(0,0); renderPhase(); };
+  $$("#mine .del").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteCard(b.dataset.id); }catch(e){ toast("No se pudo eliminar"); } renderPhase(); });
 }
 
 function renderMyCards(){
   if(!P.myCards.length) return "";
-  return `<p style="font-weight:700;font-size:14px;color:var(--ink-2);margin:8px 0 10px">Tus tarjetas (${P.myCards.length})</p>`+
-    P.myCards.map(c=>`<div class="mycard"><div class="txt">${esc(c.texto)}</div>
-      <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span>
+  const flash=P.flash==="pub"; P.flash=null;
+  return `<p class="mine-h">Tus tarjetas (${P.myCards.length})</p>`+
+    P.myCards.map((c,i)=>`<div class="mycard ${flash&&i===0?"just":""}">${flash&&i===0?'<span class="pubok">Publicada ✓</span>':""}<div class="txt">${esc(c.texto)}</div>
+      <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.actividad?`<span class="tag tool">${taskHTML(c.actividad)}</span>`:""}${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span>
       <button class="del" data-id="${c.id}">Eliminar</button></div></div>`).join("");
 }
 
-/* ---------- Quick wins: calificar mejoras propuestas + proponer las que falten ---------- */
+/* ---------- Votación: reparte tus votos; al llegar a cero, listo ---------- */
+async function renderVotes(){
+  const s=P.session;
+  [P.cards,P.votes] = await Promise.all([Store.listCards(s.id), Store.listMyVotes(s.id, P.me.id)]);
+  const mine = P.votes;
+  const used = mine.reduce((a,v)=>a+(v.points||0),0);
+  const total = s.votes_per_user||5;
+  const left = Math.max(0,total-used);
+  const my = Object.fromEntries(mine.map(v=>[v.card_id,v.points||0]));
+  const cards=[...P.cards].sort((a,b)=>a.id<b.id?-1:1);
+  const done = left===0 && cards.length>0;
+  if(done!==isDone("votes")) setDone("votes",done);
+  const draw=()=>{ $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,done?"listo":"curso")}
+    <div class="sticky-votes"><span>${done?"Repartiste tus":"Te quedan"}</span>
+      <span class="honeycells" aria-label="${left} de ${total} votos disponibles">${Array.from({length:total},(_,i)=>`<span class="honeycell ${i<left?"full":""}"></span>`).join("")}</span>
+      <span style="color:var(--ink-2);font-weight:600">${done?`${total} votos`:`${left} de ${total} votos`}</span></div>
+    <div class="p-body">
+      ${done?doneBlock({title:"Terminaste la votación", sub:"Puedes mover tus votos mientras la actividad siga abierta."})
+            :`<p class="p-sub" style="margin-bottom:14px">Reparte tus <b>${total} votos</b> entre los dolores que más te pesan a ti también. Puedes poner más de uno a la misma tarjeta; al usar el último, quedas listo.</p>`}
+      ${cards.length? cards.map(c=>{
+        const m=my[c.id]||0;
+        return `<div class="votecard ${m>0?"voted":""}">
+          <div class="txt">${esc(c.texto)}</div>
+          <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.actividad?`<span class="tag tool">${taskHTML(c.actividad)}</span>`:""}${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span></div>
+          <div class="vote-ctrl">
+            <button class="vbtn" data-id="${c.id}" data-d="-1" ${m<=0?"disabled":""} aria-label="quitar voto">−</button>
+            <span class="vcount">${m>0?`<span class="vhex"></span> ${m} voto${m===1?"":"s"}`:`<span style="color:var(--ink-3);font-weight:600">Sin votos</span>`}</span>
+            <button class="vbtn" data-id="${c.id}" data-d="1" ${left<=0?"disabled":""} aria-label="dar voto">+</button>
+          </div></div>`;
+      }).join("") : emptyWait("Aún no hay tarjetas para votar.")}
+    </div>
+  </div>`; };
+  if(P.lastVotesDraw && !P.banner && !P.votesTop) keepScroll(draw); else { draw(); if(P.votesTop) window.scrollTo(0,0); }
+  P.lastVotesDraw=true; P.votesTop=false; armBanner();
+  $$(".vbtn").forEach(b=>b.onclick=async()=>{
+    if(P.sending) return; P.sending=true;
+    const id=b.dataset.id, d=+b.dataset.d, cur=my[id]||0, next=cur+d;
+    if(next<0 || (d>0 && left<=0)){ P.sending=false; return; }
+    try{ await Store.setVote({session_id:s.id, participant_id:P.me.id, card_id:id, points:next}); }
+    catch(e){ toast(/votos/.test(String(e&&e.message))?"Ya usaste todos tus votos":"No se pudo guardar el voto"); }
+    P.sending=false; P.votesTop = left-d===0 && !done; renderVotes();
+  });
+}
+function emptyWait(t){ return `<p class="empty">${t}</p>`; }
+
+/* ---------- Validación: tres pasos (mejoras rápidas, reglas, tiempos) + propuesta opcional ---------- */
 function qwCard(q){
   const cur=P.qw.ratings[q.id], K=RATING_KINDS[kindOf(q)];
   return `<div class="qwcard ${cur!==undefined?"done":""}${K.scale.length===4&&K.na===null?" seg4":""}" data-q="${esc(q.id)}">
-    ${kindOf(q)==="time"?"":`<span class="qw-id">${esc(q.id)}</span>`}
     <div class="txt">${esc(q.text)}</div>
+    ${q.help?`<details class="qhelp"><summary>¿Qué significa?</summary><p>${esc(q.help)}</p></details>`:""}
     <div class="seg" role="group" aria-label="${esc(K.q)}">${K.scale.map(o=>`<button data-v="${o.v}" class="${cur===o.v?"on":""}" aria-pressed="${cur===o.v}">${o.t}</button>`).join("")}</div>
   </div>`;
 }
@@ -1283,7 +1662,7 @@ function qwGroup(list){
   const oneKind=new Set(list.map(kindOf)).size===1 && kindOf(list[0])==="time";
   return byStage.map(g=>`${oneKind?"":`<p class="stage-h">${esc(g.stage)}</p>`}${g.items.map(qwCard).join("")}`).join("");
 }
-/* Una sección por tipo de lista (quick wins, reglas, tiempos): primero lo de tus etapas, lo demás plegado */
+/* Una sección por tipo de lista: primero lo de tus etapas, lo demás plegado */
 function ratingSection(kind, items, et){
   if(!items.length) return "";
   const K=RATING_KINDS[kind];
@@ -1291,37 +1670,31 @@ function ratingSection(kind, items, et){
   const mine = hasMine ? items.filter(q=>et.has(q.stage)) : items;
   const other = hasMine ? items.filter(q=>!et.has(q.stage)) : [];
   return `<section class="rsec" data-kind="${kind}">
-    <p class="p-kicker" style="margin-top:18px">${esc(K.t)}</p>
     <h2 class="p-title" style="font-size:22px">${esc(K.q)}</h2>
-    <p class="p-sub">${esc(K.h)}${hasMine&&kind!=="time"?" Te mostramos primero lo de tus etapas.":""}</p>
+    <p class="p-sub">${esc(K.h)}${hasMine&&kind!=="time"?" Primero lo de tus etapas.":""}</p>
     ${qwGroup(mine)}
     ${other.length?`<details class="more"><summary>Ver ${kind==="time"?"otras etapas":"lo de otras etapas"} (${other.length})</summary>${qwGroup(other)}</details>`:""}
   </section>`;
 }
+const KIND_SHORT={qw:"Mejoras rápidas",gate:"Reglas",time:"Tiempos"};
 async function renderQuickwins(){
   const s=P.session, qws=s.quickwins||[];
   const [mine, ideas] = await Promise.all([Store.listMyQwRatings(s.id,P.me.id), Store.listIdeas(s.id)]);
   P.qw.ratings = Object.fromEntries(mine.map(r=>[r.qw_id, r.score]));
   const myProps = ideas.filter(i=>i.kind==="qw" && i.participant_id===P.me.id);
   const et=new Set(P.me.etapas||[]);
-  /* lo que te toca calificar: lo de tus etapas (si marcaste etapas), de las tres listas */
+  const steps=["qw","gate","time"].filter(k=>qws.some(q=>kindOf(q)===k));
   const anyMine = et.size && qws.some(q=>et.has(q.stage));
-  const mineAll = anyMine ? qws.filter(q=>et.has(q.stage)) : qws;
-  const doneCount=()=>mineAll.filter(q=>P.qw.ratings[q.id]!==undefined).length;
-  const byKind = k => qws.filter(q=>kindOf(q)===k);
+  const toDo = k => (anyMine ? qws.filter(q=>et.has(q.stage)) : qws).filter(q=>kindOf(q)===k);   /* lo que te toca en este paso */
+  const answered = list => list.filter(q=>P.qw.ratings[q.id]!==undefined).length;
+  const allMine = steps.flatMap(toDo);
+  const done = isDone("quickwins") && !P.qw.review;
+  if(P.qw.step>=steps.length) P.qw.step=Math.max(0,steps.length-1);
+  const k=steps[P.qw.step], K=k&&RATING_KINDS[k], list=k?toDo(k):[];
+  const last=P.qw.step===steps.length-1;
   let pStage="";
-  $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-    ${qws.length?`<div class="sticky-votes"><span>Calificaste</span><span id="qwDone">${doneCount()}</span><span style="color:var(--ink-2);font-weight:600">de ${mineAll.length}</span></div>`:""}
-    <div class="p-body">
-      ${qws.length?`
-      <p class="p-kicker">Validación</p>
-      <h1 class="p-title" style="font-size:26px">Tu opinión sobre lo que ya está sobre la mesa</h1>
-      <p class="p-sub">${[byKind("qw").length?"las mejoras rápidas":"",byKind("gate").length?"las reglas del nuevo flujo":"",byKind("time").length?"los tiempos de cada etapa":""].filter(Boolean).join(", ").replace(/, ([^,]*)$/," y $1").replace(/^./,c=>c.toUpperCase())}. Son unos minutos; contesta desde tu experiencia.</p>
-      ${ratingSection("qw", byKind("qw"), et)}
-      ${ratingSection("gate", byKind("gate"), et)}
-      ${ratingSection("time", byKind("time"), et)}
-      <h2 class="sec-title" style="margin-top:22px">¿Falta alguna mejora rápida?</h2>`
-      :`<h1 class="p-title" style="font-size:26px">¿Qué mejora rápida propones?</h1>`}
+  const proposal=`<section class="propose">
+      <h2 class="sec-title" style="margin-top:22px">${qws.length?"¿Falta alguna mejora rápida?":"¿Qué mejora rápida propones?"} <span class="opt">(opcional)</span></h2>
       <p class="p-sub" style="margin-bottom:14px">Propón la que más te ayudaría en tu día a día. Solo la ve quien facilita.</p>
       <div class="field"><label for="f-qwnew">Tu propuesta</label>
         <textarea id="f-qwnew" class="input" maxlength="240" placeholder="Ej. Que el layout valide los datos al subirlo…"></textarea></div>
@@ -1329,30 +1702,63 @@ async function renderQuickwins(){
         <div class="chips" id="f-qwstage">${s.stages.map(t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>`:""}
       <button class="btn btn-line" id="qwPropose" disabled>Enviar propuesta</button>
       <div id="myProps" style="margin-top:16px"></div>
+    </section>`;
+  if(done || !steps.length){
+    $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,isDone("quickwins")?"listo":"curso")}
+      <div class="p-body">
+        ${isDone("quickwins")?doneBlock({title:"Terminaste la validación", sub:qws.length?`Contestaste ${answered(allMine)} de ${allMine.length}.${answered(allMine)<allMine.length?" Puedes volver y completar las que faltan.":""}`:"", actions:qws.length?[{id:"qwReview",label:"Revisar mis respuestas"}]:[]})
+          :`<p class="p-kicker">Validación</p><h1 class="p-title" style="font-size:26px">¿Qué mejora rápida propones?</h1>`}
+        ${proposal}
+        ${!qws.length&&!isDone("quickwins")?`<div class="p-cta" style="position:static;padding:16px 0 0"><button class="btn btn-primary" id="qwFinish">Terminar validación</button></div>`:""}
+      </div></div>`;
+    armBanner(); bindProposal(); 
+    const r=$("#qwReview"); if(r) r.onclick=()=>{ P.qw.review=true; P.qw.step=0; window.scrollTo(0,0); renderQuickwins(); };
+    const f=$("#qwFinish"); if(f) f.onclick=async()=>{ await setDone("quickwins",true); window.scrollTo(0,0); renderQuickwins(); };
+    return;
+  }
+  $("#app").innerHTML = `<div class="p-shell tall-cta">${pTop(false,0,0,isDone("quickwins")?"listo":"curso")}
+    <div class="sticky-votes qw-band"><span>Paso ${P.qw.step+1} de ${steps.length} · <b>${KIND_SHORT[k]}</b></span><span class="qw-n"><b id="qwDone">${answered(list)}</b> de ${list.length}</span></div>
+    <div class="p-body">
+      ${P.qw.step===0?`<p class="p-sub" style="margin:0 0 4px">${steps.length} paso${steps.length===1?"":"s"}: ${steps.map(x=>KIND_SHORT[x].toLowerCase()).join(", ").replace(/, ([^,]*)$/," y $1")}. Contesta desde tu experiencia; son unos minutos.</p>`:""}
+      ${ratingSection(k, qws.filter(q=>kindOf(q)===k), et)}
+    </div>
+    <div class="p-cta">
+      <button class="btn btn-line" id="qwNextQ" ${answered(list)<list.length?"":"disabled"}>Siguiente sin contestar</button>
+      <button class="btn btn-primary" id="qwCont">${last?"Terminar validación":`Continuar a ${KIND_SHORT[steps[P.qw.step+1]]}`}</button>
+      <p class="cta-hint" id="qwHint"></p>
     </div>
   </div>`;
-  const drawProps=()=>{ $("#myProps").innerHTML = myProps.length ? `<p style="font-weight:700;font-size:14px;color:var(--ink-2);margin:8px 0 10px">Tus propuestas (${myProps.length})</p>`+
-    myProps.map(i=>`<div class="mycard"><div class="txt">${esc(i.texto)}</div><div class="meta-row">${i.etapa?`<span class="tag">${esc(i.etapa)}</span>`:""}<button class="del" data-id="${i.id}">Eliminar</button></div></div>`).join("") : "";
-    $$("#myProps .del").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteIdea(b.dataset.id); const k=myProps.findIndex(x=>x.id===b.dataset.id); if(k>=0) myProps.splice(k,1); drawProps(); }catch(e){ toast("No se pudo eliminar"); } }); };
-  drawProps();
+  armBanner();
+  const hint=()=>{ const a=answered(list), n=list.length-a; $("#qwDone").textContent=a; $("#qwNextQ").disabled=n===0;
+    $("#qwHint").textContent = n? `Te falta${n===1?"":"n"} ${n}. Puedes continuar y volver después.` : (last?"":"Todo contestado en este paso."); };
+  hint();
   $$(".qwcard .seg button").forEach(b=>b.onclick=async()=>{
     const card=b.closest(".qwcard"), id=card.dataset.q, v=+b.dataset.v, prev=P.qw.ratings[id];
     P.qw.ratings[id]=v;
     card.classList.add("done"); $$("button",card).forEach(x=>{ const on=+x.dataset.v===v; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on); });
-    const d=$("#qwDone"); if(d) d.textContent=doneCount();
+    hint();
     try{ await Store.setQwRating({session_id:s.id, participant_id:P.me.id, qw_id:id, score:v}); }
-    catch(e){ console.error(e); toast("No se guardó tu calificación. Intenta de nuevo.");
+    catch(e){ console.error(e); toast("No se guardó tu respuesta. Intenta de nuevo.");
       if(prev===undefined){ delete P.qw.ratings[id]; card.classList.remove("done"); } else P.qw.ratings[id]=prev;
       $$("button",card).forEach(x=>{ const on=+x.dataset.v===P.qw.ratings[id]; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on); });
-      if(d) d.textContent=doneCount(); }
+      hint(); }
   });
-  $$("#f-qwstage .chip").forEach(ch=>ch.onclick=()=>{ pStage = pStage===ch.dataset.t ? "" : ch.dataset.t; $$("#f-qwstage .chip").forEach(x=>x.classList.toggle("on",x.dataset.t===pStage)); });
-  const ta=$("#f-qwnew"); ta.addEventListener("input",()=>{ $("#qwPropose").disabled = ta.value.trim().length<8; });
-  $("#qwPropose").onclick=async()=>{ if(P.sending) return; P.sending=true; $("#qwPropose").disabled=true;
-    try{ const i=await Store.addIdea({session_id:s.id, participant_id:P.me.id, kind:"qw", etapa:pStage||null, texto:ta.value.trim()});
-      myProps.push(i); ta.value=""; pStage=""; $$("#f-qwstage .chip").forEach(x=>x.classList.remove("on")); drawProps(); toast("Propuesta enviada"); }
-    catch(e){ console.error(e); toast("No se pudo enviar la propuesta"); $("#qwPropose").disabled=false; }
-    P.sending=false; };
+  $("#qwNextQ").onclick=()=>{ const c=$$(".qwcard").find(x=>!x.classList.contains("done")); if(!c) return; const d=c.closest("details"); if(d) d.open=true; c.scrollIntoView({behavior:"smooth",block:"center"}); c.classList.add("focus"); setTimeout(()=>c.classList.remove("focus"),1200); };
+  $("#qwCont").onclick=async()=>{ if(last){ await setDone("quickwins",true); P.qw.review=false; } else P.qw.step++; window.scrollTo(0,0); renderQuickwins(); };
+
+  function bindProposal(){
+    const drawProps=()=>{ $("#myProps").innerHTML = myProps.length ? `<p class="mine-h">Tus propuestas (${myProps.length})</p>`+
+      myProps.map(i=>`<div class="mycard"><div class="txt">${esc(i.texto)}</div><div class="meta-row">${i.etapa?`<span class="tag">${esc(i.etapa)}</span>`:""}<button class="del" data-id="${i.id}">Eliminar</button></div></div>`).join("") : "";
+      $$("#myProps .del").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteIdea(b.dataset.id); const k=myProps.findIndex(x=>x.id===b.dataset.id); if(k>=0) myProps.splice(k,1); drawProps(); }catch(e){ toast("No se pudo eliminar"); } }); };
+    drawProps();
+    $$("#f-qwstage .chip").forEach(ch=>ch.onclick=()=>{ pStage = pStage===ch.dataset.t ? "" : ch.dataset.t; $$("#f-qwstage .chip").forEach(x=>x.classList.toggle("on",x.dataset.t===pStage)); });
+    const ta=$("#f-qwnew"); bindDraft(ta,"quickwins"); const chk=()=>{ $("#qwPropose").disabled = ta.value.trim().length<8; }; ta.addEventListener("input",chk); chk();
+    $("#qwPropose").onclick=async()=>{ if(P.sending) return; P.sending=true; $("#qwPropose").disabled=true;
+      try{ const i=await Store.addIdea({session_id:s.id, participant_id:P.me.id, kind:"qw", etapa:pStage||null, texto:ta.value.trim()});
+        myProps.push(i); ta.value=""; clearDraft("quickwins"); pStage=""; $$("#f-qwstage .chip").forEach(x=>x.classList.remove("on")); drawProps(); toast("Propuesta enviada ✓"); }
+      catch(e){ console.error(e); toast("No se pudo enviar la propuesta"); $("#qwPropose").disabled=false; }
+      P.sending=false; };
+  }
 }
 
 /* ---------- Ideas: «¿Cómo podríamos…?» sobre los dolores más votados ---------- */
@@ -1363,34 +1769,39 @@ async function renderIdeas(){
   if(P.ideas.reto >= P.ideas.targets.length) P.ideas.reto=0;
   const T=P.ideas.targets;
   if(!T.length){
-    $("#app").innerHTML = `<div class="p-shell">${pTop(false)}${waitBlock(glass("bulb",{size:"xl",tint:true}),"Ideas","Aún no hay dolores votados para trabajar. Espera la indicación de "+esc(s.facilitator||"quien facilita")+".")}</div>`;
-    return;
+    $("#app").innerHTML = `<div class="p-shell">${pTop(false)}${waitBlock(glass("bulb",{size:"xl",tint:true}),"Ideas","Aún no hay dolores votados para trabajar. Espera la indicación de "+facName()+".")}</div>`;
+    armBanner(); return;
   }
-  $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
+  const done=isDone("ideas");
+  $("#app").innerHTML = `<div class="p-shell tall-cta">${pTop(false,0,0,done?"listo":"curso")}
     <div class="sticky-votes" id="supBar"></div>
     <div class="p-body">
+      <div id="ideasDone">${done?doneBlock({title:"Terminaste Ideas", sub:"Puedes seguir proponiendo o mover tus apoyos mientras la actividad siga abierta.", next:"Resultados"}):""}</div>
       <p class="p-kicker">Ideas</p>
       <h1 class="p-title" style="font-size:26px">${esc(s.q_idea||"¿Cómo podríamos resolverlo?")}</h1>
-      <p class="p-sub" style="margin-bottom:14px">Estos son los dolores más votados. Elige un reto, propón ideas y apoya las que más te convenzan.</p>
-      <div class="chips" id="retos">${T.map((c,i)=>`<button class="chip ${i===P.ideas.reto?"on":""}" data-i="${i}">Reto ${i+1}</button>`).join("")}</div>
+      <p class="p-sub" style="margin-bottom:14px">Estos son los ${T.length} dolores más votados. Elige un reto, propón ideas y apoya las que más te convenzan. Cuando termines, toca «Terminé con Ideas».</p>
+      <div class="chips chips-tall" id="retos">${T.map((c,i)=>`<button class="chip ${i===P.ideas.reto?"on":""}" data-i="${i}">Reto ${i+1}</button>`).join("")}</div>
       <div class="reto" id="retoCard"></div>
       <div class="field"><label for="f-idea">Tu idea para este reto</label>
         <textarea id="f-idea" class="input" maxlength="240" placeholder="Ej. Que la carta de supuestos se arme sola con los datos ya cargados…"></textarea></div>
       <button class="btn btn-line" id="ideaGo" disabled>Publicar idea</button>
       <div id="ideaList" style="margin-top:18px"></div>
     </div>
+    ${done?"":`<div class="p-cta"><button class="btn btn-primary" id="ideasDoneBtn">Terminé con Ideas</button><p class="cta-hint">Tus ideas y apoyos ya están guardados.</p></div>`}
   </div>`;
+  armBanner();
   const drawReto=()=>{ const c=T[P.ideas.reto];
-    $("#retoCard").innerHTML = `<p class="rk">Reto ${P.ideas.reto+1} · ${c.pts} voto${c.pts===1?"":"s"}</p><div class="txt">${esc(c.texto)}</div>
+    $("#retoCard").innerHTML = `<p class="rk">Reto ${P.ideas.reto+1} de ${T.length} · ${c.pts} voto${c.pts===1?"":"s"}</p><div class="txt">${esc(c.texto)}</div>
       <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}</div>`; };
   drawReto();
   $$("#retos .chip").forEach(ch=>ch.onclick=()=>{ P.ideas.reto=+ch.dataset.i; $$("#retos .chip").forEach(x=>x.classList.toggle("on",x===ch)); drawReto(); drawIdeaList(); });
-  const ta=$("#f-idea"); ta.addEventListener("input",()=>{ $("#ideaGo").disabled = ta.value.trim().length<8; });
+  const ta=$("#f-idea"); bindDraft(ta,"ideas"); const chk=()=>{ $("#ideaGo").disabled = ta.value.trim().length<8; }; ta.addEventListener("input",chk); chk();
   $("#ideaGo").onclick=async()=>{ if(P.sending) return; P.sending=true; $("#ideaGo").disabled=true;
     try{ await Store.addIdea({session_id:s.id, participant_id:P.me.id, kind:"idea", card_id:T[P.ideas.reto].id, texto:ta.value.trim()});
-      ta.value=""; toast("Idea publicada"); await refreshIdeas(); }
+      ta.value=""; clearDraft("ideas"); toast("Idea publicada ✓"); await refreshIdeas(); }
     catch(e){ console.error(e); toast("No se pudo publicar la idea"); $("#ideaGo").disabled=false; }
     P.sending=false; };
+  const db=$("#ideasDoneBtn"); if(db) db.onclick=async()=>{ await setDone("ideas",true); window.scrollTo(0,0); renderIdeas(); };
   await refreshIdeas();
 }
 async function refreshIdeas(){
@@ -1405,17 +1816,17 @@ async function refreshIdeas(){
 function drawIdeaList(){
   const s=P.session, T=P.ideas.targets; if(!T.length || !$("#ideaList")) return;
   const total=s.idea_votes||3, left=Math.max(0,total-P.ideas.mine.size);
-  $("#supBar").innerHTML = `<span>Tus apoyos:</span>
+  $("#supBar").innerHTML = `<span>${left?"Te quedan":"Usaste tus"}</span>
     <span class="honeycells" aria-label="${left} de ${total} apoyos disponibles">${Array.from({length:total},(_,i)=>`<span class="honeycell ${i<left?"full":""}"></span>`).join("")}</span>
-    <span style="color:var(--ink-2);font-weight:600">${left} de ${total}</span>`;
+    <span style="color:var(--ink-2);font-weight:600">${left?`${left} de ${total} apoyos`:`${total} apoyos`}</span>`;
   const cid=T[P.ideas.reto].id;
   const list=P.ideas.list.filter(i=>i.card_id===cid).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)));
-  $("#ideaList").innerHTML = `<p style="font-weight:700;font-size:14px;color:var(--ink-2);margin:0 0 10px">Ideas para este reto (${list.length})</p>`+
+  $("#ideaList").innerHTML = `<p class="mine-h">Ideas para este reto (${list.length})</p>`+
     (list.length ? list.map(i=>{ const own=i.participant_id===P.me.id, on=P.ideas.mine.has(i.id);
       return `<div class="ideacard"><div class="txt">${esc(i.texto)}</div><div class="meta-row">
         ${own?`<span class="tag mine">Tu idea</span><button class="del" data-del="${i.id}">Eliminar</button>`
              :`<button class="support ${on?"on":""}" data-sup="${i.id}" aria-pressed="${on}"><span class="vhex"></span>${on?"Apoyada":"Apoyar"}</button>`}
-      </div></div>`; }).join("") : '<p class="empty">Sé la primera persona en proponer una idea.</p>');
+      </div></div>`; }).join("") : '<p class="empty">Sé la primera persona en proponer una idea para este reto.</p>');
   $$("#ideaList [data-sup]").forEach(b=>b.onclick=async()=>{
     if(P.sending) return; const id=b.dataset.sup, on=P.ideas.mine.has(id);
     if(!on && left<=0) return toast(`Ya usaste tus ${total} apoyos. Quita uno para apoyar otra idea.`);
@@ -1426,7 +1837,7 @@ function drawIdeaList(){
   $$("#ideaList [data-del]").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteIdea(b.dataset.del); await refreshIdeas(); }catch(e){ toast("No se pudo eliminar"); } });
 }
 
-/* ---------- Resultados: dolores, quick wins e ideas ---------- */
+/* ---------- Resultados: dolores, ideas, quick wins, reglas y tiempos ---------- */
 async function renderResults(){
   const s=P.session;
   const safe = p => p.catch(()=>null);
@@ -1440,24 +1851,27 @@ async function renderResults(){
   const topIdeas=(ideas||[]).filter(i=>i.kind==="idea").map(i=>({...i, v:(ideaT||{})[i.id]||0})).filter(i=>i.v>0)
     .sort((a,b)=>b.v-a.v).slice(0,5);
   const card = (n,txt,tags) => `<div class="mycard"><div class="txt"><strong>${n}.</strong> ${esc(txt)}</div><div class="meta-row">${tags}</div></div>`;
-  $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
+  const draw=()=>{ $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
     <div class="p-body">
       <p class="p-kicker">Resultados</p>
       <h1 class="p-title">Lo que decidimos juntos</h1>
-      <p class="p-sub">Esto marca la agenda de lo que sigue.</p>
+      <p class="p-sub">Esto marca la agenda de lo que sigue. Ya no hay nada que contestar: mira la pantalla de la sala.</p>
       <h2 class="sec-title" style="margin-top:4px">Lo que más nos duele</h2>
       ${top.length? top.map((c,i)=>card(i+1,c.texto,`<span class="tag">${esc(c.etapa)}</span><span class="tag sev">${c.pts} voto${c.pts===1?"":"s"}</span>`)).join("") : '<p class="empty">Sin votos registrados.</p>'}
-      ${qws.length?`<h2 class="sec-title">Quick wins que más ayudarían</h2>
-        ${qws.map((q,i)=>card(i+1,q.text,`<span class="tag">${esc(q.stage)}</span><span class="tag sev">Índice ${q.st.idx}/100</span>`)).join("")}`:""}
       ${topIdeas.length?`<h2 class="sec-title">Ideas con más apoyo</h2>
         ${topIdeas.map((x,i)=>card(i+1,x.texto,`<span class="tag sev">${x.v} apoyo${x.v===1?"":"s"}</span>`)).join("")}`:""}
+      ${qws.length?`<h2 class="sec-title">Quick wins que más ayudarían</h2>
+        ${qws.map((q,i)=>card(i+1,q.text,`<span class="tag">${esc(q.stage)}</span><span class="tag sev">${q.st.n<3?`${q.st.n} respuesta${q.st.n===1?"":"s"}`:`Apoyo ${q.st.idx}/100`}</span>`)).join("")}`:""}
       ${gTop.length?`<h2 class="sec-title">Reglas del nuevo flujo con más acuerdo</h2>
-        ${gTop.map((q,i)=>card(i+1,q.text,`<span class="tag">${esc(q.stage)}</span><span class="tag sev">Acuerdo ${q.st.idx}/100</span>`)).join("")}
-        ${gLow.length?`<p class="p-sub" style="margin-top:6px">Con menos acuerdo: ${gLow.map(q=>esc(q.id)+" ("+q.st.idx+")").join(" · ")}</p>`:""}`:""}
+        ${gTop.map((q,i)=>card(i+1,q.text,`<span class="tag">${esc(q.stage)}</span><span class="tag sev">${q.st.n<3?`${q.st.n} respuesta${q.st.n===1?"":"s"}`:`Acuerdo ${q.st.idx}/100`}</span>`)).join("")}
+        ${gLow.length?`<p class="p-sub" style="margin-top:6px">Con menos acuerdo: ${gLow.map(q=>esc(q.text)).join(" · ")}</p>`:""}`:""}
       ${times.length?`<h2 class="sec-title">Las etapas que más tardan hoy</h2>
         ${times.map((q,i)=>card(i+1,q.text,`<span class="tag sev">Lo más común: ${esc(scaleLabel("time",q.st.mode))}</span>`)).join("")}`:""}
+      <section class="dn end"><div class="done-h">${glass("sparkle",{size:"md",tint:true})}<div><h2>Esto es todo por hoy</h2><p class="done-peers">Gracias, ${esc(P.me.nombre)}. Todo lo que aportaste quedó guardado; ${facName()} cierra la sesión y puedes cerrar esta pestaña cuando quieras.</p></div></div></section>
     </div>
-  </div>`;
+  </div>`; };
+  if(P.lastResultsDraw) keepScroll(draw); else draw();
+  P.lastResultsDraw=true;
 }
 
 async function startParticipant(code){
@@ -1474,27 +1888,30 @@ async function startParticipant(code){
     return;
   }
   const refresh = async ()=>{
-    let ns=null; try{ ns=await Store.lookupSession(code); }catch(e){ return; }
+    let ns=null; try{ ns=await Store.lookupSession(code); }catch(e){ setOffline(true); return; }
+    setOffline(false);
     if(!ns) return;
     const changed=ns.phase!==P.session.phase; P.session=ns;
     if(!P.me) return;
     if(changed) return renderPhase();
-    /* En Dolores y Quick wins no se re-renderiza solo: borraría lo que estás escribiendo.
-       En Ideas solo se actualiza la lista (el texto que escribes se conserva). */
-    if(["votes","results"].includes(ns.phase)) return renderPhase();
+    /* Misma actividad: solo se refresca el avance de compañeros y, en Ideas, la lista. Lo que escribes no se toca. */
+    if(actIndex(ns.phase)>=0) loadProgress();
+    if(ns.phase==="results") return renderPhase();
     if(ns.phase==="ideas") return refreshIdeas();
   };
   P.unsub = Store.subscribe(s.id, ()=>refresh());
   P.poll = setInterval(refresh, 7000);
+  window.addEventListener("online",()=>setOffline(false)); window.addEventListener("offline",()=>setOffline(true));
   if(P.me) renderPhase(); else screenWelcome();
 }
+function setOffline(on){ let b=$("#offline"); if(on && !b){ b=document.createElement("div"); b.id="offline"; b.className="offline"; b.textContent="Sin conexión. Lo que contestes se enviará cuando vuelva."; document.body.appendChild(b); } if(!on && b) b.remove(); }
 
 </script>
 <script>
 /* ============================================================
    Panel del facilitador (admin) — se proyecta en la sala
    ============================================================ */
-const A = { session:null, participants:[], cards:[], votes:[], qwRatings:[], ideas:[], ideaVotes:[], unsub:null, poll:null, showAuthors:false, _t:null, seen:new Set() };
+const A = { session:null, participants:[], cards:[], votes:[], qwRatings:[], ideas:[], ideaVotes:[], unsub:null, poll:null, showAuthors:false, project:false, open:new Set(), _t:null, seen:new Set() };
 
 /* ---------- Acceso del facilitador: contraseña + segundo factor ---------- */
 function aShell(inner){
@@ -1676,7 +2093,7 @@ async function adminHome(email){
 
         <details class="ah-sec" id="sec-qw">
           <summary class="ah-sec-t"><span>4</span> Validación e ideas <em class="opt" id="c-qwcount"></em></summary>
-          <div class="field" style="margin-top:12px"><label for="c-qws">Listas a validar <span class="opt">Etapa | texto · secciones «## Quick wins», «## Reglas» y «## Tiempos» · se numeran solos</span></label><textarea id="c-qws" class="input mono" rows="12">${qwsText(pre.quickwins)}</textarea></div>
+          <div class="field" style="margin-top:12px"><label for="c-qws">Listas a validar <span class="opt">Etapa | texto | explicación (opcional) · secciones «## Quick wins», «## Reglas» y «## Tiempos» · se numeran solos</span></label><textarea id="c-qws" class="input mono" rows="12">${qwsText(pre.quickwins)}</textarea></div>
           <div class="g3">
             <div class="field" style="grid-column:span 2"><label for="c-qidea">Pregunta de ideas</label><input id="c-qidea" class="input" value="${esc(pre.q_idea||"")}"></div>
             <div class="field"><label for="c-ivotes">Apoyos por persona</label><input id="c-ivotes" class="input" type="number" min="1" max="10" value="${pre.idea_votes||3}"></div>
@@ -1734,14 +2151,14 @@ function toolsText(t){ return Object.entries(t||{}).map(([k,v])=>k+" | "+(v||[])
 /* Listas a validar ↔ texto: secciones «## Quick wins» (QW), «## Reglas» (RG) y «## Tiempos» (TM); cada línea «Etapa | texto» */
 const KIND_HEAD={qw:"## Quick wins",gate:"## Reglas",time:"## Tiempos"};
 function qwsText(q){ q=q||[]; const kinds=["qw","gate","time"].filter(k=>q.some(x=>kindOf(x)===k)); const multi=kinds.length>1 || (kinds[0]&&kinds[0]!=="qw");
-  return kinds.map(k=>(multi?KIND_HEAD[k]+"\n":"")+q.filter(x=>kindOf(x)===k).map(x=>(x.stage?x.stage+" | ":"")+x.text).join("\n")).join("\n"); }
+  return kinds.map(k=>(multi?KIND_HEAD[k]+"\n":"")+q.filter(x=>kindOf(x)===k).map(x=>(x.stage?x.stage+" | ":"")+x.text+(x.help?" | "+x.help:"")).join("\n")).join("\n"); }
 function tasksText(t){ return Object.entries(t||{}).map(([k,v])=>k+" | "+(v||[]).join("; ")).join("\n"); }
 function parseTasks(v){ const o={}; linesOf(v).forEach(l=>{ const i=l.indexOf("|"); if(i<0) return; const k=l.slice(0,i).trim(); const ts=l.slice(i+1).split(";").map(x=>x.trim()).filter(Boolean); if(k&&ts.length) o[k]=ts; }); return o; }
 function parseTools(v){ const o={}; linesOf(v).forEach(l=>{ const i=l.indexOf("|"); if(i<0) return; const k=l.slice(0,i).trim(); const tools=l.slice(i+1).split(",").map(x=>x.trim()).filter(Boolean); if(k&&tools.length) o[k]=tools; }); return o; }
 function parseQws(v){ let kind="qw"; const n={qw:0,gate:0,time:0}; const out=[];
   linesOf(v).forEach(l=>{ const m=l.match(/^##\s*(.+)$/); if(m){ const h=m[1].toLowerCase(); kind = /regla|candado|gate/.test(h)?"gate" : /tiempo|time|duraci/.test(h)?"time" : "qw"; return; }
-    const i=l.indexOf("|"); const stage=i<0?"":l.slice(0,i).trim(); const text=(i<0?l:l.slice(i+1)).trim(); if(!text) return;
-    n[kind]++; out.push({id:RATING_KINDS[kind].id+"-"+String(n[kind]).padStart(2,"0"), kind, stage, text}); });
+    const parts=l.split("|").map(x=>x.trim()); const stage=parts.length>1?parts[0]:""; const text=parts.length>1?parts[1]:parts[0]; const help=parts.length>2?parts.slice(2).join(" | "):""; if(!text) return;
+    n[kind]++; const it={id:RATING_KINDS[kind].id+"-"+String(n[kind]).padStart(2,"0"), kind, stage, text}; if(help) it.help=help; out.push(it); });
   return out; }
 
 function stopAdmin(){ if(A.unsub) A.unsub(); if(A.poll) clearInterval(A.poll); clearTimeout(A._t); A.unsub=null; A.poll=null; }
@@ -1845,7 +2262,7 @@ function renderAdmin(){
       <div class="wc-top">${sevPips(c.severidad)}<span class="wc-sev">${esc(SEV_LABELS[c.severidad]||"")}</span>
         ${totals[c.id]?`<span class="wc-votes" data-tip="${totals[c.id]} voto${totals[c.id]===1?"":"s"} en la votación">${hexIco()}${totals[c.id]}</span>`:""}</div>
       <div class="txt">${esc(c.texto)}</div>
-      ${c.actividad||c.herramienta||A.showAuthors?`<div class="wc-foot">${c.actividad?`<span class="wc-tool act">${esc(c.actividad)}</span>`:""}${c.herramienta?`<span class="wc-tool">${esc(c.herramienta)}</span>`:""}${who(c.participant_id)}</div>`:""}
+      ${c.actividad||c.herramienta||A.showAuthors?`<div class="wc-foot">${c.actividad?`<span class="wc-tool act">${taskHTML(c.actividad)}</span>`:""}${c.herramienta?`<span class="wc-tool">${esc(c.herramienta)}</span>`:""}${who(c.participant_id)}</div>`:""}
     </div>`;
   const panelWall = `
       <div class="panel">
@@ -1859,11 +2276,14 @@ function renderAdmin(){
       </div>`;
 
   const targets=topPains(A.cards, totals, s.idea_top||3);
+  const vpp=s.votes_per_user||5, ipp=s.idea_votes||3;
+  const smallV = voters<3;                                   /* pocos votantes: unidades, no barras al 100 % */
   const panelRank = `
-      <div class="panel">
-        ${head("Ranking de dolores", votesUsed? `${votesUsed} votos de ${voters} persona${voters===1?"":"s"} · ${s.votes_per_user} por persona` : `Cada quien reparte ${s.votes_per_user} votos entre los dolores`)}
-        ${votesUsed? renderRank(totals, targets) : emptyState("target","Todavía no hay votos",(A.cards.length? "El ranking se arma en vivo conforme el equipo vota" : "Primero hacen falta tarjetas de dolor"))}
-        ${votesUsed? foot(`Los ${targets.length} más votados se vuelven los retos de la fase de ideas`, `El resto queda en el muro y en el CSV`, "target") : ""}
+      <div class="panel" id="sec-1">
+        ${head("Ranking de dolores", votesUsed? `${votesUsed} votos de ${voters} persona${voters===1?"":"s"} · ${vpp} por persona` : `Cada quien reparte ${vpp} votos entre los dolores`)}
+        ${votesUsed? renderRank(totals, targets, {voters, top:5}) : emptyState("target","Todavía no hay votos",(A.cards.length? "El ranking se arma en vivo conforme el equipo vota" : "Primero hacen falta tarjetas de dolor"))}
+        ${votesUsed? (smallV? foot(`${votesUsed} voto${votesUsed===1?"":"s"} de ${voters} persona${voters===1?"":"s"}`, "El ranking se afina conforme vote el equipo; los retos se definen con 3 o más votantes", "target")
+                     : foot(`Los ${targets.length} más votados se vuelven los retos de la fase de ideas`, `El resto queda en el muro y en el CSV`, "target")) : ""}
       </div>`;
 
   const qwT=qwCount(A.qwRatings);
@@ -1871,35 +2291,50 @@ function renderAdmin(){
   const ratedIds=new Set(A.qwRatings.map(r=>r.qw_id));
   const listOf = k => allRated.filter(q=>q.kind===k);
   const hasData = k => listOf(k).some(q=>ratedIds.has(q.id));
+  const ratersOf = k => { const ids=new Set(listOf(k).map(q=>q.id)); return new Set(A.qwRatings.filter(r=>ids.has(r.qw_id)).map(r=>r.participant_id)).size; };
   const qwList=listOf("qw"), gateList=listOf("gate"), timeList=listOf("time");
+  const nQ=ratersOf("qw"), nG=ratersOf("gate"), nT=ratersOf("time");
   const byScore=[...qwList].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1) || b.st.m-a.st.m);
   const best=byScore[0];
+  const live = ph==="quickwins";
+  const tieM = list => { const mx=Math.max(0,...list.map(q=>q.st.m)); return mx? list.filter(q=>q.st.m===mx) : []; };
+  const qwFoot = () => { if(!hasData("qw")) return "";
+    if(nQ<3){ const t=tieM(qwList); return foot(`${nQ} respuesta${nQ===1?"":"s"} · ${t.length} quick win${t.length===1?"":"s"} con «mucho»${t.length>1?" (empate)":""}`, "Con 3 o más personas aparece el índice 0–100", "bolt"); }
+    const over=byScore.filter(q=>q.st.idx!==null&&q.st.idx>=70).length;
+    return foot(`${over} quick win${over===1?"":"s"} pasa${over===1?"":"n"} de 70`, "Índice 0–100: mucho = 100 · algo = 50 · poco = 0 · «No aplica» no cuenta", "bolt"); };
   const panelQW = qwList.length ? `
-      <div class="panel">
-        ${head("Quick wins · ¿cuánto ayudarían?", hasData("qw")? `${qwRaters} de ${nP} personas han calificado · columnas de mayor a menor índice` : `${qwList.length} quick wins por etapa · el equipo los califica desde su celular`)}
-        ${renderQW(qwList, byScore, ph==="quickwins", hasData("qw"))}
-        ${best&&best.st.idx!==null? foot(`${esc(best.id)} es el que más ayudaría · índice ${best.st.idx}`, "Índice 0–100: mucho = 100 · algo = 50 · poco = 0 · «No aplica» no cuenta", "bolt") : ""}
+      <div class="panel" id="sec-3">
+        ${head("Quick wins que más ayudarían", hasData("qw")? `${nQ} de ${nP} persona${nQ===1?"":"s"} calificaron ${qwList.length} quick wins: mucho, algo o poco` : `${qwList.length} quick wins por etapa · el equipo los califica desde su celular`)}
+        ${renderLikert(qwList, "qw", {raters:nQ, nP, top: live?0:5, k:"qw-all"})}
+        ${qwFoot()}
       </div>` : "";
   const gByScore=[...gateList].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1));
   const gTop=gByScore[0], gLow=[...gByScore].reverse().find(g=>g.st.idx!==null);
+  const gUnder=gByScore.filter(g=>g.st.idx!==null&&g.st.idx<50).length;
+  const gFoot = () => { if(!hasData("gate")) return "";
+    if(nG<3){ const h=gateList.filter(q=>q.st.m).length, e=gateList.filter(q=>q.st.p).length, n=gateList.filter(q=>q.st.na).length;
+      return foot(`${nG} respuesta${nG===1?"":"s"}: ${h} regla${h===1?"":"s"} ayuda${h===1?"":"n"}, ${e} estorba${e===1?"":"n"}, ${n} no le toca${n===1?"":"n"}`, "Con 3 o más personas aparece el índice de acuerdo", "check"); }
+    return foot(`${gUnder? `${gUnder} regla${gUnder===1?"":"s"} por debajo de 50 merece${gUnder===1?"":"n"} conversación` : "Todas las reglas pasan de 50"}`, `Más acuerdo: ${esc(gTop.id)} (${gTop.st.idx}) · menos: ${esc(gLow.id)} (${gLow.st.idx}) · índice 0–100: ayuda = 100 · me da igual = 50 · estorba = 0`, "check"); };
   const panelGates = gateList.length ? `
-      <div class="panel">
-        ${head("Reglas del nuevo flujo · ¿ayudan o estorban?", hasData("gate")? `Candados de LOCFY24 calificados por quienes los van a vivir · de mayor a menor acuerdo` : `${gateList.length} candados del nuevo flujo · el equipo dice si le ayudan o le estorban`)}
-        ${renderQW(gateList, gByScore, ph==="quickwins", hasData("gate"), "gate")}
-        ${gTop&&gTop.st.idx!==null? foot(`Más acuerdo: ${esc(gTop.id)} (${gTop.st.idx}) · menos: ${esc(gLow.id)} (${gLow.st.idx})`, "Índice 0–100: ayuda = 100 · me da igual = 50 · estorba = 0 · «No me toca» no cuenta", "check") : ""}
+      <div class="panel" id="sec-4">
+        ${head("Reglas del nuevo flujo: acuerdo y fricción", hasData("gate")? `${gateList.length} reglas de LOCFY24 calificadas por quienes las van a vivir · a la derecha, ayuda; a la izquierda, estorba` : `${gateList.length} candados del nuevo flujo · el equipo dice si le ayudan o le estorban`)}
+        ${renderDiverging(gateList, {raters:nG, nP, all: live, k:"gate-all"})}
+        ${gFoot()}
       </div>` : "";
   const tSorted=[...timeList].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1));
+  const tLong=timeList.filter(q=>q.st.mode===3);
   const tTop=tSorted[0];
   const panelTimes = timeList.length ? `
-      <div class="panel">
-        ${head("Tiempos · ¿cuánto tarda hoy cada etapa?", hasData("time")? `Duración típica según el equipo, en el orden del proceso · sirve de base para los semáforos` : `${timeList.length} etapas · cada quien estima las suyas`)}
-        ${renderTimes(timeList, hasData("time"))}
-        ${tTop&&tTop.st.idx!==null? foot(`La que más tarda: ${esc(tTop.text)} · lo más común: ${esc(scaleLabel("time",tTop.st.mode))}`, "Cada columna reparte las respuestas: de «menos de 1 día» (claro) a «más de 2 semanas» (oscuro)", "target") : ""}
+      <div class="panel" id="sec-5">
+        ${head("Cuánto tarda hoy cada etapa", hasData("time")? `Duración típica según el equipo, en el orden del proceso · base para los semáforos` : `${timeList.length} etapas · cada quien estima las suyas`)}
+        ${renderStrip(timeList, {hasData:hasData("time")})}
+        ${tTop&&tTop.st.idx!==null? (tLong.length? foot(`${tLong.length===1?"Una etapa tarda":tLong.length+" etapas tardan"} más de 2 semanas: ${tLong.map(q=>esc(q.stage||q.text)).join(" y ")}`, `Cada celda muestra lo más respondido · ${nT} persona${nT===1?"":"s"} estimaron`, "target")
+                                   : foot(`La que más tarda: ${esc(tTop.stage||tTop.text)} · lo más común: ${esc(scaleLabel("time",tTop.st.mode))}`, `${nT} persona${nT===1?"":"s"} estimaron`, "target")) : ""}
       </div>` : "";
   const props=A.ideas.filter(i=>i.kind==="qw");
   const panelProps = `
       <div class="panel">
-        ${head("Quick wins propuestos por el equipo", props.length? `${props.length} propuesta${props.length===1?"":"s"}` : "Mejoras rápidas que el equipo agrega desde su celular")}
+        ${head("Quick wins propuestos por el equipo", props.length? `${props.length} propuesta${props.length===1?"":"s"} nueva${props.length===1?"":"s"}${qwList.length?`, además de los ${qwList.length} de la lista`:""}` : "Mejoras rápidas que el equipo agrega desde su celular")}
         ${props.length? `<div class="wall props">${props.map(i=>`<div class="wcard${fresh(i.id)}"><div class="wc-top"><span class="wc-kind">${icon("bolt")}Propuesta</span></div><div class="txt">${esc(i.texto)}</div>
           <div class="wc-foot">${i.etapa?`<span class="wc-tool">${esc(i.etapa)}</span>`:""}${who(i.participant_id)}</div></div>`).join("")}</div>`
         : emptyState("bolt","Aún no hay propuestas","Aparecerán aquí en vivo")}
@@ -1907,47 +2342,99 @@ function renderAdmin(){
 
   const iTot={}; A.ideaVotes.forEach(v=>iTot[v.idea_id]=(iTot[v.idea_id]||0)+1);
   const lead=ideasOnly.map(x=>({...x,v:iTot[x.id]||0})).sort((a,b)=>b.v-a.v)[0];
+  const retoIdx = id => targets.findIndex(t=>t.id===id)+1;
   const retos = () => renderRetos(targets, ideasOnly, iTot, who, fresh);
   const panelIdeas = `
-      <div class="panel">
-        ${head("Ideas · "+esc(s.q_idea||"¿Cómo podríamos resolverlo?"), `${ideasOnly.length} ideas · ${A.ideaVotes.length} apoyos · ${s.idea_votes||3} por persona`)}
+      <div class="panel" id="sec-2">
+        ${head(`Ideas para los ${targets.length||s.idea_top||3} retos`, `${ideasOnly.length} idea${ideasOnly.length===1?"":"s"} · ${A.ideaVotes.length} apoyo${A.ideaVotes.length===1?"":"s"} · ${ipp} por persona`)}
         ${targets.length? retos() : emptyState("bulb","Primero hace falta la votación de dolores",`Los ${s.idea_top||3} más votados se vuelven los retos`)}
-        ${lead&&lead.v? foot(`La idea con más apoyo: ${esc(lead.texto)}`, `${lead.v} apoyo${lead.v===1?"":"s"}`, "bulb") : ""}
-      </div>`;
-  const panelTopIdeas = `
-      <div class="panel">
-        ${head("Ideas con más apoyo", `Por reto · ${A.ideaVotes.length} apoyos · ${s.idea_votes||3} por persona`)}
-        ${A.ideaVotes.length && targets.length? retos() : emptyState("bulb","Todavía no hay apoyos","Cada quien apoya las ideas que más le convencen")}
-        ${lead&&lead.v? foot(`La idea con más apoyo: ${esc(lead.texto)}`, `${lead.v} apoyo${lead.v===1?"":"s"}`, "bulb") : ""}
+        ${lead&&lead.v? foot(`La idea con más apoyo: ${esc(lead.texto)}`, `${lead.v} apoyo${lead.v===1?"":"s"} · responde al reto ${retoIdx(lead.card_id)||"—"}`, "bulb") : ""}
       </div>`;
 
-  /* ---------- Indicadores: las seis tarjetas con la misma estructura (etiqueta, número, dato, contexto) ---------- */
+  /* ---------- Indicadores en vivo: seis tarjetas con la misma estructura ---------- */
   const kOn = k => k.includes(ph);
   const joins=A.participants.map(p=>+new Date(p.joined_at)).filter(Boolean);
   const recent=joins.filter(t=>Date.now()-t<5*60000).length;
   const sevAvg=A.cards.length? (A.cards.reduce((a,c)=>a+(+c.severidad||0),0)/A.cards.length).toFixed(1).replace(".0","") : null;
   const stWith=stN.filter(x=>x.n).length;
-  const votesMax=nP*(s.votes_per_user||5), supMax=nP*(s.idea_votes||3);
+  const votesMax=nP*vpp, supMax=nP*ipp;
   const kpis = `<div class="kpis">
     ${kpiTile({on:kOn(["lobby"]), icon:"users", label:"Participantes", value:nP,
       main: nP? (recent? `${recent} entraron en los últimos 5 min` : "Todos dentro, nadie nuevo en 5 min") : "Aún no entra nadie",
       sub: nP? "Con nombre, área, rol y etapas" : "Proyecta el QR para que entren"})}
     ${kpiTile({on:kOn(["checkin"]), icon:"cloudsun", label:"Check-in", value:checkins, of:nP,
       main: checkins? `Predomina: ${esc(topMood.t)}` : "Aún sin respuestas",
-      sub: checkins? `${pctOf(checkins,nP)}% del equipo respondió` : "Ánimo y expectativa de cada quien"})}
+      sub: checkins? (checkins>=5? `${pctOf(checkins,nP)}% del equipo respondió` : `${checkins} de ${nP} respondieron`) : "Ánimo y expectativa de cada quien"})}
     ${kpiTile({on:kOn(["pains"]), icon:"flame", label:"Dolores", value:A.cards.length,
       main: A.cards.length? `Más en ${esc(stageTag(topSt.st))}` : "Aún sin tarjetas",
       sub: A.cards.length? `Dolor promedio ${sevAvg}/5 · ${stWith} de ${stN.length} etapas` : "Tarjetas por etapa del proceso"})}
     ${kpiTile({on:kOn(["votes"]), icon:"target", label:"Votación", value:votesUsed, of:votesMax,
       main: votesUsed? `${voters} de ${nP} personas votaron` : "Aún sin votos",
-      sub: `${s.votes_per_user} votos por persona`})}
+      sub: `${vpp} votos por persona`})}
     ${kpiTile({on:kOn(["quickwins"]), icon:"bolt", label:"Validación", value:qwRaters, of:nP,
       main: A.qwRatings.length? `${A.qwRatings.length} calificaciones` : "Aún sin calificaciones",
       sub: `${qwList.length} quick wins${gateList.length?` · ${gateList.length} reglas`:""}${timeList.length?` · ${timeList.length} tiempos`:""} · ${props.length} propuesta${props.length===1?"":"s"}`})}
-    ${kpiTile({on:kOn(["ideas","results","closed"]), icon:"bulb", label:"Ideas", value:ideasOnly.length,
+    ${kpiTile({on:kOn(["ideas"]), icon:"bulb", label:"Ideas", value:ideasOnly.length,
       main: A.ideaVotes.length? `${A.ideaVotes.length} de ${supMax} apoyos usados` : (ideasOnly.length? "Aún sin apoyos" : "Aún sin ideas"),
-      sub: `${s.idea_votes||3} apoyos por persona · ${targets.length||s.idea_top||3} retos`})}
+      sub: `${ipp} apoyos por persona · ${targets.length||s.idea_top||3} retos`})}
   </div>`;
+
+  /* «X de N listos»: quiénes ya dieron por terminada la actividad en curso (desde su celular) */
+  const ACT_T={checkin:"Check-in",pains:"Dolores",votes:"Votación",quickwins:"Validación",ideas:"Ideas"};
+  const listos=ACT_T[ph]? A.participants.filter(p=>(p.done_phases||[]).includes(ph)).length : null;
+  const ready = ACT_T[ph] ? `<div class="ready${nP&&listos===nP?" all":""}" data-tip="Cada quien marca «terminé» en su celular. Cuando la mayoría esté lista, abre la siguiente actividad.">
+      <span class="ready-t"><b>${listos}</b> de ${nP} listos con ${ACT_T[ph]}</span><i class="ready-bar"><span style="width:${pctOf(listos,nP)}%"></span></i>${nP&&listos===nP?`<span class="ready-ok">Todos listos: abre la siguiente</span>`:""}</div>` : "";
+
+  /* ---------- Resultados / Cierre: titular + cinco secciones numeradas + contexto plegado ---------- */
+  const isResults = ph==="results"||ph==="closed";
+  const top1 = votesUsed? topPains(A.cards, totals, 1)[0] : null;
+  const tile = (label, v, sub, href) => v? `<a class="tile" href="${href}" data-go="${href}"><span class="tile-l">${label}</span><span class="tile-v">${v}</span><span class="tile-s">${sub||""}</span></a>`
+                                        : `<div class="tile nodata"><span class="tile-l">${label}</span><span class="tile-v">Sin datos aún</span></div>`;
+  const tQW = () => { if(!hasData("qw")) return tile("Quick win con más apoyo");
+    if(nQ<3){ const t=tieM(qwList); return t.length===1? tile("Quick win con más apoyo", esc(t[0].text), `${nQ} persona${nQ===1?"":"s"}: mucho`, "#sec-3") : tile("Quick win con más apoyo", `${t.length} empatados con «mucho»`, `${nQ} respuesta${nQ===1?"":"s"} · se define con más gente`, "#sec-3"); }
+    return tile("Quick win con más apoyo", esc(best.text), `Índice ${best.st.idx} · ${best.st.n} respuesta${best.st.n===1?"":"s"}`, "#sec-3"); };
+  const tRG = () => { if(!hasData("gate")||!gLow) return tile("Regla con menos acuerdo");
+    if(nG<3){ const e=gateList.filter(q=>q.st.p); return e.length? tile("Regla con menos acuerdo", esc(e[0].text), `${nG} persona${nG===1?"":"s"}: estorba${e.length>1?` · y ${e.length-1} más`:""}`, "#sec-4") : tile("Regla con menos acuerdo", "Ninguna estorba por ahora", `${nG} respuesta${nG===1?"":"s"}`, "#sec-4"); }
+    return tile("Regla con menos acuerdo", esc(gLow.text), `Índice ${gLow.st.idx} · ${gLow.st.n} respuesta${gLow.st.n===1?"":"s"}${gLow.st.idx<50?" · hay que conversarla":""}`, "#sec-4"); };
+  const tTM = () => { if(!hasData("time")||!tTop||tTop.st.mode===null) return tile("Etapa que más tarda");
+    const cnt=[tTop.st.na,tTop.st.p,tTop.st.a,tTop.st.m][tTop.st.mode];
+    return tile("Etapa que más tarda", esc(tTop.stage||tTop.text), tTop.st.n<3? `${tTop.st.n} persona${tTop.st.n===1?"":"s"}: ${esc(scaleLabel("time",tTop.st.mode).toLowerCase())}` : `${esc(scaleLabel("time",tTop.st.mode))} para ${cnt} de ${tTop.st.n}`, "#sec-5"); };
+  const tID = () => lead&&lead.v? tile("Idea con más apoyo", esc(lead.texto), `${lead.v} apoyo${lead.v===1?"":"s"} · responde al reto ${retoIdx(lead.card_id)||"—"}`, "#sec-2") : tile("Idea con más apoyo");
+  const ctxLine = `${ph==="closed"?"Taller cerrado":"Resultados"} · ${nP} persona${nP===1?"":"s"} · ${A.cards.length} dolor${A.cards.length===1?"":"es"} · ${votesUsed} voto${votesUsed===1?"":"s"} · ${A.qwRatings.length} calificacion${A.qwRatings.length===1?"":"es"} · ${ideasOnly.length} idea${ideasOnly.length===1?"":"s"}`;
+  const hero = `<section class="hero">
+      <p class="hero-ctx">${ctxLine}</p>
+      ${top1? `<p class="hero-l">El dolor más votado${smallV?` · ${voters} votante${voters===1?"":"s"}, se afina con más gente`:""}</p><h1 class="hero-t">${esc(top1.texto)}</h1>
+               <p class="hero-s">${top1.pts} de ${votesUsed} voto${votesUsed===1?"":"s"} · ${esc(top1.etapa)}${top1.actividad?` · ${taskHTML(top1.actividad)}`:""} · ${esc((SEV_LABELS[top1.severidad]||"").toLowerCase())} (${top1.severidad}/5)</p>`
+             : `<p class="hero-l">El dolor más votado</p><h1 class="hero-t muted">Sin votos todavía</h1><p class="hero-s">${A.cards.length? `${A.cards.length} tarjeta${A.cards.length===1?"":"s"} en el muro, sin votación` : "No hubo tarjetas ni votos"}</p>`}
+      <div class="tiles">${tQW()}${tRG()}${tTM()}${tID()}</div>
+    </section>`;
+  const secHead=(n,t,d)=>`<div class="ph sec"><span class="sec-n">${n}</span><div><h2>${t}</h2>${d?`<p class="pdesc">${d}</p>`:""}</div></div>`;
+  const wrapSec=(n,html,t,d)=>html.replace(/<div class="ph">[\s\S]*?<\/div>\s*(?=<)/, secHead(n,t,d));
+  const retoVotes=targets.reduce((a,t)=>a+t.pts,0);
+  const resRank = `<div class="panel" id="sec-1">
+        ${secHead(1,"Dolores que más pesan", votesUsed? (smallV? `${votesUsed} voto${votesUsed===1?"":"s"} de ${voters} persona${voters===1?"":"s"} · ${vpp} por persona` : `Los ${targets.length} más votados fueron los retos de la fase de ideas · ${votesUsed} votos de ${voters} personas, ${vpp} por persona`) : "No hubo votación")}
+        ${votesUsed? renderRank(totals, targets, {voters, top:5}) : emptyState("target","Sin votos","No se registraron votos en este taller")}
+        ${votesUsed? (smallV? foot(`${votesUsed} voto${votesUsed===1?"":"s"} de ${voters} persona${voters===1?"":"s"}`, "El ranking se afina conforme vote el equipo", "target")
+                     : foot(`Los ${targets.length} retos concentran ${retoVotes} de ${votesUsed} votos (${pctOf(retoVotes,votesUsed)} %)`, "", "target")) : ""}
+      </div>`;
+  const resIdeas = wrapSec(2, panelIdeas, "Ideas para los "+(targets.length||s.idea_top||3)+" retos", `${ideasOnly.length} idea${ideasOnly.length===1?"":"s"} · ${A.ideaVotes.length} apoyo${A.ideaVotes.length===1?"":"s"} · ${ipp} por persona`);
+  const resQW = qwList.length? wrapSec(3, panelQW, "Quick wins que más ayudarían", hasData("qw")? `${nQ} persona${nQ===1?"":"s"} calificaron ${qwList.length} quick wins: mucho, algo o poco` : "Nadie calificó los quick wins") : "";
+  const resGates = gateList.length? wrapSec(4, panelGates, "Reglas del nuevo flujo: acuerdo y fricción", hasData("gate")? `${gateList.length} reglas de LOCFY24 calificadas por quienes las van a vivir` : "Nadie calificó las reglas") : "";
+  const resTimes = timeList.length? wrapSec(5, panelTimes, "Cuánto tarda hoy cada etapa", hasData("time")? "Duración típica según el equipo, en el orden del proceso · base para los semáforos" : "Nadie estimó los tiempos") : "";
+  const ctxMood = checkins? `<div class="panel">${head("Ánimo al empezar", `${checkins} de ${nP} hicieron check-in`)}
+        ${checkins===1? `<p class="ctx-line">${glass(topMood.ic,{size:"sm",tone:topMood.tone,tint:true})} 1 check-in: <b>${esc(topMood.t)}</b></p>`
+         : `<div class="donut-wrap">${donutSVG(moodN.map(m=>({t:m.t,v:m.n,color:TONE[m.tone]})),{center:checkins,sub:"check-ins"})}
+            <div class="dleg">${moodN.map(m=>`<div class="dleg-row${m.n?"":" zero"}"><span class="sw" style="background:${TONE[m.tone]}"></span><span class="dl-t">${esc(m.t)}</span><b>${m.n}</b><span class="pct">${checkins>=5?pctOf(m.n,checkins)+"%":""}</span></div>`).join("")}</div></div>
+            ${foot(`Predomina: ${esc(topMood.t)} (${topMood.n})`, `${moodN.filter(m=>["saturado","rebasado"].includes(m.v)).reduce((a,m)=>a+m.n,0)} llegaron saturados o rebasados`, topMood.ic)}`}
+      </div>` : "";
+  const resultsView = `${hero}
+      ${resRank}
+      ${resIdeas}
+      ${resQW||resGates? `<div class="duo2">${resQW}${resGates}</div>` : ""}
+      ${resTimes}
+      <details class="ctx" data-k="ctx"><summary><span class="ctx-t">Contexto del taller</span><span class="ctx-s">ánimo, dolores por etapa, propuestas y muro</span></summary>
+        <div class="ctx-body">${ctxMood||panelStages? `<div class="duo">${ctxMood}${panelStages}</div>` : ""}${panelProps}${panelWall}</div>
+      </details>`;
 
   let panels="";
   if(ph==="lobby"||ph==="checkin") panels= panelMood ? `<div class="duo">${panelMood}${panelParticipants}</div>` : panelParticipants;
@@ -1955,7 +2442,8 @@ function renderAdmin(){
   else if(ph==="votes") panels=panelRank+panelStages+panelWall;
   else if(ph==="quickwins") panels=panelQW+panelGates+panelTimes+panelProps+panelRank;
   else if(ph==="ideas") panels=panelIdeas;
-  else panels=panelRank+panelQW+panelTopIdeas+panelGates+panelTimes+panelProps+(panelMood?`<div class="duo">${panelMood}${panelStages}</div>`:panelStages)+panelWall;
+  else panels=resultsView;
+  document.body.classList.toggle("project", !!(A.project && isResults));
 
   $("#app").innerHTML = `<div class="a-shell">
     <div class="a-top">
@@ -1971,9 +2459,10 @@ function renderAdmin(){
     </div>
     <div class="phasebar" role="tablist" aria-label="Fase de la sesión">
       ${PHASES.map((p,i)=>`<button class="phase ${p.id===ph?"on":i<phaseIdx?"done":""}" data-ph="${p.id}">${i+1}. ${p.t}</button>`).join("")}
+      ${ready}${isResults?`<div class="ready"><button class="abtn${A.project?" on":""}" id="btnProject" data-tip="Letra ×1,25, sin metadatos ni contexto: para la pantalla de la sala">${A.project?"Salir de proyección":"Proyectar"}</button></div>`:""}
     </div>
-    <div class="a-main">
-      ${kpis}
+    <div class="a-main${isResults?" results":""}">
+      ${isResults?"":kpis}
       ${panels}
     </div>
   </div>`;
@@ -1993,6 +2482,10 @@ function renderAdmin(){
     catch(e){ toast("No se pudo borrar: "+friendlyAuthError(e)); }
   };
   $("#btnAuthors").onclick=()=>{ A.showAuthors=!A.showAuthors; renderAdmin(); };
+  const bp=$("#btnProject"); if(bp) bp.onclick=()=>{ A.project=!A.project; renderAdmin(); };
+  /* «Ver todos» y «Contexto» recuerdan si estaban abiertos (el panel se redibuja cada pocos segundos) */
+  $$("details[data-k]").forEach(d=>{ d.open=A.open.has(d.dataset.k); d.addEventListener("toggle",()=>{ if(d.open) A.open.add(d.dataset.k); else A.open.delete(d.dataset.k); }); });
+  $$("[data-go]").forEach(a=>a.onclick=e=>{ e.preventDefault(); const t=$(a.dataset.go); if(t) t.scrollIntoView({behavior:"smooth",block:"start"}); });
   $("#btnQR").onclick=showQR;
   $("#btnCSV").onclick=exportAll;
 }
@@ -2041,69 +2534,105 @@ function installTips(){
   ["focusout","scroll","pointerleave"].forEach(ev=>document.addEventListener(ev,()=>tip.classList.remove("on"),true));
 }
 
-/* Ranking de dolores: barras horizontales gruesas. Los retos en azul de marca, el resto en azul claro. */
-function renderRank(totals, targets){
-  const rows=[...A.cards].map(c=>({c,pts:totals[c.id]||0})).filter(r=>r.pts>0).sort((a,b)=>b.pts-a.pts).slice(0,10);
-  const rest=[...A.cards].filter(c=>(totals[c.id]||0)>0).length-rows.length;
-  const max=Math.max(...rows.map(r=>r.pts),1);
-  const retoOf=id=>{ const i=(targets||[]).findIndex(t=>t.id===id); return i<0?0:i+1; };
-  return `<div class="hb">${rows.map(({c,pts},i)=>{ const r=retoOf(c.id);
-    return `<div class="hb-row${r?" top":""}">
-      <div class="hb-lbl"><span class="hb-pos" aria-label="Lugar ${i+1}">${i+1}</span>
-        <div class="hb-t"><div class="hb-txt">${esc(c.texto)}</div><div class="hb-meta">${r?`<span class="hb-reto">Reto ${r}</span>`:""}<span>${esc(c.etapa)}${c.actividad?` · ${esc(c.actividad)}`:""} · dolor ${c.severidad}/5</span></div></div></div>
-      <div class="hb-track" data-tip="${pts} voto${pts===1?"":"s"} · ${esc(c.etapa)}"><span class="hb-rail"><i class="hb-bar" style="width:${Math.max(2,pts/max*100).toFixed(1)}%"></i></span><b class="hb-val">${pts}</b></div>
-    </div>`; }).join("")}</div>
-    ${rest>0?`<p class="hb-more">y ${rest} tarjeta${rest===1?"":"s"} más con votos</p>`:""}`;
+/* Unidades de la colmena: un hexágono por voto o apoyo (se lee a 3 m sin eje) */
+function hexUnits(on, total, cls){ return `<span class="hxu ${cls||""}">${'<i class="on"></i>'.repeat(on)}${'<i></i>'.repeat(Math.max(0,total-on))}</span>`; }
+const durShort = v => ["< 1 día","1–5 d","1–2 sem","> 2 sem"][v] || "—";
+
+/* 1 · Ranking de dolores: barras horizontales gruesas con la etiqueta encima; top 5 y «ver todos».
+   Con menos de 3 votantes se muestran unidades (un hexágono por voto), sin retos. */
+function renderRank(totals, targets, o){
+  o=o||{}; const small=(o.voters||0)<3;
+  const all=[...A.cards].map(c=>({c,pts:totals[c.id]||0})).filter(r=>r.pts>0).sort((a,b)=>b.pts-a.pts || b.c.severidad-a.c.severidad);
+  const max=Math.max(...all.map(r=>r.pts),1);
+  const retoOf=id=>{ if(small) return 0; const i=(targets||[]).findIndex(t=>t.id===id); return i<0?0:i+1; };
+  const row=({c,pts},i)=>{ const r=retoOf(c.id);
+    return `<div class="rk-row${r?" top":""}">
+      <div class="rk-h"><span class="rk-pos" aria-label="Lugar ${i+1}">${i+1}</span><span class="rk-txt">${esc(c.texto)}</span>${r?`<span class="hb-reto">Reto ${r}</span>`:""}</div>
+      <div class="rk-meta">${esc(c.etapa)}${c.actividad?` · ${taskHTML(c.actividad)}`:""} · dolor ${c.severidad}/5</div>
+      ${small? `<div class="rk-units">${hexUnits(pts,pts)}<b>${pts} voto${pts===1?"":"s"}</b></div>`
+             : `<div class="rk-bar" data-tip="${pts} voto${pts===1?"":"s"} · ${esc(c.etapa)}"><i style="width:${Math.max(3,pts/max*100).toFixed(1)}%"></i><b>${pts}</b></div>`}
+    </div>`; };
+  const top=o.top||5, shown=all.slice(0,top), rest=all.slice(top);
+  return `<div class="rk">${shown.map(row).join("")}</div>
+    ${rest.length?`<details class="more-a" data-k="${o.k||"rank-all"}"><summary>Ver las ${all.length} tarjetas con votos</summary><div class="rk">${rest.map((r,i)=>row(r,i+top)).join("")}</div></details>`:""}`;
 }
 
-/* Quick wins: columnas apiladas al 100 % (Mucho abajo, Algo, Poco arriba), ordenadas por índice, y la lista con el texto de cada uno */
-function renderQW(list, byScore, groupByStage, hasData, kind){
-  kind=kind||"qw"; const K=RATING_KINDS[kind], L=v=>K.scale.find(o=>o.v===v).t;
-  const col = q => { const st=q.st, b=st.m+st.a+st.p;
-    return `<div class="qwc-col" data-tip="${esc(q.id)} · ${esc(q.text)}\n${L(3)} ${st.m} · ${L(2)} ${st.a} · ${L(1)} ${st.p}${st.na?` · ${L(0)} ${st.na}`:""}">
-      <span class="qwc-idx">${st.idx===null?"—":st.idx}</span>
-      <div class="qwc-stack${b?"":" none"}">${b?`${st.p?`<i class="p" style="flex:${st.p}"></i>`:""}${st.a?`<i class="a" style="flex:${st.a}"></i>`:""}${st.m?`<i class="m" style="flex:${st.m}"></i>`:""}`:""}</div>
-      <span class="qwc-id">${esc(q.id.replace(/^[A-Z]+-/,""))}</span></div>`; };
-  const row = q => `<div class="qwl-row"><span class="qw-id">${esc(q.id)}</span><span class="qwl-t">${esc(q.text)}</span><span class="qwl-idx${q.st.n?"":" zero"}">${q.st.idx===null?'<span class="na">—</span>':q.st.idx}<small>${q.st.n?q.st.n+" resp.":"sin resp."}</small></span></div>`;
-  let body="";
-  if(groupByStage){
-    const groups=[]; list.forEach(q=>{ let g=groups.find(x=>x.stage===q.stage); if(!g){ g={stage:q.stage,items:[]}; groups.push(g); } g.items.push(q); });
-    body=groups.map(g=>`<div class="qwl-stage">${esc(g.stage||"Sin etapa")}</div>${g.items.map(row).join("")}`).join("");
-  } else body=byScore.map(row).join("");
-  const chart = hasData ? `<div class="leg"><span><i class="m"></i>${L(3)}</span><span><i class="a"></i>${L(2)}</span><span><i class="p"></i>${L(1)}</span><span class="leg-help">El número arriba de cada columna es el ${kind==="gate"?"índice de acuerdo":"índice"}; abajo, el número ${kind==="gate"?"de la regla":"del quick win"}</span></div>
-    <div class="qwc-wrap"><div class="qwc" style="--n:${list.length}">${byScore.map(col).join("")}</div></div>`
-    : emptyState(kind==="gate"?"check":"bolt","Aún no hay calificaciones","La gráfica aparecerá en vivo conforme el equipo responda");
-  return chart+`<div class="qwl${hasData?"":" quiet"}">${body}</div>`;
+/* 3 · Quick wins: filas Likert (barra apilada horizontal al 100 %: mucho · algo · poco) con el índice grande.
+   Con menos de 3 calificadores: unidades por fila, sin índice; orden por etapa. */
+function renderLikert(list, kind, o){
+  o=o||{}; const K=RATING_KINDS[kind], L=v=>K.scale.find(x=>x.v===v).t, small=(o.raters||0)<3, hasData=list.some(q=>q.st.n);
+  if(!hasData) return emptyState("bolt","Aún no hay calificaciones","La gráfica aparecerá en vivo conforme el equipo responda");
+  const seg=(cls,n)=> n?`<i class="${cls}" style="flex:${n}">${n>=2?n:""}</i>`:"";
+  const row=q=>{ const st=q.st, b=st.m+st.a+st.p;
+    const t=`<div class="lk-t"><span class="lk-id">${esc(q.id)}</span>${esc(q.text)}${!small&&o.nP&&st.n<o.nP/2?'<span class="lk-few">pocas respuestas</span>':""}</div>`;
+    if(small){ const u = st.m? `${hexUnits(st.m,st.m,"m")} ${st.m>1?st.m+" personas":"1 persona"}: ${L(3).toLowerCase()}` : st.a? `${hexUnits(st.a,st.a,"a")} ${st.a>1?st.a+" personas":"1 persona"}: ${L(2).toLowerCase()}` : st.p? `${hexUnits(st.p,st.p,"p")} ${st.p>1?st.p+" personas":"1 persona"}: ${L(1).toLowerCase()}` : st.na? `<span class="lk-na">${L(0)}</span>` : `<span class="lk-na">sin respuesta</span>`;
+      return `<div class="lk-row small">${t}<div class="lk-u">${u}</div></div>`; }
+    return `<div class="lk-row">${t}
+      <div class="lk-bar" data-tip="${esc(q.text)}\n${L(3)} ${st.m} · ${L(2)} ${st.a} · ${L(1)} ${st.p}${st.na?` · ${L(0)} ${st.na}`:""}">${b?seg("m",st.m)+seg("a",st.a)+seg("p",st.p):'<i class="none"></i>'}</div>
+      <div class="lk-idx${st.n?"":" zero"}">${st.idx===null?"—":st.idx}<small>${st.n?st.n+" resp.":"sin resp."}</small></div></div>`; };
+  const byStage=l=>{ const g=[]; l.forEach(q=>{ let x=g.find(y=>y.stage===q.stage); if(!x){ x={stage:q.stage,items:[]}; g.push(x); } x.items.push(q); }); return g.map(x=>`<div class="qwl-stage">${esc(x.stage||"Sin etapa")}</div>${x.items.map(row).join("")}`).join(""); };
+  const byScore=[...list].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1) || b.st.m-a.st.m);
+  const legend = small? "" : `<div class="leg"><span><i class="m"></i>${L(3)}</span><span><i class="a"></i>${L(2)}</span><span><i class="p"></i>${L(1)}</span></div>`;
+  if(small || !o.top) return legend+`<div class="lk">${byStage(list)}</div>`;
+  const shown=byScore.slice(0,o.top);
+  return legend+`<div class="lk">${shown.map(row).join("")}</div>
+    ${list.length>o.top?`<details class="more-a" data-k="${o.k||"lk-all"}"><summary>Ver los ${list.length}, por etapa</summary><div class="lk">${byStage(list)}</div></details>`:""}`;
 }
 
-/* Tiempos por etapa: columnas al 100 % en el orden del proceso; 4 tonos de claro (menos de 1 día) a oscuro (más de 2 semanas) */
-function renderTimes(list, hasData){
-  const K=RATING_KINDS.time, L=v=>K.scale.find(o=>o.v===v).t;
-  if(!hasData) return emptyState("target","Aún no hay estimaciones","Cada quien estima las etapas en las que participa");
-  const col = q => { const st=q.st, n=st.n;
-    return `<div class="qwc-col" data-tip="${esc(q.text)}\n${L(0)} ${st.na} · ${L(1)} ${st.p} · ${L(2)} ${st.a} · ${L(3)} ${st.m}">
-      <span class="qwc-idx">${st.mode===null?"—":esc(L(st.mode).replace("Menos de 1 día","< 1 día").replace("1 a 5 días","1–5 d").replace("1 a 2 semanas","1–2 sem").replace("Más de 2 semanas","> 2 sem"))}</span>
-      <div class="qwc-stack tm${n?"":" none"}">${n?`${st.na?`<i class="t0" style="flex:${st.na}"></i>`:""}${st.p?`<i class="t1" style="flex:${st.p}"></i>`:""}${st.a?`<i class="t2" style="flex:${st.a}"></i>`:""}${st.m?`<i class="t3" style="flex:${st.m}"></i>`:""}`:""}</div>
-      <span class="qwc-id" title="${esc(q.stage)}">${esc(stageX(q.stage))}</span></div>`; };
-  return `<div class="leg"><span><i class="t0"></i>${L(0)}</span><span><i class="t1"></i>${L(1)}</span><span><i class="t2"></i>${L(2)}</span><span><i class="t3"></i>${L(3)}</span><span class="leg-help">Arriba, lo más respondido; abajo, el paso del proceso</span></div>
-    <div class="qwc-wrap"><div class="qwc" style="--n:${list.length}">${list.map(col).join("")}</div></div>
-    <div class="qwl quiet">${list.map(q=>`<div class="qwl-row"><span class="qw-id">${esc(stageX(q.stage))}</span><span class="qwl-t">${esc(q.text)}</span><span class="qwl-idx${q.st.n?"":" zero"}">${q.st.mode===null?'<span class="na">—</span>':esc(L(q.st.mode))}<small>${q.st.n?q.st.n+" resp.":"sin resp."}</small></span></div>`).join("")}</div>`;
+/* 4 · Reglas: barras divergentes centradas en «me da igual» (derecha ayuda, izquierda estorba).
+   Se muestran las 3 con más acuerdo y las 3 con menos; el resto plegado. */
+function renderDiverging(list, o){
+  o=o||{}; const K=RATING_KINDS.gate, L=v=>K.scale.find(x=>x.v===v).t, small=(o.raters||0)<3, hasData=list.some(q=>q.st.n);
+  if(!hasData) return emptyState("check","Aún no hay calificaciones","La gráfica aparecerá en vivo conforme el equipo responda");
+  const row=q=>{ const st=q.st, b=st.m+st.a+st.p;
+    const t=`<div class="lk-t"><span class="lk-id">${esc(q.id)}</span>${esc(q.text)}</div>`;
+    if(small) return `<div class="dv-row small">${t}<div class="dv-u"><span class="l">${st.p?hexUnits(st.p,st.p,"p")+" estorba":""}</span><span class="c"></span><span class="r">${st.m?hexUnits(st.m,st.m,"m")+" ayuda":""}</span>${st.a?`<span class="dv-mid">${st.a} me da igual</span>`:""}${!b&&st.na?`<span class="lk-na">${L(0)}</span>`:""}</div></div>`;
+    const pr=b?st.m/b*100:0, pl=b?st.p/b*100:0;
+    return `<div class="dv-row">${t}
+      <div class="dv-bar" data-tip="${esc(q.text)}\n${L(3)} ${st.m} · ${L(2)} ${st.a} · ${L(1)} ${st.p}${st.na?` · ${L(0)} ${st.na}`:""}">
+        <span class="l"><i style="width:${pl.toFixed(1)}%">${st.p>=2?st.p:""}</i></span><span class="c">${st.a?`<em>${st.a}</em>`:""}</span><span class="r"><i style="width:${pr.toFixed(1)}%">${st.m>=2?st.m:""}</i></span></div>
+      <div class="lk-idx${st.n?"":" zero"}">${st.idx===null?"—":st.idx}<small>${st.n?st.n+" resp.":"sin resp."}</small></div></div>`; };
+  const legend = small? "" : `<div class="leg dv-leg"><span><i class="p"></i>${L(1)}</span><span><i class="mid"></i>${L(2)}</span><span><i class="m"></i>${L(3)}</span></div>`;
+  const byScore=[...list].sort((a,b)=>(b.st.idx??-1)-(a.st.idx??-1));
+  if(small || o.all || list.length<=6) return legend+`<div class="dv">${(small?list:byScore).map(row).join("")}</div>`;
+  const rated=byScore.filter(q=>q.st.idx!==null), top=rated.slice(0,3), low=rated.slice(-3).filter(q=>!top.includes(q));
+  const shownIds=new Set([...top,...low].map(q=>q.id)), rest=byScore.filter(q=>!shownIds.has(q.id));
+  return legend+`<div class="dv"><div class="dv-h">Más acuerdo</div>${top.map(row).join("")}${low.length?`<div class="dv-h low">Menos acuerdo · hay que conversarlas</div>${low.map(row).join("")}`:""}</div>
+    ${rest.length?`<details class="more-a" data-k="${o.k||"dv-all"}"><summary>Ver las ${list.length}</summary><div class="dv">${rest.map(row).join("")}</div></details>`:""}`;
 }
 
-/* Retos e ideas: cada idea con su barra de apoyos (misma escala en los tres retos) */
+/* 5 · Tiempos: tira de proceso, una celda por etapa en orden, del tono de su duración típica */
+function renderStrip(list, o){
+  o=o||{}; const K=RATING_KINDS.time, L=v=>K.scale.find(x=>x.v===v).t;
+  if(!o.hasData) return emptyState("target","Aún no hay estimaciones","Cada quien estima las etapas en las que participa");
+  const cell=q=>{ const st=q.st, n=st.n, counts=[st.na,st.p,st.a,st.m], name=String(q.stage||q.text||"");
+    const num=stageX(name), title=name.replace(/^\d+\s+/,"");
+    if(!n) return `<div class="sc none" data-tip="${esc(name)}\nsin respuestas"><span class="sc-n">${esc(num)}</span><span class="sc-t">${esc(title)}</span><b class="sc-d">—</b><small>sin resp.</small></div>`;
+    const mode=st.mode, share=counts[mode]/n, dis=share<.5;
+    const tip=`${esc(name)}\n${L(0)} ${st.na} · ${L(1)} ${st.p} · ${L(2)} ${st.a} · ${L(3)} ${st.m}`;
+    if(n<3) return `<div class="sc t${mode}" data-tip="${tip}"><span class="sc-n">${esc(num)}</span><span class="sc-t">${esc(title)}</span><b class="sc-d">${durShort(mode)}</b><small>${n} persona${n===1?"":"s"}${n>1&&dis?" · dividido":""}</small></div>`;
+    return `<div class="sc t${mode}${dis?" dis":""}" data-tip="${tip}"><span class="sc-n">${esc(num)}</span><span class="sc-t">${esc(title)}</span><b class="sc-d">${durShort(mode)}</b><small>${n} resp.${dis?" · dividido":""}</small></div>`; };
+  return `<div class="leg"><span><i class="t0"></i>${L(0)}</span><span><i class="t1"></i>${L(1)}</span><span><i class="t2"></i>${L(2)}</span><span><i class="t3"></i>${L(3)}</span></div>
+    <div class="strip" style="--n:${list.length}">${list.map(cell).join("")}</div>`;
+}
+
+/* 2 · Retos e ideas: un hexágono por apoyo (misma escala dentro del reto); la idea líder resaltada */
 function renderRetos(targets, ideasOnly, iTot, who, fresh){
-  const gmax=Math.max(1,...ideasOnly.map(x=>iTot[x.id]||0));
+  const anySupport=ideasOnly.some(x=>iTot[x.id]);
   return `<div class="retos">${targets.map((c,i)=>{
     const list=ideasOnly.filter(x=>x.card_id===c.id).map(x=>({...x,v:iTot[x.id]||0}))
       .sort((a,b)=>b.v-a.v || String(a.created_at).localeCompare(String(b.created_at)));
+    const max=Math.max(1,...list.map(x=>x.v));
     const lead=list.length&&list[0].v>0 ? list[0].id : null;
     return `<section class="reto">
       <div class="reto-h"><span class="reto-k">Reto ${i+1}</span><span class="reto-m" title="${esc(c.etapa)}">${esc(stageTag(c.etapa))} · ${c.pts} voto${c.pts===1?"":"s"}</span></div>
       <h3 class="reto-t">${esc(c.texto)}</h3>
       <ul class="ideas">${list.map(x=>`<li class="idea${x.id===lead?" lead":""}${fresh(x.id)}">
           <div class="idea-t">${esc(x.texto)}${who(x.participant_id)}</div>
-          <div class="idea-b" data-tip="${x.v} apoyo${x.v===1?"":"s"}"><span class="idea-rail"><i style="width:${(x.v/gmax*100).toFixed(1)}%"></i></span><b>${x.v}</b></div>
+          ${anySupport? (x.v>20? `<div class="idea-b" data-tip="${x.v} apoyos"><span class="idea-rail"><i style="width:${(x.v/max*100).toFixed(1)}%"></i></span><b>${x.v}</b></div>`
+                                : `<div class="idea-u" data-tip="${x.v} apoyo${x.v===1?"":"s"}">${hexUnits(x.v,max)}<b>${x.v}</b></div>`) : ""}
         </li>`).join("")||'<li class="idea empty-idea">Aún sin ideas</li>'}</ul>
+      ${list.length&&!anySupport?'<p class="idea-none">Aún sin apoyos</p>':""}
     </section>`; }).join("")}</div>`;
 }
 

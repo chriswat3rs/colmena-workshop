@@ -69,14 +69,18 @@ Desde entonces, cada vez que entres te pedirá contraseña + código de tu app.
 
 | Fase | En el celular | En el panel proyectado |
 |---|---|---|
-| 1. Lobby | Registro: nombre, área, rol, etapas, avatar | Tabla de quién entró (con rol y etapas) |
+| 1. Lobby | Registro: nombre, área, rol, etapas, avatar; mapa del proceso con sus etapas marcadas | Tabla de quién entró (con rol y etapas) |
 | 2. Check-in | Ánimo y expectativa | Misma tabla con respuestas |
-| 3. Dolores | Tarjetas con etapa, herramienta (opcional) y qué tanto duele | Muro en vivo agrupado por etapa |
-| 4. Votación | Reparte sus votos (tope validado en el servidor) | Ranking en vivo |
-| 5. Validación | Tres listas: quick wins (Mucho / Algo / Poco / No aplica), reglas del nuevo flujo (Ayuda / Me da igual / Estorba / No me toca) y tiempos por etapa (4 rangos); primero lo de sus etapas; propone mejoras nuevas | Barra por quick win + índice 0–100, propuestas nuevas |
-| 6. Ideas | «¿Cómo podríamos…?» para los 3 dolores más votados; apoya hasta 3 ideas ajenas | Ideas por reto con sus apoyos |
-| 7. Resultados | Top de dolores, quick wins e ideas | Todo junto para la conversación final |
-| 8. Cierre | Agradecimiento | — |
+| 3. Dolores | Tarjetas con etapa, actividad y herramienta (opcionales) y qué tanto duele; «No tengo más por ahora» cuando termina | Muro en vivo agrupado por etapa |
+| 4. Votación | Reparte sus votos (tope validado en el servidor); al usar el último queda listo | Ranking en vivo |
+| 5. Validación | Tres pasos: quick wins (Mucho / Algo / Poco / No aplica), reglas del nuevo flujo (Ayuda / Me da igual / Estorba / No me toca) y tiempos por etapa (4 rangos); primero lo de sus etapas; al final propone mejoras nuevas | Filas por quick win (mucho · algo · poco) con índice 0–100, reglas en barras divergentes, tiempos en tira de proceso, propuestas nuevas |
+| 6. Ideas | «¿Cómo podríamos…?» para los 3 dolores más votados; apoya hasta 3 ideas ajenas; «Terminé con Ideas» | Ideas por reto con un hexágono por apoyo |
+| 7. Resultados | Top de dolores, ideas, quick wins, reglas y tiempos; nota de cierre | Titular (el dolor más votado + 4 datos clave) y cinco secciones numeradas; contexto plegado; botón **Proyectar** (letra ×1,25) |
+| 8. Cierre | Agradecimiento | Igual que Resultados |
+
+**Orientación en el celular (v1.4).** Arriba siempre se ve «Actividad N de 5 · Nombre», los 5 segmentos y el estado (En curso / Listo ✓). Al abrir una actividad aparece un aviso de qué hacer. Cuando alguien termina, ve «X de N ya terminaron» y qué sigue; tú ves lo mismo en la barra de fases («X de N listos con …») para decidir cuándo avanzar. Lo que escriben se guarda como borrador en el celular: si cambias de fase antes de que lo publiquen, se les avisa y pueden copiarlo.
+
+**Pocos datos.** Con menos de 3 personas votando o calificando, el panel muestra conteos y unidades (hexágonos) en lugar de índices, porcentajes o barras al 100 %, y declara los empates en vez de coronar un ganador.
 
 4. **Exportar CSV** descarga 4 archivos: participantes, dolores, quick wins e ideas (con autor, área, rol, votos y hora).
 5. Al terminar, exporta y usa **Borrar taller** para no guardar datos del cliente más tiempo del necesario.
@@ -118,6 +122,10 @@ Límites que conviene conocer:
 
 - Alguien que adivine un código de taller activo podría unirse como participante más. Hay ~887 millones de combinaciones, y puedes borrar o cerrar el taller al terminar.
 - No captures datos sensibles (salarios, información personal de empleados) en las tarjetas.
+
+### Actualizar desde una versión anterior
+
+`setup.sql` se puede volver a correr completo sin perder datos (todo es `if not exists` / `create or replace`). Si vienes de v1.3, basta con correr el bloque marcado **v1.4** (columna `done_phases` y función `ws_phase_progress`).
 
 ### Tareas de mantenimiento (SQL Editor)
 
