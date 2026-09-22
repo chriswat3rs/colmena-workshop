@@ -75,7 +75,7 @@ Desde entonces, cada vez que entres te pedirá contraseña + código de tu app.
 | 4. Votación | Reparte sus votos (tope validado en el servidor); al usar el último queda listo | Ranking en vivo |
 | 5. Validación | Tres pasos: quick wins (Mucho / Algo / Poco / No aplica), reglas del nuevo flujo (Ayuda / Me da igual / Estorba / No me toca) y tiempos por etapa (4 rangos); primero lo de sus etapas; al final propone mejoras nuevas | Filas por quick win (mucho · algo · poco) con índice 0–100, reglas en barras divergentes, tiempos en tira de proceso, propuestas nuevas |
 | 6. Ideas | «¿Cómo podríamos…?» para los 3 dolores más votados; apoya hasta 3 ideas ajenas; «Terminé con Ideas» | Ideas por reto con un hexágono por apoyo |
-| 7. Resultados | Top de dolores, ideas, quick wins, reglas y tiempos; nota de cierre | Titular (el dolor más votado + 4 datos clave) y cinco secciones numeradas; contexto plegado; botón **Proyectar** (letra ×1,25) |
+| 7. Resultados | Top de dolores, ideas, quick wins, reglas y tiempos; nota de cierre | Titular (el dolor más votado + 4 datos clave) y cinco secciones numeradas; contexto plegado; botón **Presentar** (pantalla completa, una sección por pantalla, flechas o clicker, Esc para salir) |
 | 8. Cierre | Agradecimiento | Igual que Resultados |
 
 **Orientación en el celular (v1.4).** Arriba siempre se ve «Actividad N de 5 · Nombre», los 5 segmentos y el estado (En curso / Listo ✓). Al abrir una actividad aparece un aviso de qué hacer. Cuando alguien termina, ve «X de N ya terminaron» y qué sigue; tú ves lo mismo en la barra de fases («X de N listos con …») para decidir cuándo avanzar. Lo que escriben se guarda como borrador en el celular: si cambias de fase antes de que lo publiquen, se les avisa y pueden copiarlo.

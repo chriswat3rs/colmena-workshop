@@ -864,6 +864,60 @@ body.project .hxu i{width:18px;height:21px}
   .sc small{margin-left:auto}
   .ready{margin-left:0}
 }
+/* ===== Modo presentación (v1.6): pantalla completa, una sección por pantalla ===== */
+.pres{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;background:var(--surface)}
+.pres-stage{flex:1;min-height:0;overflow:hidden;display:flex;justify-content:center;align-items:center;padding:clamp(16px,3vh,40px) clamp(16px,3vw,56px)}
+.pres-fit{width:1280px;flex:none}
+.pres-fit.in{animation:presin .35s ease-out}
+@keyframes presin{from{opacity:0;transform:translateX(24px)}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){ .pres-fit.in{animation:none} }
+.pres .a-main.results.pres-body{max-width:none;padding:0;gap:0}
+.pres .panel{box-shadow:none}
+.pres .a-main.results>.panel{padding:36px 44px 30px}
+.pres .more-a,.pres details.ctx,.pres .rk-meta,.pres .lk-few,.pres .kpi-live{display:none!important}
+.pres .rk-bar,.pres .rk-units{padding-left:0}
+.pres .ideas .idea:nth-child(n+4){display:none}
+.pres .hero{padding:1vh 0 0}
+.pres .hero-ctx{font-size:20px;margin-bottom:3vh}
+.pres .hero-l{font-size:16px}
+.pres .hero-t{font-size:52px;max-width:26ch;-webkit-line-clamp:3;margin-bottom:16px}
+.pres .hero-s{font-size:20px;margin-bottom:5vh}
+.pres .tiles{gap:24px}
+.pres .tile{padding:26px 26px 22px}
+.pres .tile-l{font-size:14px}
+.pres .tile-v{font-size:26px}
+.pres .tile-s{font-size:17px}
+.pres .ph.sec h2{font-size:34px}
+.pres .sec-n{font-size:48px}
+.pres .ph.sec .pdesc{font-size:19px}
+.pres .rk{gap:22px}
+.pres .rk-txt,.pres .lk-t,.pres .idea-t{font-size:22px}
+.pres .rk-bar i{height:28px}
+.pres .rk-bar b,.pres .lk-idx,.pres .idea-u b{font-size:28px}
+.pres .pf-main{font-size:21px}
+.pres .pf-sub{font-size:16px}
+.pres .reto-t{font-size:19px}
+.pres .lk-bar,.pres .dv-bar{height:32px}
+.pres .lk-bar i,.pres .dv-bar i{font-size:14px}
+.pres .sc{min-height:130px;padding:16px}
+.pres .sc-t{font-size:14.5px;overflow-wrap:normal;word-break:normal;hyphens:auto}
+.pres .sc-d{font-size:24px}
+.pres .leg{font-size:15px}
+.pres .hxu i{width:20px;height:23px}
+.pres .retos{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pres-bar{flex:none;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;height:64px;padding:0 clamp(16px,3vw,40px);background:var(--card);border-top:1px solid var(--line)}
+.pb-brand{display:flex;align-items:center;gap:12px;min-width:0;font-size:13.5px;color:var(--ink-3);font-weight:600}
+.pb-brand>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pb-brand b{color:var(--ink);letter-spacing:.08em}
+.pb-pos{display:flex;flex-direction:column;align-items:center;gap:6px}
+.pb-dots{display:flex;gap:8px}
+.pb-dot{width:9px;height:9px;border-radius:50%;background:#C9D6E6;transition:all .2s}
+.pb-dot.on{width:26px;border-radius:5px;background:var(--primary)}
+.pb-t{font-size:13px;font-weight:600;color:var(--ink-2)}
+.pb-ctl{display:flex;justify-content:flex-end;gap:8px}
+.pb-ctl kbd{font:600 11px var(--sans);color:var(--ink-3);border:1px solid var(--line);border-radius:5px;padding:1px 5px;margin-left:2px}
+.pb-ctl .ib:disabled{opacity:.35}
+@media (max-width:720px){ .pres-bar{grid-template-columns:auto 1fr;height:auto;padding:10px 14px} .pb-brand{display:none} .pb-pos{align-items:flex-start} .pb-ctl kbd{display:none} }
 /* Tooltip de las gráficas */
 .vtip{position:fixed;z-index:1000;left:0;top:0;max-width:300px;padding:8px 11px;border-radius:9px;background:var(--card);color:var(--ink);border:1px solid var(--line);font:600 12.5px/1.4 var(--sans);
   box-shadow:0 8px 24px rgba(1,19,59,.14);pointer-events:none;opacity:0;transform:translateY(2px);transition:opacity .12s,transform .12s;white-space:pre-line}
@@ -2633,7 +2687,19 @@ function renderAdmin(){
   else if(ph==="quickwins") panels=panelQW+panelGates+panelTimes+panelProps+panelRank;
   else if(ph==="ideas") panels=panelIdeas;
   else panels=resultsView;
+  if(A.project && !isResults){ A.project=false; exitFull(); }
   document.body.classList.toggle("project", !!(A.project && isResults));
+  if(A.project && isResults){
+    const slides=[
+      {t:"Lo que nos llevamos", h:hero},
+      {t:"Dolores que más pesan", h:resRank},
+      {t:"Ideas para los retos", h:resIdeas},
+      resQW?{t:"Quick wins que más ayudarían", h:resQW}:null,
+      resGates?{t:"Reglas del nuevo flujo", h:resGates}:null,
+      resTimes?{t:"Cuánto tarda cada etapa", h:resTimes}:null
+    ].filter(Boolean);
+    return renderPresentation(slides);
+  }
 
   const PH_ICON={lobby:"users",checkin:"cloudsun",pains:"flame",votes:"target",quickwins:"clipboard",ideas:"bulb",results:"chart",closed:"flag"};
   const nextPh = PHASES[phaseIdx+1];
@@ -2661,7 +2727,7 @@ function renderAdmin(){
       <div class="st-side">
         <span class="st-now">Fase ${phaseIdx+1} de ${PHASES.length} · <b>${(PHASES[phaseIdx]||{}).t||""}</b></span>
         ${ready}
-        ${isResults?`<button class="ib lbl${A.project?" on":""}" id="btnProject" aria-pressed="${!!A.project}" data-tip="Letra ×1,25, sin metadatos ni contexto: para la pantalla de la sala">${icon("monitor")}<span>${A.project?"Salir de proyección":"Proyectar"}</span></button>`:""}
+        ${isResults?`<button class="ib lbl${A.project?" on":""}" id="btnProject" aria-pressed="${!!A.project}" data-tip="Pantalla completa, una sección por pantalla; avanza con las flechas o el clicker">${icon("monitor")}<span>Presentar</span></button>`:""}
         ${nextPh?`<button class="ib lbl primary st-next" id="btnNext" data-ph="${nextPh.id}">${nextPh.id==="closed"?"Cerrar taller":"Siguiente: "+nextPh.t}${icon("arrowright")}</button>`:""}
       </div>
     </nav>
@@ -2685,7 +2751,7 @@ function renderAdmin(){
   $("#btnBack").onclick=leaveAdmin;
   $("#btnCode").onclick=async()=>{ try{ await navigator.clipboard.writeText(s.code); toast("Código copiado: "+s.code); }catch(e){ toast("Código: "+s.code); } };
   $("#btnAuthors").onclick=()=>{ A.showAuthors=!A.showAuthors; renderAdmin(); };
-  const bp=$("#btnProject"); if(bp) bp.onclick=()=>{ A.project=!A.project; renderAdmin(); };
+  const bp=$("#btnProject"); if(bp) bp.onclick=()=>startPresentation();
   /* «Ver todos» y «Contexto» recuerdan si estaban abiertos (el panel se redibuja cada pocos segundos) */
   $$("details[data-k]").forEach(d=>{ d.open=A.open.has(d.dataset.k); d.addEventListener("toggle",()=>{ if(d.open) A.open.add(d.dataset.k); else A.open.delete(d.dataset.k); }); });
   $$("[data-go]").forEach(a=>a.onclick=e=>{ e.preventDefault(); const t=$(a.dataset.go); if(t) t.scrollIntoView({behavior:"smooth",block:"start"}); });
@@ -2974,6 +3040,48 @@ async function boot(){
 }
 window.addEventListener("hashchange",()=>location.reload());
 boot();
+
+
+/* ---------- Modo presentación: pantalla completa, una sección por pantalla, flechas / clicker ---------- */
+function startPresentation(){ closePop(); A.project=true; A.slide=0; A.slideAnim=true;
+  const el=document.documentElement; try{ if(el.requestFullscreen && !document.fullscreenElement) el.requestFullscreen().catch(()=>{}); }catch(e){}
+  renderAdmin(); }
+function exitFull(){ try{ if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{}); }catch(e){} }
+function stopPresentation(){ A.project=false; exitFull(); document.body.classList.remove("project"); renderAdmin(); window.scrollTo(0,0); }
+function goSlide(d){ const n=A.slideCount||1, k=Math.max(0,Math.min(n-1,(A.slide||0)+d)); if(k===A.slide) return; A.slide=k; A.slideAnim=true; renderAdmin(); }
+function renderPresentation(slides){
+  const s=A.session, n=slides.length; A.slideCount=n; if((A.slide||0)>=n) A.slide=n-1; const k=A.slide||0, sl=slides[k];
+  $("#app").innerHTML=`<div class="pres" role="region" aria-roledescription="presentación" aria-label="Resultados del taller">
+    <div class="pres-stage"><div class="pres-fit${A.slideAnim?" in":""}" id="presFit"><div class="a-main results pres-body">${sl.h}</div></div></div>
+    <div class="pres-bar">
+      <span class="pb-brand">${brandLockup("xs")}<span>${esc(s.name)} · <b>${esc(s.code)}</b></span></span>
+      <span class="pb-pos"><span class="pb-dots">${slides.map((x,i)=>`<button class="pb-dot${i===k?" on":""}" data-i="${i}" aria-label="${i+1}. ${esc(x.t)}"></button>`).join("")}</span><span class="pb-t">${k+1} de ${n} · ${esc(sl.t)}</span></span>
+      <span class="pb-ctl"><button class="ib" id="pvPrev" aria-label="Anterior" ${k===0?"disabled":""}>${icon("arrowleft")}</button><button class="ib" id="pvNext" aria-label="Siguiente" ${k===n-1?"disabled":""}>${icon("arrowright")}</button><button class="ib lbl" id="pvExit">${icon("close")}<span>Salir</span><kbd>Esc</kbd></button></span>
+    </div></div>`;
+  A.slideAnim=false;
+  $("#pvPrev").onclick=()=>goSlide(-1); $("#pvNext").onclick=()=>goSlide(1); $("#pvExit").onclick=stopPresentation;
+  $$(".pb-dot").forEach(b=>b.onclick=()=>{ A.slide=+b.dataset.i; A.slideAnim=true; renderAdmin(); });
+  $$(".pres [data-go]").forEach(a=>a.onclick=e=>{ e.preventDefault(); const map={"#sec-1":1,"#sec-2":2,"#sec-3":3,"#sec-4":4,"#sec-5":5}; const t=slides.findIndex(x=>x.h.includes(`id="${a.dataset.go.slice(1)}"`)); if(t>=0){ A.slide=t; A.slideAnim=true; renderAdmin(); } });
+  fitSlide();
+}
+/* Que todo quepa sin scroll: si el contenido es más alto que la pantalla, se escala */
+function fitSlide(){
+  const f=$("#presFit"), st=$(".pres-stage"); if(!f||!st) return;
+  f.style.zoom="1";
+  const cs=getComputedStyle(st), aw=st.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight), ah=st.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom);
+  const k=Math.max(.45, Math.min(1.7, aw/f.offsetWidth, ah/f.offsetHeight));
+  f.style.zoom=String(Math.floor(k*1000)/1000);
+}
+document.addEventListener("keydown",e=>{
+  if(!A.project || !$(".pres")) return;
+  if(["ArrowRight","PageDown"," ","Enter"].includes(e.key)){ e.preventDefault(); goSlide(1); }
+  else if(["ArrowLeft","PageUp","Backspace"].includes(e.key)){ e.preventDefault(); goSlide(-1); }
+  else if(e.key==="Home"){ e.preventDefault(); goSlide(-99); }
+  else if(e.key==="End"){ e.preventDefault(); goSlide(99); }
+  else if(e.key==="Escape"){ e.preventDefault(); stopPresentation(); }
+});
+document.addEventListener("fullscreenchange",()=>{ if(!document.fullscreenElement && A.project && $(".pres")) stopPresentation(); });
+window.addEventListener("resize",()=>{ if(A.project) fitSlide(); });
 
 </script>
 <script>
