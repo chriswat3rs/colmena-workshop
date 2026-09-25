@@ -23,6 +23,7 @@
 --   Las cuentas nuevas entran con una invitación de un solo uso (vence en
 --   7 días) que genera el admin. La primera cuenta que activó su segundo
 --   factor (tú) queda como admin automáticamente.
+--   Cada cuenta puede subir su foto de perfil (se guarda chica, ~10 KB).
 --
 -- Cómo protege los datos (todo se valida aquí, en la base de datos,
 -- no en la página, porque el código de una página se puede alterar):
@@ -194,6 +195,10 @@ alter table ws_admins add column if not exists active boolean not null default t
 alter table ws_admins add column if not exists name text;
 alter table ws_admins drop constraint if exists ws_admins_role_check;
 alter table ws_admins add constraint ws_admins_role_check check (role in ('admin','facilitator'));
+alter table ws_admins add column if not exists avatar text;
+alter table ws_admins drop constraint if exists ws_admins_avatar_check;
+alter table ws_admins add constraint ws_admins_avatar_check
+  check (avatar is null or (avatar ~ '^data:image/(webp|jpeg|png);base64,[A-Za-z0-9+/=]+$' and octet_length(avatar) <= 150000));
 alter table ws_admins drop constraint if exists ws_admins_name_check;
 alter table ws_admins add constraint ws_admins_name_check check (char_length(name) <= 120);
 -- Quien ya era facilitador en la v1.4 (la primera cuenta) pasa a admin
@@ -337,9 +342,9 @@ end $$;
 
 -- v1.5 · Tu cuenta: rol, nombre y si está activa (vacío si no tienes acceso o te falta el segundo factor)
 drop function if exists ws_me();
-create function ws_me() returns table (role text, name text, email text, active boolean)
+create function ws_me() returns table (role text, name text, email text, active boolean, avatar text)
 language sql stable security definer set search_path = public as $$
-  select a.role, a.name, a.email, a.active from ws_admins a
+  select a.role, a.name, a.email, a.active, a.avatar from ws_admins a
   where a.user_id = auth.uid() and coalesce(auth.jwt() ->> 'aal', '') = 'aal2';
 $$;
 
@@ -418,6 +423,14 @@ language plpgsql security definer set search_path = public as $$
 begin
   if not ws_is_superadmin() then raise exception 'Solo un admin puede cancelar invitaciones'; end if;
   update ws_invites set revoked_at = now() where id = p_id and used_at is null and revoked_at is null;
+end $$;
+
+-- v1.5 · Foto de perfil: cada quien cambia o quita SOLO la suya (imagen chica, ya recortada en el navegador)
+create or replace function ws_set_my_avatar(p_avatar text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not ws_is_admin() then raise exception 'Inicia sesión con tu segundo factor para cambiar tu foto'; end if;
+  update ws_admins set avatar = nullif(p_avatar, '') where user_id = auth.uid();
 end $$;
 
 -- v1.5 · El admin activa/desactiva una cuenta o cambia su rol (nunca la suya)
@@ -667,13 +680,15 @@ revoke execute on function ws_is_admin(), ws_is_owner(uuid), ws_my_participant(u
   ws_session_phase(uuid), ws_join_lookup(text), ws_card_totals(uuid), ws_claim_admin(),
   ws_qw_totals(uuid), ws_idea_totals(uuid), ws_phase_progress(uuid),
   ws_is_superadmin(), ws_can_view(uuid), ws_me(), ws_invite_hash(text), ws_create_invite(text,text,text),
-  ws_invite_peek(text), ws_redeem_invite(text), ws_revoke_invite(uuid), ws_set_staff(uuid,boolean,text)
+  ws_invite_peek(text), ws_redeem_invite(text), ws_revoke_invite(uuid), ws_set_staff(uuid,boolean,text),
+  ws_set_my_avatar(text)
   from public, anon;
 grant execute on function ws_is_admin(), ws_is_owner(uuid), ws_my_participant(uuid), ws_is_member(uuid),
   ws_session_phase(uuid), ws_join_lookup(text), ws_card_totals(uuid), ws_claim_admin(),
   ws_qw_totals(uuid), ws_idea_totals(uuid), ws_phase_progress(uuid),
   ws_is_superadmin(), ws_can_view(uuid), ws_me(), ws_create_invite(text,text,text),
-  ws_invite_peek(text), ws_redeem_invite(text), ws_revoke_invite(uuid), ws_set_staff(uuid,boolean,text)
+  ws_invite_peek(text), ws_redeem_invite(text), ws_revoke_invite(uuid), ws_set_staff(uuid,boolean,text),
+  ws_set_my_avatar(text)
   to authenticated;
 -- La pantalla «Crea tu cuenta» consulta la invitación antes de iniciar sesión
 grant execute on function ws_invite_peek(text) to anon;

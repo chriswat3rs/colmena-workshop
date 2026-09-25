@@ -73,7 +73,7 @@ Desde entonces, cada vez que entres te pedirá contraseña + código de tu app.
 ### 6. Invita a tus facilitadores (v1.5)
 
 1. En el panel, pestaña **Equipo** → **Invitar a alguien**: nombre (opcional), correo y rol (**Facilitador** o **Admin**) → **Crear invitación**.
-2. Copia el enlace o usa **Enviar por correo** (abre tu correo con el mensaje y los pasos listos).
+2. Al dar clic en **Crear y enviar invitación**, a la persona **le llega directo** un correo con diseño (Colmena + Quality & Knowledge) y el botón **Crear mi cuenta**. Lo envía la función `send-invite` por Resend (ver «Envío automático de invitaciones» abajo). Tienes **Vista previa**, **Reenviar** y **Copiar enlace**; si el envío falla, se abre **Enviarla yo desde mi correo** (copiar correo con diseño → abrir tu correo → pegar). El correo usa las imágenes de la carpeta `email/` del sitio publicado, así que esa carpeta debe estar en el repo.
 3. La persona abre el enlace, crea su contraseña con **ese mismo correo** y activa su verificación en dos pasos. Al terminar ya ve su panel.
 
 Cada invitación sirve **una sola vez**, **solo con ese correo** y **vence en 7 días**. Por seguridad el enlace se muestra solo al crearlo; si se pierde, crea otra (la nueva cancela la anterior). En **Invitaciones pendientes** puedes cancelarlas.
@@ -83,7 +83,22 @@ En **Equipo** también ves a todas las cuentas con cuántos talleres tiene cada 
 - **Desactivar / Reactivar:** quien está desactivado ya no entra al panel ni ve sus talleres; sus talleres y lo capturado se conservan y tú los sigues viendo.
 - **Hacer admin / Hacer facilitador.** Nadie puede cambiar su propia cuenta.
 
+**Foto de perfil:** cada quien da clic en su nombre (arriba a la derecha) → **Subir foto**. Se recorta en cuadrado y se guarda ligera (~10 KB) en la base; aparece en el encabezado, en **Equipo** y en **Todos los talleres**. Nadie puede cambiar la foto de otra persona. Si ya tenías la v1.5 instalada, corre `migracion-v15-foto.sql` (o `setup.sql` completo).
+
 En **Todos los talleres** filtras por facilitador o buscas por nombre o código. **Abrir** te lleva a los tuyos; **Ver** abre los ajenos en solo lectura (lo indica la etiqueta amarilla «Solo lectura · Nombre»).
+
+### 7. Envío automático de invitaciones (Resend, una sola vez, ~15 min)
+
+1. **Resend:** crea tu cuenta en [resend.com](https://resend.com) (gratis hasta 3,000 correos al mes).
+2. **Dominio:** Resend → **Domains → Add domain** con el dominio de QK (p. ej. `qacg.com`). Resend te da 3 registros (MX, TXT/SPF y DKIM): pídeselos a quien administra el DNS del dominio. Cuando salga **Verified**, ya puedes enviar a cualquier correo.
+3. **Llave:** Resend → **API Keys → Create API key** (permiso *Sending access*). Cópiala (empieza con `re_`).
+4. **Función en Supabase:** **Edge Functions → Deploy a new function → Via Editor**, nombre `send-invite`, pega todo `supabase/functions/send-invite/index.ts` y da **Deploy**. Deja activado **Verify JWT**.
+5. **Secretos:** **Edge Functions → Secrets → Add new secret**:
+   - `RESEND_API_KEY` = la llave `re_…`
+   - `INVITE_FROM` = `Colmena · Quality & Knowledge <colmena@qacg.com>` (con tu dominio verificado)
+6. Prueba: en **Equipo** invita a un correo tuyo. Debe decir «Invitación enviada».
+
+La función solo envía si quien la llama es **admin con segundo factor** y el destinatario tiene una **invitación vigente**: no sirve para mandar correos a cualquiera. Las respuestas al correo llegan a quien invitó (reply-to).
 
 ---
 
@@ -192,5 +207,7 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `index.html` | Toda la app: participante (móvil) + panel del facilitador. Incluye la librería de Supabase y el generador de QR, sin depender de CDNs. |
 | `setup.sql` | Esquema, reglas de seguridad y tiempo real (re-ejecutable; actualiza versiones anteriores sin borrar datos). |
 | `README.md` | Esta guía. |
+| `email/` | Logos del correo de invitación (Colmena + Quality & Knowledge). Se publican junto con `index.html`. |
+| `supabase/functions/send-invite/index.ts` | Función que envía la invitación por Resend (se pega en Supabase → Edge Functions). |
 
 Sin `SUPABASE_URL`, la app corre en **modo demo**: todo funciona en tu navegador y sin cuentas, útil para enseñarla o probar cambios.

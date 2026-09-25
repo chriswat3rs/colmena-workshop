@@ -1100,6 +1100,30 @@ body.project .hxu i{width:18px;height:21px}
 .adm-row .abtn svg{width:16px;height:16px}
 .av-i{display:inline-grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent-strong);font-style:normal;font-size:11px;font-weight:800}
 .av-i.lg{width:40px;height:40px;font-size:14px}
+.av-i.md{width:34px;height:34px;font-size:12.5px}
+.av-i.xl{width:76px;height:76px;font-size:24px}
+img.av-i{object-fit:cover;background:var(--navy-soft)}
+.av-w{display:inline-flex;flex:none}
+.me-btn{display:flex;align-items:center;gap:10px;padding:4px 10px 4px 4px;border-radius:999px;border:1.5px solid transparent;min-width:0;text-align:left}
+.me-btn:hover,.me-btn[aria-expanded="true"]{border-color:var(--line);background:var(--card)}
+.me-t{display:flex;flex-direction:column;align-items:flex-start;gap:2px;min-width:0}
+.me-t .ah-mail{color:var(--ink);font-weight:700;font-size:13.5px}
+.me-t .role-tag{font-size:10px;padding:1px 7px}
+.me-pop{position:absolute;z-index:120;width:min(320px,calc(100vw - 24px));padding:18px;border-radius:16px;background:var(--card);border:1px solid var(--line);box-shadow:0 14px 40px rgba(1,19,59,.18);display:flex;flex-direction:column;gap:14px}
+.me-hero{display:flex;align-items:center;gap:14px;min-width:0}
+.me-ph{position:relative;flex:none;cursor:pointer;border-radius:50%}
+.me-ph.busy{opacity:.5;pointer-events:none}
+.me-cam{position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;border:2px solid var(--card)}
+.me-cam svg{width:15px;height:15px}
+.me-ph:focus-within{outline:3px solid var(--accent);outline-offset:2px}
+.me-who{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+.me-who b{font-size:15.5px;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.me-who span:not(.role-tag){font-size:12.5px;color:var(--ink-3);max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.me-acts{display:flex;gap:8px}
+.me-acts .abtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;cursor:pointer}
+.me-acts .abtn.primary{flex:1}
+.me-acts svg{width:16px;height:16px}
+@media (max-width:720px){ .me-t{display:none} .me-btn{padding:2px} }
 .av-i.pend{background:var(--navy-soft);color:var(--ink-2)}
 .av-i svg{width:18px;height:18px}
 .ph-pill{display:inline-flex;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:var(--r-chip);background:var(--accent-soft);color:var(--accent-strong);white-space:nowrap}
@@ -1123,6 +1147,20 @@ body.project .hxu i{width:18px;height:21px}
 .inv-out-t{font-size:14px;line-height:1.45}
 .inv-out-t svg{width:18px;height:18px;color:var(--ok);vertical-align:-4px;margin-right:6px}
 .admin-theme .inv-out .input{font-size:12.5px;padding:10px 12px;border-radius:10px}
+.inv-st{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:12px;font-size:13.5px;line-height:1.45;background:var(--card);border:1px solid var(--line)}
+.inv-st>svg{width:20px;height:20px;flex:none;margin-top:1px}
+.inv-st>span>b{display:block}
+.inv-st .em{display:inline;color:var(--ink);overflow-wrap:anywhere}
+.inv-st small{display:block;margin-top:3px;font-size:12.5px;color:var(--ink-2)}
+.inv-st.ok{background:#E3F4EC;border-color:#BFE3CF}.inv-st.ok>svg{color:var(--ok)}
+.inv-st.warn{background:#FFF4DC;border-color:#F2DDA8}.inv-st.warn>svg{color:#7A4B00}
+.spin{width:18px;height:18px;flex:none;border-radius:50%;border:2.5px solid var(--accent-soft);border-top-color:var(--accent);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.inv-manual>summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--ink-2);padding:2px 0}
+.inv-manual[open]>summary{margin-bottom:8px}
+#invGo{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+#invGo svg{width:17px;height:17px}
+.inv-links .linkbtn:disabled{opacity:.5}
 .inv-how{font-size:13px;font-weight:700;color:var(--ink)}
 .inv-acts{display:grid;grid-template-columns:1fr;gap:8px}
 .inv-acts .abtn{display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:13.5px;text-align:left}
@@ -1355,7 +1393,8 @@ const GLYPHS = {
   sheet:'<path d="M14 3.4H6.6a2.1 2.1 0 0 0-2.1 2.1v13a2.1 2.1 0 0 0 2.1 2.1h10.8a2.1 2.1 0 0 0 2.1-2.1V8.9z"/><path d="M14 3.4v5.5h5.5"/><path d="M8 12.2h8M8 16.2h8M12 12.2v6.4"/>',
   filecsv:'<path d="M14 3.4H6.6a2.1 2.1 0 0 0-2.1 2.1v13a2.1 2.1 0 0 0 2.1 2.1h10.8a2.1 2.1 0 0 0 2.1-2.1V8.9z"/><path d="M14 3.4v5.5h5.5"/><path d="M8.3 12.6h7.4M8.3 16.4h5"/>',
   filepdf:'<path d="M14 3.4H6.6a2.1 2.1 0 0 0-2.1 2.1v13a2.1 2.1 0 0 0 2.1 2.1h10.8a2.1 2.1 0 0 0 2.1-2.1V8.9z"/><path d="M14 3.4v5.5h5.5"/><path d="M9 17.6v-3M12 17.6v-5M15 17.6v-2"/>',
-  close:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>'
+  close:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+  camera:'<path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.2l1.4-2h5.8l1.4 2h2.2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="12.8" r="3.4"/>'
 };
 function icon(name){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${GLYPHS[name]||GLYPHS.hexagon}</svg>`; }
 function glass(name, o){ o=o||{}; return `<span class="glass t-${o.tone||"blue"}${o.size?" "+o.size:""}${o.tint?" tint":""}"${o.label?` role="img" aria-label="${o.label}"`:' aria-hidden="true"'}>${icon(name)}</span>`; }
@@ -1459,7 +1498,7 @@ function tasksFor(session, stage){ return (session && session.tasks && session.t
 function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260925214308";
+const APP_BUILD="20260925215718";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -1543,7 +1582,7 @@ const SupaStore = {
       const m = me && me[0];
       if(!m) return {state:"forbidden", email:u.email, reason:inviteError};
       if(!m.active) return {state:"forbidden", email:u.email, reason:"Tu acceso al panel fue desactivado. Si es un error, habla con tu admin."};
-      return {state:"ready", email:u.email, uid:u.id, role:m.role, name:m.name||"", inviteError};
+      return {state:"ready", email:u.email, uid:u.id, role:m.role, name:m.name||"", avatar:m.avatar||"", inviteError};
     }
     return {state: aal.nextLevel === "aal2" ? "verify" : "enroll", email:u.email};
   },
@@ -1557,10 +1596,18 @@ const SupaStore = {
     }
   },
   async invitePeek(code){ const {data,error}=await this.client.rpc("ws_invite_peek",{p_code:code}); if(error) throw error; return (data&&data[0])||null; },
-  async listStaff(){ const {data,error}=await this.client.from("ws_admins").select("user_id,email,name,role,active,created_at").order("created_at"); if(error) throw error; return data||[]; },
+  async listStaff(){ const {data,error}=await this.client.from("ws_admins").select("user_id,email,name,role,active,created_at,avatar").order("created_at"); if(error) throw error; return data||[]; },
+  async setMyAvatar(dataUrl){ const {error}=await this.client.rpc("ws_set_my_avatar",{p_avatar:dataUrl||""}); if(error) throw error; },
   async listInvites(){ const {data,error}=await this.client.from("ws_invites").select("id,email,name,role,created_at,expires_at,used_at,revoked_at").order("created_at",{ascending:false}); if(error) throw error; return data||[]; },
   async createInvite(email,name,role){ const {data,error}=await this.client.rpc("ws_create_invite",{p_email:email,p_name:name||null,p_role:role}); if(error) throw error; return data&&data[0]; },
   async revokeInvite(id){ const {error}=await this.client.rpc("ws_revoke_invite",{p_id:id}); if(error) throw error; },
+  /* v1.5 · envía el correo de invitación desde el servidor (función send-invite + Resend) */
+  async sendInvite(to, mail){
+    const {data,error}=await this.client.functions.invoke("send-invite",{body:{email:to, subject:mail.subject, html:mail.doc, text:mail.text}});
+    if(error){ let m=""; try{ const b=await error.context.json(); m=b&&b.error; }catch(e){}
+      if(!m && /Failed to send a request|FunctionsFetchError/i.test(String(error.name||error.message))) m="El envío automático aún no está activado en Supabase (función send-invite).";
+      throw new Error(m||error.message||"No se pudo enviar"); }
+    return data; },
   async setStaff(userId,patch){ const {error}=await this.client.rpc("ws_set_staff",{p_user:userId,p_active:patch.active??null,p_role:patch.role??null}); if(error) throw error; },
   async signIn(email,password){
     const {error} = await this.client.auth.signInWithPassword({email,password});
@@ -1660,9 +1707,10 @@ const DemoStore = {
   _uid(){ let id=null; try{ id=sessionStorage.getItem("colmena_demo_uid"); if(!id){ id=uid(); sessionStorage.setItem("colmena_demo_uid",id); } }catch(e){ id=window.__demoUid=window.__demoUid||uid(); } return id; },
   async currentUser(){ return {id:this._uid(), is_anonymous:true}; },
   async ensureAnon(){ return this.currentUser(); },
-  async adminState(){ const inv=pendingInvite(); if(inv) clearInvite(); return {state:"ready", email:"modo demo", uid:"demo", role:"admin", name:"Tú (demo)"}; },
+  async adminState(){ const inv=pendingInvite(); if(inv) clearInvite(); return {state:"ready", email:"modo demo", uid:"demo", role:"admin", name:"Tú (demo)", avatar:this.db().meAvatar||""}; },
+  async setMyAvatar(d){ const db=this.db(); db.meAvatar=d||""; this.save(db); },
   async signUp(){}, async invitePeek(code){ return {email:"invitado@empresa.com", name:"Persona invitada", role:"facilitator", expires_at:new Date(Date.now()+7*864e5).toISOString()}; },
-  async listStaff(){ return [{user_id:"demo",email:"modo demo",name:"Tú (demo)",role:"admin",active:true,created_at:now()}, ...(this.db().staff||[])]; },
+  async listStaff(){ return [{user_id:"demo",email:"modo demo",name:"Tú (demo)",role:"admin",active:true,created_at:now(),avatar:this.db().meAvatar||""}, ...(this.db().staff||[])]; },
   async listInvites(){ return this.db().invites||[]; },
   async createInvite(email,name,role){ const db=this.db(); db.invites=db.invites||[]; email=String(email||"").trim().toLowerCase();
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error("Escribe un correo válido");
@@ -1670,6 +1718,7 @@ const DemoStore = {
     const hex=()=>Math.random().toString(16).slice(2,6).toUpperCase().padEnd(4,"0"); const code=[hex(),hex(),hex(),hex()].join("-");
     const it={id:uid(),email,name:name||null,role,created_at:now(),expires_at:new Date(Date.now()+7*864e5).toISOString(),used_at:null,revoked_at:null};
     db.invites.unshift(it); this.save(db); return {...it, code}; },
+  async sendInvite(){ await new Promise(r=>setTimeout(r,700)); return {ok:true, demo:true}; },
   async revokeInvite(id){ const db=this.db(); (db.invites||[]).forEach(i=>{ if(i.id===id) i.revoked_at=now(); }); this.save(db); },
   async setStaff(userId,patch){ const db=this.db(); const m=(db.staff||[]).find(x=>x.user_id===userId); if(!m) throw new Error("Esa cuenta no existe"); if(patch.active!=null) m.active=patch.active; if(patch.role) m.role=patch.role; this.save(db); },
   async signIn(){}, async signOut(){}, async mfaEnroll(){ return {}; }, async mfaVerify(){},
@@ -2420,12 +2469,28 @@ const A = { session:null, participants:[], cards:[], votes:[], qwRatings:[], ide
 
 /* v1.5 · Cuenta con la que se entró al panel. role: "admin" (ve todos los talleres, solo lectura en los ajenos) o "facilitator" (solo los suyos).
    Es solo para mostrar la interfaz correcta: quien decide qué datos se entregan es la base de datos. */
-const ME = { role:"facilitator", uid:null, email:"", name:"" };
+const ME = { role:"facilitator", uid:null, email:"", name:"", avatar:"" };
 const AH = { view:"mine", owner:"", q:"", staff:[] };
 const isAdminRole = () => ME.role === "admin";
 const ROLE_T = { admin:"Admin", facilitator:"Facilitador" };
 const fmtDate = (iso,o) => { try{ return new Date(iso).toLocaleDateString("es-MX", o||{day:"numeric",month:"short"}); }catch(e){ return ""; } };
 function staffName(id){ if(id && id===ME.uid) return "Tú"; const m=AH.staff.find(x=>x.user_id===id); return m ? (m.name||m.email||"Sin nombre") : "Cuenta eliminada"; }
+/* Foto de perfil (o iniciales si no hay). La foto es un data: URL validado en la base (solo imagen). */
+function avatarHTML(p, cls){ p=p||{}; const nm=p.name||p.email||"";
+  return /^data:image\/(webp|jpeg|png);base64,/.test(p.avatar||"") ? `<img class="av-i ${cls||""}" src="${esc(p.avatar)}" alt="">` : `<i class="av-i ${cls||""}" aria-hidden="true">${esc(initials(nm))}</i>`; }
+function staffById(id){ if(id && id===ME.uid) return ME; return AH.staff.find(x=>x.user_id===id)||{name:staffName(id)}; }
+/* Recorta al centro en cuadrado y comprime (256 px, WebP o JPEG) para guardarla ligera */
+function shrinkImage(file){ return new Promise((res,rej)=>{
+  if(!/^image\//.test(file.type)) return rej(new Error("Elige una imagen (JPG, PNG o HEIC exportada)."));
+  const url=URL.createObjectURL(file), img=new Image();
+  img.onload=()=>{ const S=256, k=Math.min(img.naturalWidth,img.naturalHeight), c=document.createElement("canvas"); c.width=c.height=S;
+    const g=c.getContext("2d"); g.fillStyle="#fff"; g.fillRect(0,0,S,S);
+    g.drawImage(img,(img.naturalWidth-k)/2,(img.naturalHeight-k)/2,k,k,0,0,S,S); URL.revokeObjectURL(url);
+    let d=c.toDataURL("image/webp",0.82); if(!/^data:image\/webp/.test(d)) d=c.toDataURL("image/jpeg",0.82);
+    if(d.length>140000) d=c.toDataURL("image/jpeg",0.6);
+    res(d); };
+  img.onerror=()=>{ URL.revokeObjectURL(url); rej(new Error("No se pudo leer esa imagen. Prueba con JPG o PNG.")); };
+  img.src=url; }); }
 function initials(t){ const w=String(t||"?").replace(/@.*/,"").replace(/[^\p{L}\p{N}]+/gu," ").split(" ").filter(Boolean); return ((w[0]||"?")[0]+((w[1]||"")[0]||"")).toUpperCase(); }
 
 /* ---------- Acceso del facilitador: contraseña + segundo factor ---------- */
@@ -2447,7 +2512,7 @@ async function adminBoot(openCode){
   if(st.state==="enroll")    return adminEnroll(st.email);
   if(st.state==="verify")    return adminVerify(st.email);
   if(st.state==="forbidden") return adminForbidden(st.email, st.reason);
-  Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"" });
+  Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"", avatar:st.avatar||"" });
   if(isAdminRole()) await loadStaff(); else AH.view="mine";
   if(st.inviteError) toast(st.inviteError);
   if(openCode){
@@ -2602,13 +2667,53 @@ function ahTop(){
       <div class="brand-row">${brandLockup("xs")}
         <div><div class="brand-name">Colmena · ${isAdminRole()?"Admin":"Facilitador"}</div><div class="brand-by">by ${BRAND_ORG}</div></div></div>
       ${tabs}
-      <div class="ah-user"><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span><span class="ah-mail" title="${esc(ME.email)}">${esc(ME.name||ME.email)}</span><button class="abtn" id="outBtn">Cerrar sesión</button></div>
+      <div class="ah-user"><button class="me-btn" id="meBtn" aria-haspopup="dialog" aria-expanded="false" title="Tu perfil">${avatarHTML(ME,"md")}<span class="me-t"><span class="ah-mail">${esc(ME.name||ME.email)}</span><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span></span></button><button class="abtn" id="outBtn">Cerrar sesión</button></div>
     </header>`;
 }
 function wireTop(){
   $("#outBtn").onclick=async()=>{ await Store.signOut(); AH.view="mine"; adminBoot(); };
+  $("#meBtn").onclick=e=>{ e.stopPropagation(); $(".me-pop") ? closeMe() : openMe(); };
   $$(".ah-tab").forEach(b=>b.onclick=()=>{ if(AH.view===b.dataset.view) return; AH.view=b.dataset.view; adminHome(); window.scrollTo(0,0); });
 }
+/* ---------- v1.5 · Tu perfil: foto ---------- */
+function closeMe(){ const p=$(".me-pop"); if(p) p.remove(); const b=$("#meBtn"); if(b) b.setAttribute("aria-expanded","false"); document.removeEventListener("click",meOutside); }
+function meOutside(e){ const p=$(".me-pop"); if(p && !e.composedPath().includes(p)) closeMe(); }
+function openMe(){
+  closeMe();
+  const pop=document.createElement("div"); pop.className="me-pop"; pop.setAttribute("role","dialog"); pop.setAttribute("aria-label","Tu perfil");
+  const draw=(msg,busy)=>{ pop.innerHTML=`
+    <div class="me-hero">
+      <label class="me-ph${busy?" busy":""}" for="meFile" title="Cambiar foto">${avatarHTML(ME,"xl")}<span class="me-cam" aria-hidden="true">${icon("camera")}</span></label>
+      <input type="file" id="meFile" accept="image/*" class="sr">
+      <div class="me-who"><b>${esc(ME.name||"Sin nombre")}</b><span>${esc(ME.email)}</span><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span></div>
+    </div>
+    <div class="me-acts">
+      <label class="abtn primary" for="meFile">${icon("camera")}${ME.avatar?"Cambiar foto":"Subir foto"}</label>
+      ${ME.avatar?`<button class="abtn" id="meDel">Quitar</button>`:""}
+    </div>
+    ${msg?`<p class="${msg.err?"err":"hint"}" role="status">${esc(msg.t)}</p>`:`<p class="hint">JPG o PNG. Se recorta en cuadrado y se guarda ligera. La ve tu equipo.</p>`}`;
+    const f=pop.querySelector("#meFile");
+    f.onchange=async()=>{ const file=f.files&&f.files[0]; if(!file) return; draw(null,true);
+      try{ const d=await shrinkImage(file); await Store.setMyAvatar(d); ME.avatar=d; syncMe(); draw({t:"Foto actualizada"}); }
+      catch(e){ draw({t:friendlyAuthError(e),err:true}); } };
+    const del=pop.querySelector("#meDel");
+    if(del) del.onclick=async()=>{ del.disabled=true; try{ await Store.setMyAvatar(""); ME.avatar=""; syncMe(); draw({t:"Foto quitada"}); }catch(e){ draw({t:friendlyAuthError(e),err:true}); } };
+  };
+  draw();
+  document.body.appendChild(pop);
+  const b=$("#meBtn"), r=b.getBoundingClientRect();
+  const w=pop.offsetWidth; pop.style.top=(r.bottom+8+window.scrollY)+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px";
+  b.setAttribute("aria-expanded","true");
+  setTimeout(()=>document.addEventListener("click",meOutside),0);
+}
+/* Refleja la foto nueva en el encabezado y en las listas sin recargar */
+function syncMe(){
+  const m=AH.staff.find(x=>x.user_id===ME.uid); if(m) m.avatar=ME.avatar;
+  const b=$("#meBtn"); if(b){ const old=b.querySelector(".av-i"); if(old) old.outerHTML=avatarHTML(ME,"md"); }
+  $$("[data-av]").forEach(el=>{ if(el.dataset.av===ME.uid) el.innerHTML=avatarHTML(ME, el.dataset.cls||""); });
+}
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $(".me-pop")) closeMe(); });
+
 async function loadStaff(){ try{ AH.staff = await Store.listStaff(); }catch(e){ console.error(e); } return AH.staff; }
 
 async function adminHome(){
@@ -2769,7 +2874,7 @@ async function adminAllView(){
       <div class="adm-row adm-th" role="row"><span role="columnheader">Taller</span><span role="columnheader">Facilitador</span><span role="columnheader">Fase</span><span role="columnheader">Creado</span><span role="columnheader"><span class="sr">Acción</span></span></div>
       ${rows.map(s=>{ const mine=s.owner_id===ME.uid; return `<div class="adm-row" role="row">
         <span role="cell" class="adm-name"><b>${esc(s.name)}</b><span class="tl-code">${esc(s.code)}</span></span>
-        <span role="cell" class="adm-owner"><i class="av-i" aria-hidden="true">${esc(initials(staffName(s.owner_id)))}</i>${esc(staffName(s.owner_id))}</span>
+        <span role="cell" class="adm-owner"><span class="av-w" data-av="${esc(s.owner_id)}">${avatarHTML(staffById(s.owner_id))}</span>${esc(staffName(s.owner_id))}</span>
         <span role="cell"><span class="ph-pill ph-${esc(s.phase)}">${esc(phaseName(s.phase))}</span></span>
         <span role="cell" class="adm-date">${esc(fmtDate(s.created_at,{day:"numeric",month:"short",year:"numeric"}))}</span>
         <span role="cell"><button class="abtn${mine?" primary":""}" data-open="${esc(s.code)}" aria-label="${mine?"Abrir":"Ver en solo lectura"} ${esc(s.name)}">${mine?"Abrir":icon("eye")+"Ver"}</button></span>
@@ -2883,7 +2988,7 @@ async function adminTeamView(lastInvite){
       <aside class="ah-side">
         <section class="panel" aria-labelledby="invT">
           <h2 id="invT">Invitar a alguien</h2>
-          <p class="hint" style="margin:-4px 0 14px">Le llega un enlace para crear su cuenta. Solo sirve una vez, con ese correo, durante 7 días.</p>
+          <p class="hint" style="margin:-4px 0 14px">Le llega un correo con el botón para crear su cuenta. Solo sirve una vez, con ese correo, durante 7 días.</p>
           <form id="invForm" novalidate>
             <div class="field"><label for="inv-name">Nombre <span class="opt">opcional</span></label><input id="inv-name" class="input" autocomplete="off" maxlength="120" value="${esc(F.name)}" placeholder="Ej. Ana López"></div>
             <div class="field"><label for="inv-mail">Correo</label><input id="inv-mail" class="input" type="email" autocomplete="off" required value="${esc(F.email)}" placeholder="nombre@empresa.com"></div>
@@ -2891,20 +2996,18 @@ async function adminTeamView(lastInvite){
               <div class="seg2" role="radiogroup" aria-labelledby="inv-role-l">${["facilitator","admin"].map(r=>`<button type="button" role="radio" aria-checked="${F.role===r}" class="${F.role===r?"on":""}" data-role="${r}">${icon(r==="admin"?"eye":"users")}${ROLE_T[r]}</button>`).join("")}</div>
               <p class="hint" id="inv-role-h" style="margin-top:6px">${F.role==="admin"?"Crea sus talleres, ve y exporta los de todos, e invita o desactiva cuentas.":"Crea y opera solo sus propios talleres. No ve los de nadie más."}</p></div>
             <p class="err" id="invErr" hidden></p>
-            <button class="abtn primary" id="invGo" type="submit" style="width:100%;padding:12px">Crear invitación</button>
+            <button class="abtn primary" id="invGo" type="submit" style="width:100%;padding:12px">${icon("mail")}Crear y enviar invitación</button>
           </form>
-          ${lastInvite?`<div class="inv-out" role="status">
-            <p class="inv-out-t">${icon("check")}Invitación lista para <b>${esc(lastInvite.email)}</b></p>
-            <label class="sr" for="invLink">Enlace de invitación</label>
-            <input id="invLink" class="input mono" readonly value="${esc(link)}">
-            <p class="inv-how">Envíala con diseño en 3 pasos:</p>
-            <div class="inv-acts">
-              <button class="abtn primary" id="invCopyMail"><i class="inv-n">1</i>${icon("copy")}Copiar correo con diseño</button>
-              <button class="abtn" id="invMail"><i class="inv-n">2</i>${icon("mail")}Abrir mi correo</button>
-              <p class="inv-step3"><i class="inv-n">3</i><span>Pega con <kbd>⌘ V</kbd> o <kbd>Ctrl V</kbd> en el cuerpo y envía. Ya lleva destinatario y asunto.</span></p>
-            </div>
-            <div class="inv-links"><button type="button" class="linkbtn" id="invPrev">${icon("eye")}Vista previa</button><button type="button" class="linkbtn" id="invCopy">${icon("copy")}Copiar solo el enlace</button></div>
-            <p class="hint">Vence el ${esc(fmtDate(lastInvite.expires_at,{day:"numeric",month:"long"}))}. Por seguridad no se vuelve a mostrar: si se pierde, crea otra.</p>
+          ${lastInvite?`<div class="inv-out">
+            <div class="inv-st" id="invSt" role="status" aria-live="polite"></div>
+            <div class="inv-links"><button type="button" class="linkbtn" id="invPrev">${icon("eye")}Vista previa</button><button type="button" class="linkbtn" id="invResend">${icon("mail")}Reenviar</button><button type="button" class="linkbtn" id="invCopy">${icon("copy")}Copiar enlace</button></div>
+            <details class="inv-manual" id="invManual"><summary>Enviarla yo desde mi correo</summary>
+              <div class="inv-acts">
+                <button class="abtn" id="invCopyMail"><i class="inv-n">1</i>${icon("copy")}Copiar correo con diseño</button>
+                <button class="abtn" id="invMail"><i class="inv-n">2</i>${icon("mail")}Abrir mi correo</button>
+                <p class="inv-step3"><i class="inv-n">3</i><span>Pega con <kbd>⌘ V</kbd> o <kbd>Ctrl V</kbd> y envía.</span></p>
+              </div></details>
+            <p class="hint">Vence el ${esc(fmtDate(lastInvite.expires_at,{day:"numeric",month:"long"}))}. Solo sirve una vez y con ese correo.</p>
           </div>`:""}
         </section>
       </aside>
@@ -2912,7 +3015,7 @@ async function adminTeamView(lastInvite){
         <section class="panel" aria-labelledby="teamT">
           <h2 id="teamT">Equipo <span class="sub">${staff.filter(m=>m.active).length} con acceso</span></h2>
           <div class="team-list">${staff.map(m=>{ const me=m.user_id===ME.uid, n=count(m.user_id); return `<div class="tm-row${m.active?"":" off"}">
-            <i class="av-i lg" aria-hidden="true">${esc(initials(m.name||m.email))}</i>
+            <span class="av-w" data-av="${esc(m.user_id)}" data-cls="lg">${avatarHTML(m,"lg")}</span>
             <div class="tm-who"><b>${esc(m.name||m.email)}${me?' <span class="tm-me">Tú</span>':""}</b><span>${esc(m.email||"")}</span></div>
             <div class="tm-meta"><span class="role-tag ${esc(m.role)}">${ROLE_T[m.role]}</span><span class="tm-n">${n} ${n===1?"taller":"talleres"}</span>${m.active?"":'<span class="tm-off">Desactivado</span>'}</div>
             <div class="tm-acts">${me?"":`
@@ -2946,13 +3049,24 @@ async function adminTeamView(lastInvite){
     catch(ex){ er.hidden=false; er.textContent=friendlyAuthError(ex); $("#invGo").disabled=false; }
   };
   if(lastInvite){
-    $("#invCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(link); toast("Enlace copiado"); }catch(e){ $("#invLink").select(); toast("Selecciona y copia el enlace"); } };
+    $("#invCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(link); toast("Enlace copiado"); }catch(e){ toast("Enlace: "+link); } };
     const mail=inviteEmail(lastInvite);
+    const st=$("#invSt"), who=esc(lastInvite.email);
+    const send=async()=>{
+      st.className="inv-st sending"; st.innerHTML=`<span class="spin" aria-hidden="true"></span><span>Enviando la invitación a <b>${who}</b>…</span>`; $("#invResend").disabled=true;
+      try{ await Store.sendInvite(lastInvite.email, mail);
+        lastInvite.sent=true;
+        st.className="inv-st ok"; st.innerHTML=`${icon("check")}<span><b>Invitación enviada</b><small>Le llegó a <b class="em">${who}</b> un correo con el botón «Crear mi cuenta». Si no lo ve, que revise spam.</small></span>`; }
+      catch(e){ console.error(e);
+        st.className="inv-st warn"; st.innerHTML=`${icon("mail")}<span><b>No se pudo enviar automáticamente</b><small>${esc(friendlyAuthError(e))} Mientras, envíala tú desde tu correo (abajo).</small></span>`;
+        const d=$("#invManual"); if(d) d.open=true; }
+      $("#invResend").disabled=false; };
+    $("#invResend").onclick=send;
+    if(lastInvite.sent) { st.className="inv-st ok"; st.innerHTML=`${icon("check")}<span><b>Invitación enviada</b><small>A <b class="em">${who}</b></small></span>`; } else send();
     $("#invCopyMail").onclick=async()=>{ const ok=await copyRich(mail.html, mail.text);
       if(ok){ $("#invCopyMail").classList.add("done"); toast("Correo copiado · ahora ábrelo y pega"); } else toast("No se pudo copiar. Usa «Copiar solo el enlace»."); };
     $("#invMail").onclick=()=>{ location.href="mailto:"+encodeURIComponent(lastInvite.email)+"?subject="+encodeURIComponent(mail.subject); };
     $("#invPrev").onclick=()=>previewEmail(mail);
-    $("#invLink").onclick=e=>e.target.select();
   }
   const who=id=>{ const m=AH.staff.find(x=>x.user_id===id)||{}; return m.name||m.email||"esta cuenta"; };
   $$("[data-act]").forEach(b=>b.onclick=async()=>{ const on=b.dataset.to==="1", id=b.dataset.act;
