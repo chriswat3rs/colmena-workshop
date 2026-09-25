@@ -1061,6 +1061,100 @@ body.project .hxu i{width:18px;height:21px}
 .srow:last-child{border-bottom:none}
 .sname2{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(max-width:620px){.srow{grid-template-columns:auto 1fr auto}.srow .hint{display:none}}
+
+/* ---------- v1.5 · Roles: admin y facilitador ---------- */
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.linkbtn{color:var(--accent-strong);font-weight:700;text-decoration:underline;text-underline-offset:2px;font-size:inherit}
+.inv-note{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--accent-soft);color:var(--ink);font-size:13.5px;line-height:1.5}
+.inv-k{display:inline-flex;align-items:center;gap:6px;margin-bottom:10px;padding:5px 11px 5px 9px;border-radius:var(--r-chip);background:var(--accent-soft);color:var(--accent-strong);font-size:12.5px;font-weight:700}
+.inv-k svg{width:15px;height:15px}
+.input[readonly]{background:var(--surface);color:var(--ink-2)}
+.field .lbl{display:block;font-weight:600;font-size:14px;color:var(--ink-2);margin-bottom:8px}
+.ah-tabs{display:flex;gap:4px;padding:4px;border-radius:13px;background:#E7EEF7;order:0}
+.ah-tab{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:10px;font-weight:700;font-size:13.5px;color:var(--ink-2);white-space:nowrap}
+.ah-tab svg{width:17px;height:17px}
+.ah-tab:hover{color:var(--ink)}
+.ah-tab .t-s{display:none}
+.ah-tab.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(1,19,59,.12)}
+.role-tag{display:inline-flex;align-items:center;font-size:11.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:var(--r-chip);background:var(--navy-soft);color:var(--ink-2);white-space:nowrap}
+.role-tag.admin{background:var(--primary);color:#fff}
+.ah-wide{width:100%;max-width:1320px;margin:0 auto;padding:clamp(16px,3vw,36px);display:flex;flex-direction:column;gap:clamp(16px,2vw,22px)}
+.ah-col{display:flex;flex-direction:column;gap:clamp(16px,2vw,22px);min-width:0}
+.adm-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap}
+.adm-t{font-size:clamp(22px,2.4vw,28px);font-weight:800;margin-bottom:4px}
+.adm-kpis{display:flex;gap:10px;flex-wrap:wrap}
+.adm-kpi{min-width:112px;padding:12px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column}
+.adm-kpi b{font-family:var(--display);font-size:24px;font-weight:800;line-height:1.1}
+.adm-kpi span{font-size:12.5px;color:var(--ink-3);font-weight:600}
+.adm-filters{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:12px 14px;margin-bottom:4px}
+.admin-theme .adm-filters .input{font-size:15px;padding:11px 13px;border-radius:11px}
+.adm-table{display:flex;flex-direction:column}
+.adm-row{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1.3fr) minmax(0,1fr) minmax(0,.9fr) 104px;gap:12px;align-items:center;padding:12px 4px;border-top:1px solid var(--line);font-size:14px}
+.adm-th{border-top:none;padding-top:4px;font-size:12px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em}
+.adm-name{display:flex;align-items:center;gap:10px;min-width:0}
+.adm-name b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.adm-name .tl-code{flex:none}
+.adm-owner{display:flex;align-items:center;gap:8px;min-width:0;color:var(--ink-2);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.adm-date{color:var(--ink-3);font-weight:600;font-size:13px}
+.adm-row .abtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:8px 12px;font-size:13.5px}
+.adm-row .abtn svg{width:16px;height:16px}
+.av-i{display:inline-grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent-strong);font-style:normal;font-size:11px;font-weight:800}
+.av-i.lg{width:40px;height:40px;font-size:14px}
+.av-i.pend{background:var(--navy-soft);color:var(--ink-2)}
+.av-i svg{width:18px;height:18px}
+.ph-pill{display:inline-flex;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:var(--r-chip);background:var(--accent-soft);color:var(--accent-strong);white-space:nowrap}
+.ph-pill.ph-lobby{background:var(--navy-soft);color:var(--ink-2)}
+.ph-pill.ph-closed{background:#EEF0F3;color:var(--ink-3)}
+.ph-pill.ph-results{background:#E3F4EC;color:var(--ok)}
+.team-list{display:flex;flex-direction:column}
+.tm-row{display:grid;grid-template-columns:40px minmax(0,1fr) auto auto;gap:6px 14px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.tm-row:first-child{border-top:none;padding-top:2px}
+.tm-row.off .tm-who,.tm-row.off .av-i{opacity:.55}
+.tm-who{display:flex;flex-direction:column;min-width:0}
+.tm-who b{font-size:14.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tm-who span{font-size:13px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tm-me{display:inline-flex;margin-left:6px;padding:1px 8px;border-radius:var(--r-chip);background:var(--accent-soft);color:var(--accent-strong)!important;font-size:11.5px;font-weight:700;vertical-align:2px}
+.tm-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tm-n{font-size:12.5px;color:var(--ink-3);font-weight:600;white-space:nowrap}
+.tm-off{font-size:12px;font-weight:700;color:var(--danger)}
+.tm-acts{display:flex;gap:6px;justify-content:flex-end}
+.abtn.sm{padding:7px 11px;font-size:13px;border-radius:9px;white-space:nowrap}
+.inv-out{margin-top:16px;padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.inv-out-t{font-size:14px;line-height:1.45}
+.inv-out-t svg{width:18px;height:18px;color:var(--ok);vertical-align:-4px;margin-right:6px}
+.admin-theme .inv-out .input{font-size:12.5px;padding:10px 12px;border-radius:10px}
+.inv-acts{display:grid;grid-template-columns:1fr;gap:8px}
+.inv-acts .abtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 10px;font-size:13.5px}
+.inv-acts .abtn svg{width:16px;height:16px}
+.ro-tag{display:inline-flex;align-items:center;gap:6px;flex:none;padding:5px 11px 5px 9px;border-radius:var(--r-chip);background:#FFF4DC;color:#7A4B00;font-size:12.5px;font-weight:700;white-space:nowrap}
+.ro-tag svg{width:15px;height:15px}
+.st-b[aria-disabled="true"]{cursor:default}
+.st-b[aria-disabled="true"]:hover{background:transparent}
+@media (max-width:1100px){
+  .ah-tabs{order:3;width:100%}
+  .ah-tab{flex:1;justify-content:center}
+}
+@media (max-width:860px){
+  .adm-row{grid-template-columns:minmax(0,1fr) auto;gap:6px 12px}
+  .adm-th{display:none}
+  .adm-name{grid-column:1/-1}
+  .adm-owner{grid-column:1}
+  .adm-row>span:nth-child(3){grid-column:1}
+  .adm-date{grid-column:1}
+  .adm-row>span:last-child{grid-column:2;grid-row:2/5}
+  .tm-row{grid-template-columns:40px minmax(0,1fr)}
+  .tm-meta,.tm-acts{grid-column:2;justify-content:flex-start}
+}
+@media (max-width:720px){
+  .adm-filters{grid-template-columns:1fr}
+  .ah-tab{padding:0 6px;gap:6px;min-width:0;flex:1 1 0}
+  .ah-tab .t-l{display:none}
+  .ah-tab .t-s{display:inline;font-size:13px}
+  .adm-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%}
+  .adm-kpi{min-width:0;padding:10px 12px}
+  .adm-kpi b{font-size:21px}
+  .ro-tag span{max-width:42vw;overflow:hidden;text-overflow:ellipsis}
+}
 </style>
 </head>
 <body>
@@ -1349,7 +1443,7 @@ function tasksFor(session, stage){ return (session && session.tasks && session.t
 function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260922075502";
+const APP_BUILD="20260925210412";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -1378,9 +1472,20 @@ function friendlyAuthError(e){
   if(/Anonymous sign-ins are disabled/i.test(m)) return "El acceso de participantes no está activado. Quien facilita debe activar «Allow anonymous sign-ins» en Supabase.";
   if(/rate limit|too many/i.test(m)) return "Demasiados intentos seguidos. Espera un minuto y vuelve a intentar.";
   if(/Invalid TOTP code|invalid.*code/i.test(m)) return "El código no es correcto o ya expiró. Usa el código actual de tu app.";
+  if(/already registered|already been registered/i.test(m)) return "Ese correo ya tiene cuenta. Usa «Ya tengo cuenta» para entrar.";
+  if(/Password should be at least/i.test(m)) return "La contraseña es muy corta. Usa al menos 8 caracteres.";
+  if(/Signups not allowed|signup.*disabled/i.test(m)) return "El registro de cuentas está apagado en Supabase. Pide al admin activar «Allow new users to sign up».";
+  if(/Email not confirmed/i.test(m)) return "Tu correo aún no está confirmado. Pide al admin apagar «Confirm email» en Supabase.";
   if(/Failed to fetch|NetworkError|Load failed/i.test(m)) return "No hay conexión con la base de datos. Revisa tu internet (en Wi-Fi corporativo prueba con datos móviles).";
   return m || "Algo salió mal. Intenta de nuevo.";
 }
+
+/* v1.5 · Invitación pendiente: llega en el enlace (?inv=…) y se canjea al entrar con segundo factor */
+const INVITE_KEY="colmena_invite";
+function pendingInvite(){ return (storageGet(INVITE_KEY)||"").trim(); }
+function clearInvite(){ try{ localStorage.removeItem(INVITE_KEY); }catch(e){ if(window.__mem) delete window.__mem[INVITE_KEY]; } }
+(function captureInvite(){ try{ const u=new URL(location.href), c=(u.searchParams.get("inv")||"").trim();
+  if(c){ storageSet(INVITE_KEY,c); u.searchParams.delete("inv"); if(!u.hash) u.hash="#admin"; history.replaceState(null,"",u.pathname+u.search+u.hash); } }catch(e){} })();
 
 const SupaStore = {
   client:null,
@@ -1407,12 +1512,40 @@ const SupaStore = {
     const {data:aal,error} = await this.client.auth.mfa.getAuthenticatorAssuranceLevel();
     if(error) throw error;
     if(aal.currentLevel === "aal2"){
-      const {data:isAdmin,error:e2} = await this.client.rpc("ws_claim_admin");
+      /* v1.5 · la primera cuenta queda como admin; las demás entran con invitación */
+      const {error:e2} = await this.client.rpc("ws_claim_admin");
       if(e2) throw e2;
-      return {state: isAdmin ? "ready" : "forbidden", email:u.email};
+      let inviteError = null;
+      const inv = pendingInvite();
+      if(inv){
+        const {error:e3} = await this.client.rpc("ws_redeem_invite",{p_code:inv});
+        if(e3){ inviteError = friendlyAuthError(e3); if(!/Entra con ese correo/.test(inviteError)) clearInvite(); }
+        else clearInvite();
+      }
+      const {data:me,error:e4} = await this.client.rpc("ws_me");
+      if(e4) throw e4;
+      const m = me && me[0];
+      if(!m) return {state:"forbidden", email:u.email, reason:inviteError};
+      if(!m.active) return {state:"forbidden", email:u.email, reason:"Tu acceso al panel fue desactivado. Si es un error, habla con tu admin."};
+      return {state:"ready", email:u.email, uid:u.id, role:m.role, name:m.name||"", inviteError};
     }
     return {state: aal.nextLevel === "aal2" ? "verify" : "enroll", email:u.email};
   },
+  /* v1.5 · el invitado crea su cuenta (requiere «Confirm email» apagado en Supabase) */
+  async signUp(email,password){
+    const {data,error} = await this.client.auth.signUp({email,password});
+    if(error) throw error;
+    if(!data.session){
+      if(data.user && Array.isArray(data.user.identities) && !data.user.identities.length) throw new Error("User already registered");
+      throw new Error("Email not confirmed");
+    }
+  },
+  async invitePeek(code){ const {data,error}=await this.client.rpc("ws_invite_peek",{p_code:code}); if(error) throw error; return (data&&data[0])||null; },
+  async listStaff(){ const {data,error}=await this.client.from("ws_admins").select("user_id,email,name,role,active,created_at").order("created_at"); if(error) throw error; return data||[]; },
+  async listInvites(){ const {data,error}=await this.client.from("ws_invites").select("id,email,name,role,created_at,expires_at,used_at,revoked_at").order("created_at",{ascending:false}); if(error) throw error; return data||[]; },
+  async createInvite(email,name,role){ const {data,error}=await this.client.rpc("ws_create_invite",{p_email:email,p_name:name||null,p_role:role}); if(error) throw error; return data&&data[0]; },
+  async revokeInvite(id){ const {error}=await this.client.rpc("ws_revoke_invite",{p_id:id}); if(error) throw error; },
+  async setStaff(userId,patch){ const {error}=await this.client.rpc("ws_set_staff",{p_user:userId,p_active:patch.active??null,p_role:patch.role??null}); if(error) throw error; },
   async signIn(email,password){
     const {error} = await this.client.auth.signInWithPassword({email,password});
     if(error) throw error;
@@ -1443,6 +1576,8 @@ const SupaStore = {
   async getMySession(code){ const {data,error}=await this.client.from("ws_sessions").select("*").eq("code",code.toUpperCase()).maybeSingle(); if(error) throw error; return data; },
   async lookupSession(code){ const {data,error}=await this.client.rpc("ws_join_lookup",{p_code:code}); if(error) throw error; return (data && data[0]) || null; },
   async listMySessions(){ const u=await this.currentUser(); const {data,error}=await this.client.from("ws_sessions").select("id,code,name,phase,created_at").eq("owner_id",u.id).order("created_at",{ascending:false}); if(error) throw error; return data||[]; },
+  /* v1.5 · el admin ve los talleres de todos (la base de datos solo se los entrega a un admin) */
+  async listAllSessions(){ const {data,error}=await this.client.from("ws_sessions").select("id,code,name,phase,created_at,owner_id,facilitator").order("created_at",{ascending:false}); if(error) throw error; return data||[]; },
   async updateSession(id,patch){ const {error}=await this.client.from("ws_sessions").update(patch).eq("id",id); if(error) throw error; },
   async deleteSession(id){ const {error}=await this.client.from("ws_sessions").delete().eq("id",id); if(error) throw error; },
 
@@ -1509,12 +1644,24 @@ const DemoStore = {
   _uid(){ let id=null; try{ id=sessionStorage.getItem("colmena_demo_uid"); if(!id){ id=uid(); sessionStorage.setItem("colmena_demo_uid",id); } }catch(e){ id=window.__demoUid=window.__demoUid||uid(); } return id; },
   async currentUser(){ return {id:this._uid(), is_anonymous:true}; },
   async ensureAnon(){ return this.currentUser(); },
-  async adminState(){ return {state:"ready", email:"modo demo"}; },
+  async adminState(){ const inv=pendingInvite(); if(inv) clearInvite(); return {state:"ready", email:"modo demo", uid:"demo", role:"admin", name:"Tú (demo)"}; },
+  async signUp(){}, async invitePeek(code){ return {email:"invitado@empresa.com", name:"Persona invitada", role:"facilitator", expires_at:new Date(Date.now()+7*864e5).toISOString()}; },
+  async listStaff(){ return [{user_id:"demo",email:"modo demo",name:"Tú (demo)",role:"admin",active:true,created_at:now()}, ...(this.db().staff||[])]; },
+  async listInvites(){ return this.db().invites||[]; },
+  async createInvite(email,name,role){ const db=this.db(); db.invites=db.invites||[]; email=String(email||"").trim().toLowerCase();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error("Escribe un correo válido");
+    db.invites.forEach(i=>{ if(i.email===email && !i.used_at && !i.revoked_at) i.revoked_at=now(); });
+    const hex=()=>Math.random().toString(16).slice(2,6).toUpperCase().padEnd(4,"0"); const code=[hex(),hex(),hex(),hex()].join("-");
+    const it={id:uid(),email,name:name||null,role,created_at:now(),expires_at:new Date(Date.now()+7*864e5).toISOString(),used_at:null,revoked_at:null};
+    db.invites.unshift(it); this.save(db); return {...it, code}; },
+  async revokeInvite(id){ const db=this.db(); (db.invites||[]).forEach(i=>{ if(i.id===id) i.revoked_at=now(); }); this.save(db); },
+  async setStaff(userId,patch){ const db=this.db(); const m=(db.staff||[]).find(x=>x.user_id===userId); if(!m) throw new Error("Esa cuenta no existe"); if(patch.active!=null) m.active=patch.active; if(patch.role) m.role=patch.role; this.save(db); },
   async signIn(){}, async signOut(){}, async mfaEnroll(){ return {}; }, async mfaVerify(){},
   async createSession(s){ const db=this.db(); s={id:uid(),created_at:now(),owner_id:"demo",...s}; db.sessions.push(s); this.save(db); return s; },
   async getMySession(code){ return this.db().sessions.find(s=>s.code===code.toUpperCase())||null; },
   async lookupSession(code){ return this.getMySession(code); },
-  async listMySessions(){ return [...this.db().sessions].sort((a,b)=>a.created_at<b.created_at?1:-1); },
+  async listMySessions(){ return this.db().sessions.filter(s=>(s.owner_id||"demo")==="demo").sort((a,b)=>a.created_at<b.created_at?1:-1); },
+  async listAllSessions(){ return [...this.db().sessions].sort((a,b)=>a.created_at<b.created_at?1:-1); },
   async updateSession(id,patch){ const db=this.db(); const s=db.sessions.find(x=>x.id===id); if(s) Object.assign(s,patch); this.save(db); },
   async deleteSession(id){ const db=this.db(); ["participants","cards","votes","qw","ideas","ideaVotes"].forEach(k=>db[k]=db[k].filter(x=>x.session_id!==id)); db.sessions=db.sessions.filter(s=>s.id!==id); this.save(db); },
   async joinParticipant(p){ const db=this.db(); p={id:uid(),joined_at:now(),user_id:this._uid(),...p}; db.participants.push(p); this.save(db); return p; },
@@ -2255,6 +2402,16 @@ function setOffline(on){ let b=$("#offline"); if(on && !b){ b=document.createEle
    ============================================================ */
 const A = { session:null, participants:[], cards:[], votes:[], qwRatings:[], ideas:[], ideaVotes:[], unsub:null, poll:null, showAuthors:false, project:false, open:new Set(), _t:null, seen:new Set() };
 
+/* v1.5 · Cuenta con la que se entró al panel. role: "admin" (ve todos los talleres, solo lectura en los ajenos) o "facilitator" (solo los suyos).
+   Es solo para mostrar la interfaz correcta: quien decide qué datos se entregan es la base de datos. */
+const ME = { role:"facilitator", uid:null, email:"", name:"" };
+const AH = { view:"mine", owner:"", q:"", staff:[] };
+const isAdminRole = () => ME.role === "admin";
+const ROLE_T = { admin:"Admin", facilitator:"Facilitador" };
+const fmtDate = (iso,o) => { try{ return new Date(iso).toLocaleDateString("es-MX", o||{day:"numeric",month:"short"}); }catch(e){ return ""; } };
+function staffName(id){ if(id && id===ME.uid) return "Tú"; const m=AH.staff.find(x=>x.user_id===id); return m ? (m.name||m.email||"Sin nombre") : "Cuenta eliminada"; }
+function initials(t){ const w=String(t||"?").replace(/@.*/,"").replace(/[^\p{L}\p{N}]+/gu," ").split(" ").filter(Boolean); return ((w[0]||"?")[0]+((w[1]||"")[0]||"")).toUpperCase(); }
+
 /* ---------- Acceso del facilitador: contraseña + segundo factor ---------- */
 function aShell(inner){
   document.body.classList.add("admin-theme");
@@ -2270,15 +2427,18 @@ async function adminBoot(openCode){
   let st;
   try{ st = await Store.adminState(); }
   catch(e){ console.error(e); aShell(`<div class="panel"><p class="err">${esc(friendlyAuthError(e))}</p></div>`); return; }
-  if(st.state==="login")     return adminLogin();
+  if(st.state==="login")     return pendingInvite() ? adminSignup() : adminLogin();
   if(st.state==="enroll")    return adminEnroll(st.email);
   if(st.state==="verify")    return adminVerify(st.email);
-  if(st.state==="forbidden") return adminForbidden(st.email);
+  if(st.state==="forbidden") return adminForbidden(st.email, st.reason);
+  Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"" });
+  if(isAdminRole()) await loadStaff(); else AH.view="mine";
+  if(st.inviteError) toast(st.inviteError);
   if(openCode){
     const s = await Store.getMySession(openCode).catch(()=>null);
     if(s) return startAdmin(s);
   }
-  adminHome(st.email);
+  adminHome();
 }
 
 function adminLogin(msg, email){
@@ -2292,8 +2452,12 @@ function adminLogin(msg, email){
         ${msg?`<p class="err">${esc(msg)}</p>`:""}
         <button class="abtn primary" id="lg-go" type="submit" style="width:100%;padding:13px">Continuar</button>
       </form>
-      <p class="hint" style="margin-top:12px">Después te pediremos el código de tu app autenticadora. Tu cuenta se crea en Supabase → Authentication → Users.</p>
+      <p class="hint" style="margin-top:12px">Después te pediremos el código de tu app autenticadora.</p>
+      ${pendingInvite()
+        ? `<div class="inv-note">Tienes una invitación pendiente: se activa al entrar con el correo al que llegó. <button type="button" class="linkbtn" id="lg-new">Crear cuenta nueva</button></div>`
+        : `<p class="hint" style="margin-top:6px">¿Aún no tienes cuenta? Pide una invitación a tu admin.</p>`}
     </div>`);
+  const nw=$("#lg-new"); if(nw) nw.onclick=()=>adminSignup();
   if(email) $("#lg-pass").focus();
   $("#lg-eye").onclick=()=>{ const i=$("#lg-pass"), show=i.type==="password"; i.type=show?"text":"password"; $("#lg-eye").textContent=show?"Ocultar":"Mostrar"; $("#lg-eye").setAttribute("aria-pressed",show); };
   $("#lgForm").onsubmit = async e=>{
@@ -2356,16 +2520,84 @@ function wireOtp(factorId){
   $("#outBtn").onclick = async ()=>{ await Store.signOut(); adminLogin(); };
 }
 
-function adminForbidden(email){
+function adminForbidden(email, reason){
   aShell(`<div class="panel">
       <h2>Cuenta sin permiso de facilitador</h2>
-      <p class="hint" style="margin-bottom:14px">${esc(email||"Esta cuenta")} inició sesión correctamente, pero no está autorizada para crear ni ver talleres.</p>
-      <button class="abtn" id="outBtn" style="width:100%">Cerrar sesión</button>
+      ${reason?`<p class="err" style="margin-bottom:12px">${esc(reason)}</p>`:""}
+      <p class="hint" style="margin-bottom:14px">${esc(email||"Esta cuenta")} inició sesión correctamente, pero no está autorizada para crear ni ver talleres.${reason?"":" Si te invitaron, abre el enlace de tu invitación y entra con el correo al que llegó."}</p>
+      <button class="abtn" id="outBtn" style="width:100%">${pendingInvite()?"Entrar con otra cuenta":"Cerrar sesión"}</button>
     </div>`);
   $("#outBtn").onclick = async ()=>{ await Store.signOut(); adminLogin(); };
 }
 
-async function adminHome(email){
+/* v1.5 · Registro con invitación: el enlace trae un código de un solo uso ligado a un correo */
+async function adminSignup(msg){
+  const code=pendingInvite();
+  let inv=null;
+  try{ inv = code ? await Store.invitePeek(code) : null; }
+  catch(e){ console.error(e); aShell(`<div class="panel"><p class="err">${esc(friendlyAuthError(e))}</p></div>`); return; }
+  if(!inv){
+    clearInvite();
+    aShell(`<div class="panel">
+      <h2>Esta invitación ya no es válida</h2>
+      <p class="hint" style="margin-bottom:14px">El enlace ya se usó, venció o fue cancelado. Pide uno nuevo a tu admin. Si ya creaste tu cuenta, solo inicia sesión.</p>
+      <button class="abtn primary" id="goLogin" style="width:100%;padding:13px">Iniciar sesión</button>
+    </div>`);
+    $("#goLogin").onclick=()=>adminLogin();
+    return;
+  }
+  const first=String(inv.name||"").trim().split(/\s+/)[0];
+  aShell(`<div class="panel">
+      <span class="inv-k">${icon("mail")}Invitación · ${ROLE_T[inv.role]||"Facilitador"}</span>
+      <h2>Crea tu cuenta${first?", "+esc(first):""}</h2>
+      <p class="hint" style="margin-bottom:14px">Te invitaron a Colmena para ${inv.role==="admin"?"administrar la plataforma y crear tus propios talleres":"crear y facilitar tus propios talleres"}. La invitación vence el ${esc(fmtDate(inv.expires_at,{day:"numeric",month:"long"}))}.</p>
+      <form id="suForm" autocomplete="on">
+        <div class="field"><label for="su-mail">Correo</label><input id="su-mail" class="input" type="email" autocomplete="username" value="${esc(inv.email)}" readonly aria-describedby="su-mail-h"><p class="hint" id="su-mail-h" style="margin-top:4px">La invitación solo funciona con este correo.</p></div>
+        <div class="field"><label for="su-pass">Contraseña <span class="opt">mínimo 8 caracteres</span></label>
+          <div class="pw-wrap"><input id="su-pass" class="input" type="password" autocomplete="new-password" minlength="8" required>
+          <button type="button" class="pw-eye" id="su-eye" aria-pressed="false">Mostrar</button></div></div>
+        <div class="field"><label for="su-pass2">Confirma tu contraseña</label><input id="su-pass2" class="input" type="password" autocomplete="new-password" required></div>
+        <p class="err" id="suErr"${msg?"":" hidden"}>${esc(msg||"")}</p>
+        <button class="abtn primary" id="su-go" type="submit" style="width:100%;padding:13px">Crear cuenta y continuar</button>
+      </form>
+      <button class="abtn" id="su-have" style="width:100%;margin-top:8px">Ya tengo cuenta</button>
+      <p class="hint" style="margin-top:12px">Después activarás la verificación en dos pasos con Microsoft Authenticator o Google Authenticator.</p>
+    </div>`);
+  $("#su-pass").focus();
+  $("#su-eye").onclick=()=>{ const show=$("#su-pass").type==="password"; ["#su-pass","#su-pass2"].forEach(k=>$(k).type=show?"text":"password"); $("#su-eye").textContent=show?"Ocultar":"Mostrar"; $("#su-eye").setAttribute("aria-pressed",show); };
+  $("#su-have").onclick=()=>adminLogin(null, inv.email);
+  const err=t=>{ const m=$("#suErr"); m.hidden=false; m.textContent=t; };
+  $("#suForm").onsubmit=async e=>{
+    e.preventDefault();
+    const pw=$("#su-pass").value, pw2=$("#su-pass2").value;
+    if(pw.length<8) return err("La contraseña es muy corta. Usa al menos 8 caracteres.");
+    if(pw!==pw2) return err("Las contraseñas no coinciden.");
+    $("#su-go").disabled=true;
+    try{ await Store.signUp(inv.email, pw); adminBoot(); }
+    catch(ex){ const t=friendlyAuthError(ex); if(/ya tiene cuenta/.test(t)) return adminLogin(t, inv.email); err(t); $("#su-go").disabled=false; }
+  };
+}
+
+/* ---------- v1.5 · Inicio: encabezado con secciones (el admin ve «Todos los talleres» y «Equipo») ---------- */
+function ahTop(){
+  const tabs = isAdminRole() ? `<nav class="ah-tabs" aria-label="Secciones">${[["mine","Mis talleres","grid","Míos"],["all","Todos los talleres","chart","Todos"],["team","Equipo","users","Equipo"]]
+    .map(([k,t,ic,sh])=>`<button class="ah-tab${AH.view===k?" on":""}" data-view="${k}"${AH.view===k?' aria-current="page"':""} aria-label="${t}">${icon(ic)}<span class="t-l">${t}</span><span class="t-s" aria-hidden="true">${sh}</span></button>`).join("")}</nav>` : "";
+  return `<header class="ah-top">
+      <div class="brand-row">${brandLockup("xs")}
+        <div><div class="brand-name">Colmena · ${isAdminRole()?"Admin":"Facilitador"}</div><div class="brand-by">by ${BRAND_ORG}</div></div></div>
+      ${tabs}
+      <div class="ah-user"><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span><span class="ah-mail" title="${esc(ME.email)}">${esc(ME.name||ME.email)}</span><button class="abtn" id="outBtn">Cerrar sesión</button></div>
+    </header>`;
+}
+function wireTop(){
+  $("#outBtn").onclick=async()=>{ await Store.signOut(); AH.view="mine"; adminBoot(); };
+  $$(".ah-tab").forEach(b=>b.onclick=()=>{ if(AH.view===b.dataset.view) return; AH.view=b.dataset.view; adminHome(); window.scrollTo(0,0); });
+}
+async function loadStaff(){ try{ AH.staff = await Store.listStaff(); }catch(e){ console.error(e); } return AH.staff; }
+
+async function adminHome(){
+  if(isAdminRole() && AH.view==="all")  return adminAllView();
+  if(isAdminRole() && AH.view==="team") return adminTeamView();
   const pre = CONFIG.PRESETS.lockton;
   let mine=[]; try{ mine = await Store.listMySessions(); }catch(e){ console.error(e); }
   const phaseName = id => (PHASES.find(p=>p.id===id)||{t:id}).t;
@@ -2378,11 +2610,7 @@ async function adminHome(email){
         </div>`).join("")}</div>`
     : `<div class="tl-empty">${glass("hexagon",{size:"md"})}<p><strong>Aún no tienes talleres.</strong><br>Crea el primero con el formulario.</p></div>`;
   $("#app").innerHTML = `<div class="ah-shell">
-    <header class="ah-top">
-      <div class="brand-row">${brandLockup("xs")}
-        <div><div class="brand-name">Colmena · Facilitador</div><div class="brand-by">by ${BRAND_ORG}</div></div></div>
-      <div class="ah-user"><span class="ah-mail" title="${esc(email||"")}">${esc(email||"")}</span><button class="abtn" id="outBtn">Cerrar sesión</button></div>
-    </header>
+    ${ahTop()}
     <main class="ah-main">
       <aside class="ah-side">
         <div class="panel">
@@ -2470,7 +2698,7 @@ async function adminHome(email){
   $("#pre-lockton").onclick=()=>pick("pre-lockton",CONFIG.PRESETS.lockton);
   $("#pre-generic").onclick=()=>pick("pre-generic",CONFIG.PRESETS.generic);
   summary();
-  $("#outBtn").onclick=async()=>{ await Store.signOut(); adminBoot(); };
+  wireTop();
   $$("[data-open]").forEach(b=>b.onclick=async()=>{ const s=await Store.getMySession(b.dataset.open).catch(()=>null); if(s) startAdmin(s); else toast("No se pudo abrir el taller"); });
   $("#c-create").onclick=async()=>{
     $("#c-create").disabled=true;
@@ -2487,6 +2715,147 @@ async function adminHome(email){
     try{ const created=await Store.createSession(s); startAdmin(created); toast("Taller creado: "+created.code); }
     catch(e){ console.error(e); toast("No se pudo crear el taller: "+friendlyAuthError(e)); $("#c-create").disabled=false; }
   };
+}
+
+/* ---------- v1.5 · Admin: todos los talleres (solo lectura en los ajenos) ---------- */
+async function adminAllView(){
+  document.body.classList.add("admin-theme");
+  $("#app").innerHTML=`<div class="ah-shell">${ahTop()}<main class="ah-wide"><div class="panel"><p class="hint">Cargando talleres…</p></div></main></div>`; wireTop();
+  let all=[];
+  try{ [all] = await Promise.all([Store.listAllSessions(), loadStaff()]); }
+  catch(e){ console.error(e); $(".ah-wide").innerHTML=`<div class="panel"><p class="err">${esc(friendlyAuthError(e))}</p></div>`; return; }
+  if(AH.view!=="all") return;
+  const phaseName = id => (PHASES.find(p=>p.id===id)||{t:id}).t;
+  const live = all.filter(s=>!["lobby","closed"].includes(s.phase)).length;
+  const owners = [...new Set(all.map(s=>s.owner_id))].sort((a,b)=>a===ME.uid?-1:b===ME.uid?1:staffName(a).localeCompare(staffName(b),"es"));
+  if(AH.owner && !owners.includes(AH.owner)) AH.owner="";
+  $(".ah-wide").innerHTML=`
+    <div class="adm-head">
+      <div><h1 class="adm-t">Todos los talleres</h1><p class="hint">Los tuyos los operas; los de otros facilitadores los ves y exportas en <b>solo lectura</b>.</p></div>
+      <div class="adm-kpis">
+        <div class="adm-kpi"><b>${all.length}</b><span>Talleres</span></div>
+        <div class="adm-kpi"><b>${live}</b><span>En curso</span></div>
+        <div class="adm-kpi"><b>${AH.staff.filter(m=>m.active).length}</b><span>Con acceso</span></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="adm-filters">
+        <div class="field"><label for="fOwner">Facilitador</label>
+          <select id="fOwner" class="input"><option value="">Todos (${owners.length})</option>${owners.map(o=>`<option value="${esc(o)}"${AH.owner===o?" selected":""}>${esc(staffName(o))} · ${all.filter(s=>s.owner_id===o).length}</option>`).join("")}</select></div>
+        <div class="field"><label for="fQ">Buscar</label><input id="fQ" class="input" type="search" placeholder="Nombre o código" value="${esc(AH.q)}"></div>
+      </div>
+      <div id="allList"></div>
+    </div>`;
+  const draw=()=>{
+    const q=AH.q.trim().toLowerCase();
+    const rows=all.filter(s=>(!AH.owner||s.owner_id===AH.owner) && (!q || String(s.name).toLowerCase().includes(q) || String(s.code).toLowerCase().includes(q)));
+    $("#allList").innerHTML = rows.length ? `<div class="adm-table" role="table" aria-label="Talleres">
+      <div class="adm-row adm-th" role="row"><span role="columnheader">Taller</span><span role="columnheader">Facilitador</span><span role="columnheader">Fase</span><span role="columnheader">Creado</span><span role="columnheader"><span class="sr">Acción</span></span></div>
+      ${rows.map(s=>{ const mine=s.owner_id===ME.uid; return `<div class="adm-row" role="row">
+        <span role="cell" class="adm-name"><b>${esc(s.name)}</b><span class="tl-code">${esc(s.code)}</span></span>
+        <span role="cell" class="adm-owner"><i class="av-i" aria-hidden="true">${esc(initials(staffName(s.owner_id)))}</i>${esc(staffName(s.owner_id))}</span>
+        <span role="cell"><span class="ph-pill ph-${esc(s.phase)}">${esc(phaseName(s.phase))}</span></span>
+        <span role="cell" class="adm-date">${esc(fmtDate(s.created_at,{day:"numeric",month:"short",year:"numeric"}))}</span>
+        <span role="cell"><button class="abtn${mine?" primary":""}" data-open="${esc(s.code)}" aria-label="${mine?"Abrir":"Ver en solo lectura"} ${esc(s.name)}">${mine?"Abrir":icon("eye")+"Ver"}</button></span>
+      </div>`; }).join("")}</div>`
+      : `<div class="tl-empty">${glass("hexagon",{size:"md"})}<p><strong>${all.length?"No hay talleres con ese filtro.":"Aún no hay talleres."}</strong>${all.length?"":"<br>Cuando alguien del equipo cree uno, aparecerá aquí."}</p></div>`;
+    $$("#allList [data-open]").forEach(b=>b.onclick=async()=>{ b.disabled=true; const s=await Store.getMySession(b.dataset.open).catch(()=>null); if(s) startAdmin(s); else { toast("No se pudo abrir el taller"); b.disabled=false; } });
+  };
+  $("#fOwner").onchange=e=>{ AH.owner=e.target.value; draw(); };
+  $("#fQ").oninput=e=>{ AH.q=e.target.value; draw(); };
+  draw();
+}
+
+/* ---------- v1.5 · Admin: equipo e invitaciones ---------- */
+async function adminTeamView(lastInvite){
+  document.body.classList.add("admin-theme");
+  if(!$(".ah-team")) { $("#app").innerHTML=`<div class="ah-shell">${ahTop()}<main class="ah-wide"><div class="panel"><p class="hint">Cargando equipo…</p></div></main></div>`; wireTop(); }
+  let invites=[], all=[];
+  try{ [invites, all] = await Promise.all([Store.listInvites(), Store.listAllSessions(), loadStaff()]); }
+  catch(e){ console.error(e); $(".ah-wide, .ah-team").innerHTML=`<div class="panel"><p class="err">${esc(friendlyAuthError(e))}</p></div>`; return; }
+  if(AH.view!=="team") return;
+  const nowT=Date.now();
+  const pending=invites.filter(i=>!i.used_at && !i.revoked_at && new Date(i.expires_at).getTime()>nowT);
+  const count=id=>all.filter(s=>s.owner_id===id).length;
+  const staff=[...AH.staff].sort((a,b)=>(a.user_id===ME.uid?-1:b.user_id===ME.uid?1:0) || (b.active-a.active) || String(a.name||a.email).localeCompare(String(b.name||b.email),"es"));
+  const F=AH.inviteForm||(AH.inviteForm={name:"",email:"",role:"facilitator"});
+  const link=lastInvite ? location.origin+location.pathname+"?inv="+encodeURIComponent(lastInvite.code)+"#admin" : "";
+  $("#app").innerHTML=`<div class="ah-shell">${ahTop()}
+    <main class="ah-main ah-team">
+      <aside class="ah-side">
+        <section class="panel" aria-labelledby="invT">
+          <h2 id="invT">Invitar a alguien</h2>
+          <p class="hint" style="margin:-4px 0 14px">Le llega un enlace para crear su cuenta. Solo sirve una vez, con ese correo, durante 7 días.</p>
+          <form id="invForm" novalidate>
+            <div class="field"><label for="inv-name">Nombre <span class="opt">opcional</span></label><input id="inv-name" class="input" autocomplete="off" maxlength="120" value="${esc(F.name)}" placeholder="Ej. Ana López"></div>
+            <div class="field"><label for="inv-mail">Correo</label><input id="inv-mail" class="input" type="email" autocomplete="off" required value="${esc(F.email)}" placeholder="nombre@empresa.com"></div>
+            <div class="field"><span class="lbl" id="inv-role-l">Rol</span>
+              <div class="seg2" role="radiogroup" aria-labelledby="inv-role-l">${["facilitator","admin"].map(r=>`<button type="button" role="radio" aria-checked="${F.role===r}" class="${F.role===r?"on":""}" data-role="${r}">${icon(r==="admin"?"eye":"users")}${ROLE_T[r]}</button>`).join("")}</div>
+              <p class="hint" id="inv-role-h" style="margin-top:6px">${F.role==="admin"?"Crea sus talleres, ve y exporta los de todos, e invita o desactiva cuentas.":"Crea y opera solo sus propios talleres. No ve los de nadie más."}</p></div>
+            <p class="err" id="invErr" hidden></p>
+            <button class="abtn primary" id="invGo" type="submit" style="width:100%;padding:12px">Crear invitación</button>
+          </form>
+          ${lastInvite?`<div class="inv-out" role="status">
+            <p class="inv-out-t">${icon("check")}Invitación lista para <b>${esc(lastInvite.email)}</b></p>
+            <label class="sr" for="invLink">Enlace de invitación</label>
+            <input id="invLink" class="input mono" readonly value="${esc(link)}">
+            <div class="inv-acts"><button class="abtn primary" id="invCopy">${icon("copy")}Copiar enlace</button><button class="abtn" id="invMail">${icon("mail")}Enviar por correo</button></div>
+            <p class="hint">Vence el ${esc(fmtDate(lastInvite.expires_at,{day:"numeric",month:"long"}))}. Por seguridad no se vuelve a mostrar: si se pierde, crea otra.</p>
+          </div>`:""}
+        </section>
+      </aside>
+      <div class="ah-col">
+        <section class="panel" aria-labelledby="teamT">
+          <h2 id="teamT">Equipo <span class="sub">${staff.filter(m=>m.active).length} con acceso</span></h2>
+          <div class="team-list">${staff.map(m=>{ const me=m.user_id===ME.uid, n=count(m.user_id); return `<div class="tm-row${m.active?"":" off"}">
+            <i class="av-i lg" aria-hidden="true">${esc(initials(m.name||m.email))}</i>
+            <div class="tm-who"><b>${esc(m.name||m.email)}${me?' <span class="tm-me">Tú</span>':""}</b><span>${esc(m.email||"")}</span></div>
+            <div class="tm-meta"><span class="role-tag ${esc(m.role)}">${ROLE_T[m.role]}</span><span class="tm-n">${n} ${n===1?"taller":"talleres"}</span>${m.active?"":'<span class="tm-off">Desactivado</span>'}</div>
+            <div class="tm-acts">${me?"":`
+              <button class="abtn sm" data-role="${esc(m.user_id)}" data-to="${m.role==="admin"?"facilitator":"admin"}">${m.role==="admin"?"Hacer facilitador":"Hacer admin"}</button>
+              <button class="abtn sm${m.active?" danger":""}" data-act="${esc(m.user_id)}" data-to="${m.active?"0":"1"}">${m.active?"Desactivar":"Reactivar"}</button>`}</div>
+          </div>`; }).join("")}</div>
+        </section>
+        <section class="panel" aria-labelledby="pendT">
+          <h2 id="pendT">Invitaciones pendientes <span class="sub">${pending.length}</span></h2>
+          ${pending.length?`<div class="team-list">${pending.map(i=>`<div class="tm-row">
+            <i class="av-i lg pend" aria-hidden="true">${icon("mail")}</i>
+            <div class="tm-who"><b>${esc(i.name||i.email)}</b><span>${esc(i.email)}</span></div>
+            <div class="tm-meta"><span class="role-tag ${esc(i.role)}">${ROLE_T[i.role]}</span><span class="tm-n">Vence ${esc(fmtDate(i.expires_at))}</span></div>
+            <div class="tm-acts"><button class="abtn sm" data-revoke="${esc(i.id)}" aria-label="Cancelar invitación de ${esc(i.email)}">Cancelar</button></div>
+          </div>`).join("")}</div>`:`<p class="hint">No hay invitaciones esperando respuesta.</p>`}
+        </section>
+      </div>
+    </main></div>`;
+  wireTop();
+  const keep=()=>{ F.name=$("#inv-name").value; F.email=$("#inv-mail").value; };
+  $("#inv-name").oninput=keep; $("#inv-mail").oninput=keep;
+  $$("#invForm [data-role]").forEach(b=>b.onclick=()=>{ F.role=b.dataset.role; $$("#invForm [data-role]").forEach(x=>{ const on=x===b; x.classList.toggle("on",on); x.setAttribute("aria-checked",on); });
+    $("#inv-role-h").textContent = F.role==="admin"?"Crea sus talleres, ve y exporta los de todos, e invita o desactiva cuentas.":"Crea y opera solo sus propios talleres. No ve los de nadie más."; });
+  $("#invForm").onsubmit=async e=>{
+    e.preventDefault(); keep();
+    const mail=F.email.trim().toLowerCase(), er=$("#invErr");
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)){ er.hidden=false; er.textContent="Escribe un correo válido."; $("#inv-mail").focus(); return; }
+    if(F.role==="admin" && !(await askDialog({kind:"bee", title:"¿Invitar como admin?", text:"Podrá ver y exportar los talleres de todo el equipo, e invitar o desactivar cuentas.", ok:"Sí, como admin"}))) return;
+    $("#invGo").disabled=true;
+    try{ const r=await Store.createInvite(mail, F.name.trim(), F.role); const nm=F.name.trim(), rl=F.role; AH.inviteForm={name:"",email:"",role:"facilitator"}; adminTeamView({...r, name:nm, role:rl}); }
+    catch(ex){ er.hidden=false; er.textContent=friendlyAuthError(ex); $("#invGo").disabled=false; }
+  };
+  if(lastInvite){
+    $("#invCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(link); toast("Enlace copiado"); }catch(e){ $("#invLink").select(); toast("Selecciona y copia el enlace"); } };
+    $("#invMail").onclick=()=>{ const first=String(lastInvite.name||"").trim().split(/\s+/)[0];
+      const body=`Hola${first?" "+first:""}:\n\nTe invité a Colmena, la plataforma de workshops de ${BRAND_ORG}, para que ${lastInvite.role==="admin"?"administres la plataforma y crees tus propios talleres":"crees y facilites tus propios talleres"}.\n\n1. Abre este enlace: ${link}\n2. Crea tu contraseña con este correo (${lastInvite.email}).\n3. Activa la verificación en dos pasos con Microsoft Authenticator o Google Authenticator.\n\nLa invitación vence el ${fmtDate(lastInvite.expires_at,{day:"numeric",month:"long"})} y solo se puede usar una vez.\n\n${ME.name||""}`;
+      location.href="mailto:"+encodeURIComponent(lastInvite.email)+"?subject="+encodeURIComponent("Tu invitación a Colmena")+"&body="+encodeURIComponent(body); };
+    $("#invLink").onclick=e=>e.target.select();
+  }
+  const who=id=>{ const m=AH.staff.find(x=>x.user_id===id)||{}; return m.name||m.email||"esta cuenta"; };
+  $$("[data-act]").forEach(b=>b.onclick=async()=>{ const on=b.dataset.to==="1", id=b.dataset.act;
+    if(!on && !(await askDialog({kind:"danger", title:`¿Desactivar a ${who(id)}?`, text:"Ya no podrá entrar al panel ni ver sus talleres. Sus talleres y lo capturado se conservan y tú los sigues viendo. Puedes reactivarla cuando quieras.", ok:"Desactivar"}))) return;
+    b.disabled=true; try{ await Store.setStaff(id,{active:on}); toast(on?"Cuenta reactivada":"Cuenta desactivada"); adminTeamView(); }catch(e){ toast(friendlyAuthError(e)); b.disabled=false; } });
+  $$(".tm-acts [data-role]").forEach(b=>b.onclick=async()=>{ const id=b.dataset.role, to=b.dataset.to;
+    if(to==="admin" && !(await askDialog({kind:"bee", title:`¿Hacer admin a ${who(id)}?`, text:"Podrá ver y exportar los talleres de todo el equipo, e invitar o desactivar cuentas.", ok:"Hacer admin"}))) return;
+    b.disabled=true; try{ await Store.setStaff(id,{role:to}); toast(to==="admin"?"Ahora es admin":"Ahora es facilitador"); adminTeamView(); }catch(e){ toast(friendlyAuthError(e)); b.disabled=false; } });
+  $$("[data-revoke]").forEach(b=>b.onclick=async()=>{ b.disabled=true; try{ await Store.revokeInvite(b.dataset.revoke); toast("Invitación cancelada"); adminTeamView(); }catch(e){ toast(friendlyAuthError(e)); b.disabled=false; } });
 }
 
 function toolsText(t){ return Object.entries(t||{}).map(([k,v])=>k+" | "+(v||[]).join(", ")).join("\n"); }
@@ -2520,6 +2889,9 @@ function startAdmin(s){
   stopAdmin();
   document.body.classList.add("admin-theme");
   A.session=s; A.participants=[]; A.cards=[]; A.votes=[]; A.qwRatings=[]; A.ideas=[]; A.ideaVotes=[]; A.seen=new Set();
+  /* v1.5 · un admin que abre el taller de otra persona lo ve en solo lectura */
+  A.readonly = !!(s.owner_id && ME.uid && s.owner_id!==ME.uid);
+  A.ownerName = A.readonly ? staffName(s.owner_id) : "";
   try{ history.replaceState(null,"",location.pathname+"?s="+encodeURIComponent(s.code)+"#admin"); }catch(e){}
   const kick=()=>{ clearTimeout(A._t); A._t=setTimeout(async()=>{ await refetchAll(); if(!A.hold) renderAdmin(); else { const sm=$("#shSum"); if(sm) sm.innerHTML=shareSummary(); } },350); };
   A.unsub=Store.subscribe(s.id, kick);
@@ -2805,21 +3177,22 @@ function renderAdmin(){
   $("#app").innerHTML = `<div class="a-shell">
     <header class="a-top">
       <div class="at-l">
-        <button class="ib" id="btnBack" data-tip="Tus talleres" aria-label="Volver a tus talleres">${icon("arrowleft")}</button>
+        <button class="ib" id="btnBack" data-tip="${A.readonly?"Todos los talleres":"Tus talleres"}" aria-label="${A.readonly?"Volver a todos los talleres":"Volver a tus talleres"}">${icon("arrowleft")}</button>
         ${brandLockup("xs")}
         <span class="at-sep" aria-hidden="true"></span>
         <div class="at-ses"><span class="at-k">${esc(s.brand||CONFIG.BRAND)} · ${BRAND_ORG}</span><span class="at-n" title="${esc(s.name)}">${esc(s.name)}</span></div>
+        ${A.readonly?`<span class="ro-tag" data-tip="Eres admin: puedes ver y exportar, pero solo quien facilita puede operarlo">${icon("eye")}<span>Solo lectura · ${esc(A.ownerName)}</span></span>`:""}
       </div>
       <div class="at-r">
         <button class="at-code" id="btnCode" data-tip="Código para entrar · clic para copiar" aria-label="Código ${esc(s.code)}, copiar">${esc(s.code)}${icon("copy")}</button>
         <span class="at-div" aria-hidden="true"></span>
-        <button class="ib lbl primary" id="btnQR">${icon("qr")}<span>QR para entrar</span></button>
+        ${A.readonly?"":`<button class="ib lbl primary" id="btnQR">${icon("qr")}<span>QR para entrar</span></button>`}
         <button class="ib${A.pop?" on":""}${ACT_T[ph]&&nP&&listos===nP?" all":""}" id="btnMore" aria-haspopup="menu" aria-expanded="${!!A.pop}" aria-label="Más opciones: compartir, autores, talleres" data-tip="Compartir, autores y más">${icon("more")}</button>
       </div>
     </header>
     <nav class="stepper" aria-label="Fases del taller">
       <ol class="st-list">${PHASES.map((p,i)=>{ const st=p.id===ph?"on":i<phaseIdx?"done":"todo";
-        return `<li class="st ${st}"><button class="st-b" data-ph="${p.id}"${st==="on"?' aria-current="step"':""} data-tip="${i+1}. ${p.t}${st==="on"?" · en curso":st==="done"?" · hecha":" · clic para abrir"}">
+        return `<li class="st ${st}"><button class="st-b" data-ph="${p.id}"${st==="on"?' aria-current="step"':""}${A.readonly?' aria-disabled="true"':""} data-tip="${i+1}. ${p.t}${st==="on"?" · en curso":st==="done"?" · hecha":A.readonly?"":" · clic para abrir"}">
           <span class="st-ic">${icon(st==="done"?"check":PH_ICON[p.id])}</span><span class="st-tx"><small>${i+1}</small>${p.t}</span></button></li>`; }).join("")}</ol>
       <div class="st-side">
         <span class="st-now">Fase ${phaseIdx+1} de ${PHASES.length} · <b>${(PHASES[phaseIdx]||{}).t||""}</b></span>
@@ -2836,6 +3209,7 @@ function renderAdmin(){
   A.cards.forEach(c=>A.seen.add(c.id)); A.ideas.forEach(i=>A.seen.add(i.id));
   const goPhase=async ph=>{
     if(ph===s.phase) return;
+    if(A.readonly) return toast("Solo lectura: solo quien facilita puede cambiar de fase");
     if(ph==="closed" && !(await askDialog({kind:"bee", title:"¿Cerrar el taller para todos?", text:"Los celulares mostrarán el cierre y nadie podrá enviar más respuestas. Todo lo capturado queda guardado para compartirlo.", ok:"Cerrar para todos"}))) return;
     try{ await Store.updateSession(s.id,{phase:ph}); A.session.phase=ph; await refetchAll(); renderAdmin(); window.scrollTo(0,0); }
     catch(e){ console.error(e); toast("No se pudo cambiar la fase: "+friendlyAuthError(e)); }
@@ -2848,7 +3222,7 @@ function renderAdmin(){
   /* «Ver todos» y «Contexto» recuerdan si estaban abiertos (el panel se redibuja cada pocos segundos) */
   $$("details[data-k]").forEach(d=>{ d.open=A.open.has(d.dataset.k); d.addEventListener("toggle",()=>{ if(d.open) A.open.add(d.dataset.k); else A.open.delete(d.dataset.k); }); });
   $$("[data-go]").forEach(a=>a.onclick=e=>{ e.preventDefault(); const t=$(a.dataset.go); if(t) t.scrollIntoView({behavior:"smooth",block:"start"}); });
-  $("#btnQR").onclick=showQR;
+  if($("#btnQR")) $("#btnQR").onclick=showQR;
   $("#btnMore").onclick=e=>{ e.stopPropagation(); A.pop==="more" ? closePop() : openPop("more"); };
   if(A.pop) placePop();
 }
@@ -2887,7 +3261,7 @@ function renderPop(){
   const L=$("#popLayer"); if(!L) return;
   const fresh=!L.querySelector(".pop"), keepScroll=(L.querySelector(".pop")||{}).scrollTop||0;
   if(A.pop==="more"){
-    const ph=A.session.phase||"lobby", pi=PHASES.findIndex(p=>p.id===ph), mnNext=PHASES[pi+1], mnRes=ph==="results"||ph==="closed";
+    const ph=A.session.phase||"lobby", pi=PHASES.findIndex(p=>p.id===ph), mnNext=A.readonly?null:PHASES[pi+1], mnRes=ph==="results"||ph==="closed";
     const nP=A.participants.length, mnAll=["checkin","pains","votes","quickwins","ideas"].includes(ph) && nP>0 && A.participants.every(p=>(p.done_phases||[]).includes(ph));
     L.innerHTML=`<div class="pop-back" id="popBack"></div><div class="pop menu" role="menu" aria-label="Más opciones">
       ${mnNext?`<button role="menuitem" class="mn-next" id="mnNext" data-ph="${mnNext.id}">${icon("arrowright")}<span><b>${mnNext.id==="closed"?"Cerrar taller":"Siguiente: "+mnNext.t}</b><small>${mnNext.id==="closed"?"Termina la sesión en todos los celulares":mnAll?"Todos listos · puedes avanzar":"Abre la siguiente fase para todos"}</small></span></button>`:""}
@@ -2896,9 +3270,9 @@ function renderPop(){
       <button role="menuitem" id="mnShare">${icon("share")}<span><b>Compartir resultados</b><small>Excel, CSV o PDF</small></span></button>
       <button role="menuitem" id="mnAuthors" aria-pressed="${!!A.showAuthors}">${icon(A.showAuthors?"eye":"eyeoff")}<span><b>Autores</b><small>${A.showAuthors?"Visibles en tarjetas e ideas":"Ocultos en pantalla"}</small></span><i class="mn-tg${A.showAuthors?" on":""}" aria-hidden="true"></i></button>
       <hr>
-      <button role="menuitem" id="mnBack">${icon("grid")}<span><b>Tus talleres</b></span></button>
-      <button role="menuitem" class="danger" id="mnDel">${icon("trash")}<span><b>Borrar taller</b></span></button></div>`;
-    $("#mnBack").onclick=leaveAdmin; $("#mnDel").onclick=deleteWorkshop;
+      <button role="menuitem" id="mnBack">${icon("grid")}<span><b>${A.readonly?"Todos los talleres":"Tus talleres"}</b></span></button>
+      ${A.readonly?"":`<button role="menuitem" class="danger" id="mnDel">${icon("trash")}<span><b>Borrar taller</b></span></button>`}</div>`;
+    $("#mnBack").onclick=leaveAdmin; if($("#mnDel")) $("#mnDel").onclick=deleteWorkshop;
     const mx=$("#mnNext"); if(mx) mx.onclick=()=>{ closePop(); A.goPhase && A.goPhase(mx.dataset.ph); };
     const mp=$("#mnPresent"); if(mp) mp.onclick=()=>{ closePop(); startPresentation(); };
     $("#mnShare").onclick=e=>{ e.stopPropagation(); openPop("share"); };

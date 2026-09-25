@@ -1,5 +1,5 @@
 -- ============================================================
--- COLMENA v1.4 · esquema seguro para Supabase
+-- COLMENA v1.5 · esquema seguro para Supabase
 --
 -- Pega TODO este archivo en Supabase → SQL Editor → Run.
 -- Es re-ejecutable: puedes correrlo las veces que quieras.
@@ -16,6 +16,13 @@
 -- misma fase; se guardan en la columna quickwins con un campo «kind».
 -- Novedades v1.4: cada participante marca cuándo terminó cada actividad
 -- (done_phases) y todos ven «X de N ya terminaron» sin ver a los demás.
+-- Novedades v1.5: dos roles de cuenta.
+--   · Admin: crea sus talleres, VE (solo lectura) y exporta los talleres de
+--     todos los facilitadores, invita facilitadores y los activa/desactiva.
+--   · Facilitador: crea y opera solo sus propios talleres; no ve los de otros.
+--   Las cuentas nuevas entran con una invitación de un solo uso (vence en
+--   7 días) que genera el admin. La primera cuenta que activó su segundo
+--   factor (tú) queda como admin automáticamente.
 --
 -- Cómo protege los datos (todo se valida aquí, en la base de datos,
 -- no en la página, porque el código de una página se puede alterar):
@@ -28,6 +35,9 @@
 -- Requisitos en el panel de Supabase (ver README):
 --   · Authentication → Sign In / Providers → Allow anonymous sign-ins: ON
 --   · Tu usuario facilitador creado en Authentication → Users
+--   · v1.5: Authentication → Sign In / Providers → Email: «Allow new users
+--     to sign up» ON y «Confirm email» OFF (los invitados crean su cuenta
+--     desde la app; sin invitación válida no obtienen ningún permiso)
 -- ============================================================
 
 -- ------------------------------------------------------------
@@ -178,6 +188,35 @@ create table if not exists ws_idea_votes (
   unique (session_id, participant_id, idea_id)
 );
 
+-- v1.5 · Roles de cuenta: 'admin' ve todo (solo lectura en talleres ajenos) · 'facilitator' solo lo suyo
+alter table ws_admins add column if not exists role text not null default 'facilitator';
+alter table ws_admins add column if not exists active boolean not null default true;
+alter table ws_admins add column if not exists name text;
+alter table ws_admins drop constraint if exists ws_admins_role_check;
+alter table ws_admins add constraint ws_admins_role_check check (role in ('admin','facilitator'));
+alter table ws_admins drop constraint if exists ws_admins_name_check;
+alter table ws_admins add constraint ws_admins_name_check check (char_length(name) <= 120);
+-- Quien ya era facilitador en la v1.4 (la primera cuenta) pasa a admin
+update ws_admins set role = 'admin'
+where not exists (select 1 from ws_admins where role = 'admin')
+  and user_id = (select user_id from ws_admins order by created_at, user_id limit 1);
+
+-- v1.5 · Invitaciones de un solo uso. Se guarda solo la huella (sha256) del código.
+create table if not exists ws_invites (
+  id uuid primary key default gen_random_uuid(),
+  code_hash text unique not null,
+  email text not null check (email = lower(email) and email ~ '^[^@\s]+@[^@\s]+\.[^@\s]+$'),
+  name text check (char_length(name) <= 120),
+  role text not null default 'facilitator' check (role in ('admin','facilitator')),
+  created_by uuid references auth.users(id) on delete set null,
+  created_at timestamptz not null default now(),
+  expires_at timestamptz not null default now() + interval '7 days',
+  used_by uuid references auth.users(id) on delete set null,
+  used_at timestamptz,
+  revoked_at timestamptz
+);
+create index if not exists ws_invites_email on ws_invites(email);
+
 create index if not exists ws_qw_ratings_session  on ws_qw_ratings(session_id);
 create index if not exists ws_ideas_session       on ws_ideas(session_id);
 create index if not exists ws_idea_votes_session  on ws_idea_votes(session_id);
@@ -187,10 +226,18 @@ create index if not exists ws_idea_votes_session  on ws_idea_votes(session_id);
 --    pero solo responden sobre el usuario que hace la petición)
 -- ------------------------------------------------------------
 
--- ¿Eres facilitador autorizado Y entraste con segundo factor?
+-- ¿Eres facilitador (o admin) activo Y entraste con segundo factor?
+-- (el nombre se conserva por compatibilidad: significa «cuenta con acceso al panel»)
 create or replace function ws_is_admin() returns boolean
 language sql stable security definer set search_path = public as $$
-  select exists (select 1 from ws_admins a where a.user_id = auth.uid())
+  select exists (select 1 from ws_admins a where a.user_id = auth.uid() and a.active)
+     and coalesce(auth.jwt() ->> 'aal', '') = 'aal2';
+$$;
+
+-- v1.5 · ¿Eres admin (rol que ve todos los talleres) activo con segundo factor?
+create or replace function ws_is_superadmin() returns boolean
+language sql stable security definer set search_path = public as $$
+  select exists (select 1 from ws_admins a where a.user_id = auth.uid() and a.active and a.role = 'admin')
      and coalesce(auth.jwt() ->> 'aal', '') = 'aal2';
 $$;
 
@@ -199,6 +246,13 @@ create or replace function ws_is_owner(p_session uuid) returns boolean
 language sql stable security definer set search_path = public as $$
   select ws_is_admin()
      and exists (select 1 from ws_sessions s where s.id = p_session and s.owner_id = auth.uid());
+$$;
+
+-- v1.5 · ¿Puedes VER el panel de esta sesión? Su dueño, o un admin (solo lectura)
+create or replace function ws_can_view(p_session uuid) returns boolean
+language sql stable security definer set search_path = public as $$
+  select ws_is_owner(p_session)
+      or (ws_is_superadmin() and exists (select 1 from ws_sessions s where s.id = p_session));
 $$;
 
 -- Tu registro de participante en esta sesión (o null)
@@ -243,7 +297,7 @@ language sql stable security definer set search_path = public as $$
          (select count(*)::int from ws_participants p where p.session_id = s.id),
          (select count(*)::int from ws_participants p where p.session_id = s.id and p.done_phases ? s.phase)
   from ws_sessions s
-  where s.id = p_session and (ws_is_owner(p_session) or ws_is_member(p_session));
+  where s.id = p_session and (ws_can_view(p_session) or ws_is_member(p_session));
 $$;
 
 -- Totales de votos por tarjeta: el facilitador siempre; participantes cuando
@@ -254,7 +308,7 @@ language sql stable security definer set search_path = public as $$
   select v.card_id, sum(v.points)::bigint
   from ws_votes v
   where v.session_id = p_session
-    and ( ws_is_owner(p_session)
+    and ( ws_can_view(p_session)
           or (ws_is_member(p_session) and ws_session_phase(p_session) in ('quickwins','ideas','results','closed')) )
   group by v.card_id;
 $$;
@@ -271,14 +325,110 @@ begin
     return false;
   end if;
   if exists (select 1 from ws_admins where user_id = auth.uid()) then
-    return true;
+    return exists (select 1 from ws_admins where user_id = auth.uid() and active);
   end if;
   lock table ws_admins in exclusive mode;
   if not exists (select 1 from ws_admins) then
-    insert into ws_admins (user_id, email) values (auth.uid(), auth.jwt() ->> 'email');
+    insert into ws_admins (user_id, email, role) values (auth.uid(), auth.jwt() ->> 'email', 'admin');
     return true;
   end if;
   return false;
+end $$;
+
+-- v1.5 · Tu cuenta: rol, nombre y si está activa (vacío si no tienes acceso o te falta el segundo factor)
+drop function if exists ws_me();
+create function ws_me() returns table (role text, name text, email text, active boolean)
+language sql stable security definer set search_path = public as $$
+  select a.role, a.name, a.email, a.active from ws_admins a
+  where a.user_id = auth.uid() and coalesce(auth.jwt() ->> 'aal', '') = 'aal2';
+$$;
+
+-- v1.5 · Huella del código de invitación (no se guarda el código en claro)
+create or replace function ws_invite_hash(p_code text) returns text
+language sql immutable set search_path = public as $$
+  select encode(sha256(convert_to(regexp_replace(upper(coalesce(p_code,'')), '[^A-Z0-9]', '', 'g'), 'UTF8')), 'hex');
+$$;
+
+-- v1.5 · El admin crea una invitación. Devuelve el código UNA sola vez.
+drop function if exists ws_create_invite(text, text, text);
+create function ws_create_invite(p_email text, p_name text default null, p_role text default 'facilitator')
+returns table (id uuid, code text, email text, expires_at timestamptz)
+language plpgsql security definer set search_path = public as $$
+declare v_email text := lower(trim(coalesce(p_email,''))); v_code text; v_id uuid; v_exp timestamptz;
+begin
+  if not ws_is_superadmin() then raise exception 'Solo un admin puede invitar facilitadores'; end if;
+  if v_email !~ '^[^@\s]+@[^@\s]+\.[^@\s]+$' then raise exception 'Escribe un correo válido'; end if;
+  if coalesce(p_role,'') not in ('admin','facilitator') then raise exception 'Rol no válido'; end if;
+  if exists (select 1 from ws_admins a where lower(a.email) = v_email and a.active) then
+    raise exception 'Ese correo ya tiene acceso al panel';
+  end if;
+  -- una invitación vigente por correo: la nueva reemplaza a las anteriores
+  update ws_invites i set revoked_at = now()
+  where i.email = v_email and i.used_at is null and i.revoked_at is null;
+  v_code := upper(substr(replace(gen_random_uuid()::text,'-',''),1,12) || substr(replace(gen_random_uuid()::text,'-',''),1,4));
+  insert into ws_invites (code_hash, email, name, role, created_by)
+  values (ws_invite_hash(v_code), v_email, nullif(trim(coalesce(p_name,'')),''), p_role, auth.uid())
+  returning ws_invites.id, ws_invites.expires_at into v_id, v_exp;
+  return query select v_id, substr(v_code,1,4)||'-'||substr(v_code,5,4)||'-'||substr(v_code,9,4)||'-'||substr(v_code,13,4), v_email, v_exp;
+end $$;
+
+-- v1.5 · Datos públicos de una invitación vigente (para la pantalla «Crea tu cuenta»).
+-- Solo responde con el código exacto (16 caracteres al azar): no permite adivinar.
+drop function if exists ws_invite_peek(text);
+create function ws_invite_peek(p_code text)
+returns table (email text, name text, role text, expires_at timestamptz)
+language sql stable security definer set search_path = public as $$
+  select i.email, i.name, i.role, i.expires_at from ws_invites i
+  where i.code_hash = ws_invite_hash(p_code)
+    and i.used_at is null and i.revoked_at is null and i.expires_at > now();
+$$;
+
+-- v1.5 · El invitado canjea su invitación (ya con contraseña y segundo factor)
+drop function if exists ws_redeem_invite(text);
+create function ws_redeem_invite(p_code text) returns text
+language plpgsql security definer set search_path = public as $$
+declare v ws_invites; v_mail text := lower(coalesce(auth.jwt() ->> 'email',''));
+begin
+  if auth.uid() is null or coalesce((auth.jwt() ->> 'is_anonymous')::boolean, false) then
+    raise exception 'Inicia sesión con tu correo para usar la invitación';
+  end if;
+  if coalesce(auth.jwt() ->> 'aal', '') <> 'aal2' then
+    raise exception 'Activa la verificación en dos pasos para usar la invitación';
+  end if;
+  select * into v from ws_invites i where i.code_hash = ws_invite_hash(p_code) for update;
+  if v.id is null or v.revoked_at is not null or v.expires_at <= now()
+     or (v.used_at is not null and v.used_by is distinct from auth.uid()) then
+    raise exception 'La invitación no es válida, ya se usó o venció. Pide una nueva al admin.';
+  end if;
+  if v.email <> v_mail then
+    raise exception 'Esta invitación es para %. Entra con ese correo.', v.email;
+  end if;
+  insert into ws_admins (user_id, email, role, name, active)
+  values (auth.uid(), v_mail, v.role, v.name, true)
+  on conflict (user_id) do update
+    set role = excluded.role, active = true, email = excluded.email,
+        name = coalesce(ws_admins.name, excluded.name);
+  update ws_invites set used_by = auth.uid(), used_at = coalesce(used_at, now()) where id = v.id;
+  return v.role;
+end $$;
+
+-- v1.5 · El admin cancela una invitación pendiente
+create or replace function ws_revoke_invite(p_id uuid) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not ws_is_superadmin() then raise exception 'Solo un admin puede cancelar invitaciones'; end if;
+  update ws_invites set revoked_at = now() where id = p_id and used_at is null and revoked_at is null;
+end $$;
+
+-- v1.5 · El admin activa/desactiva una cuenta o cambia su rol (nunca la suya)
+create or replace function ws_set_staff(p_user uuid, p_active boolean default null, p_role text default null) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not ws_is_superadmin() then raise exception 'Solo un admin puede cambiar cuentas'; end if;
+  if p_user = auth.uid() then raise exception 'No puedes cambiar tu propia cuenta'; end if;
+  if p_role is not null and p_role not in ('admin','facilitator') then raise exception 'Rol no válido'; end if;
+  update ws_admins set active = coalesce(p_active, active), role = coalesce(p_role, role) where user_id = p_user;
+  if not found then raise exception 'Esa cuenta no existe'; end if;
 end $$;
 
 -- Tope de votos por persona, validado en el servidor
@@ -316,7 +466,7 @@ language sql stable security definer set search_path = public as $$
          count(*) filter (where r.score = 0)
   from ws_qw_ratings r
   where r.session_id = p_session
-    and ( ws_is_owner(p_session)
+    and ( ws_can_view(p_session)
           or (ws_is_member(p_session) and ws_session_phase(p_session) in ('results','closed')) )
   group by r.qw_id;
 $$;
@@ -328,7 +478,7 @@ language sql stable security definer set search_path = public as $$
   select v.idea_id, count(*)::bigint
   from ws_idea_votes v
   where v.session_id = p_session
-    and ( ws_is_owner(p_session)
+    and ( ws_can_view(p_session)
           or (ws_is_member(p_session) and ws_session_phase(p_session) in ('results','closed')) )
   group by v.idea_id;
 $$;
@@ -404,6 +554,7 @@ alter table ws_votes        enable row level security;
 alter table ws_qw_ratings   enable row level security;
 alter table ws_ideas        enable row level security;
 alter table ws_idea_votes   enable row level security;
+alter table ws_invites      enable row level security;
 
 -- Borra cualquier regla previa de Colmena (incluidas las abiertas de la v1)
 do $$
@@ -415,13 +566,17 @@ begin
   end loop;
 end $$;
 
--- Facilitadores: cada quien solo se ve a sí mismo
+-- Cuentas del panel: cada quien se ve a sí mismo; el admin ve a todo el equipo
 create policy ws_admins_self on ws_admins for select to authenticated
-  using (user_id = auth.uid());
+  using (user_id = auth.uid() or ws_is_superadmin());
+
+-- v1.5 · Invitaciones: solo el admin las ve (se crean y cancelan con funciones)
+create policy ws_invites_select on ws_invites for select to authenticated
+  using (ws_is_superadmin());
 
 -- Sesiones
 create policy ws_sessions_select on ws_sessions for select to authenticated
-  using ((owner_id = auth.uid() and ws_is_admin()) or ws_is_member(id));
+  using ((owner_id = auth.uid() and ws_is_admin()) or ws_is_superadmin() or ws_is_member(id));
 create policy ws_sessions_insert on ws_sessions for insert to authenticated
   with check (owner_id = auth.uid() and ws_is_admin());
 create policy ws_sessions_update on ws_sessions for update to authenticated
@@ -432,7 +587,7 @@ create policy ws_sessions_delete on ws_sessions for delete to authenticated
 
 -- Participantes: cada quien ve y edita solo su registro; el facilitador ve a todos
 create policy ws_participants_select on ws_participants for select to authenticated
-  using (user_id = auth.uid() or ws_is_owner(session_id));
+  using (user_id = auth.uid() or ws_can_view(session_id));
 create policy ws_participants_insert on ws_participants for insert to authenticated
   with check (user_id = auth.uid() and coalesce(ws_session_phase(session_id), 'closed') <> 'closed');
 create policy ws_participants_update on ws_participants for update to authenticated
@@ -443,7 +598,7 @@ create policy ws_participants_delete on ws_participants for delete to authentica
 
 -- Tarjetas: se ven dentro de la sesión (sin autor); se publican solo en fase Dolores
 create policy ws_cards_select on ws_cards for select to authenticated
-  using (ws_is_member(session_id) or ws_is_owner(session_id));
+  using (ws_is_member(session_id) or ws_can_view(session_id));
 create policy ws_cards_insert on ws_cards for insert to authenticated
   with check (participant_id = ws_my_participant(session_id) and ws_session_phase(session_id) = 'pains');
 create policy ws_cards_delete on ws_cards for delete to authenticated
@@ -452,7 +607,7 @@ create policy ws_cards_delete on ws_cards for delete to authenticated
 
 -- Votos: cada quien ve y cambia solo los suyos, solo en fase Votación
 create policy ws_votes_select on ws_votes for select to authenticated
-  using (participant_id = ws_my_participant(session_id) or ws_is_owner(session_id));
+  using (participant_id = ws_my_participant(session_id) or ws_can_view(session_id));
 create policy ws_votes_insert on ws_votes for insert to authenticated
   with check (participant_id = ws_my_participant(session_id) and ws_session_phase(session_id) = 'votes');
 create policy ws_votes_update on ws_votes for update to authenticated
@@ -463,7 +618,7 @@ create policy ws_votes_delete on ws_votes for delete to authenticated
 
 -- v1.2 · Quick wins: cada quien califica y ve solo lo suyo, solo en fase Quick wins
 create policy ws_qw_ratings_select on ws_qw_ratings for select to authenticated
-  using (participant_id = ws_my_participant(session_id) or ws_is_owner(session_id));
+  using (participant_id = ws_my_participant(session_id) or ws_can_view(session_id));
 create policy ws_qw_ratings_insert on ws_qw_ratings for insert to authenticated
   with check (participant_id = ws_my_participant(session_id) and ws_session_phase(session_id) = 'quickwins');
 create policy ws_qw_ratings_update on ws_qw_ratings for update to authenticated
@@ -476,7 +631,7 @@ create policy ws_qw_ratings_delete on ws_qw_ratings for delete to authenticated
 --        las ideas se ven dentro de la sesión (sin autor) desde la fase Ideas
 create policy ws_ideas_select on ws_ideas for select to authenticated
   using ( participant_id = ws_my_participant(session_id)
-          or ws_is_owner(session_id)
+          or ws_can_view(session_id)
           or (kind = 'idea' and ws_is_member(session_id)
               and ws_session_phase(session_id) in ('ideas','results','closed')) );
 create policy ws_ideas_insert on ws_ideas for insert to authenticated
@@ -491,7 +646,7 @@ create policy ws_ideas_delete on ws_ideas for delete to authenticated
 
 -- v1.2 · Apoyos: cada quien ve y cambia solo los suyos, solo en fase Ideas
 create policy ws_idea_votes_select on ws_idea_votes for select to authenticated
-  using (participant_id = ws_my_participant(session_id) or ws_is_owner(session_id));
+  using (participant_id = ws_my_participant(session_id) or ws_can_view(session_id));
 create policy ws_idea_votes_insert on ws_idea_votes for insert to authenticated
   with check (participant_id = ws_my_participant(session_id) and ws_session_phase(session_id) = 'ideas');
 create policy ws_idea_votes_delete on ws_idea_votes for delete to authenticated
@@ -501,20 +656,27 @@ create policy ws_idea_votes_delete on ws_idea_votes for delete to authenticated
 -- 4) Permisos: la llave pública sola (rol anon) no accede a nada
 -- ------------------------------------------------------------
 revoke all on ws_admins, ws_sessions, ws_participants, ws_cards, ws_votes,
-  ws_qw_ratings, ws_ideas, ws_idea_votes from anon;
+  ws_qw_ratings, ws_ideas, ws_idea_votes, ws_invites from anon;
+revoke insert, update, delete on ws_admins, ws_invites from authenticated;
 grant usage on schema public to authenticated;
-grant select on ws_admins to authenticated;
+grant select on ws_admins, ws_invites to authenticated;
 grant select, insert, update, delete on ws_sessions, ws_participants, ws_cards, ws_votes,
   ws_qw_ratings, ws_ideas, ws_idea_votes to authenticated;
 
 revoke execute on function ws_is_admin(), ws_is_owner(uuid), ws_my_participant(uuid), ws_is_member(uuid),
   ws_session_phase(uuid), ws_join_lookup(text), ws_card_totals(uuid), ws_claim_admin(),
-  ws_qw_totals(uuid), ws_idea_totals(uuid), ws_phase_progress(uuid)
+  ws_qw_totals(uuid), ws_idea_totals(uuid), ws_phase_progress(uuid),
+  ws_is_superadmin(), ws_can_view(uuid), ws_me(), ws_invite_hash(text), ws_create_invite(text,text,text),
+  ws_invite_peek(text), ws_redeem_invite(text), ws_revoke_invite(uuid), ws_set_staff(uuid,boolean,text)
   from public, anon;
 grant execute on function ws_is_admin(), ws_is_owner(uuid), ws_my_participant(uuid), ws_is_member(uuid),
   ws_session_phase(uuid), ws_join_lookup(text), ws_card_totals(uuid), ws_claim_admin(),
-  ws_qw_totals(uuid), ws_idea_totals(uuid), ws_phase_progress(uuid)
+  ws_qw_totals(uuid), ws_idea_totals(uuid), ws_phase_progress(uuid),
+  ws_is_superadmin(), ws_can_view(uuid), ws_me(), ws_create_invite(text,text,text),
+  ws_invite_peek(text), ws_redeem_invite(text), ws_revoke_invite(uuid), ws_set_staff(uuid,boolean,text)
   to authenticated;
+-- La pantalla «Crea tu cuenta» consulta la invitación antes de iniciar sesión
+grant execute on function ws_invite_peek(text) to anon;
 
 -- ------------------------------------------------------------
 -- 5) Tiempo real (solo agrega las tablas que falten)
@@ -531,7 +693,7 @@ begin
   end loop;
 end $$;
 
--- Verificación: deben salir 8 tablas con seguridad activa (rls = true)
+-- Verificación: deben salir 9 tablas con seguridad activa (rls = true)
 select c.relname as tabla, c.relrowsecurity as rls,
        (select count(*) from pg_policies p where p.tablename = c.relname) as reglas
 from pg_class c join pg_namespace n on n.oid = c.relnamespace

@@ -15,6 +15,15 @@ Herramienta propia para workshops de design thinking en vivo.
 
 Todo es **un solo archivo** (`index.html`) más una base de datos gratuita en Supabase, **con autenticación**: tu cuenta está protegida con segundo factor y cada participante solo accede a lo suyo.
 
+**Roles (v1.5):** hay dos tipos de cuenta en el panel.
+
+| Rol | Qué puede hacer |
+|---|---|
+| **Admin** | Crea y opera sus propios talleres. Ve **todos** los talleres del equipo en **solo lectura** (panel, resultados, Presentar y Compartir/exportar), pero no cambia fases, no borra ni muestra el QR de talleres ajenos. Invita personas, las activa/desactiva y cambia su rol. |
+| **Facilitador** | Crea y opera **solo sus** talleres. No ve los de nadie más ni la sección Equipo. |
+
+La primera cuenta que activó su segundo factor queda como **admin**. Las demás entran **solo por invitación**.
+
 ---
 
 ## Puesta en marcha (una sola vez, ~20 min)
@@ -30,6 +39,8 @@ Todo es **un solo archivo** (`index.html`) más una base de datos gratuita en Su
 
 1. **Authentication → Sign In / Providers** → activa **Allow anonymous sign-ins** → Save.
    Así los participantes entran sin crear cuenta.
+   - En la misma pantalla (sección **Email**, v1.5): deja encendido **Allow new users to sign up** y **apaga Confirm email** → Save.
+     Así tus invitados crean su cuenta desde la app sin esperar un correo (el correo gratuito de Supabase solo llega a miembros de tu organización en Supabase). Registrarse sin una invitación válida no da ningún permiso.
 2. **Authentication → Rate Limits** → sube **anonymous users** a ~300 por hora → Save.
    Toda la sala comparte el mismo internet (misma IP) y el límite por defecto es de 30 por hora.
 3. **Authentication → Users → Add user → Create new user**. Pon tu correo y una contraseña larga, marca **Auto Confirm User** y da clic en **Create user**.
@@ -55,9 +66,24 @@ Usa la llave **publishable**. Nunca pongas la **secret** en la página.
 
 1. Abre `…/colmena-workshop/#admin` y entra con tu correo y contraseña.
 2. Te pedirá **activar la verificación en dos pasos**. Escanea el QR con Microsoft Authenticator o Google Authenticator y escribe el código de 6 dígitos.
-3. **La primera cuenta que activa su segundo factor queda como facilitador.** Ninguna otra cuenta puede auto-asignarse después.
+3. **La primera cuenta que activa su segundo factor queda como admin.** Ninguna otra cuenta puede auto-asignarse después: las demás necesitan una invitación.
 
 Desde entonces, cada vez que entres te pedirá contraseña + código de tu app.
+
+### 6. Invita a tus facilitadores (v1.5)
+
+1. En el panel, pestaña **Equipo** → **Invitar a alguien**: nombre (opcional), correo y rol (**Facilitador** o **Admin**) → **Crear invitación**.
+2. Copia el enlace o usa **Enviar por correo** (abre tu correo con el mensaje y los pasos listos).
+3. La persona abre el enlace, crea su contraseña con **ese mismo correo** y activa su verificación en dos pasos. Al terminar ya ve su panel.
+
+Cada invitación sirve **una sola vez**, **solo con ese correo** y **vence en 7 días**. Por seguridad el enlace se muestra solo al crearlo; si se pierde, crea otra (la nueva cancela la anterior). En **Invitaciones pendientes** puedes cancelarlas.
+
+En **Equipo** también ves a todas las cuentas con cuántos talleres tiene cada una, y puedes:
+
+- **Desactivar / Reactivar:** quien está desactivado ya no entra al panel ni ve sus talleres; sus talleres y lo capturado se conservan y tú los sigues viendo.
+- **Hacer admin / Hacer facilitador.** Nadie puede cambiar su propia cuenta.
+
+En **Todos los talleres** filtras por facilitador o buscas por nombre o código. **Abrir** te lleva a los tuyos; **Ver** abre los ajenos en solo lectura (lo indica la etiqueta amarilla «Solo lectura · Nombre»).
 
 ---
 
@@ -106,7 +132,7 @@ Trucos:
 
 - **Mostrar autores** enciende o apaga los nombres en el muro proyectado.
 - El código de 6 caracteres funciona sin QR: la persona entra a la liga y lo escribe.
-- **Tus talleres** lista todos tus talleres para reabrirlos otro día.
+- **Tus talleres** lista todos tus talleres para reabrirlos otro día. Si eres admin, **Todos los talleres** muestra también los del equipo.
 
 ---
 
@@ -119,10 +145,14 @@ Todas las reglas viven **en la base de datos** (políticas RLS en `setup.sql`), 
 | Sin iniciar sesión (solo con la llave pública) | Nada. Toda lectura da "no autorizado". |
 | Participante (anónimo) | Buscar un taller por código, unirse, ver y editar **solo su** registro. Publicar tarjetas en la fase Dolores, ver las tarjetas del taller **sin autor** y votar hasta su tope (validado en el servidor). Calificar quick wins solo en su fase, ver solo sus propias calificaciones y proponer mejoras que solo ve el facilitador. En Ideas: publicar ideas para los retos y apoyar hasta su tope (no las propias). Los totales se ven solo en Resultados. |
 | Tu cuenta sin el código 2FA | Nada (aunque alguien robe tu contraseña). |
-| Tu cuenta con 2FA | Crear, ver, controlar, exportar y borrar **tus** talleres. |
-| Cualquier otra cuenta | Nada: no puede volverse facilitador ni ver talleres ajenos. |
+| Facilitador con 2FA | Crear, ver, controlar, exportar y borrar **sus** talleres. No ve talleres, cuentas ni invitaciones de nadie más. |
+| Admin con 2FA | Lo mismo con sus talleres, más **ver y exportar** (sin modificar) los talleres de todos, y administrar cuentas e invitaciones. |
+| Cuenta desactivada | Nada. |
+| Cualquier otra cuenta | Nada: sin una invitación válida para **su** correo no puede volverse facilitador ni ver talleres. |
 
 Verificado con 96 pruebas de ataque directas contra la API: leer datos ajenos, suplantar, cambiar fases, votar de más, calificar o proponer fuera de fase, apoyar la idea propia o pasarse del tope, etc. Todas bloqueadas.
+
+v1.5: 67 pruebas más de roles e invitaciones (un facilitador no ve talleres ajenos ni con el código, el admin no puede cambiar ni borrar talleres ajenos, invitaciones usadas, vencidas, canceladas o con otro correo rechazadas, nadie se sube de rol editando la tabla, cuentas desactivadas sin acceso). Todas correctas.
 
 Límites que conviene conocer:
 
@@ -133,13 +163,17 @@ Límites que conviene conocer:
 
 `setup.sql` se puede volver a correr completo sin perder datos (todo es `if not exists` / `create or replace`). Si vienes de v1.3, basta con correr el bloque marcado **v1.4** (columna `done_phases` y función `ws_phase_progress`).
 
+**De v1.4 a v1.5 (roles):** corre `setup.sql` completo otra vez. Tu cuenta (la primera facilitadora) pasa sola a **admin** y tus talleres se conservan. Luego haz el ajuste de **Confirm email** del paso 2 y sube el nuevo `index.html`.
+
 ### Tareas de mantenimiento (SQL Editor)
 
-Agregar otro facilitador (primero créalo en Authentication → Users):
+Agregar facilitadores: usa **Equipo → Invitar a alguien** en el panel (ya no hace falta SQL).
+
+Si te quedaste sin ningún admin activo, recupera el rol desde el SQL Editor:
 
 ```sql
-insert into ws_admins (user_id, email)
-select id, email from auth.users where email = 'correo@empresa.com';
+update ws_admins set role = 'admin', active = true
+where email = 'tu-correo@empresa.com';
 ```
 
 Si perdiste tu celular, reinicia tu segundo factor. Al entrar de nuevo te pedirá activarlo con un QR nuevo:
