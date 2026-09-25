@@ -1123,9 +1123,25 @@ body.project .hxu i{width:18px;height:21px}
 .inv-out-t{font-size:14px;line-height:1.45}
 .inv-out-t svg{width:18px;height:18px;color:var(--ok);vertical-align:-4px;margin-right:6px}
 .admin-theme .inv-out .input{font-size:12.5px;padding:10px 12px;border-radius:10px}
+.inv-how{font-size:13px;font-weight:700;color:var(--ink)}
 .inv-acts{display:grid;grid-template-columns:1fr;gap:8px}
-.inv-acts .abtn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 10px;font-size:13.5px}
-.inv-acts .abtn svg{width:16px;height:16px}
+.inv-acts .abtn{display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:13.5px;text-align:left}
+.inv-acts .abtn svg{width:16px;height:16px;flex:none}
+.inv-n{display:inline-grid;place-items:center;flex:none;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.18);font-style:normal;font-size:11.5px;font-weight:800}
+.inv-acts .abtn:not(.primary) .inv-n,.inv-step3 .inv-n{background:var(--accent-soft);color:var(--accent-strong)}
+.inv-acts .abtn.done{background:var(--ok);border-color:var(--ok)}
+.inv-step3{display:flex;align-items:flex-start;gap:8px;padding:2px 12px;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+.inv-step3 .inv-n{margin-top:1px}
+kbd{font-family:var(--sans);font-size:11px;font-weight:700;padding:1px 5px;border-radius:5px;border:1px solid var(--line);background:var(--card);white-space:nowrap}
+.inv-links{display:flex;gap:16px;flex-wrap:wrap}
+.inv-links .linkbtn{display:inline-flex;align-items:center;gap:5px;font-size:13px;text-decoration:none}
+.inv-links .linkbtn svg{width:15px;height:15px}
+.mp-back{position:fixed;inset:0;z-index:200;background:rgba(1,19,59,.45);display:grid;place-items:center;padding:16px}
+.mp{width:min(700px,100%);height:min(88vh,980px);background:var(--card);border-radius:18px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(1,19,59,.3)}
+.mp-h{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px 14px 20px;border-bottom:1px solid var(--line)}
+.mp-h b{display:block;font-size:15px}
+.mp-h small{display:block;font-size:12.5px;color:var(--ink-3)}
+.mp-f{flex:1;width:100%;border:0;background:#EEF3F9}
 .ro-tag{display:inline-flex;align-items:center;gap:6px;flex:none;padding:5px 11px 5px 9px;border-radius:var(--r-chip);background:#FFF4DC;color:#7A4B00;font-size:12.5px;font-weight:700;white-space:nowrap}
 .ro-tag svg{width:15px;height:15px}
 .st-b[aria-disabled="true"]{cursor:default}
@@ -1443,7 +1459,7 @@ function tasksFor(session, stage){ return (session && session.tasks && session.t
 function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260925210412";
+const APP_BUILD="20260925214308";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -2766,6 +2782,88 @@ async function adminAllView(){
   draw();
 }
 
+/* ---------- v1.5 · Correo de invitación con diseño (Colmena + Quality & Knowledge) ----------
+   Se copia como HTML para pegarlo en Outlook o Gmail: tablas y estilos en línea (lo único que respetan los correos).
+   Las imágenes se sirven desde la carpeta email/ del mismo sitio publicado (GitHub Pages). */
+function inviteEmail(inv){
+  const base = new URL("email/", location.href.split(/[?#]/)[0]).href;
+  const link = location.origin+location.pathname+"?inv="+encodeURIComponent(inv.code)+"#admin";
+  const first = String(inv.name||"").trim().split(/\s+/)[0];
+  const sender = String(ME.name||"").trim();
+  const until = fmtDate(inv.expires_at,{weekday:"long",day:"numeric",month:"long"});
+  const isAdm = inv.role==="admin";
+  const roleT = isAdm ? "Admin" : "Facilitador";
+  const roleD = isAdm ? "Creas tus propios talleres, ves y exportas los de todo el equipo, e invitas o desactivas cuentas."
+                      : "Creas y facilitas tus propios talleres: los participantes entran con un QR desde su celular.";
+  const F = "font-family:Montserrat,'Segoe UI',Helvetica,Arial,sans-serif;";
+  const e = esc;
+  const step = (n,t,d) => `<tr><td valign="top" width="40" style="padding:0 0 16px 0;"><div style="${F}width:28px;height:28px;line-height:28px;border-radius:14px;background:#E6F2FB;color:#1B6FAE;font-size:13px;font-weight:800;text-align:center;">${n}</div></td>
+      <td valign="top" style="${F}padding:3px 0 16px 0;font-size:14.5px;line-height:21px;color:#46536E;"><b style="color:#01133B;">${t}</b><br>${d}</td></tr>`;
+  const body = `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#EEF3F9" style="background:#EEF3F9;border-collapse:collapse;">
+<tr><td align="center" style="padding:32px 12px;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#EEF3F9;font-size:1px;line-height:1px;">Tu acceso a Colmena para facilitar workshops en vivo. La invitación vence el ${e(until)}.</div>
+  <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#FFFFFF" style="width:100%;max-width:600px;background:#FFFFFF;border:1px solid #DCE3EE;border-radius:16px;border-collapse:separate;">
+    <tr><td height="6" bgcolor="#278FD8" style="height:6px;line-height:6px;font-size:0;background:#278FD8;border-radius:16px 16px 0 0;">&nbsp;</td></tr>
+    <tr><td align="center" style="padding:34px 40px 6px 40px;">
+      <img src="${base}colmena-qk.png" width="170" height="69" alt="Colmena + Quality &amp; Knowledge" style="display:block;width:170px;height:auto;border:0;outline:none;">
+    </td></tr>
+    <tr><td align="center" style="${F}padding:14px 40px 0 40px;font-size:12px;font-weight:800;letter-spacing:2px;color:#1B6FAE;text-transform:uppercase;">Invitación · ${roleT}</td></tr>
+    <tr><td align="center" style="${F}padding:10px 40px 0 40px;font-size:26px;line-height:33px;font-weight:800;color:#01133B;">${first?"Hola "+e(first)+", te":"Te"} damos la bienvenida a Colmena</td></tr>
+    <tr><td align="center" style="${F}padding:14px 48px 0 48px;font-size:15px;line-height:24px;color:#46536E;">${sender?e(sender)+" te invitó a":"Te invitaron a"} <b style="color:#01133B;">Colmena</b>, la plataforma de ${BRAND_ORG} para facilitar workshops de design thinking en vivo: todas las voces, un solo muro.</td></tr>
+    <tr><td style="padding:24px 40px 0 40px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F4F7FB" style="background:#F4F7FB;border-radius:12px;border-collapse:separate;">
+        <tr><td style="${F}padding:14px 18px;font-size:14px;line-height:21px;color:#46536E;"><span style="display:inline-block;padding:3px 10px;border-radius:999px;background:${isAdm?"#01133B":"#E9EDF5"};color:${isAdm?"#FFFFFF":"#46536E"};font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;">${roleT}</span>&nbsp; ${roleD}</td></tr>
+      </table>
+    </td></tr>
+    <tr><td align="center" style="padding:28px 40px 6px 40px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;"><tr>
+        <td align="center" bgcolor="#01133B" style="border-radius:12px;background:#01133B;">
+          <a href="${e(link)}" target="_blank" style="${F}display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;color:#FFFFFF;text-decoration:none;border-radius:12px;">Crear mi cuenta</a>
+        </td></tr></table>
+    </td></tr>
+    <tr><td align="center" style="${F}padding:8px 40px 0 40px;font-size:12.5px;line-height:19px;color:#616D87;">Vence el ${e(until)} · Solo funciona una vez y con <b style="color:#46536E;">${e(inv.email)}</b></td></tr>
+    <tr><td style="padding:30px 40px 0 40px;"><div style="height:1px;line-height:1px;font-size:0;background:#DCE3EE;">&nbsp;</div></td></tr>
+    <tr><td style="${F}padding:24px 40px 10px 40px;font-size:13px;font-weight:800;letter-spacing:1.5px;color:#01133B;text-transform:uppercase;">En 3 pasos, unos 2 minutos</td></tr>
+    <tr><td style="padding:6px 40px 0 40px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+      ${step(1,"Abre tu invitación","Da clic en «Crear mi cuenta».")}
+      ${step(2,"Crea tu contraseña",`Con este mismo correo: ${e(inv.email)}.`)}
+      ${step(3,"Activa la verificación en dos pasos","Escanea un QR con Microsoft Authenticator o Google Authenticator. Protege los datos de tus talleres.")}
+    </table></td></tr>
+    <tr><td style="${F}padding:4px 40px 30px 40px;font-size:12.5px;line-height:19px;color:#616D87;">¿El botón no abre? Copia este enlace en tu navegador:<br><a href="${e(link)}" style="color:#1B6FAE;word-break:break-all;">${e(link)}</a></td></tr>
+  </table>
+  <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;">
+    <tr><td align="center" style="${F}padding:26px 20px 6px 20px;font-size:11px;font-weight:700;letter-spacing:2px;color:#616D87;text-transform:uppercase;">Una plataforma de</td></tr>
+    <tr><td align="center" style="padding:4px 20px 10px 20px;"><img src="${base}quality-knowledge.png" width="150" height="45" alt="${BRAND_ORG}" style="display:block;width:150px;height:auto;border:0;"></td></tr>
+    <tr><td align="center" style="${F}padding:4px 30px 0 30px;font-size:11.5px;line-height:17px;color:#8A94A8;">Si no esperabas esta invitación, puedes ignorar este correo: sin el enlace nadie puede usar tu cuenta.</td></tr>
+  </table>
+</td></tr></table>`;
+  const doc = `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tu invitación a Colmena</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet"></head><body style="margin:0;padding:0;background:#EEF3F9;">${body}</body></html>`;
+  const text = `${first?"Hola "+first:"Hola"}:\n\n${sender?sender+" te invitó a":"Te invitaron a"} Colmena, la plataforma de ${BRAND_ORG} para facilitar workshops de design thinking en vivo.\n\nTu rol: ${roleT}. ${roleD}\n\n1. Abre tu invitación: ${link}\n2. Crea tu contraseña con este correo: ${inv.email}\n3. Activa la verificación en dos pasos con Microsoft Authenticator o Google Authenticator.\n\nLa invitación vence el ${until} y solo funciona una vez.\n${sender?"\n"+sender:""}`;
+  return { subject:"Tu invitación a Colmena · "+BRAND_ORG, html:body, doc, text, link };
+}
+/* Copia texto con formato (HTML) + texto plano. Pegado en Outlook o Gmail conserva el diseño. */
+async function copyRich(html, text){
+  try{ if(window.ClipboardItem && navigator.clipboard && navigator.clipboard.write){
+    await navigator.clipboard.write([new ClipboardItem({"text/html":new Blob([html],{type:"text/html"}),"text/plain":new Blob([text],{type:"text/plain"})})]); return true; } }catch(e){}
+  const d=document.createElement("div"); d.contentEditable="true"; d.style.cssText="position:fixed;left:-10000px;top:0;width:640px"; d.innerHTML=html; document.body.appendChild(d);
+  const r=document.createRange(); r.selectNodeContents(d); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r);
+  let ok=false; try{ ok=document.execCommand("copy"); }catch(e){} sel.removeAllRanges(); d.remove(); return ok;
+}
+function previewEmail(mail){
+  const host=document.createElement("div"); host.className="mp-back";
+  host.innerHTML=`<div class="mp" role="dialog" aria-modal="true" aria-labelledby="mpT">
+    <div class="mp-h"><div><b id="mpT">Vista previa del correo</b><small>Asunto: ${esc(mail.subject)}</small></div><button class="ib sm" id="mpX" aria-label="Cerrar">${icon("close")}</button></div>
+    <iframe class="mp-f" title="Correo de invitación" sandbox="allow-popups allow-popups-to-escape-sandbox"></iframe></div>`;
+  document.body.appendChild(host);
+  host.querySelector("iframe").srcdoc=mail.doc;
+  const close=()=>{ host.remove(); document.removeEventListener("keydown",onK); };
+  const onK=e=>{ if(e.key==="Escape") close(); };
+  document.addEventListener("keydown",onK);
+  host.onclick=e=>{ if(e.target===host) close(); };
+  host.querySelector("#mpX").onclick=close; host.querySelector("#mpX").focus();
+}
+
 /* ---------- v1.5 · Admin: equipo e invitaciones ---------- */
 async function adminTeamView(lastInvite){
   document.body.classList.add("admin-theme");
@@ -2799,7 +2897,13 @@ async function adminTeamView(lastInvite){
             <p class="inv-out-t">${icon("check")}Invitación lista para <b>${esc(lastInvite.email)}</b></p>
             <label class="sr" for="invLink">Enlace de invitación</label>
             <input id="invLink" class="input mono" readonly value="${esc(link)}">
-            <div class="inv-acts"><button class="abtn primary" id="invCopy">${icon("copy")}Copiar enlace</button><button class="abtn" id="invMail">${icon("mail")}Enviar por correo</button></div>
+            <p class="inv-how">Envíala con diseño en 3 pasos:</p>
+            <div class="inv-acts">
+              <button class="abtn primary" id="invCopyMail"><i class="inv-n">1</i>${icon("copy")}Copiar correo con diseño</button>
+              <button class="abtn" id="invMail"><i class="inv-n">2</i>${icon("mail")}Abrir mi correo</button>
+              <p class="inv-step3"><i class="inv-n">3</i><span>Pega con <kbd>⌘ V</kbd> o <kbd>Ctrl V</kbd> en el cuerpo y envía. Ya lleva destinatario y asunto.</span></p>
+            </div>
+            <div class="inv-links"><button type="button" class="linkbtn" id="invPrev">${icon("eye")}Vista previa</button><button type="button" class="linkbtn" id="invCopy">${icon("copy")}Copiar solo el enlace</button></div>
             <p class="hint">Vence el ${esc(fmtDate(lastInvite.expires_at,{day:"numeric",month:"long"}))}. Por seguridad no se vuelve a mostrar: si se pierde, crea otra.</p>
           </div>`:""}
         </section>
@@ -2843,9 +2947,11 @@ async function adminTeamView(lastInvite){
   };
   if(lastInvite){
     $("#invCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(link); toast("Enlace copiado"); }catch(e){ $("#invLink").select(); toast("Selecciona y copia el enlace"); } };
-    $("#invMail").onclick=()=>{ const first=String(lastInvite.name||"").trim().split(/\s+/)[0];
-      const body=`Hola${first?" "+first:""}:\n\nTe invité a Colmena, la plataforma de workshops de ${BRAND_ORG}, para que ${lastInvite.role==="admin"?"administres la plataforma y crees tus propios talleres":"crees y facilites tus propios talleres"}.\n\n1. Abre este enlace: ${link}\n2. Crea tu contraseña con este correo (${lastInvite.email}).\n3. Activa la verificación en dos pasos con Microsoft Authenticator o Google Authenticator.\n\nLa invitación vence el ${fmtDate(lastInvite.expires_at,{day:"numeric",month:"long"})} y solo se puede usar una vez.\n\n${ME.name||""}`;
-      location.href="mailto:"+encodeURIComponent(lastInvite.email)+"?subject="+encodeURIComponent("Tu invitación a Colmena")+"&body="+encodeURIComponent(body); };
+    const mail=inviteEmail(lastInvite);
+    $("#invCopyMail").onclick=async()=>{ const ok=await copyRich(mail.html, mail.text);
+      if(ok){ $("#invCopyMail").classList.add("done"); toast("Correo copiado · ahora ábrelo y pega"); } else toast("No se pudo copiar. Usa «Copiar solo el enlace»."); };
+    $("#invMail").onclick=()=>{ location.href="mailto:"+encodeURIComponent(lastInvite.email)+"?subject="+encodeURIComponent(mail.subject); };
+    $("#invPrev").onclick=()=>previewEmail(mail);
     $("#invLink").onclick=e=>e.target.select();
   }
   const who=id=>{ const m=AH.staff.find(x=>x.user_id===id)||{}; return m.name||m.email||"esta cuenta"; };
