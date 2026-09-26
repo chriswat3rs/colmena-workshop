@@ -1948,7 +1948,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260926104917";
+const APP_BUILD="20260926105910";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -1991,6 +1991,30 @@ function pendingInvite(){ return (storageGet(INVITE_KEY)||"").trim(); }
 function clearInvite(){ try{ localStorage.removeItem(INVITE_KEY); }catch(e){ if(window.__mem) delete window.__mem[INVITE_KEY]; } }
 (function captureInvite(){ try{ const u=new URL(location.href), c=(u.searchParams.get("inv")||"").trim();
   if(c){ storageSet(INVITE_KEY,c); u.searchParams.delete("inv"); if(!u.hash) u.hash="#admin"; history.replaceState(null,"",u.pathname+u.search+u.hash); } }catch(e){} })();
+
+/* v1.11.1 · Passkeys en dos tiempos: las opciones se piden ANTES del toque y Face ID se abre directo en el toque
+   (iPhone/Safari exige que Face ID arranque en el mismo toque; si antes hay que esperar a internet, lo bloquea). */
+const b64u = {
+  dec(s){ s=String(s).replace(/-/g,"+").replace(/_/g,"/"); while(s.length%4) s+="="; const b=atob(s), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u.buffer; },
+  enc(buf){ const u=new Uint8Array(buf); let s=""; for(let i=0;i<u.length;i++) s+=String.fromCharCode(u[i]); return btoa(s).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); }
+};
+function pkCreationOpts(o){
+  if(window.PublicKeyCredential && typeof PublicKeyCredential.parseCreationOptionsFromJSON==="function"){ try{ return PublicKeyCredential.parseCreationOptionsFromJSON(o); }catch(e){} }
+  const {challenge,user,excludeCredentials,hints,...rest}=o;
+  return {...rest, challenge:b64u.dec(challenge), user:{...user, id:b64u.dec(user.id)}, excludeCredentials:(excludeCredentials||[]).map(c=>({...c, id:b64u.dec(c.id)}))};
+}
+function pkRequestOpts(o){
+  if(window.PublicKeyCredential && typeof PublicKeyCredential.parseRequestOptionsFromJSON==="function"){ try{ return PublicKeyCredential.parseRequestOptionsFromJSON(o); }catch(e){} }
+  const {challenge,allowCredentials,hints,...rest}=o;
+  return {...rest, challenge:b64u.dec(challenge), allowCredentials:(allowCredentials||[]).map(c=>({...c, id:b64u.dec(c.id)}))};
+}
+function pkCredJSON(c, kind){
+  if(typeof c.toJSON==="function"){ try{ return c.toJSON(); }catch(e){} }
+  const r=c.response, base={id:c.id, rawId:c.id, type:"public-key", clientExtensionResults:c.getClientExtensionResults?c.getClientExtensionResults():{}, authenticatorAttachment:c.authenticatorAttachment||undefined};
+  return kind==="reg"
+    ? {...base, response:{attestationObject:b64u.enc(r.attestationObject), clientDataJSON:b64u.enc(r.clientDataJSON), transports:r.getTransports?r.getTransports():undefined}}
+    : {...base, response:{authenticatorData:b64u.enc(r.authenticatorData), clientDataJSON:b64u.enc(r.clientDataJSON), signature:b64u.enc(r.signature), userHandle:r.userHandle?b64u.enc(r.userHandle):undefined}};
+}
 
 const SupaStore = {
   client:null,
@@ -2050,6 +2074,31 @@ const SupaStore = {
     if(error) throw error;
   },
   async sessionIsCode(){ const {data} = await this.client.auth.mfa.getAuthenticatorAssuranceLevel(); return data && data.currentLevel==="aal2"; },
+  _pk:{},
+  async pkPrepare(kind){
+    const a=this.client.auth;
+    const r = kind==="reg" ? await a._startPasskeyRegistration() : await a._startPasskeyAuthentication({options:{}});
+    if(r.error || !r.data) throw (r.error || new Error("No se pudo preparar la llave"));
+    this._pk[kind]={data:r.data, at:Date.now()}; return true;
+  },
+  pkFresh(kind){ const p=this._pk[kind]; return !!(p && Date.now()-p.at < 150000); },
+  /* Llamar directo en el toque, sin esperas antes: abre Face ID de inmediato */
+  pkRun(kind){
+    const p=this._pk[kind]; this._pk[kind]=null;
+    if(!p) return Promise.reject(new Error("PK_NOT_READY"));
+    let call;
+    try{ call = kind==="reg" ? navigator.credentials.create({publicKey:pkCreationOpts(p.data.options)}) : navigator.credentials.get({publicKey:pkRequestOpts(p.data.options)}); }
+    catch(e){ return Promise.reject(e); }
+    return call.then(async cred=>{
+      if(!cred) throw new Error("El dispositivo no devolvió la llave");
+      const credential=pkCredJSON(cred, kind), a=this.client.auth;
+      if(kind==="reg"){
+        const r=await a._verifyPasskeyRegistration({challengeId:p.data.challenge_id, credential}); if(r.error) throw r.error;
+        const {data:n,error:e2}=await this.client.rpc("ws_trust_passkeys"); if(e2) throw e2; return n;
+      }
+      const r=await a._verifyPasskeyAuthentication({challengeId:p.data.challenge_id, credential}); if(r.error) throw r.error; return true;
+    });
+  },
   async enableFaceId(){
     const {error} = await this.client.auth.registerPasskey();
     if(error) throw error;
@@ -2253,6 +2302,8 @@ const DemoStore = {
   async signIn(){}, async signOut(){}, async mfaEnroll(){ return {}; }, async mfaVerify(){},
   passkeySupported(){ return !!window.PublicKeyCredential; },
   async signInWithPasskey(){ await new Promise(r=>setTimeout(r,500)); },
+  _pk:{}, async pkPrepare(kind){ this._pk[kind]=Date.now(); return true; }, pkFresh(kind){ return !!this._pk[kind]; },
+  pkRun(kind){ this._pk[kind]=null; return new Promise(r=>setTimeout(r,400)).then(()=>{ if(kind==="reg"){ const db=this.db(); db.faceIdOn=true; db.faceId=(db.faceId||0)+1; this.save(db); return db.faceId; } return true; }); },
   async sessionIsCode(){ return !this.db().faceIdOn; },
   async enableFaceId(){ await new Promise(r=>setTimeout(r,600)); const db=this.db(); db.faceIdOn=true; db.faceId=1; this.save(db); return 1; },
   async trustPasskeys(){ return 1; },
@@ -3051,6 +3102,7 @@ async function adminBoot(openCode){
   if(st.state==="verify")    return adminVerify(st.email, st.passkeyFail);
   if(st.state==="forbidden") return adminForbidden(st.email, st.reason);
   Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"", title:st.title||"", avatar:st.avatar||"", passkey:!!st.passkey });
+  if(st.passkey) storageSet("colmena_face_here","1");
   if(isAdminRole()) await loadStaff();
   if(!viewOk(AH.view)) AH.view="home";
   if(st.inviteError) toast(st.inviteError);
@@ -3068,9 +3120,28 @@ async function adminBoot(openCode){
 function bioName(){ const ua=navigator.userAgent; return (typeof APP!=="undefined"&&APP.ios())? "Face ID" : /Macintosh/.test(ua)? "Touch ID" : /Android/i.test(ua)? "tu huella" : "Face ID o huella"; }
 const BIO_IC='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M9 9v1M15 9v1M12 9v4h-1M9.5 15.5a3.5 3.5 0 0 0 5 0"/></svg>';
 function passkeyError(e){ const m=String(e&&(e.name||"")+" "+(e.message||"")); 
+  if(/InvalidState|already registered|excluded/i.test(m)) return `Este dispositivo ya tiene ${bioName()} activado para Colmena.`;
+  if(/NotSupported|SecurityError|rp.?id|origin/i.test(m)) return `Este navegador no permite ${bioName()} aquí. En iPhone usa Safari o la app instalada desde Safari.`;
   if(/NotAllowed|abort|cancel/i.test(m)) return `No se completó ${bioName()}. Si es la primera vez en este dispositivo, entra con tu correo y código, y actívalo desde Inicio o tu perfil.`;
   if(/not found|no credential|passkey.*not|Invalid credential|not registered/i.test(m)) return `Este dispositivo aún no tiene ${bioName()} activado para Colmena. Entra con tu correo y actívalo en tu perfil.`;
   return friendlyAuthError(e); }
+
+/* v1.11.1 · Botón de Face ID en dos tiempos: prepara antes y abre Face ID directo en el toque (requisito de iPhone) */
+function wirePasskeyBtn(btn, kind, onOk, onErr){
+  if(!btn) return; const label=btn.innerHTML;
+  const prep=()=>Store.pkPrepare(kind).catch(()=>{});
+  prep(); const iv=setInterval(()=>{ if(!document.body.contains(btn)) return clearInterval(iv); if(!btn.dataset.busy) prep(); }, 120000);
+  btn.onclick=()=>{
+    if(btn.dataset.busy) return;
+    if(!Store.pkFresh(kind)){ btn.dataset.busy="1"; btn.innerHTML=`<span class="spin" aria-hidden="true"></span>Preparando…`;
+      Store.pkPrepare(kind).then(()=>{ btn.innerHTML=`${BIO_IC}Toca otra vez para ${bioName()}`; delete btn.dataset.busy; })
+        .catch(e=>{ btn.innerHTML=label; delete btn.dataset.busy; onErr(e); }); return; }
+    btn.dataset.busy="1";
+    const run=Store.pkRun(kind);                 /* Face ID se abre aquí mismo, dentro del toque */
+    btn.innerHTML=`<span class="spin" aria-hidden="true"></span>${bioName()}…`;
+    run.then(r=>{ storageSet("colmena_face_here","1"); onOk(r); }).catch(e=>{ btn.innerHTML=label; delete btn.dataset.busy; prep(); onErr(e); });
+  };
+}
 
 function adminLogin(msg, email){
   const bio=Store.passkeySupported&&Store.passkeySupported();
@@ -3092,9 +3163,7 @@ function adminLogin(msg, email){
         : `<p class="hint" style="margin-top:6px">¿Aún no tienes cuenta? Pide una invitación a tu admin.</p>`}
     </div>`);
   const nw=$("#lg-new"); if(nw) nw.onclick=()=>adminSignup();
-  const lb=$("#lg-bio"); if(lb) lb.onclick=async()=>{ lb.disabled=true;
-    try{ await Store.signInWithPasskey(); adminBoot(currentCode()); }
-    catch(err){ adminLogin(passkeyError(err), $("#lg-mail")&&$("#lg-mail").value.trim()); } };
+  wirePasskeyBtn($("#lg-bio"), "auth", ()=>adminBoot(currentCode()), err=>adminLogin(passkeyError(err), $("#lg-mail")&&$("#lg-mail").value.trim()));
   if(email) $("#lg-pass").focus();
   $("#lg-eye").onclick=()=>{ const i=$("#lg-pass"), show=i.type==="password"; i.type=show?"text":"password"; $("#lg-eye").textContent=show?"Ocultar":"Mostrar"; $("#lg-eye").setAttribute("aria-pressed",show); };
   $("#lgForm").onsubmit = async e=>{
@@ -3431,7 +3500,7 @@ async function drawBio(){
   }
   box.innerHTML=html;
   const on=$("#bioOn"), tr=$("#bioTrust"), off=$("#bioOff");
-  if(on) on.onclick=async()=>{ on.disabled=true; try{ await Store.enableFaceId(); toast(`${B} activado: la próxima vez entra con un toque`); const c=$("#faceCard"); if(c) c.remove(); drawBio(); }catch(e){ toast(passkeyError(e)); on.disabled=false; } };
+  wirePasskeyBtn(on, "reg", ()=>{ toast(`${B} activado: la próxima vez entra con un toque`); const c=$("#faceCard"); if(c) c.remove(); drawBio(); }, e=>toast(passkeyError(e)));
   if(tr) tr.onclick=async()=>{ tr.disabled=true; try{ await Store.trustPasskeys(); toast("Llave aprobada"); drawBio(); }catch(e){ toast(friendlyAuthError(e)); tr.disabled=false; } };
   if(off) off.onclick=async()=>{ if(!(await askDialog({kind:"danger",title:`¿Apagar ${B}?`,text:"Volverás a entrar con tu correo, contraseña y código. Puedes activarlo de nuevo cuando quieras.",ok:"Apagar"}))) return;
     try{ await Store.disableFaceId(); toast(`${B} apagado`); drawBio(); }catch(e){ toast(friendlyAuthError(e)); } };
@@ -3440,12 +3509,12 @@ async function drawBio(){
 async function faceNudge(){
   if(!(Store.passkeySupported&&Store.passkeySupported()) || ME.passkey || storageGet("colmena_face_off")==="1" || $("#faceCard")) return;
   let st, code; try{ [st, code]=await Promise.all([Store.passkeyStatus(), Store.sessionIsCode()]); }catch(e){ return; }
-  if(!code || st.trusted>0 || AH.view!=="home" || !$(".hello")) return;
+  if(!code || storageGet("colmena_face_here")==="1" || AH.view!=="home" || !$(".hello") || $("#faceCard")) return;
   const B=bioName();
-  const html=`<section class="inst face" id="faceCard"><span class="inst-ic bio">${BIO_IC}</span><div><b>Entra con ${B} la próxima vez</b><p>Sin contraseña ni código de 6 dígitos: un toque y listo. Se activa una vez en este dispositivo.</p></div>
+  const html=`<section class="inst face" id="faceCard"><span class="inst-ic bio">${BIO_IC}</span><div><b>${st.trusted>0?`Agrega ${B} en este dispositivo`:`Entra con ${B} la próxima vez`}</b><p>Sin contraseña ni código de 6 dígitos: un toque y listo. Se activa una vez en cada dispositivo.</p></div>
     <div class="inst-r"><button class="abtn primary" id="faceGo">${BIO_IC}Activar ${B}</button><button class="ib sm inst-x" id="faceX" aria-label="Ahora no">${icon("close")}</button></div></section>`;
   $(".hello").insertAdjacentHTML("afterend",html);
-  $("#faceGo").onclick=async()=>{ const b=$("#faceGo"); b.disabled=true; try{ await Store.enableFaceId(); $("#faceCard").remove(); toast(`${B} activado: la próxima vez entra con un toque`); }catch(e){ toast(passkeyError(e)); b.disabled=false; } };
+  wirePasskeyBtn($("#faceGo"), "reg", ()=>{ const c=$("#faceCard"); if(c) c.remove(); toast(`${B} activado: la próxima vez entra con un toque`); }, e=>toast(passkeyError(e)));
   $("#faceX").onclick=()=>{ storageSet("colmena_face_off","1"); $("#faceCard").remove(); toast("Puedes activarlo después desde tu perfil"); };
 }
 
