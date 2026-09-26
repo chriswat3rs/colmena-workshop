@@ -129,6 +129,19 @@ La **campana** (arriba a la derecha, también dentro del panel del taller) muest
 
 ---
 
+### 10. Sugerir un taller con IA (v1.9, opcional)
+
+En el creador de talleres, paso **Plantilla**, aparece la tarjeta **Sugerir con IA**: el facilitador escribe 2–3 líneas (cliente, proceso, qué duele) y en 10–20 segundos recibe un borrador completo —nombre, áreas, roles, etapas con actividades y herramientas, quick wins, reglas, tiempos y preguntas— cargado en el wizard como **borrador editable**. Nada se crea solo.
+
+Para activarlo (una sola vez):
+
+1. Crea una llave en [console.anthropic.com](https://console.anthropic.com) → *API keys* (empieza con `sk-ant-`). La API se cobra por uso y **aparte** de la suscripción de Claude: con el modelo Haiku, cada sugerencia usa ~1,000 tokens de entrada y ~1,800 de salida (≈ 1 centavo de dólar; 100 talleres ≈ 1 USD). En la consola pon un **límite mensual de gasto** (Settings → Limits), por ejemplo 5 USD, para que nunca pase de ahí.
+2. Supabase → **Edge Functions** → *Deploy a new function* → nombre `suggest-workshop` → pega `supabase/functions/suggest-workshop/index.ts` → **Deploy**. En la función, apaga *Verify JWT with legacy secret* (la función valida la sesión por sí misma, igual que `send-invite`).
+3. Supabase → **Edge Functions → Secrets**: agrega `ANTHROPIC_API_KEY` con tu llave. Opcionales: `AI_MODEL` (por omisión `claude-haiku-4-5-20251001`, el más barato) y `AI_MAX_TOKENS` (tope de la respuesta, por omisión 2500).
+4. Recarga Colmena: la tarjeta aparece sola. Sin llave, la tarjeta no se muestra y todo sigue igual.
+
+Seguridad: la llave vive solo en Supabase; la función responde únicamente a facilitadores o admins activos (revisa la sesión con `ws_me()`), limita el texto a 800 caracteres y normaliza la respuesta de la IA (etapas inexistentes fuera, listas acotadas) antes de devolverla.
+
 ## Cómo se usa en la sala
 
 1. En tu laptop abre `#admin`, entra y crea un taller con la plantilla **Lockton · Actua** o la genérica.
@@ -239,6 +252,7 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `email/` | Logos del correo de invitación (Colmena + Quality & Knowledge). Se publican junto con `index.html`. |
 | `supabase/functions/send-invite/index.ts` | Función que envía la invitación (Gmail o Resend). |
 | `supabase/functions/send-notifications/index.ts` | Función que envía los correos del centro de notificaciones. |
+| `supabase/functions/suggest-workshop/index.ts` | Función que pide a la IA un borrador de taller (v1.9, opcional). |
 | `migracion-v16-notificaciones.sql` | Instala el centro de notificaciones sobre la v1.5. |
 | `migracion-v17-inicio.sql` | Inicio, perfil editable y datos del dashboard sobre la v1.6. |
 

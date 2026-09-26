@@ -1432,8 +1432,8 @@ kbd{font-family:var(--sans);font-size:11px;font-weight:700;padding:1px 5px;borde
 .g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
 .g2.side{grid-template-columns:minmax(0,1fr) minmax(280px,360px)}
 .g2.lobby{grid-template-columns:minmax(300px,380px) minmax(0,1fr)}
-.g3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,.8fr);gap:18px;align-items:start}
-@media (max-width:1100px){ .g2,.g2.side,.g2.lobby{grid-template-columns:1fr} .g3{grid-template-columns:1fr} }
+.pg3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,.8fr);gap:18px;align-items:start}
+@media (max-width:1100px){ .g2,.g2.side,.g2.lobby{grid-template-columns:1fr} .pg3{grid-template-columns:1fr} }
 .panel.tight{padding:18px 20px}
 .ph{margin-bottom:16px}
 .ph h2{font-size:16.5px}
@@ -1582,6 +1582,21 @@ kbd{font-family:var(--sans);font-size:11px;font-weight:700;padding:1px 5px;borde
 @media (max-width:900px){ .res-nav{display:none} .hero-t{font-size:24px} .tiles{grid-template-columns:1fr 1fr} }
 @media (max-width:560px){ .tiles{grid-template-columns:1fr} }
 
+/* v1.9 · Sugerir taller con IA */
+.ai-card{margin-top:14px;padding:18px;border-radius:16px;border:1.5px dashed var(--accent);background:linear-gradient(180deg,#F5FAFE,#fff);display:flex;flex-direction:column;gap:12px}
+.ai-card.busy{opacity:.85}
+.ai-h{display:flex;gap:12px;align-items:flex-start}
+.ai-h b{display:block;font-size:16px;color:var(--ink)}
+.ai-h small{display:block;font-size:13px;color:var(--ink-2);line-height:1.45;margin-top:2px}
+.ai-card textarea.input{resize:vertical;min-height:72px;font-size:14px;line-height:1.45}
+.ai-f{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ai-f .hint:empty{display:none}
+.ai-f .hint{color:var(--danger);font-weight:600}
+.ai-f .abtn{display:inline-flex;align-items:center;gap:8px;margin-left:auto}
+.ai-f .abtn svg{width:16px;height:16px}
+.ai-note{margin:0;font-size:12.5px}
+.spin{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .8s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -1872,7 +1887,7 @@ function tasksFor(session, stage){ return (session && session.tasks && session.t
 function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260926044651";
+const APP_BUILD="20260926081337";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -1985,6 +2000,14 @@ const SupaStore = {
       if(!m && /Failed to send a request|FunctionsFetchError/i.test(String(error.name||error.message))) m="El envío automático aún no está activado en Supabase (función send-invite).";
       throw new Error(m||error.message||"No se pudo enviar"); }
     return data; },
+  /* v1.9 · Sugerir taller con IA (función suggest-workshop; la llave vive en Supabase) */
+  async aiStatus(){ if(this._ai!==undefined) return this._ai;
+    try{ const {data,error}=await this.client.functions.invoke("suggest-workshop",{body:{ping:true}}); this._ai = !error && !!(data&&data.enabled); }catch(e){ this._ai=false; }
+    return this._ai; },
+  async suggestWorkshop(brief){
+    const {data,error}=await this.client.functions.invoke("suggest-workshop",{body:{brief}});
+    if(error){ let m=""; try{ const b=await error.context.json(); m=b&&b.error; }catch(e){} throw new Error(m||error.message||"No se pudo generar la sugerencia"); }
+    return data.draft; },
   /* v1.6 · Centro de notificaciones */
   async listNotifications(){ const {data,error}=await this.client.from("ws_notifications").select("id,type,title,body,action,data,read_at,created_at").order("created_at",{ascending:false}).limit(60); if(error) throw error; return data||[]; },
   async markRead(ids){ if(!ids.length) return; const {error}=await this.client.rpc("ws_mark_read",{p_ids:ids}); if(error) throw error; },
@@ -2112,6 +2135,15 @@ const DemoStore = {
     const it={id:uid(),email,name:name||null,role,created_at:now(),expires_at:new Date(Date.now()+7*864e5).toISOString(),used_at:null,revoked_at:null};
     db.invites.unshift(it); this.save(db); return {...it, code}; },
   async sendInvite(){ await new Promise(r=>setTimeout(r,700)); return {ok:true, demo:true}; },
+  async aiStatus(){ return true; },
+  async suggestWorkshop(brief){ await new Promise(r=>setTimeout(r,1400)); const b=String(brief||"").trim(); const st=["1 Recibir solicitud","2 Revisar información","3 Analizar el caso","4 Preparar entregable","5 Entregar y dar seguimiento","Transversal (comunicación y seguimiento)"];
+    return { name:(b.split(/[,.\n]/)[0]||"Taller").slice(0,60)+" · Workshop del proceso", areas:["Operaciones","Atención a clientes","Finanzas","TI / Sistemas","Dirección"], roles:["Coordinador","Analista","Especialista","Gerente"], stages:st,
+      tasks:{[st[0]]:["Registrar la solicitud","Validar datos del cliente"],[st[1]]:["Pedir documentos faltantes","Cotejar contra el expediente"],[st[2]]:["Revisar criterios","Consultar al especialista"],[st[3]]:["Armar el reporte","Revisión de calidad"],[st[4]]:["Enviar al cliente","Registrar cierre"]},
+      tools:{[st[0]]:["Correo","CRM"],[st[1]]:["Excel de control","Carpeta compartida"],[st[2]]:["Sistema interno"],[st[3]]:["Plantilla Word","Excel"],[st[4]]:["Correo","Portal del cliente"]},
+      quickwins:[{kind:"qw",stage:st[0],text:"Formulario único de solicitud con los datos obligatorios",help:"Evita el ida y vuelta por datos faltantes"},{kind:"qw",stage:st[1],text:"Checklist de documentos por tipo de caso"},{kind:"qw",stage:st[2],text:"Criterios de análisis escritos y compartidos"},{kind:"qw",stage:st[3],text:"Plantilla del entregable con secciones fijas"},{kind:"qw",stage:st[4],text:"Aviso automático al cliente al cerrar"},{kind:"qw",stage:st[5],text:"Tablero único de estatus de casos"},
+        {kind:"gate",stage:st[0],text:"No se abre un caso sin datos completos del cliente"},{kind:"gate",stage:st[3],text:"Todo entregable pasa por revisión de un par"},{kind:"gate",stage:st[4],text:"El caso se cierra solo con confirmación del cliente"},
+        ...st.map(x=>({kind:"time",stage:x,text:x}))],
+      q_checkin:"¿Cómo llegas hoy?", q_expect:"En una frase: ¿qué esperas de este taller?", q_pain:"Piensa en un caso típico: ¿qué es lo que más tiempo te roba o más te frustra?", q_idea:"¿Cómo podríamos resolverlo sin agregar trabajo?", votes_per_user:5, idea_votes:3, idea_top:3 }; },
   _notifs(){ const db=this.db(); if(!db.notifs){ const t=m=>new Date(Date.now()-m*60000).toISOString();
       db.notifs=[
         {id:uid(),type:"invite_accepted",title:"Ana López aceptó tu invitación",body:"Ya creó su cuenta y entra a Colmena como facilitador.",action:{label:"Ver equipo",view:"team"},read_at:null,created_at:t(4)},
@@ -3406,7 +3438,26 @@ function drawWizard(){
         <button type="button" class="tpl${d&&d.template==="generic"?" on":""}" data-tpl="generic"><span class="nt-ic t-acct">${icon("sparkle")}</span><b>Genérica</b><small>${G.stages.length} etapas · ${G.areas.length} áreas</small><em>Para cualquier proceso. Tú defines etapas y listas.</em></button>
         <div class="tpl${d&&d.template==="copy"?" on":""}"><span class="nt-ic t-team">${icon("copy")}</span><b>Copiar un taller anterior</b><small>Misma configuración, sin los datos capturados</small>
           <select class="input" id="tplCopy"><option value="">Elige un taller…</option>${mine.map(s=>`<option value="${esc(s.code)}">${esc(s.name)} · ${esc(s.code)}</option>`).join("")}</select></div>
-      </div>${d?`<p class="hint" style="margin-top:14px">Base actual: <b>${d.template==="lockton"?"Lockton · Actua":d.template==="generic"?"Genérica":"copia de «"+esc(d.name)+"»"}</b>. Si eliges otra, se reemplaza lo capturado.</p>`:""}`;
+      </div>
+      ${AH.ai? `<section class="ai-card${W.aiBusy?" busy":""}" id="aiCard" aria-labelledby="aiT">
+        <div class="ai-h"><span class="nt-ic t-acct">${icon("sparkle")}</span><div><b id="aiT">Sugerir con IA</b><small>Cuéntame el cliente, el proceso y qué duele. Te propongo un borrador completo (etapas, actividades, herramientas, quick wins, reglas y preguntas) para que lo edites.</small></div></div>
+        <textarea id="aiBrief" class="input" rows="3" maxlength="600" placeholder="Ej. Aseguradora, proceso de siniestros de autos. Tardan mucho en dictaminar, hay retrabajo con los talleres y el cliente no sabe en qué va su caso." ${W.aiBusy?"disabled":""}>${esc(W.brief||"")}</textarea>
+        <div class="ai-f"><span class="hint" id="aiErr" role="alert"></span><button type="button" class="abtn primary" id="aiGo" ${W.aiBusy?"disabled":""}>${W.aiBusy?`<span class="spin" aria-hidden="true"></span>Pensando…`:`${icon("sparkle")}Generar borrador`}</button></div>
+        <p class="hint ai-note">La IA solo sugiere: revisas y ajustas todo antes de crear el taller. Tarda unos 10–20 segundos.</p>
+      </section>` : ""}
+      ${d?`<p class="hint" style="margin-top:14px">Base actual: <b>${d.template==="lockton"?"Lockton · Actua":d.template==="generic"?"Genérica":d.template==="ai"?"sugerida por IA":"copia de «"+esc(d.name)+"»"}</b>. Si eliges otra, se reemplaza lo capturado.</p>`:""}`;
+    if(AH.ai===undefined){ AH.ai=null; Store.aiStatus().then(v=>{ AH.ai=!!v; if(v && W.step===0 && $("#wBody") && !$("#aiCard")) drawWizard(); }).catch(()=>{ AH.ai=false; }); }
+    const ab=$("#aiBrief"), ag=$("#aiGo");
+    if(ab) ab.oninput=()=>{ W.brief=ab.value; };
+    if(ag) ag.onclick=async()=>{ const brief=(ab.value||"").trim(); const err=$("#aiErr");
+      if(brief.length<12){ err.textContent="Cuéntame un poco más: cliente, proceso y qué duele."; ab.focus(); return; }
+      if(d && !(await askDialog({kind:"bee",title:"¿Reemplazar lo capturado?",text:"Se cargará el borrador sugerido por la IA y se pierde lo que hayas editado.",ok:"Reemplazar"}))) return;
+      W.aiBusy=true; drawWizard();
+      try{ const draft=await Store.suggestWorkshop(brief); W.aiBusy=false;
+        W.d=fromPreset({...draft, template:"ai", facilitator:ME.name||""}); saveWzDraft(); W.step=1; drawWizard(); window.scrollTo(0,0);
+        toast("Borrador sugerido por IA: revísalo y ajusta lo que quieras"); }
+      catch(e){ W.aiBusy=false; drawWizard(); const er=$("#aiErr"); if(er) er.textContent=friendlyAuthError(e); }
+    };
     $$("[data-tpl]").forEach(b=>b.onclick=async()=>{ if(d && !(await askDialog({kind:"bee",title:"¿Reemplazar lo capturado?",text:"Se cargará la plantilla y se pierde lo que hayas editado.",ok:"Reemplazar"}))) return;
       W.d=fromPreset({...CONFIG.PRESETS[b.dataset.tpl], template:b.dataset.tpl}); saveWzDraft(); W.step=1; drawWizard(); window.scrollTo(0,0); });
     $("#tplCopy").onchange=async e=>{ const code=e.target.value; if(!code) return; const s=await Store.getMySession(code).catch(()=>null); if(!s) return toast("No se pudo leer ese taller");
@@ -4141,7 +4192,7 @@ function renderAdmin(){
 
   let panels="";
   if(ph==="lobby") panels=`<div class="g2 lobby">${panelJoin}<div class="duo2">${panelPeople}${panelMix}</div></div>`;
-  else if(ph==="checkin") panels=`<div class="g3">${panelMood}${panelExpect}${panelMissing}</div><details class="ctx" data-k="people"><summary><span class="ctx-t">Participantes</span><span class="ctx-s">${nP} en la sala · rol, área y etapas</span></summary><div class="ctx-body">${panelPeople}</div></details>`;
+  else if(ph==="checkin") panels=`<div class="pg3">${panelMood}${panelExpect}${panelMissing}</div><details class="ctx" data-k="people"><summary><span class="ctx-t">Participantes</span><span class="ctx-s">${nP} en la sala · rol, área y etapas</span></summary><div class="ctx-body">${panelPeople}</div></details>`;
   else if(ph==="pains") panels=panelStages+panelWall;
   else if(ph==="votes") panels=`<div class="g2 side">${panelRank}${panelVoters}</div><details class="ctx" data-k="wall"><summary><span class="ctx-t">Muro de dolores</span><span class="ctx-s">${A.cards.length} tarjeta${A.cards.length===1?"":"s"} con sus votos, por etapa</span></summary><div class="ctx-body">${panelStages}${panelWall}</div></details>`;
   else if(ph==="quickwins") panels=validation;
