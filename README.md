@@ -142,6 +142,17 @@ Para activarlo (una sola vez):
 
 Seguridad: la llave vive solo en Supabase; la función responde únicamente a facilitadores o admins activos (revisa la sesión con `ws_me()`), limita el texto a 800 caracteres y normaliza la respuesta de la IA (etapas inexistentes fuera, listas acotadas) antes de devolverla.
 
+### 11. Colmena como app en el celular (v1.10)
+
+Colmena se puede **instalar como app** (PWA) sin pasar por App Store ni Google Play: ícono de abeja en la pantalla de inicio, pantalla completa y apertura rápida. Los participantes **no necesitan instalar nada**: siguen entrando con el QR desde el navegador.
+
+- **iPhone:** abrir Colmena en **Safari** → **Compartir** → **Agregar a inicio**.
+- **Android:** en Chrome aparece **Instalar** en la tarjeta de Inicio (o menú ⋮ → *Instalar app*).
+- **Computadora:** en Inicio hay un QR para abrir Colmena en el celular; en Chrome/Edge también sale **Instalar aquí**.
+- La tarjeta se puede cerrar con la ✕; después la opción queda en tu perfil (*App en tu celular*).
+- Sin internet, la app abre la última versión guardada y muestra el aviso «Sin conexión». Los datos siempre se leen en vivo de Supabase (nunca se guardan en el teléfono).
+- Archivos en la raíz del repo: `manifest.json` (nombre, colores, íconos y accesos directos *Crear taller* / *Mis talleres*), `sw.js` (se genera con `build.py`) y la carpeta `icons/`.
+
 ## Cómo se usa en la sala
 
 1. En tu laptop abre `#admin`, entra y crea un taller con la plantilla **Lockton · Actua** o la genérica.
@@ -252,6 +263,7 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `email/` | Logos del correo de invitación (Colmena + Quality & Knowledge). Se publican junto con `index.html`. |
 | `supabase/functions/send-invite/index.ts` | Función que envía la invitación (Gmail o Resend). |
 | `supabase/functions/send-notifications/index.ts` | Función que envía los correos del centro de notificaciones. |
+| `manifest.json`, `sw.js`, `icons/` | App instalable (v1.10): manifiesto, service worker e íconos. |
 | `supabase/functions/suggest-workshop/index.ts` | Función que pide a la IA un borrador de taller (v1.9, opcional). |
 | `migracion-v16-notificaciones.sql` | Instala el centro de notificaciones sobre la v1.5. |
 | `migracion-v17-inicio.sql` | Inicio, perfil editable y datos del dashboard sobre la v1.6. |

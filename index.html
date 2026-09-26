@@ -6,6 +6,13 @@
 <title>Colmena · Quality & Knowledge</title>
 <meta name="description" content="Workshops de design thinking en vivo: los participantes entran con un QR desde su celular y todas las ideas quedan guardadas.">
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABBCAMAAABW61JJAAAAkFBMVEWYqKf8/PwehLeaq6hYla+1xslWptL+///B0dR/v78A//8qjsaJm5i1wL2JnJaHvdcA/wB/v3+wxLDv7+/+/v4Afb4AAACXp6T///8IgsGmtLEBfcCRoZ3S5u/P1tWpqqpRptJ/f3+w1+oylsqYqKVyt9qSx+Pm6+v9/f2WpqOXp6SXp6SNnpuXp6P9/f3///+/SSWrAAAAMHRSTlMboP/x//7/T/AEAf+S/1z/AQQNEP7/APsD//3//f7+BP8C//+L///+Mc9VsPtycNZxfnv9AAAD/UlEQVR42pVYiXajMAxUAknTdrsnh22OhkAOcvX//24l2YANhBK91yswY2kk2VYh6lnxB7/B+XapYzalNov7i8APhYhGDNw/xSehL7FjyJEt7mKcwiUgeIUAxnktQ5rGH1mwOI1RgLs8wQ3Y95doYYjffB85lKF4TICPzgRP09Tzl2FCFqLxzyVyqCBY/OszgIUHjP1KIXvbspQIpS9jSYJ+pHnw9dILoyUQ4tNTapUfA2PZoQwdS6R/RSfuLoNFEG1asLFD2KNY+hSGsBk6gugeDGxvR8GBDBhgAp8d3sNw4ESPARr8S9/9rQzHLFl+IEPUIxDRyV17zWg5zpCzkjYBevRlw7cEHneAGHwU+9QwaIJo4Sj3YO2GIIyD4KuRAfoCZOU0nBnyTgboBbCT38HJfHzzpF0AN4OHcA7edgEcB1b0cI6xC8wAtgJZONOSMGtcIILWgVnx6wL51bgAVg1tv8cnUkoOsgyMC9DVQDYVf2KAbTkeuRaIoJXwsQOJeSDfy/V2W3IMOxMDtBFkE5KFstzvsmOba2TcB7ojoM3B/oEDCC8PKPpq/b42r67x1a0RAVoJynEJ8MNdU2O71gXJKn6JSHQEDzOwG+40SCvpFyJoNMzm43kxJjgRwaSGMjwMlt90BLjHw2QStNhBb7NJ9qUhuNsEcg4eu521TljE4C46ghERda4cvO72pHm0wEr0HnbCEJ+13c6+rZSqa1Adu3TPkIH/VrdyKSs8SOOOACtJ2stzxzpm+yixNvkiAHHnYGItEMpB/i0XtYZ8+YDakQiPA92362H1WLWuy4PwNfw42geSeb7PhnhXI3zhmCLBBX7k7nm63x82wZhZCuj85ERQwc9VMM/s6wo3iCKCM1gqTlo2KBCtIUTecRbBzt4uSKKMHKhxQ3FFmPBAuh26QgJVIcHcGHQZ0v6qK1RHEEEhvHxmDMYBvUNwDmpRoAg/1UwZt1hkZVMifIm+RQDi7e81n5nJoNObHcAIcFMtopsKnjbjQEGHawHp6ln8h3agoHMB7/jnOH8OzwGoM48HPCVcZlZTIwVPBBfCM0EhIH5KBj2KgCiaax4F8QQDd1HMATQ31dfoNp+B8ZiBV/uu/BpVcxk0vjL4huCNhIyzGeUYMx4FfOtd94uoUunmO/yGw8f1CzEYOJDBo9FsanktX2zhraHrN+UCR7OHFXHUcI/0fxudG7GwLwopRssyV7F2/0Lt82ByxcRiOnH0s4Y3Xjtf0fRK8PgW6fyPj77UHDS7ptfYwxGQDY9Qg8YHFTXf1PDN7XGreYC9oqXp1YDxo/oGveVHCHh+F1DVsR6iW6srwKU/RfQdAcK5xuBcNf9CqC/Vmd97HRn//wNj92Kq2xi1XQAAAABJRU5ErkJggg==">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#01133B">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Colmena">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -1597,6 +1604,29 @@ kbd{font-family:var(--sans);font-size:11px;font-weight:700;padding:1px 5px;borde
 .ai-note{margin:0;font-size:12.5px}
 .spin{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .8s linear infinite;display:inline-block}
 @keyframes spin{to{transform:rotate(360deg)}}
+/* v1.10 · App instalable */
+.inst{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px 18px;align-items:center;padding:16px 18px;margin-bottom:18px;border-radius:var(--r-card);border:1px solid #BFDDF4;background:linear-gradient(120deg,#F3F9FE,#E6F2FB)}
+.inst-ic{width:52px;height:52px;border-radius:14px;overflow:hidden;flex:none;box-shadow:0 2px 6px rgba(1,19,59,.18)}
+.inst-ic img{width:100%;height:100%;display:block}
+.inst>div>b{display:block;font-size:15px;color:var(--ink)}
+.inst{position:relative}
+.inst p{margin:3px 0 0;font-size:13px;color:var(--ink-2);line-height:1.45}
+.inst ol{margin:6px 0 0;padding-left:18px;font-size:13px;color:var(--ink-2);line-height:1.55}
+.inst ol svg{width:14px;height:14px;vertical-align:-2px}
+.inst-r{display:flex;align-items:center;gap:10px}
+.inst-r .abtn{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.inst-r .abtn svg{width:16px;height:16px}
+.inst-qr{background:#fff;border-radius:10px;padding:6px;border:1px solid var(--line);line-height:0}
+.inst-qr svg{width:96px;height:96px}
+.inst-x{align-self:start}
+@media (max-width:700px){ .inst{grid-template-columns:auto minmax(0,1fr);padding-right:48px} .inst-r{grid-column:1/-1} .inst-r .abtn{flex:1;justify-content:center} .inst-qr{display:none} .inst-x{position:absolute;top:10px;right:10px} }
+.me-app{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.me-app b{font-size:13px}
+.me-app .abtn{display:inline-flex;align-items:center;gap:8px}
+.me-app .abtn svg{width:16px;height:16px}
+.offline-bn{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:90;display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:#01133B;color:#fff;font-size:13px;font-weight:600;box-shadow:0 6px 20px rgba(1,19,59,.25)}
+.offline-bn i{width:8px;height:8px;border-radius:50%;background:#F0962E}
+@media (display-mode: standalone){ body{padding-top:env(safe-area-inset-top)} .banner-demo{display:none} }
 </style>
 </head>
 <body>
@@ -1886,8 +1916,30 @@ function taskHTML(t){ const m=String(t||"").match(/^(\d+(?:\.\d+)*)\s+(.+)$/); r
 function tasksFor(session, stage){ return (session && session.tasks && session.tasks[stage]) || []; }
 function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
 
+/* v1.10 · App instalable (PWA): service worker, aviso de instalación y aviso sin conexión */
+const APP = { prompt:null, installed:false,
+  standalone(){ try{ return matchMedia("(display-mode: standalone)").matches || navigator.standalone===true; }catch(e){ return false; } },
+  ios(){ return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1); },
+  mobile(){ return /android|iphone|ipad|ipod|mobile/i.test(navigator.userAgent) || this.ios(); },
+  dismissed(){ return storageGet("colmena_inst_off")==="1"; },
+  dismiss(){ storageSet("colmena_inst_off","1"); },
+  async install(){ if(!this.prompt) return false; this.prompt.prompt(); const r=await this.prompt.userChoice.catch(()=>null); this.prompt=null; return !!(r&&r.outcome==="accepted"); }
+};
+(function pwa(){
+  try{ const u=new URL(location.href); if(u.searchParams.has("source")){ u.searchParams.delete("source"); history.replaceState(null,"",u.pathname+u.search+u.hash); } }catch(e){}
+  if("serviceWorker" in navigator && (location.protocol==="https:" || location.hostname==="localhost")){
+    window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+  }
+  window.addEventListener("beforeinstallprompt",e=>{ e.preventDefault(); APP.prompt=e; window.dispatchEvent(new Event("colmena-installable")); });
+  window.addEventListener("appinstalled",()=>{ APP.installed=true; APP.prompt=null; window.dispatchEvent(new Event("colmena-installable")); try{ toast("Colmena quedó instalada: búscala en tu pantalla de inicio"); }catch(e){} });
+  const net=()=>{ let b=document.querySelector(".offline-bn");
+    if(navigator.onLine){ if(b) b.remove(); return; }
+    if(!b){ b=document.createElement("div"); b.className="offline-bn"; b.setAttribute("role","status"); b.innerHTML="<i></i>Sin conexión: lo que ves puede no estar al día"; document.body.appendChild(b); } };
+  window.addEventListener("online",net); window.addEventListener("offline",net); window.addEventListener("load",net);
+})();
+
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260926081337";
+const APP_BUILD="20260926085804";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -3148,8 +3200,10 @@ function openMe(){
       ${ME.avatar?`<button class="abtn" id="meDel">Quitar</button>`:""}
     </div>
     ${msg?`<p class="${msg.err?"err":"hint"}" role="status">${esc(msg.t)}</p>`:`<p class="hint">JPG o PNG. Se recorta en cuadrado y se guarda ligera. La ve tu equipo.</p>`}
-    <div class="me-prefs" id="mePrefs"><b>Correos de avisos</b><p class="hint">Cargando…</p></div>`;
+    <div class="me-prefs" id="mePrefs"><b>Correos de avisos</b><p class="hint">Cargando…</p></div>
+    ${APP.standalone()? "" : `<div class="me-app"><b>App en tu celular</b>${APP.prompt?`<button class="abtn" id="meInstall">${icon("download")}Instalar Colmena</button>`:`<p class="hint">${APP.ios()?"En Safari: Compartir → Agregar a inicio.":APP.mobile()?"En Chrome: menú ⋮ → Instalar app.":"Abre Colmena en tu celular y agrégala a tu pantalla de inicio."}</p>`}</div>`}`;
     drawPrefs();
+    const mi=pop.querySelector("#meInstall"); if(mi) mi.onclick=async()=>{ const ok=await APP.install(); if(ok) closeMe(); };
     const f=pop.querySelector("#meFile");
     f.onchange=async()=>{ const file=f.files&&f.files[0]; if(!file) return; draw(null,true);
       try{ const d=await shrinkImage(file); await Store.setMyAvatar(d); ME.avatar=d; syncMe(); draw({t:"Foto actualizada"}); }
@@ -3299,6 +3353,23 @@ async function adminHome(){
 }
 
 /* ---------- Inicio ---------- */
+/* v1.10 · Tarjeta «Lleva Colmena en tu celular» (se oculta si ya está instalada o si la cerraste) */
+function installCardHTML(){
+  if(APP.standalone() || APP.installed || APP.dismissed()) return "";
+  const ic=`<span class="inst-ic"><img src="icons/icon-192.png" alt=""></span>`, x=`<button class="ib sm inst-x" id="instX" aria-label="No volver a mostrar">${icon("close")}</button>`;
+  if(APP.ios()) return `<section class="inst" id="instCard">${ic}<div><b>Instala Colmena en tu iPhone</b><ol><li>Abre esta página en <b>Safari</b></li><li>Toca <b>Compartir</b> <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg> abajo</li><li>Elige <b>Agregar a inicio</b></li></ol></div>${x}</section>`;
+  if(APP.mobile()) return APP.prompt? `<section class="inst" id="instCard">${ic}<div><b>Instala Colmena en tu celular</b><p>Ábrela desde tu pantalla de inicio, a pantalla completa, como cualquier app.</p></div><div class="inst-r"><button class="abtn primary" id="instGo">${icon("download")}Instalar</button>${x}</div></section>`
+    : `<section class="inst" id="instCard">${ic}<div><b>Instala Colmena en tu celular</b><p>En el menú <b>⋮</b> de Chrome elige <b>Instalar app</b> o <b>Agregar a pantalla principal</b>.</p></div>${x}</section>`;
+  let qr=""; try{ const q=qrcode(0,'M'); q.addData(location.origin+location.pathname+"#admin"); q.make(); qr=q.createSvgTag({cellSize:3,margin:1}); }catch(e){}
+  return `<section class="inst" id="instCard">${ic}<div><b>Lleva Colmena en tu celular</b><p>Escanea el código con tu celular, entra con tu cuenta y agrégala a tu pantalla de inicio: queda como una app para seguir tus talleres y recibir tus avisos.${APP.prompt?" También puedes instalarla en esta computadora.":""}</p></div>
+    <div class="inst-r">${qr?`<span class="inst-qr" aria-label="QR para abrir Colmena en tu celular">${qr}</span>`:""}${APP.prompt?`<button class="abtn" id="instGo">${icon("download")}Instalar aquí</button>`:""}${x}</div></section>`;
+}
+function wireInstall(){
+  const g=$("#instGo"); if(g) g.onclick=async()=>{ const ok=await APP.install(); const c=$("#instCard"); if(ok&&c) c.remove(); };
+  const x=$("#instX"); if(x) x.onclick=()=>{ APP.dismiss(); const c=$("#instCard"); if(c) c.remove(); toast("Listo. Puedes instalarla después desde tu perfil"); };
+}
+window.addEventListener("colmena-installable",()=>{ if(AH.view==="home" && $(".hello")){ const c=$("#instCard"), h=installCardHTML(); if(c) c.outerHTML=h||""; else if(h) $(".hello").insertAdjacentHTML("afterend",h); wireInstall(); } });
+
 async function homeView(){
   document.body.classList.add("admin-theme");
   $("#app").innerHTML=shellHTML(`<div class="panel"><p class="hint">Cargando…</p></div>`,"home"); wireTop();
@@ -3332,6 +3403,7 @@ async function homeView(){
         ${ME.name?"":`<p class="hello-nn">${icon("users")}Tu cuenta no tiene nombre. <button type="button" class="linkbtn" id="hlName">Ponle tu nombre</button> para que tu equipo te reconozca.</p>`}</div>
       <div class="hello-acts"><button class="abtn primary" id="hCreate">${icon("sparkle")}Crear taller</button>${isAdminRole()?`<button class="abtn" id="hInvite">${icon("mail")}Invitar a alguien</button>`:""}</div>
     </section>
+    ${installCardHTML()}
     <div class="home-grid">
       <section class="panel wg wg-now" aria-labelledby="wgNow">
         <h2 id="wgNow">Ahora mismo <span class="sub">${live.length?live.length:""}</span></h2>
@@ -3354,6 +3426,7 @@ async function homeView(){
         </section>`:`<section class="panel wg wg-ok"><span class="nt-ic t-team">${icon("check")}</span><div><b>Todo al día</b><p class="hint">Sin invitaciones por vencer, avisos pendientes ni talleres por depurar.</p></div></section>`}
       </div>
     </div>`;
+  wireInstall();
   const goCreate=()=>{ AH.view="create"; adminHome(); window.scrollTo(0,0); };
   ["#hCreate","#hCreate2","#qaCreate"].forEach(k=>{ const b=$(k); if(b) b.onclick=goCreate; });
   ["#hInvite","#qaInvite"].forEach(k=>{ const b=$(k); if(b) b.onclick=()=>{ AH.view="team"; adminHome(); window.scrollTo(0,0); }; });

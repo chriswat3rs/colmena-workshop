@@ -1,0 +1,24 @@
+{
+  "name": "Colmena · Quality & Knowledge",
+  "short_name": "Colmena",
+  "description": "Workshops de design thinking en vivo: crea el taller, proyecta el QR y sigue a la sala desde tu celular.",
+  "lang": "es-MX",
+  "dir": "ltr",
+  "id": "./?app=colmena",
+  "start_url": "./?source=app#admin",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F1F5FA",
+  "theme_color": "#01133B",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Crear taller", "short_name": "Crear", "url": "./?view=create&source=app#admin", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Mis talleres", "short_name": "Talleres", "url": "./?view=mine&source=app#admin", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}
