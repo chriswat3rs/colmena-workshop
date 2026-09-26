@@ -1948,7 +1948,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260926104017";
+const APP_BUILD="20260926104917";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -3068,7 +3068,7 @@ async function adminBoot(openCode){
 function bioName(){ const ua=navigator.userAgent; return (typeof APP!=="undefined"&&APP.ios())? "Face ID" : /Macintosh/.test(ua)? "Touch ID" : /Android/i.test(ua)? "tu huella" : "Face ID o huella"; }
 const BIO_IC='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M9 9v1M15 9v1M12 9v4h-1M9.5 15.5a3.5 3.5 0 0 0 5 0"/></svg>';
 function passkeyError(e){ const m=String(e&&(e.name||"")+" "+(e.message||"")); 
-  if(/NotAllowed|abort|cancel/i.test(m)) return `Se canceló ${bioName()}. Inténtalo de nuevo o entra con tu correo.`;
+  if(/NotAllowed|abort|cancel/i.test(m)) return `No se completó ${bioName()}. Si es la primera vez en este dispositivo, entra con tu correo y código, y actívalo desde Inicio o tu perfil.`;
   if(/not found|no credential|passkey.*not|Invalid credential|not registered/i.test(m)) return `Este dispositivo aún no tiene ${bioName()} activado para Colmena. Entra con tu correo y actívalo en tu perfil.`;
   return friendlyAuthError(e); }
 
