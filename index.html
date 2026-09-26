@@ -1264,6 +1264,134 @@ kbd{font-family:var(--sans);font-size:11px;font-weight:700;padding:1px 5px;borde
   .adm-kpi b{font-size:21px}
   .ro-tag span{max-width:42vw;overflow:hidden;text-overflow:ellipsis}
 }
+
+/* ---------- v1.7 · Inicio, Mis talleres y creador paso a paso ---------- */
+.hello{display:flex;align-items:flex-end;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;padding:6px 4px 2px}
+.hello-t{font-size:clamp(24px,2.8vw,32px);font-weight:800;letter-spacing:-.02em}
+.hello-s{margin-top:4px;font-size:14px;color:var(--ink-2)}
+.hello-nn{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:8px 12px;border-radius:12px;background:#FFF4DC;color:#7A4B00;font-size:13px}
+.hello-nn svg{width:16px;height:16px}
+.hello-acts{display:flex;gap:8px;flex-wrap:wrap}
+.hello-acts .abtn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px}
+.hello-acts .abtn svg{width:17px;height:17px}
+.home-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);gap:clamp(16px,2vw,22px);align-items:start}
+.home-col{display:flex;flex-direction:column;gap:clamp(16px,2vw,22px)}
+.wg h2{margin-bottom:12px}
+.wg-ok{display:flex;align-items:center;gap:12px}
+.wg-ok b{display:block;font-size:14.5px}
+.now-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.now-it,.tl-card{display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
+.now-it.live,.tl-card.live{border-color:#BFE3CF;background:#F3FBF6}
+.now-h{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.now-own{font-size:12px;color:var(--ink-3);font-weight:600}
+.now-n{font-size:15px;line-height:1.35;font-weight:700}
+.now-m{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2);font-weight:600}
+.now-m span{display:inline-flex;align-items:center;gap:4px}
+.now-m svg{width:15px;height:15px;color:var(--ink-3)}
+.now-m .tl-date{margin-left:auto;color:var(--ink-3)}
+.now-it .abtn,.tl-card .abtn{margin-top:auto;align-self:flex-start;padding:8px 14px;font-size:13.5px}
+.ph-pill .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ok);margin-right:6px;animation:pulse 1.6s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.ph-pill.ph-checkin,.ph-pill.ph-pains,.ph-pill.ph-votes,.ph-pill.ph-quickwins,.ph-pill.ph-ideas{background:#E3F4EC;color:var(--ok)}
+.qa-list{display:flex;flex-direction:column;gap:6px}
+.qa{display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;align-items:center;padding:8px 10px;border-radius:12px;text-align:left;width:100%}
+.qa:hover{background:var(--surface)}
+.qa b{display:block;font-size:13.5px;font-weight:700}
+.qa small{display:block;font-size:12.5px;color:var(--ink-3)}
+.pd-list{display:flex;flex-direction:column}
+.pd-it{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.pd-it:first-child{border-top:none;padding-top:2px}
+.pd-it .nt-tx b{font-size:13.5px;font-weight:700}
+.tl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.tl-card{background:var(--card)}
+.tl-card .now-n{font-size:16px}
+/* creador */
+.wz{display:flex;flex-direction:column;gap:14px}
+.wz-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.wz-top .adm-t{margin:0;flex:1}
+.wz-top .linkbtn{font-size:13.5px;text-decoration:none}
+.wz-steps{list-style:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;padding:4px;border-radius:14px;background:#E7EEF7}
+.wz-s button{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:42px;border-radius:10px;font-size:13px;font-weight:700;color:var(--ink-3)}
+.wz-s button:disabled{cursor:default;opacity:.55}
+.wz-s.seen button,.wz-s.done button{color:var(--ink-2)}
+.wz-s.on button{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(1,19,59,.12)}
+.wz-n{display:inline-grid;place-items:center;flex:none;width:24px;height:24px;border-radius:8px;background:var(--accent-soft);color:var(--accent-strong);font-size:12px;font-weight:800}
+.wz-s.done .wz-n{background:#E3F4EC;color:var(--ok)}
+.wz-n svg{width:14px;height:14px}
+.wz-body{padding:clamp(18px,2.6vw,30px)}
+.wz-h{margin-bottom:18px}
+.wz-h h2{font-size:20px;margin-bottom:4px}
+.wz-h .hint{font-size:13.5px}
+.wz-foot{position:sticky;bottom:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line)}
+.wz-foot .abtn{display:inline-flex;align-items:center;gap:6px;padding:11px 18px}
+.wz-foot .abtn svg{width:16px;height:16px}
+.wz-foot .abtn:disabled{opacity:.45;cursor:default}
+.wz-pos{text-align:center}
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tpl{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:18px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);text-align:left;transition:border-color .15s,box-shadow .15s}
+.tpl:hover{border-color:var(--accent)}
+.tpl.on{border-color:var(--accent-strong);box-shadow:0 0 0 3px var(--accent-soft)}
+.tpl b{font-size:16px}
+.tpl small{font-size:12.5px;color:var(--accent-strong);font-weight:700}
+.tpl em{font-style:normal;font-size:13px;color:var(--ink-2);line-height:1.45}
+.tpl .input{margin-top:6px;font-size:14px;padding:10px 12px}
+.admin-theme .wz-body .input{font-size:15px;padding:11px 13px;border-radius:11px}
+.chips-in{display:flex;flex-wrap:wrap;gap:6px;padding:8px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);cursor:text;min-height:52px}
+.chips-in:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.chips-l{display:contents}
+.chips-in .chip{display:inline-flex;align-items:center;gap:4px;padding:6px 6px 6px 12px;font-size:13.5px}
+.chips-in .chip button{width:20px;height:20px;border-radius:50%;font-size:15px;line-height:1;color:inherit;opacity:.7}
+.chips-in .chip button:hover{opacity:1;background:rgba(255,255,255,.25)}
+.chips-i{flex:1 1 140px;min-width:120px;border:0;outline:0;background:transparent;font-size:15px;padding:6px 8px}
+.st-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.st-row{border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.st-row.open{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.st-main{display:flex;align-items:center;gap:8px;padding:8px 10px}
+.st-main .st-name{flex:1;min-width:0}
+.admin-theme .st-main .input{padding:9px 12px;font-size:14.5px}
+.st-cnt{display:inline-flex;gap:8px;font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap}
+.st-cnt svg{width:14px;height:14px;vertical-align:-3px;margin-right:2px}
+.st-main .ib.sm{flex:none;color:var(--ink-3)}
+.st-main .ib.sm:hover{color:var(--ink);background:var(--surface)}
+.st-main .ib.danger:hover{color:var(--danger)}
+.st-main [data-up] svg{transform:rotate(-90deg)}
+.st-main [data-down] svg{transform:rotate(90deg)}
+.st-main .ib:disabled{opacity:.3}
+.st-main [data-tg][aria-expanded="true"] svg{transform:rotate(180deg)}
+.st-more{padding:6px 14px 6px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.val-sec{padding:14px 0 18px;border-top:1px solid var(--line)}
+.val-sec:first-of-type{border-top:none;padding-top:0}
+.val-h h3{font-size:15.5px;font-family:var(--display);display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.val-h .sub{font-family:var(--sans);font-weight:600;font-size:12.5px;color:var(--ink-3)}
+.val-rows{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.val-row{display:grid;grid-template-columns:auto minmax(120px,.7fr) minmax(0,1.6fr) minmax(0,1fr) auto;gap:8px;align-items:center}
+.admin-theme .val-row .input{padding:9px 11px;font-size:14px}
+.val-row .wz-n{width:auto;padding:0 8px;font-size:11px;letter-spacing:.04em}
+.sum-list{display:flex;flex-direction:column}
+.sum-it{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:14px 0;border-top:1px solid var(--line)}
+.sum-it:first-child{border-top:none;padding-top:0}
+.sum-it b{display:block;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.sum-it p{font-size:14.5px;line-height:1.45;color:var(--ink)}
+.sum-it .linkbtn{flex:none;font-size:13.5px;text-decoration:none}
+.me-edit{align-self:flex-start;font-size:12.5px;text-decoration:none;margin-top:2px}
+.me-form{border-top:1px solid var(--line);padding-top:12px}
+.me-form .field{margin-bottom:10px}
+.admin-theme .me-form .input{font-size:14px;padding:10px 12px}
+@media (max-width:1024px){ .home-grid{grid-template-columns:1fr} }
+@media (max-width:900px){
+  .wz-steps{grid-template-columns:repeat(7,auto);overflow-x:auto}
+  .wz-s .wz-t{display:none}
+  .wz-s.on .wz-t{display:inline}
+  .wz-s button{padding:0 10px;width:auto}
+  .st-more{grid-template-columns:1fr}
+  .val-row{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"n txt rm" "st st st" "hp hp hp"}
+  .val-row .wz-n{grid-area:n}.val-row .val-txt{grid-area:txt}.val-row .val-st{grid-area:st}.val-row .val-help{grid-area:hp}.val-row [data-rm]{grid-area:rm}
+}
+@media (max-width:720px){
+  .wz-foot{flex-wrap:wrap}.wz-pos{order:3;width:100%}
+  .st-cnt{display:none}
+  .hello-acts .abtn{flex:1}
+}
 </style>
 </head>
 <body>
@@ -1554,7 +1682,7 @@ function tasksFor(session, stage){ return (session && session.tasks && session.t
 function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260926000829";
+const APP_BUILD="20260926020413";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -1638,7 +1766,7 @@ const SupaStore = {
       const m = me && me[0];
       if(!m) return {state:"forbidden", email:u.email, reason:inviteError};
       if(!m.active) return {state:"forbidden", email:u.email, reason:"Tu acceso al panel fue desactivado. Si es un error, habla con tu admin."};
-      return {state:"ready", email:u.email, uid:u.id, role:m.role, name:m.name||"", avatar:m.avatar||"", inviteError};
+      return {state:"ready", email:u.email, uid:u.id, role:m.role, name:m.name||"", title:m.title||"", avatar:m.avatar||"", inviteError};
     }
     return {state: aal.nextLevel === "aal2" ? "verify" : "enroll", email:u.email};
   },
@@ -1652,7 +1780,10 @@ const SupaStore = {
     }
   },
   async invitePeek(code){ const {data,error}=await this.client.rpc("ws_invite_peek",{p_code:code}); if(error) throw error; return (data&&data[0])||null; },
-  async listStaff(){ const {data,error}=await this.client.from("ws_admins").select("user_id,email,name,role,active,created_at,avatar").order("created_at"); if(error) throw error; return data||[]; },
+  async listStaff(){ const {data,error}=await this.client.from("ws_admins").select("user_id,email,name,title,role,active,created_at,avatar").order("created_at"); if(error) throw error; return data||[]; },
+  /* v1.7 · perfil e Inicio */
+  async setMyProfile(name,title){ const {error}=await this.client.rpc("ws_set_my_profile",{p_name:name,p_title:title||null}); if(error) throw error; },
+  async dashboard(){ const {data,error}=await this.client.rpc("ws_dashboard"); if(error) throw error; return data||{sessions:[],invites:[]}; },
   async setMyAvatar(dataUrl){ const {error}=await this.client.rpc("ws_set_my_avatar",{p_avatar:dataUrl||""}); if(error) throw error; },
   async listInvites(){ const {data,error}=await this.client.from("ws_invites").select("id,email,name,role,created_at,expires_at,used_at,revoked_at").order("created_at",{ascending:false}); if(error) throw error; return data||[]; },
   async createInvite(email,name,role){ const {data,error}=await this.client.rpc("ws_create_invite",{p_email:email,p_name:name||null,p_role:role}); if(error) throw error; return data&&data[0]; },
@@ -1773,10 +1904,16 @@ const DemoStore = {
   _uid(){ let id=null; try{ id=sessionStorage.getItem("colmena_demo_uid"); if(!id){ id=uid(); sessionStorage.setItem("colmena_demo_uid",id); } }catch(e){ id=window.__demoUid=window.__demoUid||uid(); } return id; },
   async currentUser(){ return {id:this._uid(), is_anonymous:true}; },
   async ensureAnon(){ return this.currentUser(); },
-  async adminState(){ const inv=pendingInvite(); if(inv) clearInvite(); return {state:"ready", email:"modo demo", uid:"demo", role:"admin", name:"Tú (demo)", avatar:this.db().meAvatar||""}; },
+  async adminState(){ const inv=pendingInvite(); if(inv) clearInvite(); const db=this.db(); return {state:"ready", email:"modo demo", uid:"demo", role:"admin", name:db.meName||"Tú (demo)", title:db.meTitle||"", avatar:db.meAvatar||""}; },
+  async setMyProfile(name,title){ const db=this.db(); db.meName=name; db.meTitle=title||""; this.save(db); },
+  async dashboard(){ const db=this.db(); const st=(db.staff||[]);
+    return { sessions:[...db.sessions].sort((a,b)=>a.created_at<b.created_at?1:-1).map(s=>{ const ps=db.participants.filter(p=>p.session_id===s.id);
+      return {id:s.id,code:s.code,name:s.name,phase:s.phase,owner_id:s.owner_id||"demo",created_at:s.created_at,closed_at:s.closed_at||(s.phase==="closed"?s.created_at:null),
+        participants:ps.length, listos:ps.filter(p=>(p.done_phases||[]).includes(s.phase)).length, cards:db.cards.filter(c=>c.session_id===s.id).length, ideas:db.ideas.filter(i=>i.session_id===s.id&&i.kind==="idea").length}; }),
+      invites:(db.invites||[]).filter(i=>!i.used_at&&!i.revoked_at).map(i=>({id:i.id,email:i.email,name:i.name,expires_at:i.expires_at})) }; },
   async setMyAvatar(d){ const db=this.db(); db.meAvatar=d||""; this.save(db); },
   async signUp(){}, async invitePeek(code){ return {email:"invitado@empresa.com", name:"Persona invitada", role:"facilitator", expires_at:new Date(Date.now()+7*864e5).toISOString()}; },
-  async listStaff(){ return [{user_id:"demo",email:"modo demo",name:"Tú (demo)",role:"admin",active:true,created_at:now(),avatar:this.db().meAvatar||""}, ...(this.db().staff||[])]; },
+  async listStaff(){ const db=this.db(); return [{user_id:"demo",email:"modo demo",name:db.meName||"Tú (demo)",title:db.meTitle||"",role:"admin",active:true,created_at:now(),avatar:db.meAvatar||""}, ...(db.staff||[])]; },
   async listInvites(){ return this.db().invites||[]; },
   async createInvite(email,name,role){ const db=this.db(); db.invites=db.invites||[]; email=String(email||"").trim().toLowerCase();
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error("Escribe un correo válido");
@@ -2551,8 +2688,10 @@ const A = { session:null, participants:[], cards:[], votes:[], qwRatings:[], ide
 
 /* v1.5 · Cuenta con la que se entró al panel. role: "admin" (ve todos los talleres, solo lectura en los ajenos) o "facilitator" (solo los suyos).
    Es solo para mostrar la interfaz correcta: quien decide qué datos se entregan es la base de datos. */
-const ME = { role:"facilitator", uid:null, email:"", name:"", avatar:"" };
-const AH = { view:"mine", owner:"", q:"", staff:[] };
+const ME = { role:"facilitator", uid:null, email:"", name:"", title:"", avatar:"" };
+const AH = { view:"home", owner:"", q:"", staff:[] };
+const VIEWS_ALL = ["home","mine","create","all","team"], VIEWS_FAC = ["home","mine","create"];
+const viewOk = v => (isAdminRole()?VIEWS_ALL:VIEWS_FAC).includes(v);
 const isAdminRole = () => ME.role === "admin";
 const ROLE_T = { admin:"Admin", facilitator:"Facilitador" };
 const fmtDate = (iso,o) => { try{ return new Date(iso).toLocaleDateString("es-MX", o||{day:"numeric",month:"short"}); }catch(e){ return ""; } };
@@ -2594,11 +2733,12 @@ async function adminBoot(openCode){
   if(st.state==="enroll")    return adminEnroll(st.email);
   if(st.state==="verify")    return adminVerify(st.email);
   if(st.state==="forbidden") return adminForbidden(st.email, st.reason);
-  Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"", avatar:st.avatar||"" });
-  if(isAdminRole()) await loadStaff(); else AH.view="mine";
+  Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"", title:st.title||"", avatar:st.avatar||"" });
+  if(isAdminRole()) await loadStaff();
+  if(!viewOk(AH.view)) AH.view="home";
   if(st.inviteError) toast(st.inviteError);
   /* v1.6 · enlaces de los correos: ?view=team|all|mine */
-  try{ const u=new URL(location.href), v=u.searchParams.get("view"); if(v){ if(["team","all","mine"].includes(v) && (isAdminRole()||v==="mine")) AH.view=v; u.searchParams.delete("view"); history.replaceState(null,"",u.pathname+u.search+u.hash); } }catch(e){}
+  try{ const u=new URL(location.href), v=u.searchParams.get("view"); if(v){ if(viewOk(v)) AH.view=v; u.searchParams.delete("view"); history.replaceState(null,"",u.pathname+u.search+u.hash); } }catch(e){}
   startNotifications();
   if(openCode){
     const s = await Store.getMySession(openCode).catch(()=>null);
@@ -2746,8 +2886,10 @@ async function adminSignup(msg){
 
 /* ---------- v1.5 · Inicio: encabezado con secciones (el admin ve «Todos los talleres» y «Equipo») ---------- */
 function ahTop(){
-  const tabs = isAdminRole() ? `<nav class="ah-tabs" aria-label="Secciones">${[["mine","Mis talleres","grid","Míos"],["all","Todos los talleres","chart","Todos"],["team","Equipo","users","Equipo"]]
-    .map(([k,t,ic,sh])=>`<button class="ah-tab${AH.view===k?" on":""}" data-view="${k}"${AH.view===k?' aria-current="page"':""} aria-label="${t}">${icon(ic)}<span class="t-l">${t}</span><span class="t-s" aria-hidden="true">${sh}</span></button>`).join("")}</nav>` : "";
+  const tabsDef = [["home","Inicio","hexagon","Inicio"],["mine","Mis talleres","grid","Míos"]].concat(isAdminRole()?[["all","Todos los talleres","chart","Todos"],["team","Equipo","users","Equipo"]]:[]);
+  const cur = AH.view==="create" ? "mine" : AH.view;
+  const tabs = `<nav class="ah-tabs" aria-label="Secciones">${tabsDef
+    .map(([k,t,ic,sh])=>`<button class="ah-tab${cur===k?" on":""}" data-view="${k}"${cur===k?' aria-current="page"':""} aria-label="${t}">${icon(ic)}<span class="t-l">${t}</span><span class="t-s" aria-hidden="true">${sh}</span></button>`).join("")}</nav>`;
   return `<header class="ah-top">
       <div class="brand-row">${brandLockup("xs")}
         <div><div class="brand-name">Colmena · ${isAdminRole()?"Admin":"Facilitador"}</div><div class="brand-by">by ${BRAND_ORG}</div></div></div>
@@ -2756,7 +2898,7 @@ function ahTop(){
     </header>`;
 }
 function wireTop(){
-  $("#outBtn").onclick=async()=>{ if(NT.unsub) NT.unsub(); if(NT.poll) clearInterval(NT.poll); NT.unsub=NT.poll=NT.uid=null; NT.items=[]; NT.loaded=false; await Store.signOut(); AH.view="mine"; adminBoot(); };
+  $("#outBtn").onclick=async()=>{ if(NT.unsub) NT.unsub(); if(NT.poll) clearInterval(NT.poll); NT.unsub=NT.poll=NT.uid=null; NT.items=[]; NT.loaded=false; W.d=null; await Store.signOut(); AH.view="home"; adminBoot(); };
   $("#meBtn").onclick=e=>{ e.stopPropagation(); $(".me-pop") ? closeMe() : openMe(); };
   wireBell();
   $$(".ah-tab").forEach(b=>b.onclick=()=>{ if(AH.view===b.dataset.view) return; AH.view=b.dataset.view; adminHome(); window.scrollTo(0,0); });
@@ -2771,8 +2913,14 @@ function openMe(){
     <div class="me-hero">
       <label class="me-ph${busy?" busy":""}" for="meFile" title="Cambiar foto">${avatarHTML(ME,"xl")}<span class="me-cam" aria-hidden="true">${icon("camera")}</span></label>
       <input type="file" id="meFile" accept="image/*" class="sr">
-      <div class="me-who"><b>${esc(ME.name||"Sin nombre")}</b><span>${esc(ME.email)}</span><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span></div>
+      <div class="me-who"><b>${esc(ME.name||"Sin nombre")}</b>${ME.title?`<span>${esc(ME.title)}</span>`:""}<span>${esc(ME.email)}</span><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span>
+        <button type="button" class="linkbtn me-edit" id="meEdit">${ME.name?"Editar nombre y puesto":"Poner mi nombre"}</button></div>
     </div>
+    <form class="me-form" id="meForm" hidden>
+      <div class="field"><label for="me-name">Nombre</label><input id="me-name" class="input" maxlength="120" value="${esc(ME.name)}" placeholder="Ej. Ana López" required></div>
+      <div class="field"><label for="me-title">Puesto <span class="opt">opcional</span></label><input id="me-title" class="input" maxlength="120" value="${esc(ME.title)}" placeholder="Ej. Consultora de procesos"></div>
+      <div class="me-acts"><button class="abtn primary" type="submit">Guardar</button><button class="abtn" type="button" id="meCancel">Cancelar</button></div>
+    </form>
     <div class="me-acts">
       <label class="abtn primary" for="meFile">${icon("camera")}${ME.avatar?"Cambiar foto":"Subir foto"}</label>
       ${ME.avatar?`<button class="abtn" id="meDel">Quitar</button>`:""}
@@ -2784,6 +2932,15 @@ function openMe(){
     f.onchange=async()=>{ const file=f.files&&f.files[0]; if(!file) return; draw(null,true);
       try{ const d=await shrinkImage(file); await Store.setMyAvatar(d); ME.avatar=d; syncMe(); draw({t:"Foto actualizada"}); }
       catch(e){ draw({t:friendlyAuthError(e),err:true}); } };
+    const form=pop.querySelector("#meForm"), ed=pop.querySelector("#meEdit");
+    ed.onclick=()=>{ form.hidden=false; ed.hidden=true; pop.querySelector("#me-name").focus(); };
+    pop.querySelector("#meCancel").onclick=()=>{ form.hidden=true; ed.hidden=false; };
+    form.onsubmit=async e=>{ e.preventDefault(); const nm=pop.querySelector("#me-name").value.trim(), tt=pop.querySelector("#me-title").value.trim();
+      if(nm.length<2) return toast("Escribe tu nombre");
+      try{ await Store.setMyProfile(nm,tt); ME.name=nm; ME.title=tt; const m=AH.staff.find(x=>x.user_id===ME.uid); if(m){ m.name=nm; m.title=tt; }
+        const nb=$("#meBtn .ah-mail"); if(nb) nb.textContent=nm; const ht=$(".hello-t"); if(ht) ht.textContent=greeting()+", "+firstName(nm); const hn=$(".hello-nn"); if(hn) hn.remove();
+        draw({t:"Perfil actualizado"}); }
+      catch(ex){ toast(friendlyAuthError(ex)); } };
     const del=pop.querySelector("#meDel");
     if(del) del.onclick=async()=>{ del.disabled=true; try{ await Store.setMyAvatar(""); ME.avatar=""; syncMe(); draw({t:"Foto quitada"}); }catch(e){ draw({t:friendlyAuthError(e),err:true}); } };
   };
@@ -2884,7 +3041,7 @@ async function ntOpen(id){
   const a=n.action||{}; closeNotifs();
   if(a.code){ const s=await Store.getMySession(a.code).catch(()=>null); if(s){ startAdmin(s); return; } toast("Ese taller ya no existe o no tienes acceso"); return; }
   if(a.view){ if(A.session){ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); A.session=null; }
-    AH.view = (a.view==="mine"||isAdminRole()) ? a.view : "mine"; adminHome(); window.scrollTo(0,0); return; }
+    AH.view = viewOk(a.view) ? a.view : "home"; adminHome(); window.scrollTo(0,0); return; }
 }
 document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $(".nt-pop")) closeNotifs(); });
 window.addEventListener("resize",()=>{ if($(".nt-pop")) placeNotifs(); });
@@ -2899,126 +3056,295 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $(".me-pop")) cl
 
 async function loadStaff(){ try{ AH.staff = await Store.listStaff(); }catch(e){ console.error(e); } return AH.staff; }
 
+/* ============================================================
+   v1.7 · Inicio (saludo + widgets), Mis talleres y creador paso a paso
+   ============================================================ */
+const phaseName = id => (PHASES.find(p=>p.id===id)||{t:id}).t;
+const ACTIVE_PH = ["checkin","pains","votes","quickwins","ideas"];
+function firstName(t){ return String(t||"").trim().split(/\s+/)[0]||""; }
+function greeting(){ const h=new Date().getHours(); return h<5?"Buenas noches":h<12?"Buenos días":h<19?"Buenas tardes":"Buenas noches"; }
+function todayLong(){ try{ const t=new Date().toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long"}); return t.charAt(0).toUpperCase()+t.slice(1); }catch(e){ return ""; } }
+function daysSince(iso){ return Math.floor((Date.now()-new Date(iso).getTime())/864e5); }
+function shellHTML(inner, cls){ return `<div class="ah-shell">${ahTop()}<main class="ah-wide ${cls||""}">${inner}</main></div>`; }
+async function openSession(code, btn){ if(btn) btn.disabled=true; const s=await Store.getMySession(code).catch(()=>null); if(s) startAdmin(s); else { toast("No se pudo abrir el taller"); if(btn) btn.disabled=false; } }
+
 async function adminHome(){
   if(isAdminRole() && AH.view==="all")  return adminAllView();
   if(isAdminRole() && AH.view==="team") return adminTeamView();
-  const pre = CONFIG.PRESETS.lockton;
-  let mine=[]; try{ mine = await Store.listMySessions(); }catch(e){ console.error(e); }
-  const phaseName = id => (PHASES.find(p=>p.id===id)||{t:id}).t;
+  if(AH.view==="create") return createView();
+  if(AH.view==="mine")   return mineView();
+  return homeView();
+}
+
+/* ---------- Inicio ---------- */
+async function homeView(){
   document.body.classList.add("admin-theme");
-  const talleres = mine.length ? `<div class="tl-list">${mine.map(m=>`
-        <div class="tl-item">
-          <div class="tl-name">${esc(m.name)}</div>
-          <div class="tl-meta"><span class="tl-code">${esc(m.code)}</span><span>${esc(phaseName(m.phase))}</span><span>·</span><span>${new Date(m.created_at).toLocaleDateString("es-MX",{day:"numeric",month:"short"})}</span></div>
-          <button class="abtn" data-open="${esc(m.code)}">Abrir</button>
-        </div>`).join("")}</div>`
-    : `<div class="tl-empty">${glass("hexagon",{size:"md"})}<p><strong>Aún no tienes talleres.</strong><br>Crea el primero con el formulario.</p></div>`;
-  $("#app").innerHTML = `<div class="ah-shell">
-    ${ahTop()}
-    <main class="ah-main">
-      <aside class="ah-side">
-        <div class="panel">
-          <h2>Tus talleres <span class="sub">${mine.length}</span></h2>
-          ${talleres}
-        </div>
-        <div class="panel ah-how">
-          <h2>Cómo funciona</h2>
-          <ol class="ah-steps">
-            <li><strong>Crea el taller</strong> con una plantilla y ajusta lo que necesites.</li>
-            <li><strong>Proyecta el QR</strong>: la sala entra desde su celular.</li>
-            <li><strong>Lleva el ritmo</strong> con la barra de fases y, al final, usa <strong>Compartir</strong> para bajar Excel, CSV o el PDF.</li>
-          </ol>
-        </div>
-      </aside>
-      <section class="panel ah-form">
-        <div class="ah-form-head">
-          <div><h2 style="margin:0">Crear taller nuevo</h2><p class="hint" id="c-summary" style="margin-top:4px"></p></div>
-          <div class="chips">
-            <button class="chip on" id="pre-lockton">Plantilla Lockton · Actua</button>
-            <button class="chip" id="pre-generic">Plantilla genérica</button>
-          </div>
-        </div>
-
-        <div class="ah-sec">
-          <h3 class="ah-sec-t"><span>1</span> Datos del taller</h3>
-          <div class="g3">
-            <div class="field"><label for="c-name">Nombre del taller</label><input id="c-name" class="input" value="${esc(pre.name)}"></div>
-            <div class="field"><label for="c-fac">Facilita</label><input id="c-fac" class="input" value="${esc(pre.facilitator)}"></div>
-            <div class="field"><label for="c-votes">Votos por persona</label><input id="c-votes" class="input" type="number" min="1" max="20" value="${pre.votes_per_user}"></div>
-          </div>
-        </div>
-
-        <div class="ah-sec">
-          <h3 class="ah-sec-t"><span>2</span> Registro de participantes</h3>
-          <div class="grid2">
-            <div class="field"><label for="c-areas">Áreas <span class="opt">una por línea</span></label><textarea id="c-areas" class="input" rows="7">${pre.areas.join("\n")}</textarea></div>
-            <div class="field"><label for="c-roles">Roles <span class="opt">uno por línea · vacío = texto libre</span></label><textarea id="c-roles" class="input" rows="7">${(pre.roles||[]).join("\n")}</textarea></div>
-          </div>
-        </div>
-
-        <div class="ah-sec">
-          <h3 class="ah-sec-t"><span>3</span> Proceso y herramientas</h3>
-          <div class="grid2">
-            <div class="field"><label for="c-stages">Etapas del proceso <span class="opt">una por línea</span></label><textarea id="c-stages" class="input" rows="10">${pre.stages.join("\n")}</textarea></div>
-            <div class="field"><label for="c-tools">Herramientas por etapa <span class="opt">Etapa | herr1, herr2</span></label><textarea id="c-tools" class="input mono" rows="10">${toolsText(pre.tools)}</textarea></div>
-          </div>
-          <div class="field"><label for="c-tasks">Actividades por etapa <span class="opt">opcional · Etapa | actividad; actividad · cada dolor podrá señalar la actividad exacta</span></label><textarea id="c-tasks" class="input mono" rows="8">${tasksText(pre.tasks)}</textarea></div>
-        </div>
-
-        <details class="ah-sec" id="sec-qw">
-          <summary class="ah-sec-t"><span>4</span> Validación e ideas <em class="opt" id="c-qwcount"></em></summary>
-          <div class="field" style="margin-top:12px"><label for="c-qws">Listas a validar <span class="opt">Etapa | texto | explicación (opcional) · secciones «## Quick wins», «## Reglas» y «## Tiempos» · se numeran solos</span></label><textarea id="c-qws" class="input mono" rows="12">${qwsText(pre.quickwins)}</textarea></div>
-          <div class="g3">
-            <div class="field" style="grid-column:span 2"><label for="c-qidea">Pregunta de ideas</label><input id="c-qidea" class="input" value="${esc(pre.q_idea||"")}"></div>
-            <div class="field"><label for="c-ivotes">Apoyos por persona</label><input id="c-ivotes" class="input" type="number" min="1" max="10" value="${pre.idea_votes||3}"></div>
-          </div>
-        </details>
-
-        <details class="ah-sec">
-          <summary class="ah-sec-t"><span>5</span> Preguntas a la sala</summary>
-          <div class="field" style="margin-top:12px"><label for="c-qpain">Pregunta de dolores</label><textarea id="c-qpain" class="input" rows="2">${esc(pre.q_pain)}</textarea></div>
-          <div class="grid2">
-            <div class="field"><label for="c-qcheck">Check-in: estado de ánimo</label><input id="c-qcheck" class="input" value="${esc(pre.q_checkin)}"></div>
-            <div class="field"><label for="c-qexp">Check-in: expectativa</label><input id="c-qexp" class="input" value="${esc(pre.q_expect)}"></div>
-          </div>
-        </details>
-
-        <div class="ah-actions">
-          <p class="hint">Al crearlo se genera un código de 6 caracteres y el QR para proyectar.</p>
-          <button class="abtn primary ah-create" id="c-create">Crear taller</button>
-        </div>
+  $("#app").innerHTML=shellHTML(`<div class="panel"><p class="hint">Cargando…</p></div>`,"home"); wireTop();
+  let d={sessions:[],invites:[]};
+  try{ const r=await Promise.all([Store.dashboard(), isAdminRole()?loadStaff():null, NT.loaded?null:loadNotifs()]); d=r[0]||d; }
+  catch(e){ console.error(e); }
+  if(AH.view!=="home") return;
+  AH.dash=d;
+  const mine=d.sessions.filter(s=>s.owner_id===ME.uid);
+  const live=d.sessions.filter(s=>!["closed"].includes(s.phase)).sort((a,b)=>(ACTIVE_PH.includes(b.phase)-ACTIVE_PH.includes(a.phase)) || (b.participants-a.participants));
+  const lastClosed=mine.find(s=>s.phase==="closed");
+  const un=ntUnread();
+  /* pendientes */
+  const pend=[];
+  if(isAdminRole()) d.invites.forEach(i=>{ const h=(new Date(i.expires_at).getTime()-Date.now())/36e5;
+    if(h<=0) pend.push({ic:"mail",tone:"t-warn",t:`La invitación de ${i.name||i.email} venció`,s:"Invítala de nuevo si aún necesita acceso",go:{view:"team"},label:"Invitar de nuevo"});
+    else if(h<=24) pend.push({ic:"mail",tone:"t-warn",t:`La invitación de ${i.name||i.email} vence hoy`,s:"Aún no crea su cuenta",go:{view:"team"},label:"Reenviar"}); });
+  mine.filter(s=>s.phase==="closed" && s.closed_at && daysSince(s.closed_at)>=30).forEach(s=>pend.push({ic:"trash",tone:"t-warn",t:`«${s.name}» lleva ${daysSince(s.closed_at)} días cerrado`,s:"Exporta los resultados y bórralo",go:{code:s.code},label:"Abrir"}));
+  if(un) pend.unshift({ic:"bell",tone:"",t:`Tienes ${un} ${un===1?"aviso sin leer":"avisos sin leer"}`,s:"Ábrelos en la campana",go:{bell:true},label:"Ver avisos"});
+  const ctx = live.length ? `${live.length} ${live.length===1?"taller en curso":"talleres en curso"}` : "Sin talleres en curso";
+  const nowCard = s => { const mineS=s.owner_id===ME.uid, act=ACTIVE_PH.includes(s.phase);
+    return `<div class="now-it${act?" live":""}">
+      <div class="now-h"><span class="ph-pill ph-${esc(s.phase)}">${act?'<i class="dot"></i>':""}${esc(phaseName(s.phase))}</span>${mineS?"":`<span class="now-own">${esc(staffName(s.owner_id))} · solo lectura</span>`}</div>
+      <b class="now-n">${esc(s.name)}</b>
+      <div class="now-m"><span>${icon("users")}${s.participants} ${s.participants===1?"participante":"participantes"}</span>${act&&s.participants?`<span>${icon("check")}${s.listos} de ${s.participants} listos</span>`:""}${s.phase==="results"?`<span>${icon("chart")}${s.cards} dolores · ${s.ideas} ideas</span>`:""}</div>
+      <button class="abtn ${act||mineS?"primary":""}" data-open="${esc(s.code)}">${mineS?"Ir al taller":"Ver"}</button></div>`; };
+  $(".ah-wide").innerHTML=`
+    <section class="hello">
+      <div><h1 class="hello-t">${greeting()}${ME.name?", "+esc(firstName(ME.name)):""}</h1>
+        <p class="hello-s">${esc(todayLong())} · ${ctx}${un?` · <b>${un} ${un===1?"aviso":"avisos"}</b>`:""}</p>
+        ${ME.name?"":`<p class="hello-nn">${icon("users")}Tu cuenta no tiene nombre. <button type="button" class="linkbtn" id="hlName">Ponle tu nombre</button> para que tu equipo te reconozca.</p>`}</div>
+      <div class="hello-acts"><button class="abtn primary" id="hCreate">${icon("sparkle")}Crear taller</button>${isAdminRole()?`<button class="abtn" id="hInvite">${icon("mail")}Invitar a alguien</button>`:""}</div>
+    </section>
+    <div class="home-grid">
+      <section class="panel wg wg-now" aria-labelledby="wgNow">
+        <h2 id="wgNow">Ahora mismo <span class="sub">${live.length?live.length:""}</span></h2>
+        ${live.length?`<div class="now-list">${live.slice(0,6).map(nowCard).join("")}</div>${live.length>6?`<p class="hint">Y ${live.length-6} más en <button type="button" class="linkbtn" data-view-go="${isAdminRole()?"all":"mine"}">${isAdminRole()?"Todos los talleres":"Mis talleres"}</button>.</p>`:""}`
+        :`<div class="nt-empty">${glass("hexagon",{size:"md"})}<b>No hay talleres en curso</b><span>Cuando crees uno y abras el QR, aquí verás cuántos entraron y cómo va cada actividad.</span><button class="abtn primary" id="hCreate2">Crear taller</button></div>`}
       </section>
-    </main>
-  </div>`;
-  const summary=()=>{ const st=linesOf($("#c-stages").value).length, ar=linesOf($("#c-areas").value).length, ro=linesOf($("#c-roles").value).length, all=parseQws($("#c-qws").value), qw=all.filter(q=>q.kind==="qw").length, ex=all.length-qw;
-    $("#c-summary").textContent=`${st} etapas · ${ar} áreas · ${ro||"sin"} roles · ${qw} quick wins${ex?` · ${ex} reglas y tiempos`:""}`; $("#c-qwcount").textContent=all.length?`· ${all.length}`:""; };
-  $$(".ah-form .input").forEach(i=>i.addEventListener("input",summary));
-  const fill = p => { $("#c-name").value=p.name; $("#c-fac").value=p.facilitator; $("#c-votes").value=p.votes_per_user;
-    $("#c-areas").value=p.areas.join("\n"); $("#c-stages").value=p.stages.join("\n");
-    $("#c-qpain").value=p.q_pain; $("#c-qcheck").value=p.q_checkin; $("#c-qexp").value=p.q_expect;
-    $("#c-roles").value=(p.roles||[]).join("\n"); $("#c-tools").value=toolsText(p.tools); $("#c-tasks").value=tasksText(p.tasks); $("#c-qws").value=qwsText(p.quickwins);
-    $("#c-qidea").value=p.q_idea||""; $("#c-ivotes").value=p.idea_votes||3; };
-  const pick=(id,p)=>{ fill(p); $$(".ah-form-head .chip").forEach(x=>x.classList.toggle("on",x.id===id)); summary(); };
-  $("#pre-lockton").onclick=()=>pick("pre-lockton",CONFIG.PRESETS.lockton);
-  $("#pre-generic").onclick=()=>pick("pre-generic",CONFIG.PRESETS.generic);
-  summary();
-  wireTop();
-  $$("[data-open]").forEach(b=>b.onclick=async()=>{ const s=await Store.getMySession(b.dataset.open).catch(()=>null); if(s) startAdmin(s); else toast("No se pudo abrir el taller"); });
-  $("#c-create").onclick=async()=>{
-    $("#c-create").disabled=true;
-    const s={
-      code:makeCode(), name:$("#c-name").value.trim()||"Taller", facilitator:$("#c-fac").value.trim(),
-      phase:"lobby", votes_per_user:Math.max(1,Math.min(20,+$("#c-votes").value||5)),
-      areas:$("#c-areas").value.split("\n").map(x=>x.trim()).filter(Boolean),
-      stages:$("#c-stages").value.split("\n").map(x=>x.trim()).filter(Boolean),
-      q_checkin:$("#c-qcheck").value.trim(), q_expect:$("#c-qexp").value.trim(), q_pain:$("#c-qpain").value.trim(),
-      brand:CONFIG.BRAND,
-      roles:linesOf($("#c-roles").value), tools:parseTools($("#c-tools").value), tasks:parseTasks($("#c-tasks").value), quickwins:parseQws($("#c-qws").value),
-      q_idea:$("#c-qidea").value.trim()||"¿Cómo podríamos resolverlo?", idea_votes:Math.max(1,Math.min(10,+$("#c-ivotes").value||3)), idea_top:3
-    };
-    try{ const created=await Store.createSession(s); startAdmin(created); toast("Taller creado: "+created.code); }
-    catch(e){ console.error(e); toast("No se pudo crear el taller: "+friendlyAuthError(e)); $("#c-create").disabled=false; }
-  };
+      <div class="home-col">
+        <section class="panel wg" aria-labelledby="wgQuick">
+          <h2 id="wgQuick">Acciones rápidas</h2>
+          <div class="qa-list">
+            <button class="qa" id="qaCreate"><span class="nt-ic">${icon("sparkle")}</span><span><b>Crear taller</b><small>Paso a paso, con plantilla</small></span></button>
+            ${isAdminRole()?`<button class="qa" id="qaInvite"><span class="nt-ic t-team">${icon("mail")}</span><span><b>Invitar a alguien</b><small>Le llega un correo con diseño</small></span></button>`:""}
+            ${lastClosed?`<button class="qa" data-open="${esc(lastClosed.code)}"><span class="nt-ic t-acct">${icon("chart")}</span><span><b>Resultados de «${esc(lastClosed.name)}»</b><small>${lastClosed.participants} participantes · ${lastClosed.cards} dolores · ${lastClosed.ideas} ideas</small></span></button>`:""}
+            <button class="qa" data-view-go="mine"><span class="nt-ic t-acct">${icon("grid")}</span><span><b>Mis talleres</b><small>${mine.length} en total</small></span></button>
+          </div>
+        </section>
+        ${pend.length?`<section class="panel wg" aria-labelledby="wgPend">
+          <h2 id="wgPend">Pendientes <span class="sub">${pend.length}</span></h2>
+          <div class="pd-list">${pend.map((p,i)=>`<div class="pd-it"><span class="nt-ic ${p.tone}">${icon(p.ic)}</span><span class="nt-tx"><b>${esc(p.t)}</b><p>${esc(p.s)}</p></span><button class="nt-act" data-pend="${i}">${esc(p.label)}</button></div>`).join("")}</div>
+        </section>`:`<section class="panel wg wg-ok"><span class="nt-ic t-team">${icon("check")}</span><div><b>Todo al día</b><p class="hint">Sin invitaciones por vencer, avisos pendientes ni talleres por depurar.</p></div></section>`}
+      </div>
+    </div>`;
+  const goCreate=()=>{ AH.view="create"; adminHome(); window.scrollTo(0,0); };
+  ["#hCreate","#hCreate2","#qaCreate"].forEach(k=>{ const b=$(k); if(b) b.onclick=goCreate; });
+  ["#hInvite","#qaInvite"].forEach(k=>{ const b=$(k); if(b) b.onclick=()=>{ AH.view="team"; adminHome(); window.scrollTo(0,0); }; });
+  const nn=$("#hlName"); if(nn) nn.onclick=()=>{ openMe(); setTimeout(()=>{ const e=$("#meEdit"); if(e) e.click(); },50); };
+  $$("[data-open]").forEach(b=>b.onclick=()=>openSession(b.dataset.open,b));
+  $$("[data-view-go]").forEach(b=>b.onclick=()=>{ AH.view=b.dataset.viewGo; adminHome(); window.scrollTo(0,0); });
+  $$("[data-pend]").forEach(b=>b.onclick=()=>{ const p=pend[+b.dataset.pend]; if(p.go.bell) return openNotifs(); if(p.go.code) return openSession(p.go.code,b); AH.view=p.go.view; adminHome(); window.scrollTo(0,0); });
+}
+
+/* ---------- Mis talleres ---------- */
+async function mineView(){
+  document.body.classList.add("admin-theme");
+  $("#app").innerHTML=shellHTML(`<div class="panel"><p class="hint">Cargando…</p></div>`); wireTop();
+  let d={sessions:[]}; try{ d=await Store.dashboard(); }catch(e){ console.error(e); }
+  if(AH.view!=="mine") return;
+  const mine=d.sessions.filter(s=>s.owner_id===ME.uid);
+  const draft=loadWzDraft();
+  $(".ah-wide").innerHTML=`
+    <div class="adm-head"><div><h1 class="adm-t">Mis talleres</h1><p class="hint">${mine.length?`${mine.length} ${mine.length===1?"taller":"talleres"} · los operas tú`:"Aún no tienes talleres"}</p></div>
+      <div class="hello-acts">${draft?`<button class="abtn" id="mDraft">${icon("clipboard")}Continuar borrador</button>`:""}<button class="abtn primary" id="mCreate">${icon("sparkle")}Crear taller</button></div></div>
+    ${mine.length?`<div class="tl-grid">${mine.map(s=>{ const act=ACTIVE_PH.includes(s.phase); return `<div class="tl-card${act?" live":""}">
+        <div class="now-h"><span class="ph-pill ph-${esc(s.phase)}">${act?'<i class="dot"></i>':""}${esc(phaseName(s.phase))}</span><span class="tl-code">${esc(s.code)}</span></div>
+        <b class="now-n">${esc(s.name)}</b>
+        <div class="now-m"><span>${icon("users")}${s.participants}</span><span>${icon("flame")}${s.cards} dolores</span><span>${icon("bulb")}${s.ideas} ideas</span><span class="tl-date">${esc(fmtDate(s.created_at,{day:"numeric",month:"short",year:"numeric"}))}</span></div>
+        <button class="abtn ${act?"primary":""}" data-open="${esc(s.code)}">${s.phase==="closed"?"Ver resultados":act?"Ir al taller":"Abrir"}</button></div>`; }).join("")}</div>`
+    :`<section class="panel"><div class="nt-empty">${glass("hexagon",{size:"md"})}<b>Crea tu primer taller</b><span>Elige una plantilla, ajusta etapas y preguntas, y en 5 minutos tienes el QR para proyectar.</span><button class="abtn primary" id="mCreate2">Crear taller</button></div></section>`}
+    <section class="panel ah-how" style="margin-top:4px"><h2>Cómo funciona</h2><ol class="ah-steps">
+      <li><strong>Crea el taller</strong> con una plantilla y ajusta lo que necesites.</li>
+      <li><strong>Proyecta el QR</strong>: la sala entra desde su celular.</li>
+      <li><strong>Lleva el ritmo</strong> con la barra de fases y, al final, usa <strong>Compartir</strong> para bajar Excel, CSV o el PDF.</li></ol></section>`;
+  const go=()=>{ AH.view="create"; adminHome(); window.scrollTo(0,0); };
+  ["#mCreate","#mCreate2","#mDraft"].forEach(k=>{ const b=$(k); if(b) b.onclick=go; });
+  $$("[data-open]").forEach(b=>b.onclick=()=>openSession(b.dataset.open,b));
+}
+
+/* ---------- Creador paso a paso ---------- */
+const W = { step:0, d:null, seen:new Set(), _t:null };
+const W_STEPS = [
+  {k:"tpl",  t:"Plantilla",   s:"Empieza con una base"},
+  {k:"data", t:"Datos",       s:"Nombre y votos"},
+  {k:"who",  t:"Participantes", s:"Áreas y roles"},
+  {k:"proc", t:"Proceso",     s:"Etapas, herramientas y actividades"},
+  {k:"val",  t:"Validación e ideas", s:"Quick wins, reglas y tiempos"},
+  {k:"ask",  t:"Preguntas",   s:"Lo que verá la sala"},
+  {k:"sum",  t:"Resumen",     s:"Revisa y crea"}
+];
+const wzKey = () => "colmena_draft_"+(ME.uid||"x");
+function loadWzDraft(){ try{ const j=JSON.parse(storageGet(wzKey())||"null"); return j&&j.d&&j.d.name!==undefined ? j : null; }catch(e){ return null; } }
+function saveWzDraft(){ clearTimeout(W._t); W._t=setTimeout(()=>{ try{ storageSet(wzKey(), JSON.stringify({step:W.step,d:W.d,at:now()})); const c=$("#wDraft"); if(c) c.textContent="Borrador guardado"; }catch(e){} },300); }
+function clearWzDraft(){ try{ localStorage.removeItem(wzKey()); }catch(e){} }
+function fromPreset(p){ const c=JSON.parse(JSON.stringify(p)); return {
+  template:c.template||"", name:c.name||"", facilitator:c.facilitator||ME.name||"", votes_per_user:c.votes_per_user||5,
+  areas:c.areas||[], roles:c.roles||[], stages:c.stages||[], tools:c.tools||{}, tasks:c.tasks||{},
+  quickwins:(c.quickwins||[]).map(q=>({kind:kindOf(q),stage:q.stage||"",text:q.text||"",help:q.help||""})),
+  q_idea:c.q_idea||"¿Cómo podríamos resolverlo?", idea_votes:c.idea_votes||3,
+  q_pain:c.q_pain||"", q_checkin:c.q_checkin||"", q_expect:c.q_expect||"" }; }
+
+async function createView(){
+  document.body.classList.add("admin-theme");
+  const dr=loadWzDraft();
+  if(!W.d){ if(dr){ W.d=dr.d; W.step=Math.min(dr.step||0, 6); W.seen=new Set([...Array(W.step+1).keys()]); } else { W.d=null; W.step=0; W.seen=new Set([0]); } }
+  $("#app").innerHTML=shellHTML(`<div class="wz"><div class="wz-top"><h1 class="adm-t">Crear taller</h1><span class="hint" id="wDraft">${dr?"Borrador recuperado":""}</span><button type="button" class="linkbtn" id="wQuit">Salir</button></div>
+    <ol class="wz-steps" id="wSteps"></ol><div class="panel wz-body" id="wBody"></div><div class="wz-foot" id="wFoot"></div></div>`,"create"); wireTop();
+  $("#wQuit").onclick=async()=>{ if(W.d && !(await askDialog({kind:"bee",title:"¿Salir del creador?",text:"Tu avance queda guardado como borrador en este navegador. Puedes continuarlo desde Mis talleres.",ok:"Salir"}))) return; W.d=W.d||null; AH.view="mine"; adminHome(); };
+  drawWizard();
+}
+function drawSteps(){
+  $("#wSteps").innerHTML=W_STEPS.map((s,i)=>{ const st=i===W.step?"on":i<W.step?"done":W.seen.has(i)?"seen":"todo";
+    return `<li class="wz-s ${st}"><button type="button" data-st="${i}" ${st==="todo"?"disabled":""} ${i===W.step?'aria-current="step"':""}><span class="wz-n">${st==="done"?icon("check"):i+1}</span><span class="wz-t">${s.t}</span></button></li>`; }).join("");
+  $$("#wSteps [data-st]").forEach(b=>b.onclick=()=>{ if(!W.d && +b.dataset.st>0) return; W.step=+b.dataset.st; drawWizard(); });
+}
+function drawWizard(){
+  drawSteps(); const B=$("#wBody"), d=W.d, k=W_STEPS[W.step].k;
+  W.seen.add(W.step);
+  const head=(t,s)=>`<div class="wz-h"><h2>${t}</h2>${s?`<p class="hint">${s}</p>`:""}</div>`;
+  if(k==="tpl"){
+    const L=CONFIG.PRESETS.lockton, G=CONFIG.PRESETS.generic; const mine=(AH.dash&&AH.dash.sessions||[]).filter(s=>s.owner_id===ME.uid);
+    B.innerHTML=head("¿Con qué base empezamos?","Puedes cambiar todo después. La plantilla solo te ahorra escribir.")+`
+      <div class="tpl-grid">
+        <button type="button" class="tpl${d&&d.template==="lockton"?" on":""}" data-tpl="lockton"><span class="nt-ic">${icon("clipboard")}</span><b>Lockton · Actua</b><small>${L.stages.length} etapas · ${L.areas.length} áreas · ${(L.quickwins||[]).filter(q=>kindOf(q)==="qw").length} quick wins</small><em>Proceso de valuación actuarial, con herramientas y listas a validar.</em></button>
+        <button type="button" class="tpl${d&&d.template==="generic"?" on":""}" data-tpl="generic"><span class="nt-ic t-acct">${icon("sparkle")}</span><b>Genérica</b><small>${G.stages.length} etapas · ${G.areas.length} áreas</small><em>Para cualquier proceso. Tú defines etapas y listas.</em></button>
+        <div class="tpl${d&&d.template==="copy"?" on":""}"><span class="nt-ic t-team">${icon("copy")}</span><b>Copiar un taller anterior</b><small>Misma configuración, sin los datos capturados</small>
+          <select class="input" id="tplCopy"><option value="">Elige un taller…</option>${mine.map(s=>`<option value="${esc(s.code)}">${esc(s.name)} · ${esc(s.code)}</option>`).join("")}</select></div>
+      </div>${d?`<p class="hint" style="margin-top:14px">Base actual: <b>${d.template==="lockton"?"Lockton · Actua":d.template==="generic"?"Genérica":"copia de «"+esc(d.name)+"»"}</b>. Si eliges otra, se reemplaza lo capturado.</p>`:""}`;
+    $$("[data-tpl]").forEach(b=>b.onclick=async()=>{ if(d && !(await askDialog({kind:"bee",title:"¿Reemplazar lo capturado?",text:"Se cargará la plantilla y se pierde lo que hayas editado.",ok:"Reemplazar"}))) return;
+      W.d=fromPreset({...CONFIG.PRESETS[b.dataset.tpl], template:b.dataset.tpl}); saveWzDraft(); W.step=1; drawWizard(); window.scrollTo(0,0); });
+    $("#tplCopy").onchange=async e=>{ const code=e.target.value; if(!code) return; const s=await Store.getMySession(code).catch(()=>null); if(!s) return toast("No se pudo leer ese taller");
+      W.d=fromPreset({...s, template:"copy", name:s.name+" (copia)"}); saveWzDraft(); W.step=1; drawWizard(); window.scrollTo(0,0); };
+  }
+  else if(k==="data"){
+    B.innerHTML=head("Datos del taller")+`<div class="g3">
+      <div class="field" style="grid-column:span 3"><label for="w-name">Nombre del taller</label><input id="w-name" class="input" maxlength="160" value="${esc(d.name)}" placeholder="Ej. Discovery · Proceso de onboarding"></div>
+      <div class="field" style="grid-column:span 2"><label for="w-fac">Quién facilita</label><input id="w-fac" class="input" maxlength="120" value="${esc(d.facilitator)}"></div>
+      <div class="field"><label for="w-votes">Votos por persona</label><input id="w-votes" class="input" type="number" min="1" max="20" value="${d.votes_per_user}"><p class="hint">Cuántos reparte cada quien entre los dolores</p></div></div>`;
+    bind("#w-name","name"); bind("#w-fac","facilitator"); bind("#w-votes","votes_per_user",v=>Math.max(1,Math.min(20,+v||5)));
+  }
+  else if(k==="who"){
+    B.innerHTML=head("Registro de participantes","Lo que cada quien elige al entrar con el QR. Escribe y da Enter para agregar.")+`<div class="grid2">
+      <div class="field"><label>Áreas</label>${chipsHTML("w-areas",d.areas,"Ej. Finanzas")}<p class="hint">Sirven para leer resultados por área.</p></div>
+      <div class="field"><label>Roles <span class="opt">opcional</span></label>${chipsHTML("w-roles",d.roles,"Ej. Analista")}<p class="hint">Si lo dejas vacío, cada quien escribe su puesto.</p></div></div>`;
+    wireChips("w-areas",v=>{ d.areas=v; saveWzDraft(); }); wireChips("w-roles",v=>{ d.roles=v; saveWzDraft(); });
+  }
+  else if(k==="proc"){
+    B.innerHTML=head("Proceso","Las etapas en orden. Abre cada una para poner sus herramientas y, si quieres, las actividades exactas.")+`<div class="st-rows" id="wStages"></div>
+      <button type="button" class="abtn" id="wAddStage">${icon("sparkle")}Agregar etapa</button>`;
+    drawStages();
+    $("#wAddStage").onclick=()=>{ d.stages.push(""); saveWzDraft(); drawStages(); const last=$$("#wStages .st-name").pop(); if(last) last.focus(); };
+  }
+  else if(k==="val"){
+    const kinds=[["qw","Quick wins","Mejoras rápidas ya identificadas. La sala dirá cuánto le ayudaría cada una."],["gate","Reglas del nuevo flujo","Candados obligatorios. La sala dirá si le ayudan o le estorban."],["time","Tiempos","Etapas cuya duración actual quieres medir."]];
+    B.innerHTML=head("Validación e ideas","Listas que la sala califica. Puedes dejar vacías las que no apliquen.")+kinds.map(([kk,t,h])=>`<section class="val-sec" data-kind="${kk}"><div class="val-h"><h3>${t} <span class="sub" id="cnt-${kk}"></span></h3><p class="hint">${h}</p></div><div class="val-rows" id="rows-${kk}"></div><button type="button" class="abtn sm" data-add="${kk}">Agregar</button></section>`).join("")+`
+      <div class="wz-h" style="margin-top:22px"><h2>Ideas</h2></div><div class="g3">
+      <div class="field" style="grid-column:span 2"><label for="w-qidea">Pregunta de ideas</label><input id="w-qidea" class="input" maxlength="280" value="${esc(d.q_idea)}"></div>
+      <div class="field"><label for="w-iv">Apoyos por persona</label><input id="w-iv" class="input" type="number" min="1" max="10" value="${d.idea_votes}"></div></div>`;
+    ["qw","gate","time"].forEach(drawVal);
+    $$("[data-add]").forEach(b=>b.onclick=()=>{ d.quickwins.push({kind:b.dataset.add,stage:"",text:"",help:""}); saveWzDraft(); drawVal(b.dataset.add); const r=$$(`#rows-${b.dataset.add} .val-txt`).pop(); if(r) r.focus(); });
+    bind("#w-qidea","q_idea"); bind("#w-iv","idea_votes",v=>Math.max(1,Math.min(10,+v||3)));
+  }
+  else if(k==="ask"){
+    B.innerHTML=head("Preguntas a la sala","Cómo se formulan en el celular. Cortas y en segunda persona funcionan mejor.")+`
+      <div class="field"><label for="w-qpain">Dolores</label><textarea id="w-qpain" class="input" rows="2" maxlength="280">${esc(d.q_pain)}</textarea></div>
+      <div class="grid2"><div class="field"><label for="w-qcheck">Check-in · ánimo</label><input id="w-qcheck" class="input" maxlength="200" value="${esc(d.q_checkin)}"></div>
+      <div class="field"><label for="w-qexp">Check-in · expectativa</label><input id="w-qexp" class="input" maxlength="200" value="${esc(d.q_expect)}"></div></div>`;
+    bind("#w-qpain","q_pain"); bind("#w-qcheck","q_checkin"); bind("#w-qexp","q_expect");
+  }
+  else if(k==="sum"){
+    const errs=validateDraft(d); const qw=d.quickwins.filter(q=>q.kind==="qw").length, rg=d.quickwins.filter(q=>q.kind==="gate").length, tm=d.quickwins.filter(q=>q.kind==="time").length;
+    const stTools=d.stages.filter(s=>(d.tools[s]||[]).length).length, stTasks=d.stages.filter(s=>(d.tasks[s]||[]).length).length;
+    const row=(i,t,v)=>`<div class="sum-it"><div><b>${t}</b><p>${v}</p></div><button type="button" class="linkbtn" data-st="${i}">Editar</button></div>`;
+    B.innerHTML=head("Resumen","Revisa y crea. Al crearlo se genera el código de 6 caracteres y el QR.")+(errs.length?`<div class="inv-st warn" style="margin-bottom:14px">${icon("mail")}<span><b>Faltan datos</b><small>${errs.map(esc).join(" · ")}</small></span></div>`:"")+`<div class="sum-list">
+      ${row(1,"Datos",`<b>${esc(d.name||"Sin nombre")}</b> · facilita ${esc(d.facilitator||"—")} · ${d.votes_per_user} votos por persona`)}
+      ${row(2,"Participantes",`${d.areas.length} áreas${d.areas.length?": "+esc(d.areas.slice(0,5).join(", "))+(d.areas.length>5?"…":""):""} · ${d.roles.length?d.roles.length+" roles":"puesto libre"}`)}
+      ${row(3,"Proceso",`${d.stages.length} etapas · ${stTools} con herramientas · ${stTasks} con actividades`)}
+      ${row(4,"Validación e ideas",`${qw} quick wins · ${rg} reglas · ${tm} tiempos · ${d.idea_votes} apoyos por persona`)}
+      ${row(5,"Preguntas",`«${esc(d.q_pain||"—")}»`)}</div>`;
+    $$("#wBody [data-st]").forEach(b=>b.onclick=()=>{ W.step=+b.dataset.st; drawWizard(); window.scrollTo(0,0); });
+  }
+  /* pie */
+  const last=W.step===W_STEPS.length-1, errs=W.d?validateDraft(W.d):[];
+  $("#wFoot").innerHTML=`<button type="button" class="abtn" id="wPrev" ${W.step===0?"disabled":""}>${icon("arrowleft")}Anterior</button>
+    <span class="hint wz-pos">${W.step+1} de ${W_STEPS.length} · ${W_STEPS[W.step].s}</span>
+    ${last?`<button type="button" class="abtn primary ah-create" id="wCreate" ${errs.length?"disabled":""}>${icon("sparkle")}Crear taller</button>`
+         :`<button type="button" class="abtn primary" id="wNext" ${!W.d?"disabled":""}>Siguiente${icon("arrowright")}</button>`}`;
+  $("#wPrev").onclick=()=>{ W.step--; drawWizard(); window.scrollTo(0,0); };
+  const nx=$("#wNext"); if(nx) nx.onclick=()=>{ W.step++; drawWizard(); window.scrollTo(0,0); };
+  const cr=$("#wCreate"); if(cr) cr.onclick=createFromWizard;
+
+  function bind(sel,key,fn){ const el=$(sel); el.oninput=()=>{ d[key]=fn?fn(el.value):el.value.trim(); saveWzDraft(); }; }
+}
+function validateDraft(d){ const e=[]; if(!d.name.trim()) e.push("nombre del taller"); if(!d.stages.filter(Boolean).length) e.push("al menos una etapa"); if(!d.areas.length) e.push("al menos un área"); if(d.quickwins.some(q=>!q.text.trim())) e.push("hay elementos de validación sin texto"); return e; }
+async function createFromWizard(){
+  const d=W.d, b=$("#wCreate"); b.disabled=true;
+  const n={qw:0,gate:0,time:0};
+  const stages=d.stages.map(x=>x.trim()).filter(Boolean);
+  const tools={}, tasks={}; stages.forEach(s=>{ if((d.tools[s]||[]).length) tools[s]=d.tools[s]; if((d.tasks[s]||[]).length) tasks[s]=d.tasks[s]; });
+  const s={ code:makeCode(), name:d.name.trim()||"Taller", facilitator:d.facilitator.trim(), phase:"lobby", votes_per_user:d.votes_per_user,
+    areas:d.areas, stages, roles:d.roles, tools, tasks,
+    quickwins:d.quickwins.filter(q=>q.text.trim()).map(q=>{ n[q.kind]++; const it={id:RATING_KINDS[q.kind].id+"-"+String(n[q.kind]).padStart(2,"0"),kind:q.kind,stage:q.stage||"",text:q.text.trim()}; if(q.help&&q.help.trim()) it.help=q.help.trim(); return it; }),
+    q_checkin:d.q_checkin.trim(), q_expect:d.q_expect.trim(), q_pain:d.q_pain.trim(), q_idea:d.q_idea.trim()||"¿Cómo podríamos resolverlo?", idea_votes:d.idea_votes, idea_top:3, brand:CONFIG.BRAND };
+  try{ const created=await Store.createSession(s); clearWzDraft(); W.d=null; W.step=0; AH.view="home"; startAdmin(created); toast("Taller creado: "+created.code); }
+  catch(e){ console.error(e); toast("No se pudo crear el taller: "+friendlyAuthError(e)); b.disabled=false; }
+}
+/* chips: lista editable */
+function chipsHTML(id, items, ph){ return `<div class="chips-in" id="${id}" role="group"><div class="chips-l">${(items||[]).map((x,i)=>`<span class="chip on">${esc(x)}<button type="button" data-rm="${i}" aria-label="Quitar ${esc(x)}">×</button></span>`).join("")}</div><input class="chips-i" placeholder="${esc(ph||"")}" aria-label="Agregar"></div>`; }
+function wireChips(id, onChange){
+  const box=$("#"+id), inp=box.querySelector(".chips-i"); const get=()=>$$(".chip",box).map(c=>c.firstChild.textContent);
+  const set=v=>{ box.querySelector(".chips-l").innerHTML=v.map((x,i)=>`<span class="chip on">${esc(x)}<button type="button" data-rm="${i}" aria-label="Quitar ${esc(x)}">×</button></span>`).join(""); wireRm(); onChange(v); };
+  const add=t=>{ const v=get(); String(t).split(/[\n,;]+/).map(x=>x.trim()).filter(Boolean).forEach(x=>{ if(!v.includes(x)) v.push(x); }); set(v); inp.value=""; };
+  const wireRm=()=>$$("[data-rm]",box).forEach(b=>b.onclick=()=>{ const v=get(); v.splice(+b.dataset.rm,1); set(v); inp.focus(); });
+  inp.onkeydown=e=>{ if(e.key==="Enter"||e.key===","){ e.preventDefault(); add(inp.value); } else if(e.key==="Backspace"&&!inp.value){ const v=get(); v.pop(); set(v); } };
+  inp.onblur=()=>{ if(inp.value.trim()) add(inp.value); };
+  inp.onpaste=e=>{ const t=(e.clipboardData||window.clipboardData).getData("text"); if(/[\n,;]/.test(t)){ e.preventDefault(); add(t); } };
+  box.onclick=e=>{ if(e.target===box||e.target.classList.contains("chips-l")) inp.focus(); };
+  wireRm();
+}
+/* etapas */
+function drawStages(){
+  const d=W.d, host=$("#wStages"); if(!host) return;
+  host.innerHTML=d.stages.map((s,i)=>{ const tl=(d.tools[s]||[]), tk=(d.tasks[s]||[]), open=W.openStage===i;
+    return `<div class="st-row${open?" open":""}" data-i="${i}">
+      <div class="st-main"><span class="wz-n">${i+1}</span><input class="input st-name" value="${esc(s)}" placeholder="Nombre de la etapa" aria-label="Etapa ${i+1}">
+        <span class="st-cnt">${tl.length?`${icon("clipboard")}${tl.length}`:""}${tk.length?`${icon("check")}${tk.length}`:""}</span>
+        <button type="button" class="ib sm" data-up="${i}" ${i===0?"disabled":""} aria-label="Subir" data-tip="Subir">${icon("arrowright")}</button><button type="button" class="ib sm" data-down="${i}" ${i===d.stages.length-1?"disabled":""} aria-label="Bajar" data-tip="Bajar">${icon("arrowright")}</button>
+        <button type="button" class="ib sm" data-tg="${i}" aria-expanded="${open}" aria-label="Herramientas y actividades">${icon("chevdown")}</button><button type="button" class="ib sm danger" data-del="${i}" aria-label="Quitar etapa">${icon("trash")}</button></div>
+      ${open?`<div class="st-more"><div class="field"><label>Herramientas de esta etapa</label>${chipsHTML("tl-"+i,tl,"Ej. SIGER, Excel de layout")}<p class="hint">Siempre se agregan «Correo / Teams», «Excel propio» y «Otra».</p></div>
+        <div class="field"><label>Actividades <span class="opt">opcional</span></label>${chipsHTML("tk-"+i,tk,"Ej. 3.7 Validación de bajas")}<p class="hint">Cada dolor podrá señalar la actividad exacta.</p></div></div>`:""}</div>`; }).join("")
+    || `<p class="hint">Sin etapas. Agrega la primera.</p>`;
+  $$(".st-name",host).forEach(inp=>{ inp.oninput=()=>{ const i=+inp.closest(".st-row").dataset.i, old=d.stages[i], nw=inp.value; d.stages[i]=nw;
+      if(old!==nw){ if(d.tools[old]!==undefined){ d.tools[nw]=d.tools[old]; delete d.tools[old]; } if(d.tasks[old]!==undefined){ d.tasks[nw]=d.tasks[old]; delete d.tasks[old]; } d.quickwins.forEach(q=>{ if(q.stage===old) q.stage=nw; }); }
+      saveWzDraft(); }; });
+  $$("[data-tg]",host).forEach(b=>b.onclick=()=>{ W.openStage=W.openStage===+b.dataset.tg?null:+b.dataset.tg; drawStages(); });
+  $$("[data-del]",host).forEach(b=>b.onclick=async()=>{ const i=+b.dataset.del, s=d.stages[i]; if(s && !(await askDialog({kind:"danger",title:`¿Quitar «${s}»?`,text:"Se quitan también sus herramientas, actividades y los elementos de validación ligados a ella.",ok:"Quitar"}))) return;
+    d.stages.splice(i,1); delete d.tools[s]; delete d.tasks[s]; d.quickwins=d.quickwins.filter(q=>q.stage!==s); W.openStage=null; saveWzDraft(); drawStages(); });
+  const mv=(i,j)=>{ [d.stages[i],d.stages[j]]=[d.stages[j],d.stages[i]]; if(W.openStage===i) W.openStage=j; else if(W.openStage===j) W.openStage=i; saveWzDraft(); drawStages(); };
+  $$("[data-up]",host).forEach(b=>b.onclick=()=>mv(+b.dataset.up,+b.dataset.up-1));
+  $$("[data-down]",host).forEach(b=>b.onclick=()=>mv(+b.dataset.down,+b.dataset.down+1));
+  if(W.openStage!=null && d.stages[W.openStage]!==undefined){ const i=W.openStage, s=()=>d.stages[i];
+    wireChips("tl-"+i,v=>{ d.tools[s()]=v; saveWzDraft(); }); wireChips("tk-"+i,v=>{ d.tasks[s()]=v; saveWzDraft(); }); }
+}
+/* listas a validar */
+function drawVal(kind){
+  const d=W.d, host=$("#rows-"+kind); if(!host) return; const items=d.quickwins.map((q,i)=>[q,i]).filter(([q])=>q.kind===kind);
+  $("#cnt-"+kind).textContent=items.length||"";
+  host.innerHTML=items.map(([q,i],n)=>`<div class="val-row" data-i="${i}"><span class="wz-n">${RATING_KINDS[kind].id}-${String(n+1).padStart(2,"0")}</span>
+    <select class="input val-st" aria-label="Etapa"><option value="">Etapa…</option>${d.stages.filter(Boolean).map(s=>`<option ${q.stage===s?"selected":""}>${esc(s)}</option>`).join("")}</select>
+    <input class="input val-txt" value="${esc(q.text)}" placeholder="${kind==="time"?"Ej. Solicitar información al cliente":kind==="gate"?"Ej. No se envía propuesta sin firma de Compliance":"Ej. Plantilla única de layout"}" aria-label="Texto">
+    <input class="input val-help" value="${esc(q.help)}" placeholder="Explicación (opcional)" aria-label="Explicación">
+    <button type="button" class="ib sm danger" data-rm="${i}" aria-label="Quitar">${icon("trash")}</button></div>`).join("") || `<p class="hint">Nada por ahora.</p>`;
+  $$(".val-row",host).forEach(r=>{ const q=d.quickwins[+r.dataset.i];
+    r.querySelector(".val-st").onchange=e=>{ q.stage=e.target.value; saveWzDraft(); };
+    r.querySelector(".val-txt").oninput=e=>{ q.text=e.target.value; saveWzDraft(); };
+    r.querySelector(".val-help").oninput=e=>{ q.help=e.target.value; saveWzDraft(); };
+    r.querySelector("[data-rm]").onclick=()=>{ d.quickwins.splice(+r.dataset.i,1); saveWzDraft(); drawVal(kind); }; });
 }
 
 /* ---------- v1.5 · Admin: todos los talleres (solo lectura en los ajenos) ---------- */
@@ -3199,7 +3525,7 @@ async function adminTeamView(lastInvite){
           <h2 id="teamT">Equipo <span class="sub">${staff.filter(m=>m.active).length} con acceso</span></h2>
           <div class="team-list">${staff.map(m=>{ const me=m.user_id===ME.uid, n=count(m.user_id); return `<div class="tm-row${m.active?"":" off"}">
             <span class="av-w" data-av="${esc(m.user_id)}" data-cls="lg">${avatarHTML(m,"lg")}</span>
-            <div class="tm-who"><b>${esc(m.name||m.email)}${me?' <span class="tm-me">Tú</span>':""}</b><span>${esc(m.email||"")}</span></div>
+            <div class="tm-who"><b>${esc(m.name||m.email)}${me?' <span class="tm-me">Tú</span>':""}</b><span>${esc(m.title?m.title+" · ":"")}${esc(m.email||"")}</span></div>
             <div class="tm-meta"><span class="role-tag ${esc(m.role)}">${ROLE_T[m.role]}</span><span class="tm-n">${n} ${n===1?"taller":"talleres"}</span>${m.active?"":'<span class="tm-off">Desactivado</span>'}</div>
             <div class="tm-acts">${me?"":`
               <button class="abtn sm" data-role="${esc(m.user_id)}" data-to="${m.role==="admin"?"facilitator":"admin"}">${m.role==="admin"?"Hacer facilitador":"Hacer admin"}</button>
@@ -3632,7 +3958,7 @@ function renderAdmin(){
   if(A.pop) placePop();
 }
 
-function leaveAdmin(){ closePop(); stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); adminBoot(); }
+function leaveAdmin(){ closePop(); stopAdmin(); if(AH.view==="create") AH.view="home"; history.replaceState(null,"",location.pathname+"#admin"); adminBoot(); }
 async function deleteWorkshop(){
   const s=A.session; closePop();
   if(!(await askDialog({kind:"danger", title:"¿Borrar este taller?", text:"Se borra todo lo capturado: participantes, dolores, votos, validación e ideas. Descarga el Excel antes si lo necesitas. No se puede deshacer.", ok:"Borrar taller"}))) return;

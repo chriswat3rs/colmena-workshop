@@ -119,6 +119,14 @@ La **campana** (arriba a la derecha, también dentro del panel del taller) muest
 - Cada quien apaga los correos que no quiera en **su perfil → Correos de avisos**.
 - Instalación: corre `migracion-v16-notificaciones.sql` (o `setup.sql` completo), despliega `supabase/functions/send-notifications` con **Verify JWT apagado** (la llama la tarea programada; solo envía lo que ya está en la bandeja, a su destinatario).
 
+### 9. Inicio, perfil y creador paso a paso (v1.7)
+
+- **Inicio** (pestaña por defecto): saludo según la hora, **Ahora mismo** (talleres en curso con participantes y avance, con «Ir al taller»), **Acciones rápidas** y **Pendientes** (invitaciones por vencer, talleres cerrados con 30 días, avisos sin leer). Cuando no hay nada pendiente, dice «Todo al día».
+- **Mis talleres:** tarjetas con fase, participantes, dolores e ideas, y el botón **Crear taller**.
+- **Crear taller** es paso a paso: Plantilla (Lockton · Actua, Genérica o **copiar un taller anterior**) → Datos → Participantes (áreas y roles como chips: escribe y Enter) → Proceso (cada etapa se abre para poner herramientas y actividades; se reordenan con las flechas) → Validación e ideas (quick wins, reglas y tiempos con su etapa) → Preguntas → **Resumen** con «Editar» por sección. Lo capturado se guarda como **borrador** en el navegador: si sales, lo retomas desde Mis talleres.
+- **Perfil:** clic en tu nombre → **Editar nombre y puesto**. El nombre aparece en el saludo, en Equipo y en los avisos del equipo.
+- Instalación: corre `migracion-v17-inicio.sql` (o `setup.sql` completo).
+
 ---
 
 ## Cómo se usa en la sala
@@ -230,5 +238,6 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `supabase/functions/send-invite/index.ts` | Función que envía la invitación (Gmail o Resend). |
 | `supabase/functions/send-notifications/index.ts` | Función que envía los correos del centro de notificaciones. |
 | `migracion-v16-notificaciones.sql` | Instala el centro de notificaciones sobre la v1.5. |
+| `migracion-v17-inicio.sql` | Inicio, perfil editable y datos del dashboard sobre la v1.6. |
 
 Sin `SUPABASE_URL`, la app corre en **modo demo**: todo funciona en tu navegador y sin cuentas, útil para enseñarla o probar cambios.
