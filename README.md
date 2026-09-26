@@ -100,6 +100,25 @@ En **Todos los talleres** filtras por facilitador o buscas por nombre o código.
 
 La función solo envía si quien la llama es **admin con segundo factor** y el destinatario tiene una **invitación vigente**: no sirve para mandar correos a cualquiera. Las respuestas al correo llegan a quien invitó (reply-to).
 
+### 8. Centro de notificaciones (v1.6)
+
+La **campana** (arriba a la derecha, también dentro del panel del taller) muestra cuántos avisos tienes sin leer. Al abrirla: pestañas **No leídas / Todas**, agrupadas en *Hoy · Esta semana · Antes*, cada aviso con su botón de acción y **Marcar todo como leído**. Si llega uno con la app abierta, aparece un aviso discreto y el contador sube solo.
+
+| Para | Aviso | Canal |
+|---|---|---|
+| Admin | Alguien aceptó tu invitación | App + correo |
+| Admin | Una invitación vence mañana / venció sin usarse | App |
+| Admin | Un facilitador creó / cerró un taller | App |
+| Todos | Cambió tu rol · reactivaron tu acceso | App + correo |
+| Todos | Bienvenida al activar la cuenta | App |
+| Facilitador | Todos terminaron la actividad en curso | App |
+| Facilitador | Un taller lleva 30 días cerrado (exporta y borra) | App + correo |
+
+- Los avisos los crea la **base de datos** (disparadores + una revisión diaria a las 9:00 de CDMX): nadie puede inventarlos y llegan aunque la app esté cerrada. Se borran solos a los 90 días.
+- Los correos salen de una **bandeja de salida** que la función `send-notifications` envía cada 5 minutos (con reintentos) usando los mismos secretos que las invitaciones.
+- Cada quien apaga los correos que no quiera en **su perfil → Correos de avisos**.
+- Instalación: corre `migracion-v16-notificaciones.sql` (o `setup.sql` completo), despliega `supabase/functions/send-notifications` con **Verify JWT apagado** (la llama la tarea programada; solo envía lo que ya está en la bandeja, a su destinatario).
+
 ---
 
 ## Cómo se usa en la sala
@@ -208,6 +227,8 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `setup.sql` | Esquema, reglas de seguridad y tiempo real (re-ejecutable; actualiza versiones anteriores sin borrar datos). |
 | `README.md` | Esta guía. |
 | `email/` | Logos del correo de invitación (Colmena + Quality & Knowledge). Se publican junto con `index.html`. |
-| `supabase/functions/send-invite/index.ts` | Función que envía la invitación por Resend (se pega en Supabase → Edge Functions). |
+| `supabase/functions/send-invite/index.ts` | Función que envía la invitación (Gmail o Resend). |
+| `supabase/functions/send-notifications/index.ts` | Función que envía los correos del centro de notificaciones. |
+| `migracion-v16-notificaciones.sql` | Instala el centro de notificaciones sobre la v1.5. |
 
 Sin `SUPABASE_URL`, la app corre en **modo demo**: todo funciona en tu navegador y sin cuentas, útil para enseñarla o probar cambios.

@@ -1124,6 +1124,61 @@ img.av-i{object-fit:cover;background:var(--navy-soft)}
 .me-acts .abtn.primary{flex:1}
 .me-acts svg{width:16px;height:16px}
 @media (max-width:720px){ .me-t{display:none} .me-btn{padding:2px} }
+/* ---------- v1.6 · Centro de notificaciones ---------- */
+.nt-bell{position:relative}
+.ah-user .nt-bell{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1.5px solid transparent;color:var(--ink-2)}
+.ah-user .nt-bell:hover,.ah-user .nt-bell[aria-expanded="true"]{background:var(--card);border-color:var(--line);color:var(--ink)}
+.ah-user .nt-bell svg{width:21px;height:21px}
+.nt-badge{position:absolute;top:-3px;right:-7px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#D93A34;color:#fff;font-size:10.5px;font-weight:800;line-height:18px;text-align:center;border:2px solid var(--surface);box-sizing:content-box}
+.a-top .nt-badge{top:-6px;right:-7px;border-color:var(--card)}
+.a-top .nt-bell svg{width:20px;height:20px}
+.nt-bell.ring svg{animation:ring .9s ease}
+@keyframes ring{0%,100%{transform:rotate(0)}20%{transform:rotate(14deg)}40%{transform:rotate(-12deg)}60%{transform:rotate(8deg)}80%{transform:rotate(-4deg)}}
+.nt-pop{position:absolute;z-index:120;width:min(400px,calc(100vw - 24px));max-height:min(620px,calc(100dvh - 90px));display:flex;flex-direction:column;border-radius:16px;background:var(--card);border:1px solid var(--line);box-shadow:0 14px 40px rgba(1,19,59,.18);overflow:hidden}
+.nt-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 18px 10px}
+.nt-h b{font-size:16px;font-family:var(--display)}
+.nt-h .linkbtn{font-size:12.5px;text-decoration:none}
+.nt-h .linkbtn:disabled{opacity:.45;cursor:default}
+.nt-tabs{display:flex;gap:4px;margin:0 18px 8px;padding:3px;border-radius:10px;background:#EDF3FA}
+.nt-tabs button{flex:1;height:32px;border-radius:8px;font-size:13px;font-weight:700;color:var(--ink-2)}
+.nt-tabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(1,19,59,.12)}
+.nt-list{overflow:auto;padding:0 8px 10px;overscroll-behavior:contain}
+.nt-g{padding:10px 10px 4px;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.nt-it{position:relative;display:grid;grid-template-columns:36px minmax(0,1fr);gap:10px;padding:10px;border-radius:12px;text-align:left;width:100%}
+.nt-it:hover{background:var(--surface)}
+.nt-it.unread{background:#F2F8FE}
+.nt-it.unread:hover{background:#E8F2FC}
+.nt-it.unread::after{content:"";position:absolute;top:16px;right:12px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.nt-ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-strong)}
+.nt-ic svg{width:18px;height:18px}
+.nt-ic.t-team{background:#E3F4EC;color:var(--ok)}
+.nt-ic.t-warn{background:#FFF4DC;color:#7A4B00}
+.nt-ic.t-acct{background:var(--navy-soft);color:var(--ink)}
+.nt-tx{min-width:0;padding-right:14px}
+.nt-tx b{display:block;font-size:13.5px;line-height:1.35;font-weight:600;color:var(--ink)}
+.nt-it.unread .nt-tx b{font-weight:800}
+.nt-tx p{margin-top:2px;font-size:12.5px;line-height:1.4;color:var(--ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nt-meta{display:flex;align-items:center;gap:10px;margin-top:6px}
+.nt-meta time{font-size:11.5px;color:var(--ink-3);font-weight:600}
+.nt-act{font-size:12.5px;font-weight:700;color:var(--accent-strong);padding:3px 10px;border-radius:999px;border:1.5px solid #CFE3F6;background:var(--card)}
+.nt-act:hover{background:var(--accent-soft)}
+.nt-empty{display:flex;flex-direction:column;align-items:center;gap:8px;padding:34px 20px 40px;text-align:center;color:var(--ink-2);font-size:13.5px}
+.nt-empty b{color:var(--ink);font-size:15px}
+.nt-toast{position:fixed;right:16px;top:76px;z-index:130;width:min(360px,calc(100vw - 32px));display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:10px;align-items:start;padding:12px;border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:0 14px 40px rgba(1,19,59,.2);animation:ntin .25s ease}
+.nt-toast b{font-size:13.5px;line-height:1.35}
+.nt-toast p{font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.nt-toast .ib{width:28px;height:28px}
+@keyframes ntin{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.me-prefs{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px}
+.me-prefs>b{font-size:13px}
+.pf-row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:var(--ink-2);cursor:pointer}
+.pf-row input{position:absolute;opacity:0;pointer-events:none}
+.pf-sw{flex:none;width:36px;height:21px;border-radius:11px;background:#CBD5E3;position:relative;transition:background .15s}
+.pf-sw::after{content:"";position:absolute;top:2.5px;left:2.5px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:transform .15s}
+.pf-row input:checked+.pf-sw{background:var(--ok)}
+.pf-row input:checked+.pf-sw::after{transform:translateX(15px)}
+.pf-row input:focus-visible+.pf-sw{outline:3px solid var(--accent);outline-offset:2px}
+@media (max-width:720px){ .nt-toast{top:auto;bottom:16px;right:16px} }
 .av-i.pend{background:var(--navy-soft);color:var(--ink-2)}
 .av-i svg{width:18px;height:18px}
 .ph-pill{display:inline-flex;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:var(--r-chip);background:var(--accent-soft);color:var(--accent-strong);white-space:nowrap}
@@ -1394,6 +1449,7 @@ const GLYPHS = {
   filecsv:'<path d="M14 3.4H6.6a2.1 2.1 0 0 0-2.1 2.1v13a2.1 2.1 0 0 0 2.1 2.1h10.8a2.1 2.1 0 0 0 2.1-2.1V8.9z"/><path d="M14 3.4v5.5h5.5"/><path d="M8.3 12.6h7.4M8.3 16.4h5"/>',
   filepdf:'<path d="M14 3.4H6.6a2.1 2.1 0 0 0-2.1 2.1v13a2.1 2.1 0 0 0 2.1 2.1h10.8a2.1 2.1 0 0 0 2.1-2.1V8.9z"/><path d="M14 3.4v5.5h5.5"/><path d="M9 17.6v-3M12 17.6v-5M15 17.6v-2"/>',
   close:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+  bell:'<path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
   camera:'<path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.2l1.4-2h5.8l1.4 2h2.2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="12.8" r="3.4"/>'
 };
 function icon(name){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${GLYPHS[name]||GLYPHS.hexagon}</svg>`; }
@@ -1498,7 +1554,7 @@ function tasksFor(session, stage){ return (session && session.tasks && session.t
 function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260925215718";
+const APP_BUILD="20260926000829";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -1608,6 +1664,16 @@ const SupaStore = {
       if(!m && /Failed to send a request|FunctionsFetchError/i.test(String(error.name||error.message))) m="El envío automático aún no está activado en Supabase (función send-invite).";
       throw new Error(m||error.message||"No se pudo enviar"); }
     return data; },
+  /* v1.6 · Centro de notificaciones */
+  async listNotifications(){ const {data,error}=await this.client.from("ws_notifications").select("id,type,title,body,action,data,read_at,created_at").order("created_at",{ascending:false}).limit(60); if(error) throw error; return data||[]; },
+  async markRead(ids){ if(!ids.length) return; const {error}=await this.client.rpc("ws_mark_read",{p_ids:ids}); if(error) throw error; },
+  async markAllRead(){ const {error}=await this.client.rpc("ws_mark_all_read"); if(error) throw error; },
+  async getEmailPrefs(){ const {data,error}=await this.client.rpc("ws_my_email_prefs"); if(error) throw error; return data||{}; },
+  async setEmailPrefs(prefs){ const {error}=await this.client.rpc("ws_set_my_email_prefs",{p_prefs:prefs}); if(error) throw error; },
+  subscribeNotifications(uid, cb){
+    const ch=this.client.channel("nt-"+uid);
+    ch.on("postgres_changes",{event:"INSERT",schema:"public",table:"ws_notifications",filter:"user_id=eq."+uid}, pl=>cb(pl.new)); ch.subscribe();
+    return ()=>{ try{ this.client.removeChannel(ch); }catch(e){} }; },
   async setStaff(userId,patch){ const {error}=await this.client.rpc("ws_set_staff",{p_user:userId,p_active:patch.active??null,p_role:patch.role??null}); if(error) throw error; },
   async signIn(email,password){
     const {error} = await this.client.auth.signInWithPassword({email,password});
@@ -1719,6 +1785,22 @@ const DemoStore = {
     const it={id:uid(),email,name:name||null,role,created_at:now(),expires_at:new Date(Date.now()+7*864e5).toISOString(),used_at:null,revoked_at:null};
     db.invites.unshift(it); this.save(db); return {...it, code}; },
   async sendInvite(){ await new Promise(r=>setTimeout(r,700)); return {ok:true, demo:true}; },
+  _notifs(){ const db=this.db(); if(!db.notifs){ const t=m=>new Date(Date.now()-m*60000).toISOString();
+      db.notifs=[
+        {id:uid(),type:"invite_accepted",title:"Ana López aceptó tu invitación",body:"Ya creó su cuenta y entra a Colmena como facilitador.",action:{label:"Ver equipo",view:"team"},read_at:null,created_at:t(4)},
+        {id:uid(),type:"phase_done",title:"Todos terminaron Votación en «Retro Q3»",body:"12 participantes listos. Puedes abrir la siguiente actividad.",action:{label:"Abrir taller",code:"DEMO00"},read_at:null,created_at:t(38)},
+        {id:uid(),type:"invite_expiring",title:"La invitación de Beto vence mañana",body:"Aún no crea su cuenta. Si hace falta, reenvíale una invitación nueva.",action:{label:"Reenviar",view:"team"},read_at:null,created_at:t(60*5)},
+        {id:uid(),type:"session_created",title:"Ana López creó el taller «Discovery Acme»",body:"Código ANA123. Puedes verlo en solo lectura.",action:{label:"Ver taller",code:"ANA123"},read_at:t(60*20),created_at:t(60*26)},
+        {id:uid(),type:"retention",title:"«Onboarding 2025» lleva 30 días cerrado",body:"Si ya no lo necesitas, exporta los resultados y bórralo para no guardar datos del cliente más tiempo del necesario.",action:{label:"Exportar o borrar",code:"OLD001"},read_at:t(60*24*3),created_at:t(60*24*4)},
+        {id:uid(),type:"welcome",title:"Bienvenido a Colmena",body:"Crea tu primer taller con una plantilla y proyecta el QR: la sala entra desde su celular.",action:{label:"Crear mi primer taller",view:"mine"},read_at:t(60*24*9),created_at:t(60*24*10)}];
+      this.save(db); } return db; },
+  async listNotifications(){ return [...this._notifs().notifs].sort((a,b)=>a.created_at<b.created_at?1:-1); },
+  async markRead(ids){ const db=this._notifs(); db.notifs.forEach(n=>{ if(ids.includes(n.id)&&!n.read_at) n.read_at=now(); }); this.save(db); },
+  async markAllRead(){ const db=this._notifs(); db.notifs.forEach(n=>{ if(!n.read_at) n.read_at=now(); }); this.save(db); },
+  async getEmailPrefs(){ return this.db().emailPrefs||{}; },
+  async setEmailPrefs(p){ const db=this.db(); db.emailPrefs=p; this.save(db); },
+  subscribeNotifications(uid, cb){ const h=e=>cb(e.detail); window.addEventListener("demo-notify",h); return ()=>window.removeEventListener("demo-notify",h); },
+  demoNotify(n){ const db=this._notifs(); n={id:uid(),read_at:null,created_at:now(),action:{},...n}; db.notifs.unshift(n); this.save(db); window.dispatchEvent(new CustomEvent("demo-notify",{detail:n})); },
   async revokeInvite(id){ const db=this.db(); (db.invites||[]).forEach(i=>{ if(i.id===id) i.revoked_at=now(); }); this.save(db); },
   async setStaff(userId,patch){ const db=this.db(); const m=(db.staff||[]).find(x=>x.user_id===userId); if(!m) throw new Error("Esa cuenta no existe"); if(patch.active!=null) m.active=patch.active; if(patch.role) m.role=patch.role; this.save(db); },
   async signIn(){}, async signOut(){}, async mfaEnroll(){ return {}; }, async mfaVerify(){},
@@ -2515,6 +2597,9 @@ async function adminBoot(openCode){
   Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"", avatar:st.avatar||"" });
   if(isAdminRole()) await loadStaff(); else AH.view="mine";
   if(st.inviteError) toast(st.inviteError);
+  /* v1.6 · enlaces de los correos: ?view=team|all|mine */
+  try{ const u=new URL(location.href), v=u.searchParams.get("view"); if(v){ if(["team","all","mine"].includes(v) && (isAdminRole()||v==="mine")) AH.view=v; u.searchParams.delete("view"); history.replaceState(null,"",u.pathname+u.search+u.hash); } }catch(e){}
+  startNotifications();
   if(openCode){
     const s = await Store.getMySession(openCode).catch(()=>null);
     if(s) return startAdmin(s);
@@ -2667,19 +2752,20 @@ function ahTop(){
       <div class="brand-row">${brandLockup("xs")}
         <div><div class="brand-name">Colmena · ${isAdminRole()?"Admin":"Facilitador"}</div><div class="brand-by">by ${BRAND_ORG}</div></div></div>
       ${tabs}
-      <div class="ah-user"><button class="me-btn" id="meBtn" aria-haspopup="dialog" aria-expanded="false" title="Tu perfil">${avatarHTML(ME,"md")}<span class="me-t"><span class="ah-mail">${esc(ME.name||ME.email)}</span><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span></span></button><button class="abtn" id="outBtn">Cerrar sesión</button></div>
+      <div class="ah-user">${bellHTML()}<button class="me-btn" id="meBtn" aria-haspopup="dialog" aria-expanded="false" title="Tu perfil">${avatarHTML(ME,"md")}<span class="me-t"><span class="ah-mail">${esc(ME.name||ME.email)}</span><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span></span></button><button class="abtn" id="outBtn">Cerrar sesión</button></div>
     </header>`;
 }
 function wireTop(){
-  $("#outBtn").onclick=async()=>{ await Store.signOut(); AH.view="mine"; adminBoot(); };
+  $("#outBtn").onclick=async()=>{ if(NT.unsub) NT.unsub(); if(NT.poll) clearInterval(NT.poll); NT.unsub=NT.poll=NT.uid=null; NT.items=[]; NT.loaded=false; await Store.signOut(); AH.view="mine"; adminBoot(); };
   $("#meBtn").onclick=e=>{ e.stopPropagation(); $(".me-pop") ? closeMe() : openMe(); };
+  wireBell();
   $$(".ah-tab").forEach(b=>b.onclick=()=>{ if(AH.view===b.dataset.view) return; AH.view=b.dataset.view; adminHome(); window.scrollTo(0,0); });
 }
 /* ---------- v1.5 · Tu perfil: foto ---------- */
 function closeMe(){ const p=$(".me-pop"); if(p) p.remove(); const b=$("#meBtn"); if(b) b.setAttribute("aria-expanded","false"); document.removeEventListener("click",meOutside); }
 function meOutside(e){ const p=$(".me-pop"); if(p && !e.composedPath().includes(p)) closeMe(); }
 function openMe(){
-  closeMe();
+  closeMe(); closeNotifs();
   const pop=document.createElement("div"); pop.className="me-pop"; pop.setAttribute("role","dialog"); pop.setAttribute("aria-label","Tu perfil");
   const draw=(msg,busy)=>{ pop.innerHTML=`
     <div class="me-hero">
@@ -2691,7 +2777,9 @@ function openMe(){
       <label class="abtn primary" for="meFile">${icon("camera")}${ME.avatar?"Cambiar foto":"Subir foto"}</label>
       ${ME.avatar?`<button class="abtn" id="meDel">Quitar</button>`:""}
     </div>
-    ${msg?`<p class="${msg.err?"err":"hint"}" role="status">${esc(msg.t)}</p>`:`<p class="hint">JPG o PNG. Se recorta en cuadrado y se guarda ligera. La ve tu equipo.</p>`}`;
+    ${msg?`<p class="${msg.err?"err":"hint"}" role="status">${esc(msg.t)}</p>`:`<p class="hint">JPG o PNG. Se recorta en cuadrado y se guarda ligera. La ve tu equipo.</p>`}
+    <div class="me-prefs" id="mePrefs"><b>Correos de avisos</b><p class="hint">Cargando…</p></div>`;
+    drawPrefs();
     const f=pop.querySelector("#meFile");
     f.onchange=async()=>{ const file=f.files&&f.files[0]; if(!file) return; draw(null,true);
       try{ const d=await shrinkImage(file); await Store.setMyAvatar(d); ME.avatar=d; syncMe(); draw({t:"Foto actualizada"}); }
@@ -2700,12 +2788,107 @@ function openMe(){
     if(del) del.onclick=async()=>{ del.disabled=true; try{ await Store.setMyAvatar(""); ME.avatar=""; syncMe(); draw({t:"Foto quitada"}); }catch(e){ draw({t:friendlyAuthError(e),err:true}); } };
   };
   draw();
-  document.body.appendChild(pop);
+  document.body.appendChild(pop); drawPrefs();
   const b=$("#meBtn"), r=b.getBoundingClientRect();
   const w=pop.offsetWidth; pop.style.top=(r.bottom+8+window.scrollY)+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px";
   b.setAttribute("aria-expanded","true");
   setTimeout(()=>document.addEventListener("click",meOutside),0);
 }
+/* v1.6 · Preferencias de correo: cada aviso importante se puede apagar por tipo */
+const PREF_T = [
+  {k:"invite_accepted", t:"Alguien aceptó mi invitación", admin:true},
+  {k:"role_changed",    t:"Cambió mi rol"},
+  {k:"reactivated",     t:"Reactivaron mi acceso"},
+  {k:"retention",       t:"Un taller mío lleva 30 días cerrado"}
+];
+async function drawPrefs(){
+  const box=$("#mePrefs"); if(!box) return;
+  let prefs={}; try{ prefs=await Store.getEmailPrefs(); }catch(e){ box.innerHTML=`<b>Correos de avisos</b><p class="err">${esc(friendlyAuthError(e))}</p>`; return; }
+  if(!$("#mePrefs")) return;
+  const rows=PREF_T.filter(x=>!x.admin||isAdminRole());
+  box.innerHTML=`<b>Correos de avisos</b>${rows.map(x=>`<label class="pf-row"><span>${x.t}</span><input type="checkbox" data-pf="${x.k}" ${prefs[x.k]===false?"":"checked"}><i class="pf-sw" aria-hidden="true"></i></label>`).join("")}<p class="hint">Todos los avisos aparecen en la campana; esto solo decide cuáles también te llegan por correo.</p>`;
+  $$("#mePrefs [data-pf]").forEach(cb=>cb.onchange=async()=>{ prefs={...prefs,[cb.dataset.pf]:cb.checked};
+    try{ await Store.setEmailPrefs(prefs); toast(cb.checked?"Te llegará por correo":"Ya no te llegará por correo"); }
+    catch(e){ cb.checked=!cb.checked; toast(friendlyAuthError(e)); } });
+}
+
+/* ---------- v1.6 · Centro de notificaciones (campana) ---------- */
+const NT = { items:[], tab:"unread", unsub:null, poll:null, uid:null, loaded:false };
+const NT_ICON = {
+  invite_accepted:["users","t-team"], invite_expiring:["mail","t-warn"], invite_expired:["mail","t-warn"],
+  session_created:["grid",""], session_closed:["flag",""], phase_done:["check","t-team"],
+  retention:["trash","t-warn"], welcome:["sparkle",""], role_changed:["users","t-acct"], reactivated:["check","t-acct"]
+};
+const ntUnread = () => NT.items.filter(n=>!n.read_at).length;
+function bellHTML(cls){ const n=ntUnread();
+  return `<button class="${cls||""} nt-bell" id="ntBell" aria-haspopup="dialog" aria-expanded="${!!$(".nt-pop")}" aria-label="Notificaciones${n?`, ${n} sin leer`:""}" data-tip="Notificaciones">${icon("bell")}${n?`<span class="nt-badge">${n>9?"9+":n}</span>`:""}</button>`; }
+function wireBell(){ const b=$("#ntBell"); if(b) b.onclick=e=>{ e.stopPropagation(); $(".nt-pop") ? closeNotifs() : openNotifs(); }; }
+function refreshBell(ring){ const b=$("#ntBell"); if(!b) return; const cls=b.className.replace(/\s*ring/,"");
+  const tmp=document.createElement("div"); tmp.innerHTML=bellHTML(); const nb=tmp.firstElementChild; nb.className=cls+(ring?" ring":"");
+  b.replaceWith(nb); wireBell(); }
+function timeAgo(iso){ const s=(Date.now()-new Date(iso).getTime())/1000;
+  if(s<60) return "hace un momento"; if(s<3600) return `hace ${Math.round(s/60)} min`; if(s<86400) return `hace ${Math.round(s/3600)} h`;
+  if(s<172800) return "ayer"; if(s<604800) return `hace ${Math.round(s/86400)} días`; return fmtDate(iso,{day:"numeric",month:"short"}); }
+async function loadNotifs(){ try{ NT.items=await Store.listNotifications(); NT.loaded=true; }catch(e){ console.error(e); } refreshBell(); if($(".nt-pop")) drawNotifs(); }
+function startNotifications(){
+  if(NT.uid===ME.uid && NT.unsub){ loadNotifs(); return; }
+  if(NT.unsub) NT.unsub(); if(NT.poll) clearInterval(NT.poll);
+  NT.uid=ME.uid; NT.items=[];
+  NT.unsub=Store.subscribeNotifications(ME.uid, n=>{ if(!n||NT.items.some(x=>x.id===n.id)) return; NT.items.unshift(n); refreshBell(true); if($(".nt-pop")) drawNotifs(); else ntToast(n); });
+  NT.poll=setInterval(loadNotifs, 60000);
+  loadNotifs();
+}
+function ntToast(n){
+  $$(".nt-toast").forEach(t=>t.remove());
+  const [ic,tone]=NT_ICON[n.type]||["bell",""]; const t=document.createElement("div"); t.className="nt-toast"; t.setAttribute("role","status");
+  t.innerHTML=`<span class="nt-ic ${tone}">${icon(ic)}</span><div><b>${esc(n.title)}</b>${n.body?`<p>${esc(n.body)}</p>`:""}</div><button class="ib sm" aria-label="Cerrar">${icon("close")}</button>`;
+  t.querySelector("button").onclick=ev=>{ ev.stopPropagation(); t.remove(); };
+  t.onclick=()=>{ t.remove(); openNotifs(); };
+  document.body.appendChild(t); setTimeout(()=>t.remove(), 7000);
+}
+function closeNotifs(){ const p=$(".nt-pop"); if(p) p.remove(); const b=$("#ntBell"); if(b) b.setAttribute("aria-expanded","false"); document.removeEventListener("click",ntOutside); }
+function ntOutside(e){ const p=$(".nt-pop"); if(p && !e.composedPath().includes(p)) closeNotifs(); }
+function openNotifs(){
+  closeMe(); closeNotifs(); $$(".nt-toast").forEach(t=>t.remove());
+  const pop=document.createElement("div"); pop.className="nt-pop"; pop.setAttribute("role","dialog"); pop.setAttribute("aria-label","Notificaciones");
+  document.body.appendChild(pop); drawNotifs(); placeNotifs();
+  const b=$("#ntBell"); if(b) b.setAttribute("aria-expanded","true");
+  setTimeout(()=>document.addEventListener("click",ntOutside),0);
+  if(!NT.loaded) loadNotifs();
+}
+function placeNotifs(){ const pop=$(".nt-pop"), b=$("#ntBell"); if(!pop||!b) return; const r=b.getBoundingClientRect(), w=pop.offsetWidth;
+  pop.style.top=(r.bottom+8+window.scrollY)+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px"; }
+function drawNotifs(){
+  const pop=$(".nt-pop"); if(!pop) return; const keep=(pop.querySelector(".nt-list")||{}).scrollTop||0;
+  const un=ntUnread(), list=NT.tab==="unread" ? NT.items.filter(n=>!n.read_at) : NT.items;
+  const day=d=>{ const x=new Date(d), t=new Date(); t.setHours(0,0,0,0); if(x>=t) return "Hoy"; const w=new Date(t); w.setDate(t.getDate()-6); return x>=w ? "Esta semana" : "Antes"; };
+  const groups=[]; list.forEach(n=>{ const g=day(n.created_at); let G=groups.find(x=>x.g===g); if(!G) groups.push(G={g,items:[]}); G.items.push(n); });
+  pop.innerHTML=`<div class="nt-h"><b>Notificaciones</b><button type="button" class="linkbtn" id="ntAll" ${un?"":"disabled"}>Marcar todo como leído</button></div>
+    <div class="nt-tabs" role="tablist"><button role="tab" aria-selected="${NT.tab==="unread"}" class="${NT.tab==="unread"?"on":""}" data-tab="unread">No leídas${un?` · ${un}`:""}</button><button role="tab" aria-selected="${NT.tab==="all"}" class="${NT.tab==="all"?"on":""}" data-tab="all">Todas</button></div>
+    <div class="nt-list">${!NT.loaded?`<div class="nt-empty"><span class="spin"></span></div>`
+      : list.length ? groups.map(G=>`<div class="nt-g">${G.g}</div>${G.items.map(n=>{ const [ic,tone]=NT_ICON[n.type]||["bell",""], a=n.action||{};
+        return `<div class="nt-it${n.read_at?"":" unread"}" data-id="${esc(n.id)}" role="button" tabindex="0">
+          <span class="nt-ic ${tone}">${icon(ic)}</span>
+          <span class="nt-tx"><b>${esc(n.title)}</b>${n.body?`<p>${esc(n.body)}</p>`:""}
+            <span class="nt-meta"><time datetime="${esc(n.created_at)}">${esc(timeAgo(n.created_at))}</time>${a.label?`<button type="button" class="nt-act" data-go="${esc(n.id)}">${esc(a.label)}</button>`:""}</span></span></div>`; }).join("")}`).join("")
+      : `<div class="nt-empty">${glass("check",{size:"md"})}<b>${NT.tab==="unread"?"Todo al día":"Aún no tienes avisos"}</b><span>${NT.tab==="unread"?"No tienes avisos sin leer.":"Aquí verás cuando alguien acepte una invitación, termine una actividad y más."}</span></div>`}</div>`;
+  pop.querySelector(".nt-list").scrollTop=keep;
+  $$(".nt-tabs [data-tab]",pop).forEach(b=>b.onclick=()=>{ NT.tab=b.dataset.tab; drawNotifs(); });
+  const all=$("#ntAll"); all.onclick=async()=>{ const ids=NT.items.filter(n=>!n.read_at).map(n=>n.id); NT.items.forEach(n=>{ if(!n.read_at) n.read_at=new Date().toISOString(); }); drawNotifs(); refreshBell();
+    try{ await Store.markAllRead(); }catch(e){ toast(friendlyAuthError(e)); loadNotifs(); } };
+  $$(".nt-it",pop).forEach(el=>{ const go=()=>ntOpen(el.dataset.id); el.onclick=go; el.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } }; });
+}
+async function ntOpen(id){
+  const n=NT.items.find(x=>x.id===id); if(!n) return;
+  if(!n.read_at){ n.read_at=new Date().toISOString(); refreshBell(); Store.markRead([id]).catch(e=>console.error(e)); }
+  const a=n.action||{}; closeNotifs();
+  if(a.code){ const s=await Store.getMySession(a.code).catch(()=>null); if(s){ startAdmin(s); return; } toast("Ese taller ya no existe o no tienes acceso"); return; }
+  if(a.view){ if(A.session){ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); A.session=null; }
+    AH.view = (a.view==="mine"||isAdminRole()) ? a.view : "mine"; adminHome(); window.scrollTo(0,0); return; }
+}
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $(".nt-pop")) closeNotifs(); });
+window.addEventListener("resize",()=>{ if($(".nt-pop")) placeNotifs(); });
+
 /* Refleja la foto nueva en el encabezado y en las listas sin recargar */
 function syncMe(){
   const m=AH.staff.find(x=>x.user_id===ME.uid); if(m) m.avatar=ME.avatar;
@@ -3407,6 +3590,7 @@ function renderAdmin(){
         <button class="at-code" id="btnCode" data-tip="Código para entrar · clic para copiar" aria-label="Código ${esc(s.code)}, copiar">${esc(s.code)}${icon("copy")}</button>
         <span class="at-div" aria-hidden="true"></span>
         ${A.readonly?"":`<button class="ib lbl primary" id="btnQR">${icon("qr")}<span>QR para entrar</span></button>`}
+        ${bellHTML("ib")}
         <button class="ib${A.pop?" on":""}${ACT_T[ph]&&nP&&listos===nP?" all":""}" id="btnMore" aria-haspopup="menu" aria-expanded="${!!A.pop}" aria-label="Más opciones: compartir, autores, talleres" data-tip="Compartir, autores y más">${icon("more")}</button>
       </div>
     </header>
@@ -3444,6 +3628,7 @@ function renderAdmin(){
   $$("[data-go]").forEach(a=>a.onclick=e=>{ e.preventDefault(); const t=$(a.dataset.go); if(t) t.scrollIntoView({behavior:"smooth",block:"start"}); });
   if($("#btnQR")) $("#btnQR").onclick=showQR;
   $("#btnMore").onclick=e=>{ e.stopPropagation(); A.pop==="more" ? closePop() : openPop("more"); };
+  wireBell();
   if(A.pop) placePop();
 }
 

@@ -1,10 +1,13 @@
 // Colmena v1.5 · send-invite
-// Envía el correo de invitación (HTML con diseño) por Resend en cuanto el admin crea la invitación.
+// Envía el correo de invitación (HTML con diseño) en cuanto el admin crea la invitación.
 // Seguridad: solo responde a un ADMIN con segundo factor, y solo a correos con una invitación vigente.
-// Secretos (Supabase → Edge Functions → Secrets):
-//   RESEND_API_KEY  = re_xxx…                                   (Resend → API Keys)
-//   INVITE_FROM     = Colmena · Quality & Knowledge <colmena@tudominio.com>   (dominio verificado en Resend)
+// Secretos (Supabase → Edge Functions → Secrets). Usa UNO de los dos métodos:
+//   A) Gmail u otro SMTP:  SMTP_USER = tu@gmail.com · SMTP_PASS = contraseña de aplicación (16 letras)
+//                          (opcionales: SMTP_HOST = smtp.gmail.com · SMTP_PORT = 465)
+//   B) Resend (dominio propio verificado): RESEND_API_KEY = re_xxx…  → si existe, tiene prioridad
+//   INVITE_FROM = Colmena · Quality & Knowledge <correo@remitente>   (con Gmail debe ser el mismo SMTP_USER)
 import { createClient } from "npm:@supabase/supabase-js@2";
+import nodemailer from "npm:nodemailer@6.9.16";
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -22,11 +25,16 @@ Deno.serve(async (req) => {
   if (!auth.startsWith("Bearer ")) return json(401, { error: "Inicia sesión como admin" });
 
   const apiKey = Deno.env.get("RESEND_API_KEY");
-  const from = Deno.env.get("INVITE_FROM");
-  if (!apiKey || !from) return json(500, { error: "Falta configurar RESEND_API_KEY o INVITE_FROM en Supabase" });
+  const smtpUser = Deno.env.get("SMTP_USER");
+  const smtpPass = Deno.env.get("SMTP_PASS");
+  const from = Deno.env.get("INVITE_FROM") || (smtpUser ? `Colmena · Quality & Knowledge <${smtpUser}>` : "");
+  if (!apiKey && !(smtpUser && smtpPass)) return json(500, { error: "Falta configurar el envío en Supabase (SMTP_USER y SMTP_PASS, o RESEND_API_KEY)." });
+  if (!from) return json(500, { error: "Falta configurar INVITE_FROM en Supabase" });
 
   // Cliente con la sesión de quien llama: la base aplica sus reglas (RLS) como si fuera la página
-  const sb = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, {
+  // Llave pública: la del entorno o la que manda la página (publishable). Nunca se usa la secreta.
+  const pubKey = Deno.env.get("SUPABASE_ANON_KEY") || req.headers.get("apikey") || "";
+  const sb = createClient(Deno.env.get("SUPABASE_URL")!, pubKey, {
     global: { headers: { Authorization: auth } },
     auth: { persistSession: false },
   });
@@ -55,12 +63,33 @@ Deno.serve(async (req) => {
   const { data: me } = await sb.rpc("ws_me");
   const replyTo = me && me[0] && me[0].email ? String(me[0].email) : undefined;
 
-  const r = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from, to: [email], subject, html, text, ...(replyTo ? { reply_to: replyTo } : {}) }),
-  });
-  const out = await r.json().catch(() => ({}));
-  if (!r.ok) return json(502, { error: "Resend no aceptó el envío: " + ((out as { message?: string }).message ?? r.status) });
-  return json(200, { ok: true, id: (out as { id?: string }).id });
+  if (apiKey) {
+    const r = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from, to: [email], subject, html, text, ...(replyTo ? { reply_to: replyTo } : {}) }),
+    });
+    const out = await r.json().catch(() => ({}));
+    if (!r.ok) return json(502, { error: "Resend no aceptó el envío: " + ((out as { message?: string }).message ?? r.status) });
+    return json(200, { ok: true, via: "resend", id: (out as { id?: string }).id });
+  }
+
+  // SMTP (Gmail): puerto 465 con TLS (Supabase bloquea 25 y 587)
+  const port = Number(Deno.env.get("SMTP_PORT") || 465);
+  try {
+    const transport = nodemailer.createTransport({
+      host: Deno.env.get("SMTP_HOST") || "smtp.gmail.com",
+      port,
+      secure: port === 465,
+      auth: { user: smtpUser, pass: String(smtpPass).replace(/\s+/g, "") },
+    });
+    const info = await transport.sendMail({ from, to: email, subject, html, text, ...(replyTo ? { replyTo } : {}) });
+    return json(200, { ok: true, via: "smtp", id: info.messageId });
+  } catch (err) {
+    const m = String((err as Error)?.message || err);
+    const hint = /Invalid login|Username and Password not accepted|535/i.test(m)
+      ? "Gmail rechazó el usuario o la contraseña de aplicación (revisa SMTP_USER y SMTP_PASS)."
+      : "El servidor de correo no aceptó el envío: " + m.slice(0, 160);
+    return json(502, { error: hint });
+  }
 });
