@@ -137,14 +137,16 @@ La **campana** (arriba a la derecha, también dentro del panel del taller) muest
 
 | Fase | En el celular | En el panel proyectado |
 |---|---|---|
-| 1. Lobby | Registro: nombre, área, rol, etapas, avatar; mapa del proceso con sus etapas marcadas | Tabla de quién entró (con rol y etapas) |
-| 2. Check-in | Ánimo y expectativa | Misma tabla con respuestas |
-| 3. Dolores | Tarjetas con etapa, actividad y herramienta (opcionales) y qué tanto duele; «No tengo más por ahora» cuando termina | Muro en vivo agrupado por etapa |
-| 4. Votación | Reparte sus votos (tope validado en el servidor); al usar el último queda listo | Ranking en vivo |
-| 5. Validación | Tres pasos: quick wins (Mucho / Algo / Poco / No aplica), reglas del nuevo flujo (Ayuda / Me da igual / Estorba / No me toca) y tiempos por etapa (4 rangos); primero lo de sus etapas; al final propone mejoras nuevas | Filas por quick win (mucho · algo · poco) con índice 0–100, reglas en barras divergentes, tiempos en tira de proceso, propuestas nuevas |
-| 6. Ideas | «¿Cómo podríamos…?» para los 3 dolores más votados; apoya hasta 3 ideas ajenas; «Terminé con Ideas» | Ideas por reto con un hexágono por apoyo |
+| 1. Lobby | Registro: nombre, área, rol, etapas, avatar; mapa del proceso con sus etapas marcadas | Tarjeta **Entrar al taller** (QR, código y liga), tarjetas de quién entró (rol, área, etapas) y mezcla de áreas en la sala |
+| 2. Check-in | Ánimo y expectativa | Ánimo del equipo (barras por estado), expectativas en sus palabras y a quién le falta el check-in |
+| 3. Dolores | Tarjetas con etapa, actividad y herramienta (opcionales) y qué tanto duele; «No tengo más por ahora» cuando termina | Dolores por etapa (barras horizontales con el nombre completo de cada etapa) y muro en vivo por etapa; la intensidad va como etiqueta de color en cada tarjeta |
+| 4. Votación | Reparte sus votos (tope validado en el servidor); al usar el último queda listo | Ranking en vivo (los primeros marcados como Reto 1, 2, 3) y **Quién ya votó** con un hexágono por voto; el muro queda plegado abajo |
+| 5. Validación | Tres pasos: quick wins (Mucho / Algo / Poco / No aplica), reglas del nuevo flujo (Ayuda / Me da igual / Estorba / No me toca) y tiempos por etapa (4 rangos); primero lo de sus etapas; al final propone mejoras nuevas | Pestañas **Quick wins · Reglas · Tiempos · Propuestas** (una lista a la vez, con una nota que explica cómo leer cada gráfica): filas por quick win con índice 0–100, reglas en barras divergentes, tiempos en tira de proceso, propuestas nuevas |
+| 6. Ideas | «¿Cómo podríamos…?» para los 3 dolores más votados; apoya hasta 3 ideas ajenas; «Terminé con Ideas» | Una columna por reto (votos, ideas y apoyos), un hexágono por apoyo y la idea más apoyada resaltada |
 | 7. Resultados | Top de dolores, ideas, quick wins, reglas y tiempos; nota de cierre | Titular (el dolor más votado + 4 datos clave) y cinco secciones numeradas; contexto plegado; botón **Presentar** (pantalla completa, una sección por pantalla, flechas o clicker, Esc para salir) |
-| 8. Cierre | Agradecimiento | Igual que Resultados |
+| 8. Cierre | Agradecimiento | Aviso de taller cerrado + lo mismo que Resultados (con barra de secciones y botones **Presentar** y **Compartir** siempre a la mano) |
+
+**Foco de la fase (v1.8).** En el panel del facilitador, arriba de cada fase en vivo hay una tarjeta que dice qué está haciendo la sala, cuántos ya terminaron (con las caritas de quienes van listos), los 3–5 datos que importan en esa fase y el botón **Abrir <siguiente fase>**. Los seis indicadores que antes ocupaban la parte de arriba desaparecieron: cada fase muestra solo lo suyo.
 
 **Orientación en el celular (v1.4).** Arriba siempre se ve «Actividad N de 5 · Nombre», los 5 segmentos y el estado (En curso / Listo ✓). Al abrir una actividad aparece un aviso de qué hacer. Cuando alguien termina, ve «X de N ya terminaron» y qué sigue; tú ves lo mismo en la barra de fases («X de N listos con …») para decidir cuándo avanzar. Lo que escriben se guarda como borrador en el celular: si cambias de fase antes de que lo publiquen, se les avisa y pueden copiarlo.
 

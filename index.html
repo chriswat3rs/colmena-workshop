@@ -645,7 +645,7 @@ details.more .chips{padding-top:4px}
 .hb-t{min-width:0}
 .hb-txt{font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .hb-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:3px;font-size:11.5px;font-weight:600;color:var(--ink-3)}
-.hb-reto{font-size:10.5px;font-weight:700;color:var(--accent-strong);background:var(--accent-soft);padding:1px 7px;border-radius:999px}
+.hb-reto{white-space:nowrap;font-size:10.5px;font-weight:700;color:var(--accent-strong);background:var(--accent-soft);padding:1px 7px;border-radius:999px}
 .hb-track{display:grid;grid-template-columns:minmax(0,1fr) 36px;gap:10px;align-items:center}
 .hb-rail{display:block;min-width:0}
 .hb-bar{display:block;height:34px;border-radius:8px;background:var(--c-light);min-width:6px;transition:width .5s ease}
@@ -1392,6 +1392,196 @@ kbd{font-family:var(--sans);font-size:11px;font-weight:700;padding:1px 5px;borde
   .st-cnt{display:none}
   .hello-acts .abtn{flex:1}
 }
+/* ===== v1.8 · Panel del facilitador: foco por fase, tarjetas y gráficas más claras ===== */
+.a-main{gap:18px}
+/* Foco de la fase: qué está pasando, cuántos van y qué sigue */
+.fx{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px 28px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r-card);padding:20px 24px;box-shadow:0 1px 2px rgba(1,19,59,.04);position:relative;overflow:hidden}
+.fx::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent)}
+.fx.all::before{background:#1FA971}
+.fx-l{display:flex;gap:16px;align-items:flex-start;min-width:0}
+.fx-ic{flex:none}
+.fx-k{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-strong)}
+.fx-k i{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:livepulse 1.6s ease-in-out infinite}
+.fx-t{font-family:var(--sans);font-size:20px;font-weight:800;color:var(--ink);line-height:1.25;margin:4px 0 4px}
+.fx-d{font-size:13.5px;font-weight:500;color:var(--ink-2);line-height:1.45;margin:0;max-width:64ch}
+.fx-r{display:flex;flex-direction:column;align-items:flex-end;gap:10px;flex:none;min-width:240px}
+.fx-prog{display:flex;flex-direction:column;gap:6px;width:100%}
+.fx-prog-t{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.fx-prog-t b{font-size:18px;color:var(--ink);font-weight:800}
+.fx-prog-t .ok{font-size:12.5px;font-weight:700;color:#1E7A45;background:#E3F5EA;padding:3px 9px;border-radius:999px}
+.fx-bar{display:block;height:8px;border-radius:4px;background:var(--c-track);overflow:hidden}
+.fx-bar span{display:block;height:100%;background:var(--c1);transition:width .5s;border-radius:4px}
+.fx.all .fx-bar span{background:#1FA971}
+.fx-faces{display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end}
+.fx-faces .glass{width:26px;height:26px;border-radius:8px;font-size:15px}
+.fx-faces .glass.off{opacity:.28;filter:grayscale(1)}
+.fx-next{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:12px;background:var(--primary);color:#fff;font-weight:700;font-size:14px;border:1.5px solid var(--primary);white-space:nowrap}
+.fx-next:hover{background:var(--primary-hover)}
+.fx-next svg{width:16px;height:16px;stroke-width:2.4}
+.fx-next.close{background:#fff;color:var(--ink);border-color:var(--line)}
+.fx-next.close:hover{border-color:var(--ink)}
+.fx-stats{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 26px;padding-top:14px;border-top:1px solid var(--line)}
+.fx-st{display:flex;flex-direction:column;gap:1px;min-width:0}
+.fx-st b{font-size:17px;font-weight:800;color:var(--ink);line-height:1.15}
+.fx-st b small{font-size:12.5px;font-weight:600;color:var(--ink-3);margin-left:3px}
+.fx-st b.tx{font-size:14px;max-width:34ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-top:3px}
+.fx-st span{font-size:12px;font-weight:600;color:var(--ink-3);white-space:nowrap}
+@media (max-width:900px){ .fx{grid-template-columns:1fr} .fx-r{align-items:stretch;min-width:0} .fx-faces{justify-content:flex-start} .fx-next{justify-content:center} }
+
+/* Rejillas del panel */
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.g2.side{grid-template-columns:minmax(0,1fr) minmax(280px,360px)}
+.g2.lobby{grid-template-columns:minmax(300px,380px) minmax(0,1fr)}
+.g3{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,.8fr);gap:18px;align-items:start}
+@media (max-width:1100px){ .g2,.g2.side,.g2.lobby{grid-template-columns:1fr} .g3{grid-template-columns:1fr} }
+.panel.tight{padding:18px 20px}
+.ph{margin-bottom:16px}
+.ph h2{font-size:16.5px}
+.ph .n{font-size:12px;font-weight:700;color:var(--ink-2);background:var(--navy-soft);padding:2px 9px;border-radius:999px;margin-left:8px;vertical-align:middle}
+
+/* Lobby: tarjeta para entrar */
+.join{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+.join-qr svg{width:200px;height:200px;border-radius:12px;display:block}
+.join-code{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:.2em;color:var(--ink);background:var(--navy-soft);padding:8px 20px;border-radius:12px}
+.join-url{font-size:12.5px;font-weight:600;color:var(--ink-3);word-break:break-all;max-width:100%}
+.join-acts{display:flex;gap:8px;width:100%}
+.join-acts .abtn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:13.5px;padding:10px 12px}
+.join-acts .abtn svg{width:16px;height:16px}
+.join-help{font-size:12.5px;color:var(--ink-3);font-weight:500;margin:0}
+
+/* Personas: tarjetas en vez de tabla */
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.person{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);min-width:0}
+.person.new{animation:cardin .35s ease}
+.person .glass{grid-row:span 2}
+.pe-n{font-size:14px;font-weight:700;color:var(--ink);line-height:1.25;display:flex;align-items:center;gap:6px;min-width:0}
+.pe-n span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pe-n time{margin-left:auto;font-size:11px;font-weight:600;color:var(--ink-3);flex:none}
+.pe-r{font-size:12.5px;font-weight:500;color:var(--ink-2);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pe-x{grid-column:2;display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:4px}
+.pe-et{display:inline-flex;align-items:center;gap:3px}
+.pe-et i{font-style:normal;font-size:11px;font-weight:800;color:var(--ink-2);background:var(--navy-soft);min-width:20px;height:20px;padding:0 5px;border-radius:6px;display:inline-grid;place-items:center}
+.pe-et i.all{background:var(--accent-soft);color:var(--accent-strong);padding:0 8px}
+.pe-mood{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--ink-2);margin-left:auto}
+.pe-mood .glass.xs{width:20px;height:20px;border-radius:6px}
+.pe-mood.none{color:var(--ink-3);font-weight:500}
+/* Mezcla de áreas */
+.mix{display:flex;flex-direction:column;gap:8px}
+.mix-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;align-items:center}
+.mix-l{font-size:13px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mix-n{font-size:13px;font-weight:800;color:var(--ink)}
+.mix-b{grid-column:1/-1;height:6px;border-radius:3px;background:var(--c-track);overflow:hidden}
+.mix-b i{display:block;height:100%;background:var(--c1);border-radius:3px}
+
+/* Check-in: expectativas y quién falta */
+.quotes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.quotes li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--surface)}
+.quotes .glass{flex:none}
+.quotes p{margin:0;font-size:14px;font-weight:600;color:var(--ink);line-height:1.4}
+.quotes small{display:block;font-size:12px;font-weight:600;color:var(--ink-3);margin-top:2px}
+.chips-p{display:flex;flex-wrap:wrap;gap:6px}
+.chips-p>span{display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 5px;border-radius:999px;border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--ink-2);background:var(--card)}
+.chips-p .glass.xs{width:20px;height:20px;border-radius:6px}
+.mood-big{display:flex;flex-direction:column;gap:10px}
+.mood-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:10px;align-items:center}
+.mood-row .glass.sm{width:30px;height:30px;border-radius:9px}
+.mood-row .t{font-size:13.5px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mood-row .b{grid-column:2;height:8px;border-radius:4px;background:var(--c-track);overflow:hidden}
+.mood-row .b i{display:block;height:100%;border-radius:4px}
+.mood-row b{font-size:15px;font-weight:800;color:var(--ink);min-width:16px;text-align:right}
+.mood-row small{font-size:12px;font-weight:600;color:var(--ink-3);min-width:34px;text-align:right}
+.mood-row.zero .t,.mood-row.zero b,.mood-row.zero small{color:var(--ink-3);font-weight:500}
+
+/* Dolores por etapa: barras horizontales con el nombre completo */
+.sb{display:flex;flex-direction:column;gap:7px}
+.sb-row{display:grid;grid-template-columns:minmax(170px,300px) minmax(0,1fr) 34px;gap:12px;align-items:center;min-width:0}
+.sb-l{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink);min-width:0}
+.sb-l i{flex:none;font-style:normal;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:11.5px;font-weight:800;background:var(--navy-soft);color:var(--ink-2)}
+.sb-l span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-row.top .sb-l i{background:var(--primary);color:#fff}
+.sb-row.zero .sb-l,.sb-row.zero .sb-n{color:var(--ink-3);font-weight:500}
+.sb-bar{display:flex;height:18px;border-radius:6px;background:var(--c-track);overflow:hidden}
+.sb-bar i{display:block;height:100%;min-width:0}
+.sb-bar .hi{background:var(--c3)}.sb-bar .lo{background:var(--c2)}
+.sb-n{font-size:14px;font-weight:800;color:var(--ink);text-align:right}
+@media (max-width:640px){ .sb-row{grid-template-columns:minmax(0,1fr) 34px} .sb-bar{grid-column:1/-1} }
+
+/* Muro: tarjetas con la intensidad como etiqueta de color */
+.wall{gap:16px}
+.wcol h3{font-size:13.5px;padding-bottom:9px;border-bottom:2px solid var(--line)}
+.wcol h3 span{display:flex;align-items:center;gap:7px;min-width:0}
+.wcol h3 span i{flex:none;font-style:normal;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:11.5px;font-weight:800;background:var(--primary);color:#fff}
+.wcard{padding:12px 14px 12px 16px;position:relative}
+.wcard::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:0 3px 3px 0;background:var(--sev,#C9D3E2)}
+.wcard.s3{--sev:var(--c1)}.wcard.s4{--sev:#F0962E}.wcard.s5{--sev:#E5484D}
+.sev-chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--navy-soft);color:var(--ink-2)}
+.sev-chip.s3{background:var(--accent-soft);color:var(--accent-strong)}
+.sev-chip.s4{background:#FDEEDC;color:#9A5A0F}
+.sev-chip.s5{background:#FDE4E4;color:#B3262B}
+.sev-chip small{font-weight:600;opacity:.8}
+.wcard .txt{font-size:14px;line-height:1.45;margin:4px 0 0}
+.wc-foot{margin-top:9px;gap:6px}
+.wc-tool{font-size:11px;padding:2px 7px}
+
+/* Votación: quién ya votó */
+.voters{display:flex;flex-direction:column;gap:9px}
+.vt-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:2px 10px;align-items:center}
+.vt-row .u{grid-column:2/-1}
+.vt-row .glass{grid-row:span 2}
+.vt-row .glass.sm{width:30px;height:30px;border-radius:9px}
+.vt-row .t{font-size:13.5px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vt-row .u{display:flex;gap:3px}
+.vt-row .u i{display:block;width:10px;height:12px;background:var(--c-track);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.vt-row .u i.on{background:var(--c1)}
+.vt-row.done .u i.on{background:#1FA971}
+.vt-row .n{font-size:12px;font-weight:700;color:var(--ink-3);min-width:34px;text-align:right}
+.vt-row.none .t{color:var(--ink-3);font-weight:500}
+.rk-bar b{font-size:20px}
+
+/* Validación: pestañas */
+.vtabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:0 0 2px;margin:-4px 0 16px}
+.vtabs::-webkit-scrollbar{display:none}
+.vtab{flex:none;display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:11px;border:1.5px solid var(--line);background:var(--card);font-size:13.5px;font-weight:700;color:var(--ink-2);white-space:nowrap}
+.vtab svg{width:15px;height:15px}
+.vtab b{font-size:11.5px;font-weight:800;padding:1px 7px;border-radius:999px;background:var(--navy-soft);color:var(--ink-2)}
+.vtab.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.vtab.on b{background:rgba(255,255,255,.18);color:#fff}
+.vtab:hover:not(.on){border-color:var(--ink-3)}
+.vhelp{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;background:var(--surface);font-size:13px;font-weight:500;color:var(--ink-2);line-height:1.45;margin-bottom:16px}
+.vhelp svg{width:16px;height:16px;flex:none;margin-top:1px;color:var(--accent-strong)}
+.vhelp b{color:var(--ink)}
+.lk-row{padding:10px 0}
+.dv-row{padding:10px 0}
+
+/* Ideas */
+.retos{gap:16px}
+.reto{padding:0;overflow:hidden}
+.reto-h{padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
+.reto-t{padding:0 16px;margin:12px 0 8px}
+.reto .ideas{padding:0 16px 12px}
+.reto-c{font-size:12px;font-weight:600;color:var(--ink-3);padding:0 16px 10px}
+.idea.lead::before{content:"Más apoyada";display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-strong);margin-bottom:2px}
+.idea-none,.empty-idea{padding:0 16px 12px;color:var(--ink-3);font-size:13px;font-weight:500}
+.reto .ideas .empty-idea{padding:10px 0 0}
+
+/* Resultados y cierre */
+.res-nav{position:sticky;top:calc(61px + 58px);z-index:20;display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:10px 14px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;box-shadow:0 1px 2px rgba(1,19,59,.04)}
+.res-nav a{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:9px;font-size:13px;font-weight:700;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.res-nav a b{font-family:var(--display);font-size:13px;color:var(--accent)}
+.res-nav a:hover{background:var(--surface);color:var(--ink)}
+.res-nav .sp{flex:1}
+.res-nav .abtn{padding:8px 14px;font-size:13px;display:inline-flex;align-items:center;gap:7px}
+.res-nav .abtn svg{width:15px;height:15px}
+.closed-bn{display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--r-card);background:#E3F5EA;border:1px solid #BFE8CE;color:#1E7A45}
+.closed-bn b{display:block;font-size:15px;color:#155C34}
+.closed-bn span{font-size:13px;font-weight:500;color:#2B6B47}
+.closed-bn .glass{flex:none}
+.a-main.results{gap:26px}
+.a-main.results>.panel,.a-main.results .duo2>.panel{padding:26px 30px 24px}
+.hero-t{font-size:30px}
+@media (max-width:900px){ .res-nav{display:none} .hero-t{font-size:24px} .tiles{grid-template-columns:1fr 1fr} }
+@media (max-width:560px){ .tiles{grid-template-columns:1fr} }
+
 </style>
 </head>
 <body>
@@ -1682,7 +1872,7 @@ function tasksFor(session, stage){ return (session && session.tasks && session.t
 function linesOf(v){ return String(v||"").split("\n").map(x=>x.trim()).filter(Boolean); }
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260926020413";
+const APP_BUILD="20260926044651";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -3180,6 +3370,7 @@ const W_STEPS = [
 ];
 const wzKey = () => "colmena_draft_"+(ME.uid||"x");
 function loadWzDraft(){ try{ const j=JSON.parse(storageGet(wzKey())||"null"); return j&&j.d&&j.d.name!==undefined ? j : null; }catch(e){ return null; } }
+function saveWzDraftNow(){ clearTimeout(W._t); try{ storageSet(wzKey(), JSON.stringify({step:W.step,d:W.d,at:now()})); }catch(e){} }
 function saveWzDraft(){ clearTimeout(W._t); W._t=setTimeout(()=>{ try{ storageSet(wzKey(), JSON.stringify({step:W.step,d:W.d,at:now()})); const c=$("#wDraft"); if(c) c.textContent="Borrador guardado"; }catch(e){} },300); }
 function clearWzDraft(){ try{ localStorage.removeItem(wzKey()); }catch(e){} }
 function fromPreset(p){ const c=JSON.parse(JSON.stringify(p)); return {
@@ -3275,8 +3466,8 @@ function drawWizard(){
     <span class="hint wz-pos">${W.step+1} de ${W_STEPS.length} · ${W_STEPS[W.step].s}</span>
     ${last?`<button type="button" class="abtn primary ah-create" id="wCreate" ${errs.length?"disabled":""}>${icon("sparkle")}Crear taller</button>`
          :`<button type="button" class="abtn primary" id="wNext" ${!W.d?"disabled":""}>Siguiente${icon("arrowright")}</button>`}`;
-  $("#wPrev").onclick=()=>{ W.step--; drawWizard(); window.scrollTo(0,0); };
-  const nx=$("#wNext"); if(nx) nx.onclick=()=>{ W.step++; drawWizard(); window.scrollTo(0,0); };
+  $("#wPrev").onclick=()=>{ W.step--; if(W.d) saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
+  const nx=$("#wNext"); if(nx) nx.onclick=()=>{ W.step++; if(W.d) saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
   const cr=$("#wCreate"); if(cr) cr.onclick=createFromWizard;
 
   function bind(sel,key,fn){ const el=$(sel); el.oninput=()=>{ d[key]=fn?fn(el.value):el.value.trim(); saveWzDraft(); }; }
@@ -3651,59 +3842,89 @@ function renderAdmin(){
   const head=(t,d)=>`<div class="ph"><h2>${t}</h2>${d?`<p class="pdesc">${d}</p>`:""}</div>`;
   const foot=(main,sub,ic)=> main?`<div class="pf"><span class="pf-main">${icon(ic||"trendup")}<span>${main}</span></span>${sub?`<span class="pf-sub">${sub}</span>`:""}</div>`:"";
   const nP=A.participants.length;
+  const recentN=A.participants.map(p=>+new Date(p.joined_at)).filter(t=>t&&Date.now()-t<5*60000).length;
   const TONE={green:"#1FA971",blue:"#278FD8",slate:"#7A879F",amber:"#F0962E",coral:"#E5484D",navy:"#173F84",sky:"#4FA9E6",deep:"#1B6FAE"};
 
-  const panelParticipants = `
+  const nSt=(s.stages||[]).length;
+  const person = p => { const m=MOODS.find(x=>x.v===p.mood); const et=(p.etapas||[]); const all=nSt && et.length===nSt;
+    return `<div class="person${fresh(p.id)}">${avatar(p.emoji,"sm")}
+      <div class="pe-n"><span>${esc(p.nombre)} ${esc(p.apellido||"")}</span><time>${fmtTime(p.joined_at)}</time></div>
+      <div class="pe-r" title="${esc(p.rol||"")} · ${esc(p.area||"")}">${esc(p.rol||"")}${p.rol&&p.area?" · ":""}${esc(p.area||"")}</div>
+      <div class="pe-x"><span class="pe-et" data-tip="Etapas del proceso en las que participa">${all?'<i class="all">Todas las etapas</i>':et.map(x=>`<i title="${esc(x)}">${esc(stageX(x))}</i>`).join("")||'<i title="Sin etapas">—</i>'}</span>
+        ${ph==="lobby"?"":(m? `<span class="pe-mood">${glass(m.ic,{size:"xs",tone:m.tone,tint:true})}${esc(m.t)}</span>` : '<span class="pe-mood none">Sin check-in</span>')}</div>
+    </div>`; };
+  const peopleSorted=[...A.participants].sort((a,b)=>String(b.joined_at).localeCompare(String(a.joined_at)));
+  const panelPeople = `
+      <div class="panel" id="sec-people">
+        ${head(`Participantes<span class="n">${nP}</span>`, nP? (recentN? `${recentN} entr${recentN===1?"ó":"aron"} en los últimos 5 minutos · los más recientes primero` : "Nombre, rol, área y etapas en las que participa") : "Entran escaneando el QR desde su celular")}
+        ${nP? `<div class="people">${peopleSorted.map(person).join("")}</div>` : emptyState("users","Aún no entra nadie","Proyecta el QR y espera a la colmena")}
+      </div>`;
+  const areaN=Object.entries(A.participants.reduce((o,p)=>{ const k=p.area||"Sin área"; o[k]=(o[k]||0)+1; return o; },{})).sort((a,b)=>b[1]-a[1]);
+  const panelMix = nP? `
+      <div class="panel tight">
+        ${head("Áreas en la sala", `${areaN.length} área${areaN.length===1?"":"s"} · ${nSt? `${new Set(A.participants.flatMap(p=>p.etapas||[])).size} de ${nSt} etapas cubiertas` : ""}`)}
+        <div class="mix">${areaN.map(([a,n])=>`<div class="mix-row"><span class="mix-l" title="${esc(a)}">${esc(a)}</span><span class="mix-n">${n}</span><span class="mix-b"><i style="width:${pctOf(n,nP)}%"></i></span></div>`).join("")}</div>
+      </div>` : "";
+  let joinQR=""; try{ const q=qrcode(0,'M'); q.addData(participantURL()); q.make(); joinQR=q.createSvgTag({cellSize:4,margin:2}); }catch(e){}
+  const panelJoin = `
       <div class="panel">
-        ${head("Participantes", nP? nP+" registrado"+(nP===1?"":"s")+" · entran escaneando el QR" : "Entran escaneando el QR desde su celular")}
-        ${nP? `<div style="overflow-x:auto"><table class="ptable">
-          <thead><tr><th></th><th>Nombre</th><th>Área</th><th>Rol</th><th>Etapas</th><th>Ánimo</th><th>Expectativa</th><th>Hora</th></tr></thead>
-          <tbody>${A.participants.map(p=>{
-            const m=MOODS.find(x=>x.v===p.mood);
-            const et=(p.etapas||[]); const all=(s.stages||[]).length && et.length===(s.stages||[]).length;
-            return `<tr><td>${avatar(p.emoji,"sm")}</td>
-              <td style="font-weight:600">${esc(p.nombre)} ${esc(p.apellido||"")}</td>
-              <td>${esc(p.area||"")}</td><td>${esc(p.rol||"")}</td>
-              <td class="et">${all?"Todas":esc(et.map(shortStage).join(" · "))}</td>
-              <td>${m? `<span class="who">${glass(m.ic,{size:"xs",tone:m.tone,tint:true})} ${m.t}</span>` : '<span class="hint">—</span>'}</td>
-              <td>${esc(p.expectativa||"")}</td><td class="hint">${fmtTime(p.joined_at)}</td></tr>`;
-          }).join("")}</tbody></table></div>`
-        : emptyState("users","Aún no entra nadie","Proyecta el QR y espera a la colmena")}
+        ${head("Entrar al taller", "Proyecta este QR o comparte la liga; cada quien entra desde su celular")}
+        <div class="join">
+          ${joinQR?`<div class="join-qr" role="img" aria-label="QR para entrar">${joinQR}</div>`:""}
+          <div class="join-code" aria-label="Código ${esc(s.code)}">${esc(s.code)}</div>
+          <p class="join-url">${esc(participantURL())}</p>
+          <div class="join-acts">${A.readonly?"":`<button class="abtn primary" id="joinBig">${icon("monitor")}Proyectar</button>`}<button class="abtn" id="joinCopy">${icon("copy")}Copiar liga</button></div>
+          <p class="join-help">Al entrar, cada persona escribe su nombre, área, rol y las etapas en las que participa.</p>
+        </div>
       </div>`;
 
   /* Ánimo del equipo: dona con el total al centro */
   const moodN=MOODS.map(m=>({...m,n:A.participants.filter(p=>p.mood===m.v).length}));
   const topMood=[...moodN].sort((a,b)=>b.n-a.n)[0];
-  const panelMood = checkins? `
+  const moodMax=Math.max(1,...moodN.map(m=>m.n));
+  const panelMood = `
       <div class="panel">
-        ${head("Ánimo del equipo", `${checkins} de ${nP} respondieron el check-in`)}
-        <div class="donut-wrap">
-          ${donutSVG(moodN.map(m=>({t:m.t,v:m.n,color:TONE[m.tone]})),{center:checkins,sub:"check-ins"})}
-          <div class="dleg">${moodN.map(m=>`<div class="dleg-row${m.n?"":" zero"}"><span class="sw" style="background:${TONE[m.tone]}"></span><span class="dl-t">${esc(m.t)}</span><b>${m.n}</b><span class="pct">${pctOf(m.n,checkins)}%</span></div>`).join("")}</div>
-        </div>
-        ${foot(`Predomina: ${esc(topMood.t)}`, `${pctOf(topMood.n,checkins)}% del equipo que hizo check-in`, topMood.ic)}
-      </div>` : "";
+        ${head("Ánimo del equipo", checkins? `${checkins} de ${nP} respondieron el check-in` : "Cada quien dice cómo llega desde su celular")}
+        ${checkins? `<div class="mood-big">${moodN.map(m=>`<div class="mood-row${m.n?"":" zero"}">${glass(m.ic,{size:"sm",tone:m.tone,tint:!!m.n})}<span class="t">${esc(m.t)}</span><b>${m.n}</b><small>${m.n?pctOf(m.n,checkins)+"%":""}</small><span class="b"><i style="width:${pctOf(m.n,moodMax)}%;background:${TONE[m.tone]}"></i></span></div>`).join("")}</div>
+        ${foot(`Predomina: ${esc(topMood.t)}`, `${pctOf(topMood.n,checkins)}% de quienes hicieron check-in${moodN.filter(m=>["saturado","rebasado"].includes(m.v)).reduce((a,m)=>a+m.n,0)?` · ${moodN.filter(m=>["saturado","rebasado"].includes(m.v)).reduce((a,m)=>a+m.n,0)} llegan saturados o rebasados: cuida el ritmo`:""}`, topMood.ic)}`
+        : emptyState("cloudsun","Aún sin check-ins","Aparecerán aquí en vivo")}
+      </div>`;
+  const expects=A.participants.filter(p=>(p.expectativa||"").trim());
+  const missing=A.participants.filter(p=>!p.mood);
+  const panelExpect = `
+      <div class="panel">
+        ${head(`Qué esperan del taller${expects.length?`<span class="n">${expects.length}</span>`:""}`, expects.length? "En sus palabras · úsalo para abrir la sesión" : "Cada quien escribe su expectativa en el check-in")}
+        ${expects.length? `<ul class="quotes">${expects.map(p=>`<li>${avatar(p.emoji,"xs")}<div><p>«${esc(p.expectativa)}»</p><small>${esc(p.nombre)} · ${esc(p.rol||p.area||"")}</small></div></li>`).join("")}</ul>` : emptyState("sparkle","Aún sin expectativas","Aparecerán aquí en vivo")}
+      </div>`;
+  const panelMissing = `
+      <div class="panel tight">
+        ${head(`Falta check-in<span class="n">${missing.length}</span>`, missing.length? "Puedes pedirles que abran su celular" : "Todo el equipo ya respondió")}
+        ${missing.length? `<div class="chips-p">${missing.map(p=>`<span>${avatar(p.emoji,"xs")}${esc(p.nombre)}</span>`).join("")}</div>` : `<p class="join-help">${icon("check")} Todos respondieron</p>`}
+      </div>`;
 
   /* Dolores por etapa: columnas apiladas por intensidad */
   const stN=(s.stages||[]).map(st=>{ const cs=A.cards.filter(c=>c.etapa===st); return {st,n:cs.length,hi:cs.filter(c=>+c.severidad>=4).length}; });
   const stMax=Math.max(1,...stN.map(x=>x.n));
   const topSt=[...stN].sort((a,b)=>b.n-a.n||b.hi-a.hi)[0];
   const hiTotal=A.cards.filter(c=>+c.severidad>=4).length;
+  const stageName = t => { const n=stageX(t); return /^\d+$/.test(n) ? String(t).replace(/^\d+\s*/,"") : String(t); };
   const panelStages = A.cards.length? `
       <div class="panel">
-        ${head("Dolores por etapa del proceso", `${A.cards.length} tarjetas · ${hiTotal} duelen mucho o son insoportables`)}
+        ${head("Dolores por etapa del proceso", `${A.cards.length} tarjeta${A.cards.length===1?"":"s"} · ${hiTotal} duele${hiTotal===1?"":"n"} mucho o ${hiTotal===1?"es":"son"} insoportable${hiTotal===1?"":"s"}`)}
         <div class="leg"><span><i style="background:var(--c3)"></i>Duele mucho / insoportable (4–5)</span><span><i style="background:var(--c2)"></i>Molesta / incomoda / duele (1–3)</span></div>
-        <div class="bars-v" style="--n:${stN.length}">${stN.map(x=>{ const lo=x.n-x.hi, pct=v=>(v/stMax*100).toFixed(1);
-          return `<div class="bv" data-tip="${esc(x.st)}\n${x.n} tarjeta${x.n===1?"":"s"} · ${x.hi} de 4–5">
-            <div class="bv-stack">${x.n?`<span class="bv-n" style="bottom:calc(${pct(x.n)}% + 6px)">${x.n}</span>`:""}${lo?`<i class="lo" style="height:${pct(lo)}%"></i>`:""}${x.hi?`<i class="hi" style="height:${pct(x.hi)}%"></i>`:""}</div>
-            <span class="bv-x">${esc(stageX(x.st))}</span></div>`; }).join("")}</div>
-        ${foot(`Donde más duele: ${esc(topSt.st)}`, `${topSt.n} tarjeta${topSt.n===1?"":"s"} · el número bajo cada columna es el paso del proceso`, "flame")}
+        <div class="sb">${stN.map(x=>{ const lo=x.n-x.hi, pct=v=>(v/stMax*100).toFixed(1);
+          return `<div class="sb-row${x.n?"":" zero"}${x===topSt&&x.n?" top":""}" data-tip="${esc(x.st)}\n${x.n} tarjeta${x.n===1?"":"s"} · ${x.hi} de 4–5">
+            <span class="sb-l"><i>${esc(stageB(x.st))}</i><span>${esc(stageName(x.st))}</span></span>
+            <span class="sb-bar">${x.hi?`<i class="hi" style="width:${pct(x.hi)}%"></i>`:""}${lo?`<i class="lo" style="width:${pct(lo)}%"></i>`:""}</span>
+            <b class="sb-n">${x.n||"·"}</b></div>`; }).join("")}</div>
+        ${foot(`Donde más duele: ${esc(topSt.st)}`, `${topSt.n} tarjeta${topSt.n===1?"":"s"}${stN.filter(x=>!x.n).length?` · ${stN.filter(x=>!x.n).length} etapa${stN.filter(x=>!x.n).length===1?"":"s"} sin tarjetas todavía`:""}`, "flame")}
       </div>` : "";
 
   /* Muro de dolores */
   const sorted = list => votesUsed ? [...list].sort((x,y)=>(totals[y.id]||0)-(totals[x.id]||0) || y.severidad-x.severidad) : list;
-  const wcard = c => `<div class="wcard${fresh(c.id)}">
-      <div class="wc-top">${sevPips(c.severidad)}<span class="wc-sev">${esc(SEV_LABELS[c.severidad]||"")}</span>
+  const sevChip = n => `<span class="sev-chip s${+n||0}">${esc(SEV_LABELS[n]||"")}<small>${n}/5</small></span>`;
+  const wcard = c => `<div class="wcard s${+c.severidad||0}${fresh(c.id)}">
+      <div class="wc-top">${sevChip(c.severidad)}
         ${totals[c.id]?`<span class="wc-votes" data-tip="${totals[c.id]} voto${totals[c.id]===1?"":"s"} en la votación">${hexIco()}${totals[c.id]}</span>`:""}</div>
       <div class="txt">${esc(c.texto)}</div>
       ${c.actividad||c.herramienta||A.showAuthors?`<div class="wc-foot">${c.actividad?`<span class="wc-tool act">${taskHTML(c.actividad)}</span>`:""}${c.herramienta?`<span class="wc-tool">${esc(c.herramienta)}</span>`:""}${who(c.participant_id)}</div>`:""}
@@ -3714,7 +3935,7 @@ function renderAdmin(){
         ${A.cards.length? `<div class="wall">${
           orderStages(s,[...new Set(A.cards.map(c=>c.etapa))]).map(et=>{
             const cs=sorted(A.cards.filter(c=>c.etapa===et));
-            return `<div class="wcol"><h3><span>${esc(et)}</span><b>${cs.length}</b></h3>${cs.map(wcard).join("")}</div>`;
+            return `<div class="wcol"><h3><span><i>${esc(stageB(et))}</i>${esc(stageName(et))}</span><b>${cs.length}</b></h3>${cs.map(wcard).join("")}</div>`;
           }).join("")}</div>`
         : emptyState("flame","Aún no hay tarjetas","Aparecerán aquí en vivo conforme el equipo las publique")}
       </div>`;
@@ -3724,10 +3945,17 @@ function renderAdmin(){
   const smallV = voters<3;                                   /* pocos votantes: unidades, no barras al 100 % */
   const panelRank = `
       <div class="panel" id="sec-1">
-        ${head("Ranking de dolores", votesUsed? `${votesUsed} votos de ${voters} persona${voters===1?"":"s"} · ${vpp} por persona` : `Cada quien reparte ${vpp} votos entre los dolores`)}
+        ${head("Ranking de dolores", votesUsed? `${votesUsed} votos de ${voters} persona${voters===1?"":"s"} · ${vpp} por persona · los ${s.idea_top||3} primeros serán los retos` : `Cada quien reparte ${vpp} votos entre los dolores del muro`)}
         ${votesUsed? renderRank(totals, targets, {voters, top:5}) : emptyState("target","Todavía no hay votos",(A.cards.length? "El ranking se arma en vivo conforme el equipo vota" : "Primero hacen falta tarjetas de dolor"))}
         ${votesUsed? (smallV? foot(`${votesUsed} voto${votesUsed===1?"":"s"} de ${voters} persona${voters===1?"":"s"}`, "El ranking se afina conforme vote el equipo; los retos se definen con 3 o más votantes", "target")
                      : foot(`Los ${targets.length} más votados se vuelven los retos de la fase de ideas`, `El resto queda en el muro y en el Excel`, "target")) : ""}
+      </div>`;
+  const usedBy={}; A.votes.forEach(v=>usedBy[v.participant_id]=(usedBy[v.participant_id]||0)+(v.points||0));
+  const votersSorted=[...A.participants].sort((a,b)=>(usedBy[b.id]||0)-(usedBy[a.id]||0));
+  const panelVoters = `
+      <div class="panel tight">
+        ${head(`Quién ya votó<span class="n">${voters} de ${nP}</span>`, "Cada hexágono es un voto; en verde, quienes ya usaron todos")}
+        ${nP? `<div class="voters">${votersSorted.map(p=>{ const u=usedBy[p.id]||0; return `<div class="vt-row${u>=vpp?" done":u?"":" none"}">${avatar(p.emoji,"sm")}<span class="t">${esc(p.nombre)} ${esc(p.apellido||"")}</span><span class="n">${u} de ${vpp}</span><span class="u" aria-hidden="true">${'<i class="on"></i>'.repeat(Math.min(u,vpp))}${'<i></i>'.repeat(Math.max(0,vpp-u))}</span></div>`; }).join("")}</div>` : emptyState("users","Aún no entra nadie","")}
       </div>`;
 
   const qwT=qwCount(A.qwRatings);
@@ -3790,44 +4018,56 @@ function renderAdmin(){
   const retos = () => renderRetos(targets, ideasOnly, iTot, who, fresh);
   const panelIdeas = `
       <div class="panel" id="sec-2">
-        ${head(`Ideas para los ${targets.length||s.idea_top||3} retos`, `${ideasOnly.length} idea${ideasOnly.length===1?"":"s"} · ${A.ideaVotes.length} apoyo${A.ideaVotes.length===1?"":"s"} · ${ipp} por persona`)}
+        ${head("Ideas por reto", `${ideasOnly.length} idea${ideasOnly.length===1?"":"s"} · ${A.ideaVotes.length} apoyo${A.ideaVotes.length===1?"":"s"} · ${ipp} por persona · la más apoyada de cada reto va resaltada`)}
         ${targets.length? retos() : emptyState("bulb","Primero hace falta la votación de dolores",`Los ${s.idea_top||3} más votados se vuelven los retos`)}
         ${lead&&lead.v? foot(`La idea con más apoyo: ${esc(lead.texto)}`, `${lead.v} apoyo${lead.v===1?"":"s"} · responde al reto ${retoIdx(lead.card_id)||"—"}`, "bulb") : ""}
       </div>`;
 
-  /* ---------- Indicadores en vivo: seis tarjetas con la misma estructura ---------- */
-  const kOn = k => k.includes(ph);
+  /* ---------- Foco de la fase: qué pasa en la sala, cuántos van y qué sigue (v1.8) ---------- */
   const joins=A.participants.map(p=>+new Date(p.joined_at)).filter(Boolean);
-  const recent=joins.filter(t=>Date.now()-t<5*60000).length;
+  const recent=recentN;
   const sevAvg=A.cards.length? (A.cards.reduce((a,c)=>a+(+c.severidad||0),0)/A.cards.length).toFixed(1).replace(".0","") : null;
   const stWith=stN.filter(x=>x.n).length;
   const votesMax=nP*vpp, supMax=nP*ipp;
-  const kpis = `<div class="kpis">
-    ${kpiTile({on:kOn(["lobby"]), icon:"users", label:"Participantes", value:nP,
-      main: nP? (recent? `${recent} entraron en los últimos 5 min` : "Todos dentro, nadie nuevo en 5 min") : "Aún no entra nadie",
-      sub: nP? "Con nombre, área, rol y etapas" : "Proyecta el QR para que entren"})}
-    ${kpiTile({on:kOn(["checkin"]), icon:"cloudsun", label:"Check-in", value:checkins, of:nP,
-      main: checkins? `Predomina: ${esc(topMood.t)}` : "Aún sin respuestas",
-      sub: checkins? (checkins>=5? `${pctOf(checkins,nP)}% del equipo respondió` : `${checkins} de ${nP} respondieron`) : "Ánimo y expectativa de cada quien"})}
-    ${kpiTile({on:kOn(["pains"]), icon:"flame", label:"Dolores", value:A.cards.length,
-      main: A.cards.length? `Más en ${esc(stageTag(topSt.st))}` : "Aún sin tarjetas",
-      sub: A.cards.length? `Dolor promedio ${sevAvg}/5 · ${stWith} de ${stN.length} etapas` : "Tarjetas por etapa del proceso"})}
-    ${kpiTile({on:kOn(["votes"]), icon:"target", label:"Votación", value:votesUsed, of:votesMax,
-      main: votesUsed? `${voters} de ${nP} personas votaron` : "Aún sin votos",
-      sub: `${vpp} votos por persona`})}
-    ${kpiTile({on:kOn(["quickwins"]), icon:"bolt", label:"Validación", value:qwRaters, of:nP,
-      main: A.qwRatings.length? `${A.qwRatings.length} calificaciones` : "Aún sin calificaciones",
-      sub: `${qwList.length} quick wins${gateList.length?` · ${gateList.length} reglas`:""}${timeList.length?` · ${timeList.length} tiempos`:""} · ${props.length} propuesta${props.length===1?"":"s"}`})}
-    ${kpiTile({on:kOn(["ideas"]), icon:"bulb", label:"Ideas", value:ideasOnly.length,
-      main: A.ideaVotes.length? `${A.ideaVotes.length} de ${supMax} apoyos usados` : (ideasOnly.length? "Aún sin apoyos" : "Aún sin ideas"),
-      sub: `${ipp} apoyos por persona · ${targets.length||s.idea_top||3} retos`})}
-  </div>`;
-
-  /* «X de N listos»: quiénes ya dieron por terminada la actividad en curso (desde su celular) */
+  const lastCard=A.cards.length? Math.max(...A.cards.map(c=>+new Date(c.created_at)||0)) : 0;
+  const ago = t => { if(!t) return ""; const m=Math.round((Date.now()-t)/60000); return m<1? "hace un momento" : m<60? `hace ${m} min` : `hace ${Math.round(m/60)} h`; };
+  const stat=(v,l,of)=>`<div class="fx-st"><b>${v}${of!=null?`<small>de ${of}</small>`:""}</b><span>${l}</span></div>`;
+  const statT=(v,l)=>`<div class="fx-st"><b class="tx" title="${esc(v)}">${esc(v)}</b><span>${l}</span></div>`;
+  const FX={
+    lobby:{ic:"users", t: nP? "La sala se está llenando" : "Esperando a la colmena", d:"Proyecta el QR en grande. Cada persona entra desde su celular con su nombre, área, rol y etapas; en cuanto entra aparece aquí.",
+      st: [stat(nP,"en la sala"), stat(recent,"entraron en 5 min"), stat(areaN.length,"áreas"), nSt? stat(new Set(A.participants.flatMap(p=>p.etapas||[])).size,"etapas cubiertas",nSt):""]},
+    checkin:{ic:"cloudsun", t:"Check-in: cómo llega el equipo", d:"Cada quien elige su ánimo y escribe qué espera del taller. Úsalo para abrir la sesión y ajustar el ritmo.",
+      st: [stat(checkins,"check-ins",nP), checkins? statT(topMood.t,"ánimo que predomina"):"", stat(expects.length,"expectativas")]},
+    pains:{ic:"flame", t:"El equipo publica sus dolores", d:"Una tarjeta por dolor: en qué etapa pasa, en qué actividad, con qué herramienta y cuánto duele. Las tarjetas nuevas se iluminan al llegar.",
+      st: [stat(A.cards.length,"tarjetas"), stat(hiTotal,"duelen mucho o más"), stat(stWith,"etapas con dolores",nSt||undefined), stat(sevAvg||"—","dolor promedio de 5"), lastCard? stat(ago(lastCard),"última tarjeta"):""]},
+    votes:{ic:"target", t:`Votación: ${vpp} votos por persona`, d:`Cada quien reparte sus ${vpp} votos entre los dolores del muro. Los ${s.idea_top||3} más votados se vuelven los retos de la fase de ideas.`,
+      st: [stat(votesUsed,"votos",votesMax), stat(voters,"personas votaron",nP), targets.length? statT(targets[0].texto, `va adelante · ${targets[0].pts} votos`):""]},
+    quickwins:{ic:"clipboard", t:"Validación de la propuesta", d:`El equipo califica desde su celular${qwList.length?` ${qwList.length} quick wins`:""}${gateList.length?`, ${gateList.length} reglas del nuevo flujo`:""}${timeList.length?` y los tiempos de ${timeList.length} etapas`:""}. También puede proponer quick wins nuevos.`,
+      st: [stat(qwRaters,"personas calificaron",nP), stat(A.qwRatings.length,"calificaciones"), stat(props.length,"propuestas nuevas")]},
+    ideas:{ic:"bulb", t:`Ideas para los ${targets.length||s.idea_top||3} retos`, d:`Cada quien propone ideas para cada reto y apoya las de otros con ${ipp} apoyos. La idea con más apoyo de cada reto se resalta.`,
+      st: [stat(ideasOnly.length,"ideas"), stat(A.ideaVotes.length,"apoyos",supMax), stat(targets.length,"retos")]}
+  };
   const ACT_T={checkin:"Check-in",pains:"Dolores",votes:"Votación",quickwins:"Validación",ideas:"Ideas"};
   const listos=ACT_T[ph]? A.participants.filter(p=>(p.done_phases||[]).includes(ph)).length : null;
-  const ready = ACT_T[ph] ? `<div class="ready${nP&&listos===nP?" all":""}" data-tip="Cada quien marca «terminé» en su celular. Cuando la mayoría esté lista, abre la siguiente actividad.">
-      <span class="ready-t"><b>${listos}</b> de ${nP} listos con ${ACT_T[ph]}</span><i class="ready-bar"><span style="width:${pctOf(listos,nP)}%"></span></i>${nP&&listos===nP?`<span class="ready-ok">Todos listos: abre la siguiente</span>`:""}</div>` : "";
+  const allDone=!!(ACT_T[ph]&&nP&&listos===nP);
+  const nextPh = PHASES[phaseIdx+1];
+  const fx=FX[ph];
+  const focus = fx? `<section class="fx${allDone?" all":""}" aria-label="Fase en curso">
+      <div class="fx-l">${glass(fx.ic,{size:"md",tone:allDone?"green":"blue",tint:true})}<div>
+        <span class="fx-k"><i></i>Fase ${phaseIdx+1} de ${PHASES.length} · ${(PHASES[phaseIdx]||{}).t||""}</span>
+        <h1 class="fx-t">${fx.t}</h1><p class="fx-d">${fx.d}</p></div></div>
+      <div class="fx-r">
+        ${ACT_T[ph]? `<div class="fx-prog" data-tip="Cada quien marca «terminé» en su celular. Cuando la mayoría esté lista, abre la siguiente fase.">
+            <div class="fx-prog-t"><span><b>${listos}</b> de ${nP} listos con ${ACT_T[ph]}</span>${allDone?'<span class="ok">Todos listos</span>':""}</div>
+            <i class="fx-bar"><span style="width:${pctOf(listos,nP)}%"></span></i>
+            ${nP&&nP<=24? `<div class="fx-faces" aria-hidden="true">${A.participants.map(p=>avatar(p.emoji,"xs").replace('class="glass',`class="glass${(p.done_phases||[]).includes(ph)?"":" off"}`)).join("")}</div>`:""}
+          </div>` : (nP? `<div class="fx-prog"><div class="fx-prog-t"><span><b>${nP}</b> en la sala</span></div>${nP<=24?`<div class="fx-faces" aria-hidden="true">${A.participants.map(p=>avatar(p.emoji,"xs")).join("")}</div>`:""}</div>`:"")}
+        ${!A.readonly&&nextPh? `<button class="fx-next${nextPh.id==="closed"?" close":""}" id="fxNext" data-ph="${nextPh.id}">${nextPh.id==="results"?"Ver resultados":nextPh.id==="closed"?"Cerrar taller":"Abrir "+nextPh.t}${icon("arrowright")}</button>`:""}
+      </div>
+      <div class="fx-stats">${fx.st.filter(Boolean).join("")}</div>
+    </section>` : "";
+
+  const ready="";
 
   /* ---------- Resultados / Cierre: titular + cinco secciones numeradas + contexto plegado ---------- */
   const isResults = ph==="results"||ph==="closed";
@@ -3871,7 +4111,13 @@ function renderAdmin(){
             <div class="dleg">${moodN.map(m=>`<div class="dleg-row${m.n?"":" zero"}"><span class="sw" style="background:${TONE[m.tone]}"></span><span class="dl-t">${esc(m.t)}</span><b>${m.n}</b><span class="pct">${checkins>=5?pctOf(m.n,checkins)+"%":""}</span></div>`).join("")}</div></div>
             ${foot(`Predomina: ${esc(topMood.t)} (${topMood.n})`, `${moodN.filter(m=>["saturado","rebasado"].includes(m.v)).reduce((a,m)=>a+m.n,0)} llegaron saturados o rebasados`, topMood.ic)}`}
       </div>` : "";
-  const resultsView = `${hero}
+  const resNav = `<nav class="res-nav" aria-label="Secciones">
+      <a href="#sec-1" data-go="#sec-1"><b>1</b>Dolores</a><a href="#sec-2" data-go="#sec-2"><b>2</b>Ideas</a>${resQW?`<a href="#sec-3" data-go="#sec-3"><b>3</b>Quick wins</a>`:""}${resGates?`<a href="#sec-4" data-go="#sec-4"><b>4</b>Reglas</a>`:""}${resTimes?`<a href="#sec-5" data-go="#sec-5"><b>5</b>Tiempos</a>`:""}
+      <span class="sp"></span>
+      <button class="abtn" id="resPresent">${icon("monitor")}Presentar</button><button class="abtn primary" id="resShare">${icon("share")}Compartir</button>
+    </nav>`;
+  const closedBn = ph==="closed"? `<div class="closed-bn">${glass("flag",{size:"md",tone:"green",tint:true})}<div><b>Taller cerrado${s.closed_at?` · ${new Date(s.closed_at).toLocaleDateString("es-MX",{day:"numeric",month:"long"})}`:""}</b><span>Los celulares muestran el cierre y ya nadie puede enviar respuestas. Todo quedó guardado: compártelo en Excel, CSV o PDF.</span></div></div>` : "";
+  const resultsView = `${closedBn}${resNav}${hero}
       ${resRank}
       ${resIdeas}
       ${resQW||resGates? `<div class="duo2">${resQW}${resGates}</div>` : ""}
@@ -3880,11 +4126,25 @@ function renderAdmin(){
         <div class="ctx-body">${ctxMood||panelStages? `<div class="duo">${ctxMood}${panelStages}</div>` : ""}${panelProps}${panelWall}</div>
       </details>`;
 
+  /* Validación: una lista a la vez, en pestañas */
+  const VT=[qwList.length?{k:"qw",t:"Quick wins",n:qwList.length,ic:"bolt",h:panelQW,help:`El equipo dice cuánto ayudaría cada quick win: <b>mucho, algo o poco</b>. El número a la derecha es el índice 0–100 (mucho = 100, algo = 50, poco = 0; «no aplica» no cuenta). Aparece con 3 o más personas.`}:null,
+    gateList.length?{k:"gate",t:"Reglas",n:gateList.length,ic:"check",h:panelGates,help:`Reglas del nuevo flujo: la barra crece a la <b>derecha si ayuda</b> y a la <b>izquierda si estorba</b>; el número del centro es «me da igual». Índice 0–100: ayuda = 100, me da igual = 50, estorba = 0.`}:null,
+    timeList.length?{k:"time",t:"Tiempos",n:timeList.length,ic:"target",h:panelTimes,help:`Cuánto tarda hoy cada etapa según quienes la viven. Cada celda muestra la respuesta más común; <b>más oscuro = más tiempo</b>. «Dividido» quiere decir que no hubo mayoría.`}:null,
+    {k:"props",t:"Propuestas",n:props.length,ic:"sparkle",h:panelProps,help:`Quick wins que el equipo propone desde su celular, además de la lista. Se guardan con el resto de resultados y en el Excel.`}].filter(Boolean);
+  if(!VT.some(v=>v.k===A.vtab)) A.vtab=VT[0].k;
+  const vcur=VT.find(v=>v.k===A.vtab);
+  const validation = `<div class="panel">
+      <div class="vtabs" role="tablist" aria-label="Listas a validar">${VT.map(v=>`<button class="vtab${v.k===A.vtab?" on":""}" role="tab" aria-selected="${v.k===A.vtab}" data-tab="${v.k}">${icon(v.ic)}${v.t}<b>${v.n}</b></button>`).join("")}</div>
+      <div class="vhelp">${icon("bulb")}<span>${vcur.help}</span></div>
+      ${vcur.h.replace(/^\s*<div class="panel"[^>]*>/,"").replace(/<\/div>\s*$/,"")}
+    </div>`;
+
   let panels="";
-  if(ph==="lobby"||ph==="checkin") panels= panelMood ? `<div class="duo">${panelMood}${panelParticipants}</div>` : panelParticipants;
+  if(ph==="lobby") panels=`<div class="g2 lobby">${panelJoin}<div class="duo2">${panelPeople}${panelMix}</div></div>`;
+  else if(ph==="checkin") panels=`<div class="g3">${panelMood}${panelExpect}${panelMissing}</div><details class="ctx" data-k="people"><summary><span class="ctx-t">Participantes</span><span class="ctx-s">${nP} en la sala · rol, área y etapas</span></summary><div class="ctx-body">${panelPeople}</div></details>`;
   else if(ph==="pains") panels=panelStages+panelWall;
-  else if(ph==="votes") panels=panelRank+panelStages+panelWall;
-  else if(ph==="quickwins") panels=panelQW+panelGates+panelTimes+panelProps+panelRank;
+  else if(ph==="votes") panels=`<div class="g2 side">${panelRank}${panelVoters}</div><details class="ctx" data-k="wall"><summary><span class="ctx-t">Muro de dolores</span><span class="ctx-s">${A.cards.length} tarjeta${A.cards.length===1?"":"s"} con sus votos, por etapa</span></summary><div class="ctx-body">${panelStages}${panelWall}</div></details>`;
+  else if(ph==="quickwins") panels=validation;
   else if(ph==="ideas") panels=panelIdeas;
   else panels=resultsView;
   if(A.project && !isResults){ A.project=false; exitFull(); }
@@ -3902,7 +4162,6 @@ function renderAdmin(){
   }
 
   const PH_ICON={lobby:"users",checkin:"cloudsun",pains:"flame",votes:"target",quickwins:"clipboard",ideas:"bulb",results:"chart",closed:"flag"};
-  const nextPh = PHASES[phaseIdx+1];
   $("#app").innerHTML = `<div class="a-shell">
     <header class="a-top">
       <div class="at-l">
@@ -3917,7 +4176,7 @@ function renderAdmin(){
         <span class="at-div" aria-hidden="true"></span>
         ${A.readonly?"":`<button class="ib lbl primary" id="btnQR">${icon("qr")}<span>QR para entrar</span></button>`}
         ${bellHTML("ib")}
-        <button class="ib${A.pop?" on":""}${ACT_T[ph]&&nP&&listos===nP?" all":""}" id="btnMore" aria-haspopup="menu" aria-expanded="${!!A.pop}" aria-label="Más opciones: compartir, autores, talleres" data-tip="Compartir, autores y más">${icon("more")}</button>
+        <button class="ib${A.pop?" on":""}${allDone?" all":""}" id="btnMore" aria-haspopup="menu" aria-expanded="${!!A.pop}" aria-label="Más opciones: compartir, autores, talleres" data-tip="Compartir, autores y más">${icon("more")}</button>
       </div>
     </header>
     <nav class="stepper" aria-label="Fases del taller">
@@ -3926,11 +4185,10 @@ function renderAdmin(){
           <span class="st-ic">${icon(st==="done"?"check":PH_ICON[p.id])}</span><span class="st-tx"><small>${i+1}</small>${p.t}</span></button></li>`; }).join("")}</ol>
       <div class="st-side">
         <span class="st-now">Fase ${phaseIdx+1} de ${PHASES.length} · <b>${(PHASES[phaseIdx]||{}).t||""}</b></span>
-        ${ready}
       </div>
     </nav>
     <div class="a-main${isResults?" results":""}">
-      ${isResults?"":kpis}
+      ${isResults?"":focus}
       ${panels}
     </div>
   </div>`;
@@ -3953,6 +4211,12 @@ function renderAdmin(){
   $$("details[data-k]").forEach(d=>{ d.open=A.open.has(d.dataset.k); d.addEventListener("toggle",()=>{ if(d.open) A.open.add(d.dataset.k); else A.open.delete(d.dataset.k); }); });
   $$("[data-go]").forEach(a=>a.onclick=e=>{ e.preventDefault(); const t=$(a.dataset.go); if(t) t.scrollIntoView({behavior:"smooth",block:"start"}); });
   if($("#btnQR")) $("#btnQR").onclick=showQR;
+  if($("#joinBig")) $("#joinBig").onclick=showQR;
+  if($("#joinCopy")) $("#joinCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(participantURL()); toast("Liga copiada"); }catch(e){ toast(participantURL()); } };
+  const fxn=$("#fxNext"); if(fxn) fxn.onclick=()=>goPhase(fxn.dataset.ph);
+  $$(".vtab").forEach(b=>b.onclick=()=>{ A.vtab=b.dataset.tab; renderAdmin(); });
+  if($("#resShare")) $("#resShare").onclick=e=>{ e.stopPropagation(); openPop("share"); };
+  if($("#resPresent")) $("#resPresent").onclick=()=>startPresentation();
   $("#btnMore").onclick=e=>{ e.stopPropagation(); A.pop==="more" ? closePop() : openPop("more"); };
   wireBell();
   if(A.pop) placePop();
@@ -4068,6 +4332,7 @@ function hexIco(){ return '<i class="hx" aria-hidden="true"></i>'; }
 /* «3 Revisar información» → «Etapa 3»; «Transversal (…)» → «Transversal» */
 function stageTag(t){ const n=shortStage(t); return /^\d+$/.test(n) ? "Etapa "+n : String(t||"").split(/[ (/]/)[0]; }
 /* Etiqueta de eje: el número del paso, o la primera palabra */
+function stageB(t){ const n=shortStage(t); return /^\d+$/.test(n) ? n : String(t||"·").trim().charAt(0).toUpperCase(); }
 function stageX(t){ const n=shortStage(t); return /^\d+$/.test(n) ? n : String(t||"").split(/[ (/]/)[0]; }
 
 /* Dona con el total al centro; cada gajo lleva su tooltip */
@@ -4210,6 +4475,7 @@ function renderRetos(targets, ideasOnly, iTot, who, fresh){
     return `<section class="reto">
       <div class="reto-h"><span class="reto-k">Reto ${i+1}</span><span class="reto-m" title="${esc(c.etapa)}">${esc(stageTag(c.etapa))} · ${c.pts} voto${c.pts===1?"":"s"}</span></div>
       <h3 class="reto-t">${esc(c.texto)}</h3>
+      <p class="reto-c">${list.length? `${list.length} idea${list.length===1?"":"s"} · ${list.reduce((a,x)=>a+x.v,0)} apoyo${list.reduce((a,x)=>a+x.v,0)===1?"":"s"}` : "Sin ideas todavía"}</p>
       <ul class="ideas">${list.map(x=>`<li class="idea${x.id===lead?" lead":""}${fresh(x.id)}">
           <div class="idea-t">${esc(x.texto)}${who(x.participant_id)}</div>
           ${anySupport? (x.v>20? `<div class="idea-b" data-tip="${x.v} apoyos"><span class="idea-rail"><i style="width:${(x.v/max*100).toFixed(1)}%"></i></span><b>${x.v}</b></div>`
