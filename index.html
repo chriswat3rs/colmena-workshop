@@ -1636,6 +1636,34 @@ kbd{font-family:var(--sans);font-size:11px;font-weight:700;padding:1px 5px;borde
 .me-bio .abtn{display:inline-flex;align-items:center;gap:8px}
 .inst-ic.bio{display:grid;place-items:center;background:var(--primary);color:#fff}
 .inst-ic.bio svg{width:28px;height:28px}
+/* v1.11.2 · Encabezado en celular: íconos de marca + campana + avatar en una fila; perfil como panel lateral */
+.me-sh,.me-out{display:none}
+@media (max-width:720px){
+  .ah-top{flex-wrap:wrap;gap:10px 12px;padding-top:calc(10px + env(safe-area-inset-top,0px))}
+  .ah-top .brand-txt{display:none}
+  .ah-top .brand-row{order:1}
+  .ah-top .ah-user{order:2;margin-left:auto;gap:6px}
+  .ah-top .ah-tabs{order:3;width:100%}
+  .ah-top .ah-tab{flex:1;justify-content:center}
+  #outBtn{display:none}
+  .me-btn{padding:2px;border:none}
+  .me-btn .av-i.md,.me-btn img.av-i{width:38px;height:38px}
+}
+.me-back{position:fixed;inset:0;z-index:119;background:rgba(1,19,59,.38);opacity:0;transition:opacity .25s ease}
+.me-back.in{opacity:1}
+html.me-lock,html.me-lock body{overflow:hidden}
+.me-pop.sheet{position:fixed;top:0;right:0;bottom:0;left:auto;width:min(380px,88vw);max-height:none;border-radius:22px 0 0 22px;border:none;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 20px calc(20px + env(safe-area-inset-bottom,0px));gap:16px;transform:translateX(104%);transition:transform .28s cubic-bezier(.2,.8,.2,1);box-shadow:-12px 0 40px rgba(1,19,59,.22)}
+.me-pop.sheet.in{transform:none}
+.me-pop.sheet{display:block}
+.me-pop.sheet>*{margin:0 0 16px}
+.me-pop.sheet>.sr{margin:0}
+.me-pop.sheet .me-sh{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.me-pop.sheet .me-sh b{font-size:17px}
+.me-pop.sheet .me-who b,.me-pop.sheet .me-who span:not(.role-tag){max-width:100%;white-space:normal;word-break:break-word}
+.me-pop.sheet .me-out{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:8px 0 0;padding:13px;border-color:var(--line);color:var(--danger);font-weight:700}
+.me-pop.sheet .me-out svg{width:16px;height:16px}
+@media (prefers-reduced-motion:reduce){ .me-pop.sheet,.me-back{transition:none} }
 </style>
 </head>
 <body>
@@ -1948,7 +1976,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260926105910";
+const APP_BUILD="20260926111727";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -3293,24 +3321,26 @@ function ahTop(){
     .map(([k,t,ic,sh])=>`<button class="ah-tab${cur===k?" on":""}" data-view="${k}"${cur===k?' aria-current="page"':""} aria-label="${t}">${icon(ic)}<span class="t-l">${t}</span><span class="t-s" aria-hidden="true">${sh}</span></button>`).join("")}</nav>`;
   return `<header class="ah-top">
       <div class="brand-row">${brandLockup("xs")}
-        <div><div class="brand-name">Colmena · ${isAdminRole()?"Admin":"Facilitador"}</div><div class="brand-by">by ${BRAND_ORG}</div></div></div>
+        <div class="brand-txt"><div class="brand-name">Colmena · ${isAdminRole()?"Admin":"Facilitador"}</div><div class="brand-by">by ${BRAND_ORG}</div></div></div>
       ${tabs}
       <div class="ah-user">${bellHTML()}<button class="me-btn" id="meBtn" aria-haspopup="dialog" aria-expanded="false" title="Tu perfil">${avatarHTML(ME,"md")}<span class="me-t"><span class="ah-mail">${esc(ME.name||ME.email)}</span><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span></span></button><button class="abtn" id="outBtn">Cerrar sesión</button></div>
     </header>`;
 }
+async function signOutAll(){ if(NT.unsub) NT.unsub(); if(NT.poll) clearInterval(NT.poll); NT.unsub=NT.poll=NT.uid=null; NT.items=[]; NT.loaded=false; W.d=null; await Store.signOut(); AH.view="home"; adminBoot(); }
 function wireTop(){
-  $("#outBtn").onclick=async()=>{ if(NT.unsub) NT.unsub(); if(NT.poll) clearInterval(NT.poll); NT.unsub=NT.poll=NT.uid=null; NT.items=[]; NT.loaded=false; W.d=null; await Store.signOut(); AH.view="home"; adminBoot(); };
+  $("#outBtn").onclick=signOutAll;
   $("#meBtn").onclick=e=>{ e.stopPropagation(); $(".me-pop") ? closeMe() : openMe(); };
   wireBell();
   $$(".ah-tab").forEach(b=>b.onclick=()=>{ if(AH.view===b.dataset.view) return; AH.view=b.dataset.view; adminHome(); window.scrollTo(0,0); });
 }
 /* ---------- v1.5 · Tu perfil: foto ---------- */
-function closeMe(){ const p=$(".me-pop"); if(p) p.remove(); const b=$("#meBtn"); if(b) b.setAttribute("aria-expanded","false"); document.removeEventListener("click",meOutside); }
+function closeMe(){ const p=$(".me-pop"); if(p) p.remove(); const bk=$(".me-back"); if(bk) bk.remove(); document.documentElement.classList.remove("me-lock"); const b=$("#meBtn"); if(b) b.setAttribute("aria-expanded","false"); document.removeEventListener("click",meOutside); }
 function meOutside(e){ const p=$(".me-pop"); if(p && !e.composedPath().includes(p)) closeMe(); }
 function openMe(){
   closeMe(); closeNotifs();
   const pop=document.createElement("div"); pop.className="me-pop"; pop.setAttribute("role","dialog"); pop.setAttribute("aria-label","Tu perfil");
   const draw=(msg,busy)=>{ pop.innerHTML=`
+    <div class="me-sh"><b>Tu perfil</b><button class="ib sm" id="meClose" aria-label="Cerrar">${icon("close")}</button></div>
     <div class="me-hero">
       <label class="me-ph${busy?" busy":""}" for="meFile" title="Cambiar foto">${avatarHTML(ME,"xl")}<span class="me-cam" aria-hidden="true">${icon("camera")}</span></label>
       <input type="file" id="meFile" accept="image/*" class="sr">
@@ -3330,7 +3360,10 @@ function openMe(){
     ${Store.passkeySupported&&Store.passkeySupported()?`<div class="me-bio" id="meBio"><b>Entrar con ${bioName()}</b><p class="hint">Cargando…</p></div>`:""}
     <div class="me-prefs" id="mePrefs"><b>Correos de avisos</b><p class="hint">Cargando…</p></div>
     ${APP.standalone()? "" : `<div class="me-app"><b>App en tu celular</b>${APP.prompt?`<button class="abtn" id="meInstall">${icon("download")}Instalar Colmena</button>`:`<p class="hint">${APP.ios()?"En Safari: Compartir → Agregar a inicio.":APP.mobile()?"En Chrome: menú ⋮ → Instalar app.":"Abre Colmena en tu celular y agrégala a tu pantalla de inicio."}</p>`}</div>`}`;
+    pop.insertAdjacentHTML("beforeend", `<button class="abtn me-out" id="meOut" type="button">${icon("arrowleft")}Cerrar sesión</button>`);
     drawPrefs(); drawBio();
+    pop.querySelector("#meClose").onclick=closeMe;
+    pop.querySelector("#meOut").onclick=()=>{ closeMe(); signOutAll(); };
     const mi=pop.querySelector("#meInstall"); if(mi) mi.onclick=async()=>{ const ok=await APP.install(); if(ok) closeMe(); };
     const f=pop.querySelector("#meFile");
     f.onchange=async()=>{ const file=f.files&&f.files[0]; if(!file) return; draw(null,true);
@@ -3349,9 +3382,13 @@ function openMe(){
     if(del) del.onclick=async()=>{ del.disabled=true; try{ await Store.setMyAvatar(""); ME.avatar=""; syncMe(); draw({t:"Foto quitada"}); }catch(e){ draw({t:friendlyAuthError(e),err:true}); } };
   };
   draw();
+  /* v1.11.2 · En celular el perfil es un panel lateral que entra desde la derecha */
+  const sheet = window.innerWidth<=720;
+  if(sheet){ pop.classList.add("sheet"); const bk=document.createElement("div"); bk.className="me-back"; bk.onclick=closeMe; document.body.appendChild(bk); document.documentElement.classList.add("me-lock"); }
   document.body.appendChild(pop); drawPrefs(); drawBio();
   const b=$("#meBtn"), r=b.getBoundingClientRect();
-  const w=pop.offsetWidth; pop.style.top=(r.bottom+8+window.scrollY)+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px";
+  if(!sheet){ const w=pop.offsetWidth; pop.style.top=(r.bottom+8+window.scrollY)+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px"; }
+  else requestAnimationFrame(()=>{ pop.classList.add("in"); const bk=$(".me-back"); if(bk) bk.classList.add("in"); });
   b.setAttribute("aria-expanded","true");
   setTimeout(()=>document.addEventListener("click",meOutside),0);
 }
