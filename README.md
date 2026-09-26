@@ -153,6 +153,15 @@ Colmena se puede **instalar como app** (PWA) sin pasar por App Store ni Google P
 - Sin internet, la app abre la última versión guardada y muestra el aviso «Sin conexión». Los datos siempre se leen en vivo de Supabase (nunca se guardan en el teléfono).
 - Archivos en la raíz del repo: `manifest.json` (nombre, colores, íconos y accesos directos *Crear taller* / *Mis talleres*), `sw.js` (se genera con `build.py`) y la carpeta `icons/`.
 
+### 12. Entrar con Face ID / Touch ID / huella (v1.11)
+
+En vez de contraseña + código de 6 dígitos, cada facilitador puede entrar **de un toque** con Face ID (iPhone), Touch ID (Mac) o su huella (Android). Usa las *passkeys* de Supabase (en beta desde mayo de 2026).
+
+- **Activar (una vez por dispositivo):** entra con correo, contraseña y código → en Inicio aparece **Entra con Face ID la próxima vez → Activar** (o en tu perfil → *Entrar con Face ID*).
+- **Entrar:** en la pantalla de inicio de sesión, **Entrar con Face ID**.
+- **Seguridad:** Face ID cuenta como acceso completo solo con llaves que aprobaste estando con tu código. Si apareciera una llave que no aprobaste, Face ID deja de funcionar y tu perfil te avisa (*Es mía: aprobar* / *No la reconozco: apagar*). Si pierdes el teléfono: entra con tu código desde otro equipo → perfil → **Apagar**.
+- Instalación: corre `migracion-v111-faceid.sql` y en Supabase → **Authentication → Passkeys** activa passkeys con *Relying Party ID* = `chriswat3rs.github.io`, nombre `Colmena` y origen `https://chriswat3rs.github.io`.
+
 ## Cómo se usa en la sala
 
 1. En tu laptop abre `#admin`, entra y crea un taller con la plantilla **Lockton · Actua** o la genérica.

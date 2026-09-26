@@ -1627,6 +1627,15 @@ kbd{font-family:var(--sans);font-size:11px;font-weight:700;padding:1px 5px;borde
 .offline-bn{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:90;display:flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:#01133B;color:#fff;font-size:13px;font-weight:600;box-shadow:0 6px 20px rgba(1,19,59,.25)}
 .offline-bn i{width:8px;height:8px;border-radius:50%;background:#F0962E}
 @media (display-mode: standalone){ body{padding-top:env(safe-area-inset-top)} .banner-demo{display:none} }
+/* v1.11 · Face ID */
+.bio-go{width:100%;padding:13px;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:15px}
+.or-sep{display:flex;align-items:center;gap:12px;margin:16px 0 12px;font-size:12.5px;font-weight:600;color:var(--ink-3)}
+.or-sep::before,.or-sep::after{content:"";flex:1;height:1px;background:var(--line)}
+.me-bio{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.me-bio b{font-size:13px}.me-bio p{margin:0}
+.me-bio .abtn{display:inline-flex;align-items:center;gap:8px}
+.inst-ic.bio{display:grid;place-items:center;background:var(--primary);color:#fff}
+.inst-ic.bio svg{width:28px;height:28px}
 </style>
 </head>
 <body>
@@ -1939,7 +1948,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260926085804";
+const APP_BUILD="20260926104017";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -1987,7 +1996,7 @@ const SupaStore = {
   client:null,
   init(){
     this.client = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY, {
-      auth:{ persistSession:true, autoRefreshToken:true, detectSessionInUrl:false, storageKey:"colmena-auth" }
+      auth:{ persistSession:true, autoRefreshToken:true, detectSessionInUrl:false, storageKey:"colmena-auth", experimental:{ passkey:true } }
     });
   },
   async currentUser(){ const {data} = await this.client.auth.getSession(); return data.session ? data.session.user : null; },
@@ -2025,7 +2034,34 @@ const SupaStore = {
       if(!m.active) return {state:"forbidden", email:u.email, reason:"Tu acceso al panel fue desactivado. Si es un error, habla con tu admin."};
       return {state:"ready", email:u.email, uid:u.id, role:m.role, name:m.name||"", title:m.title||"", avatar:m.avatar||"", inviteError};
     }
-    return {state: aal.nextLevel === "aal2" ? "verify" : "enroll", email:u.email};
+    /* v1.11 · entró con Face ID / huella: cuenta como acceso completo solo si la llave está aprobada */
+    const viaPasskey = (aal.currentAuthenticationMethods||[]).some(m=>m && m.method==="passkey");
+    if(viaPasskey){
+      const {data:me} = await this.client.rpc("ws_me");
+      const m = me && me[0];
+      if(m && m.active) return {state:"ready", email:u.email, uid:u.id, role:m.role, name:m.name||"", title:m.title||"", avatar:m.avatar||"", passkey:true};
+    }
+    return {state: aal.nextLevel === "aal2" ? "verify" : "enroll", email:u.email, passkeyFail:viaPasskey};
+  },
+  /* v1.11 · Face ID / huella (passkeys de Supabase, beta) */
+  passkeySupported(){ return !!(window.PublicKeyCredential && navigator.credentials && location.protocol==="https:"); },
+  async signInWithPasskey(){
+    const {error} = await this.client.auth.signInWithPasskey();
+    if(error) throw error;
+  },
+  async sessionIsCode(){ const {data} = await this.client.auth.mfa.getAuthenticatorAssuranceLevel(); return data && data.currentLevel==="aal2"; },
+  async enableFaceId(){
+    const {error} = await this.client.auth.registerPasskey();
+    if(error) throw error;
+    const {data:n, error:e2} = await this.client.rpc("ws_trust_passkeys");
+    if(e2) throw e2;
+    return n;
+  },
+  async trustPasskeys(){ const {data,error} = await this.client.rpc("ws_trust_passkeys"); if(error) throw error; return data; },
+  async passkeyStatus(){ const {data,error} = await this.client.rpc("ws_passkey_status"); if(error) throw error; return data||{trusted:0,untrusted:0}; },
+  async disableFaceId(){
+    const {error} = await this.client.rpc("ws_untrust_passkeys"); if(error) throw error;
+    try{ const {data} = await this.client.auth._listPasskeys(); for(const k of (data||[])) await this.client.auth._deletePasskey({passkeyId:k.id}); }catch(e){}
   },
   /* v1.5 · el invitado crea su cuenta (requiere «Confirm email» apagado en Supabase) */
   async signUp(email,password){
@@ -2215,6 +2251,13 @@ const DemoStore = {
   async revokeInvite(id){ const db=this.db(); (db.invites||[]).forEach(i=>{ if(i.id===id) i.revoked_at=now(); }); this.save(db); },
   async setStaff(userId,patch){ const db=this.db(); const m=(db.staff||[]).find(x=>x.user_id===userId); if(!m) throw new Error("Esa cuenta no existe"); if(patch.active!=null) m.active=patch.active; if(patch.role) m.role=patch.role; this.save(db); },
   async signIn(){}, async signOut(){}, async mfaEnroll(){ return {}; }, async mfaVerify(){},
+  passkeySupported(){ return !!window.PublicKeyCredential; },
+  async signInWithPasskey(){ await new Promise(r=>setTimeout(r,500)); },
+  async sessionIsCode(){ return !this.db().faceIdOn; },
+  async enableFaceId(){ await new Promise(r=>setTimeout(r,600)); const db=this.db(); db.faceIdOn=true; db.faceId=1; this.save(db); return 1; },
+  async trustPasskeys(){ return 1; },
+  async passkeyStatus(){ const db=this.db(); return {trusted:db.faceId||0, untrusted:0, last_used:null}; },
+  async disableFaceId(){ const db=this.db(); db.faceId=0; db.faceIdOn=false; this.save(db); },
   async createSession(s){ const db=this.db(); s={id:uid(),created_at:now(),owner_id:"demo",...s}; db.sessions.push(s); this.save(db); return s; },
   async getMySession(code){ return this.db().sessions.find(s=>s.code===code.toUpperCase())||null; },
   async lookupSession(code){ return this.getMySession(code); },
@@ -3005,9 +3048,9 @@ async function adminBoot(openCode){
   catch(e){ console.error(e); aShell(`<div class="panel"><p class="err">${esc(friendlyAuthError(e))}</p></div>`); return; }
   if(st.state==="login")     return pendingInvite() ? adminSignup() : adminLogin();
   if(st.state==="enroll")    return adminEnroll(st.email);
-  if(st.state==="verify")    return adminVerify(st.email);
+  if(st.state==="verify")    return adminVerify(st.email, st.passkeyFail);
   if(st.state==="forbidden") return adminForbidden(st.email, st.reason);
-  Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"", title:st.title||"", avatar:st.avatar||"" });
+  Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"", title:st.title||"", avatar:st.avatar||"", passkey:!!st.passkey });
   if(isAdminRole()) await loadStaff();
   if(!viewOk(AH.view)) AH.view="home";
   if(st.inviteError) toast(st.inviteError);
@@ -3021,23 +3064,37 @@ async function adminBoot(openCode){
   adminHome();
 }
 
+/* v1.11 · Face ID / Touch ID / huella: nombre según el dispositivo */
+function bioName(){ const ua=navigator.userAgent; return (typeof APP!=="undefined"&&APP.ios())? "Face ID" : /Macintosh/.test(ua)? "Touch ID" : /Android/i.test(ua)? "tu huella" : "Face ID o huella"; }
+const BIO_IC='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M9 9v1M15 9v1M12 9v4h-1M9.5 15.5a3.5 3.5 0 0 0 5 0"/></svg>';
+function passkeyError(e){ const m=String(e&&(e.name||"")+" "+(e.message||"")); 
+  if(/NotAllowed|abort|cancel/i.test(m)) return `Se canceló ${bioName()}. Inténtalo de nuevo o entra con tu correo.`;
+  if(/not found|no credential|passkey.*not|Invalid credential|not registered/i.test(m)) return `Este dispositivo aún no tiene ${bioName()} activado para Colmena. Entra con tu correo y actívalo en tu perfil.`;
+  return friendlyAuthError(e); }
+
 function adminLogin(msg, email){
+  const bio=Store.passkeySupported&&Store.passkeySupported();
   aShell(`<div class="panel">
       <h2>Inicia sesión</h2>
+      ${bio?`<button class="abtn primary bio-go" id="lg-bio" type="button">${BIO_IC}Entrar con ${bioName()}</button>
+      <div class="or-sep"><span>o con tu correo</span></div>`:""}
       <form id="lgForm" autocomplete="on">
         <div class="field"><label for="lg-mail">Correo</label><input id="lg-mail" class="input" type="email" autocomplete="username" value="${esc(email||"")}" required></div>
         <div class="field"><label for="lg-pass">Contraseña</label>
           <div class="pw-wrap"><input id="lg-pass" class="input" type="password" autocomplete="current-password" required>
           <button type="button" class="pw-eye" id="lg-eye" aria-pressed="false">Mostrar</button></div></div>
         ${msg?`<p class="err">${esc(msg)}</p>`:""}
-        <button class="abtn primary" id="lg-go" type="submit" style="width:100%;padding:13px">Continuar</button>
+        <button class="abtn ${bio?"":"primary"}" id="lg-go" type="submit" style="width:100%;padding:13px">Continuar</button>
       </form>
-      <p class="hint" style="margin-top:12px">Después te pediremos el código de tu app autenticadora.</p>
+      <p class="hint" style="margin-top:12px">Con correo te pediremos también el código de tu app autenticadora.${bio?` Con ${bioName()} entras de un toque (actívalo una vez en tu perfil).`:""}</p>
       ${pendingInvite()
         ? `<div class="inv-note">Tienes una invitación pendiente: se activa al entrar con el correo al que llegó. <button type="button" class="linkbtn" id="lg-new">Crear cuenta nueva</button></div>`
         : `<p class="hint" style="margin-top:6px">¿Aún no tienes cuenta? Pide una invitación a tu admin.</p>`}
     </div>`);
   const nw=$("#lg-new"); if(nw) nw.onclick=()=>adminSignup();
+  const lb=$("#lg-bio"); if(lb) lb.onclick=async()=>{ lb.disabled=true;
+    try{ await Store.signInWithPasskey(); adminBoot(currentCode()); }
+    catch(err){ adminLogin(passkeyError(err), $("#lg-mail")&&$("#lg-mail").value.trim()); } };
   if(email) $("#lg-pass").focus();
   $("#lg-eye").onclick=()=>{ const i=$("#lg-pass"), show=i.type==="password"; i.type=show?"text":"password"; $("#lg-eye").textContent=show?"Ocultar":"Mostrar"; $("#lg-eye").setAttribute("aria-pressed",show); };
   $("#lgForm").onsubmit = async e=>{
@@ -3076,9 +3133,10 @@ async function adminEnroll(email){
   wireOtp(f.factorId);
 }
 
-function adminVerify(email){
+function adminVerify(email, passkeyFail){
   aShell(`<div class="panel">
       <h2>Verificación en dos pasos</h2>
+      ${passkeyFail?`<p class="err" style="margin-bottom:12px">Entraste con ${bioName()}, pero esa llave aún no está aprobada en tu cuenta. Escribe tu código una vez y revísala en tu perfil.</p>`:""}
       <p class="hint" style="margin-bottom:14px">Escribe el código de 6 dígitos de tu app autenticadora${email?` para ${esc(email)}`:""}.</p>
       <div class="field"><label for="otp">Código</label><input id="otp" class="input otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6"></div>
       <p class="err" id="otpErr" hidden></p>
@@ -3200,9 +3258,10 @@ function openMe(){
       ${ME.avatar?`<button class="abtn" id="meDel">Quitar</button>`:""}
     </div>
     ${msg?`<p class="${msg.err?"err":"hint"}" role="status">${esc(msg.t)}</p>`:`<p class="hint">JPG o PNG. Se recorta en cuadrado y se guarda ligera. La ve tu equipo.</p>`}
+    ${Store.passkeySupported&&Store.passkeySupported()?`<div class="me-bio" id="meBio"><b>Entrar con ${bioName()}</b><p class="hint">Cargando…</p></div>`:""}
     <div class="me-prefs" id="mePrefs"><b>Correos de avisos</b><p class="hint">Cargando…</p></div>
     ${APP.standalone()? "" : `<div class="me-app"><b>App en tu celular</b>${APP.prompt?`<button class="abtn" id="meInstall">${icon("download")}Instalar Colmena</button>`:`<p class="hint">${APP.ios()?"En Safari: Compartir → Agregar a inicio.":APP.mobile()?"En Chrome: menú ⋮ → Instalar app.":"Abre Colmena en tu celular y agrégala a tu pantalla de inicio."}</p>`}</div>`}`;
-    drawPrefs();
+    drawPrefs(); drawBio();
     const mi=pop.querySelector("#meInstall"); if(mi) mi.onclick=async()=>{ const ok=await APP.install(); if(ok) closeMe(); };
     const f=pop.querySelector("#meFile");
     f.onchange=async()=>{ const file=f.files&&f.files[0]; if(!file) return; draw(null,true);
@@ -3221,7 +3280,7 @@ function openMe(){
     if(del) del.onclick=async()=>{ del.disabled=true; try{ await Store.setMyAvatar(""); ME.avatar=""; syncMe(); draw({t:"Foto quitada"}); }catch(e){ draw({t:friendlyAuthError(e),err:true}); } };
   };
   draw();
-  document.body.appendChild(pop); drawPrefs();
+  document.body.appendChild(pop); drawPrefs(); drawBio();
   const b=$("#meBtn"), r=b.getBoundingClientRect();
   const w=pop.offsetWidth; pop.style.top=(r.bottom+8+window.scrollY)+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px";
   b.setAttribute("aria-expanded","true");
@@ -3353,6 +3412,43 @@ async function adminHome(){
 }
 
 /* ---------- Inicio ---------- */
+/* v1.11 · Perfil: activar / revisar / desactivar Face ID */
+async function drawBio(){
+  const box=$("#meBio"); if(!box) return; const B=bioName();
+  let st, code=false;
+  try{ [st, code]=await Promise.all([Store.passkeyStatus(), Store.sessionIsCode()]); }catch(e){ box.innerHTML=`<b>Entrar con ${B}</b><p class="err">${esc(friendlyAuthError(e))}</p>`; return; }
+  const needCode=`<p class="hint">Para cambiar esto entra con tu correo y código (no con ${B}).</p>`;
+  let html=`<b>Entrar con ${B}</b>`;
+  if(st.untrusted>0){
+    html+=`<p class="err">Hay ${st.untrusted===1?"una llave":st.untrusted+" llaves"} de acceso que no aprobaste. Mientras tanto, ${B} no te deja entrar.</p>`+
+      (code?`<div class="me-acts"><button class="abtn primary" id="bioTrust">Es mía: aprobar</button><button class="abtn danger" id="bioOff">No la reconozco: apagar</button></div>`:needCode);
+  } else if(st.trusted>0){
+    html+=`<p class="hint">Activo en ${st.trusted===1?"1 dispositivo":st.trusted+" dispositivos"}${st.last_used?` · último uso ${esc(new Date(st.last_used).toLocaleDateString("es-MX",{day:"numeric",month:"short"}))}`:""}. Entras de un toque, sin contraseña ni código.</p>`+
+      (code?`<div class="me-acts"><button class="abtn" id="bioOn">${BIO_IC}Agregar este dispositivo</button><button class="abtn danger" id="bioOff">Apagar</button></div>`:`<div class="me-acts"><button class="abtn danger" id="bioOff">Apagar en todos</button></div>`);
+  } else {
+    html+=`<p class="hint">Entra de un toque, sin contraseña ni código de 6 dígitos. Se activa una vez por dispositivo.</p>`+
+      (code?`<div class="me-acts"><button class="abtn primary" id="bioOn">${BIO_IC}Activar ${B}</button></div>`:needCode);
+  }
+  box.innerHTML=html;
+  const on=$("#bioOn"), tr=$("#bioTrust"), off=$("#bioOff");
+  if(on) on.onclick=async()=>{ on.disabled=true; try{ await Store.enableFaceId(); toast(`${B} activado: la próxima vez entra con un toque`); const c=$("#faceCard"); if(c) c.remove(); drawBio(); }catch(e){ toast(passkeyError(e)); on.disabled=false; } };
+  if(tr) tr.onclick=async()=>{ tr.disabled=true; try{ await Store.trustPasskeys(); toast("Llave aprobada"); drawBio(); }catch(e){ toast(friendlyAuthError(e)); tr.disabled=false; } };
+  if(off) off.onclick=async()=>{ if(!(await askDialog({kind:"danger",title:`¿Apagar ${B}?`,text:"Volverás a entrar con tu correo, contraseña y código. Puedes activarlo de nuevo cuando quieras.",ok:"Apagar"}))) return;
+    try{ await Store.disableFaceId(); toast(`${B} apagado`); drawBio(); }catch(e){ toast(friendlyAuthError(e)); } };
+}
+/* v1.11 · Inicio: invitación a activar Face ID (solo si el dispositivo lo permite y aún no lo tienes) */
+async function faceNudge(){
+  if(!(Store.passkeySupported&&Store.passkeySupported()) || ME.passkey || storageGet("colmena_face_off")==="1" || $("#faceCard")) return;
+  let st, code; try{ [st, code]=await Promise.all([Store.passkeyStatus(), Store.sessionIsCode()]); }catch(e){ return; }
+  if(!code || st.trusted>0 || AH.view!=="home" || !$(".hello")) return;
+  const B=bioName();
+  const html=`<section class="inst face" id="faceCard"><span class="inst-ic bio">${BIO_IC}</span><div><b>Entra con ${B} la próxima vez</b><p>Sin contraseña ni código de 6 dígitos: un toque y listo. Se activa una vez en este dispositivo.</p></div>
+    <div class="inst-r"><button class="abtn primary" id="faceGo">${BIO_IC}Activar ${B}</button><button class="ib sm inst-x" id="faceX" aria-label="Ahora no">${icon("close")}</button></div></section>`;
+  $(".hello").insertAdjacentHTML("afterend",html);
+  $("#faceGo").onclick=async()=>{ const b=$("#faceGo"); b.disabled=true; try{ await Store.enableFaceId(); $("#faceCard").remove(); toast(`${B} activado: la próxima vez entra con un toque`); }catch(e){ toast(passkeyError(e)); b.disabled=false; } };
+  $("#faceX").onclick=()=>{ storageSet("colmena_face_off","1"); $("#faceCard").remove(); toast("Puedes activarlo después desde tu perfil"); };
+}
+
 /* v1.10 · Tarjeta «Lleva Colmena en tu celular» (se oculta si ya está instalada o si la cerraste) */
 function installCardHTML(){
   if(APP.standalone() || APP.installed || APP.dismissed()) return "";
@@ -3426,7 +3522,7 @@ async function homeView(){
         </section>`:`<section class="panel wg wg-ok"><span class="nt-ic t-team">${icon("check")}</span><div><b>Todo al día</b><p class="hint">Sin invitaciones por vencer, avisos pendientes ni talleres por depurar.</p></div></section>`}
       </div>
     </div>`;
-  wireInstall();
+  wireInstall(); faceNudge();
   const goCreate=()=>{ AH.view="create"; adminHome(); window.scrollTo(0,0); };
   ["#hCreate","#hCreate2","#qaCreate"].forEach(k=>{ const b=$(k); if(b) b.onclick=goCreate; });
   ["#hInvite","#qaInvite"].forEach(k=>{ const b=$(k); if(b) b.onclick=()=>{ AH.view="team"; adminHome(); window.scrollTo(0,0); }; });
