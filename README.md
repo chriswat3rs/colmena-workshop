@@ -277,7 +277,9 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `migracion-v16-notificaciones.sql` | Instala el centro de notificaciones sobre la v1.5. |
 | `migracion-v17-inicio.sql` | Inicio, perfil editable y datos del dashboard sobre la v1.6. |
 | `supabase/functions/account/index.ts` | v1.12: aceptar invitación sin contraseña, «Entrar sin contraseña» (enlace por correo) y «Reiniciar acceso». |
+| `migracion-v113-borradores.sql` | v1.13: borradores del creador guardados en tu cuenta (tabla ws_drafts, solo los ve su dueño). |
 | `migracion-v112-acceso-ia.sql` | v1.12: invitaciones con estado y reenvío, alta con Face ID, reinicio de acceso, «caso» del taller y límite diario de IA. |
+| `tools/escala.py`, `tools/px2rem.py` | v1.14: el armado duplica los cortes de pantalla para letra Grande / Muy grande; `px2rem` fue la conversión única de px a rem. |
 
 ## v1.12 · Acceso sin contraseñas y creador con IA
 
@@ -297,6 +299,8 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 - **Primera vez en una computadora:** entra con tu teléfono (QR) o con tu correo + código, y en Inicio toca «Activa Touch ID / Windows Hello en esta computadora». Si tu cuenta tiene app autenticadora, Supabase pide el código de 6 dígitos antes de agregar la llave (por seguridad); Colmena lo pide ahí mismo.
 - **Recomendación para cada facilitador:** Face ID/huella en el celular + app autenticadora de respaldo. Así nunca se queda fuera si cambia de equipo.
 
+**Tus talleres en Inicio (v1.13).** Inicio muestra una tabla con todos tus talleres y borradores: filtros **Todos · En curso · Por iniciar · Borradores · Finalizados**, búsqueda por nombre o código y orden por nombre, participantes o fecha. El menú **⋯** de cada fila permite abrir (o continuar el borrador), **Duplicar** (crea un borrador con la misma configuración, sin datos de la sala), copiar el código y **Eliminar** (con confirmación; si el taller está en curso lo advierte). Los borradores del creador se guardan solos en tu cuenta, así que los ves desde cualquier dispositivo. Instalación: correr `migracion-v113-borradores.sql`.
+
 **Pasos para activarla (una vez):**
 1. SQL Editor → correr `migracion-v112-acceso-ia.sql`.
 2. Edge Functions → crear la función `account` con `supabase/functions/account/index.ts` (apaga «Verify JWT with legacy secret»). Usa los mismos secretos de correo que `send-invite`.
@@ -304,3 +308,18 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 4. Publicar `index.html`, `sw.js` en GitHub Pages.
 
 Sin `SUPABASE_URL`, la app corre en **modo demo**: todo funciona en tu navegador y sin cuentas, útil para enseñarla o probar cambios.
+
+## v1.14 · Accesibilidad: tamaño de texto, alto contraste y menos animaciones
+
+**Dónde está.** Facilitador: tu foto (arriba a la derecha) → **Accesibilidad**. Participante: botón **Aa** en la parte de arriba de cada pantalla. Se guarda en ese dispositivo (no en la cuenta), así que cada persona lo ajusta en su celular o compu.
+
+| Ajuste | Qué hace |
+|---|---|
+| Tamaño de texto: Normal / Grande / Muy grande | Todo crece en proporción (100 %, 112.5 %, 125 %): letras, espacios, íconos y botones. |
+| Alto contraste | Textos grises más oscuros, bordes marcados (≥ 3:1), enlaces subrayados y foco más visible. Se activa solo si el sistema lo pide. |
+| Reducir animaciones | Quita movimientos y transiciones. Se activa solo si el sistema lo pide. |
+
+**Por qué rem.** La tipografía, espaciados, íconos, botones y anchos de tarjetas y paneles están en `rem` (1 rem = 16 px con el tamaño normal, así que el diseño se ve idéntico). Bordes, sombras, radios, posiciones y los códigos QR se quedan en px. Los cortes de pantalla (media queries) no entienden de rem, así que al armar `index.html` cada corte se duplica escalado ×1.125 y ×1.25 para Grande y Muy grande: el diseño compacto entra antes y nada se encima. Al «Proyectar» resultados se usa siempre el tamaño normal (la sala manda).
+
+**Cambio de encabezado.** «Cerrar sesión» ya no está en la barra superior: está al final de tu perfil (en celular y en computadora).
+
