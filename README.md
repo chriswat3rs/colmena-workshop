@@ -253,7 +253,7 @@ update ws_admins set role = 'admin', active = true
 where email = 'tu-correo@empresa.com';
 ```
 
-Si perdiste tu celular, reinicia tu segundo factor. Al entrar de nuevo te pedirá activarlo con un QR nuevo:
+Si alguien del equipo perdió su celular, un admin usa **Equipo → Reiniciar acceso** (v1.12): le llega un correo para activar Face ID o su app de nuevo. Si el único admin eres tú y perdiste tu celular, reinicia tu segundo factor con SQL. Al entrar de nuevo te pedirá activarlo con un QR nuevo:
 
 ```sql
 delete from auth.mfa_factors
@@ -276,5 +276,25 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `supabase/functions/suggest-workshop/index.ts` | Función que pide a la IA un borrador de taller (v1.9, opcional). |
 | `migracion-v16-notificaciones.sql` | Instala el centro de notificaciones sobre la v1.5. |
 | `migracion-v17-inicio.sql` | Inicio, perfil editable y datos del dashboard sobre la v1.6. |
+| `supabase/functions/account/index.ts` | v1.12: aceptar invitación sin contraseña, «Entrar sin contraseña» (enlace por correo) y «Reiniciar acceso». |
+| `migracion-v112-acceso-ia.sql` | v1.12: invitaciones con estado y reenvío, alta con Face ID, reinicio de acceso, «caso» del taller y límite diario de IA. |
+
+## v1.12 · Acceso sin contraseñas y creador con IA
+
+**Alta de facilitadores.** El correo de invitación trae «Aceptar invitación». Al abrirlo, la persona elige **Face ID / huella** (recomendado: un toque, sin contraseña ni código) o **app autenticadora** (Microsoft/Google). En Microsoft Authenticator debe elegir «Otra cuenta (Google, Facebook, etc.)», no «Cuenta profesional o educativa»: esa opción no lee el QR. En el celular, el botón «Agregar a mi app autenticadora» abre la app directo, sin escanear.
+
+**Invitaciones vencidas.** En Equipo cada invitación muestra Vigente / Vence hoy / Vencida con **Reenviar** (código nuevo por 7 días; la anterior deja de servir). En Inicio, «Reenviar» actúa en el mismo lugar. Si el invitado abre un enlace vencido, puede tocar «Pedir una nueva» y te llega un aviso.
+
+**Olvidé mi contraseña / entrar sin contraseña.** En la pantalla de entrada, «Entrar sin contraseña» manda un enlace de un solo uso (vence en 1 hora, máximo 3 por hora). El enlace no se salta el segundo paso: después se confirma con Face ID o el código. Ya dentro, en tu perfil puedes crear o cambiar tu contraseña.
+
+**Perdió su teléfono.** Equipo → **Reiniciar acceso**: borra su Face ID y su app, y le manda un correo para activarlos de nuevo (7 días). Sus talleres no se tocan.
+
+**Creador con IA.** El paso 1 es «Cuéntanos del taller» (cliente, proceso, qué duele, objetivo, personas y duración). La IA propone el taller completo y el código decide los números (votos, retos, tiempos). En la propuesta hay advertencias («cosas para revisar»), aviso si algún dolor no quedó cubierto, «Ajustar con una instrucción» y «Otra propuesta» (5 por borrador; 30 por persona al día). Sin IA disponible, «Armar a mano» usa lo que escribiste.
+
+**Pasos para activarla (una vez):**
+1. SQL Editor → correr `migracion-v112-acceso-ia.sql`.
+2. Edge Functions → crear la función `account` con `supabase/functions/account/index.ts` (apaga «Verify JWT with legacy secret»). Usa los mismos secretos de correo que `send-invite`.
+3. Edge Functions → actualizar `suggest-workshop` con el archivo nuevo.
+4. Publicar `index.html`, `sw.js` en GitHub Pages.
 
 Sin `SUPABASE_URL`, la app corre en **modo demo**: todo funciona en tu navegador y sin cuentas, útil para enseñarla o probar cambios.
