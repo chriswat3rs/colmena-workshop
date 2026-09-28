@@ -2393,7 +2393,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260928183851";
+const APP_BUILD="20260928193011";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -2715,6 +2715,8 @@ const SupaStore = {
   async addCard(c){ const {data,error}=await this.client.from("ws_cards").insert(c).select().single(); if(error) throw error; return data; },
   async deleteCard(id){ const {error}=await this.client.from("ws_cards").delete().eq("id",id); if(error) throw error; },
   async listCards(sid){ const {data,error}=await this.client.from("ws_cards").select("*").eq("session_id",sid).order("created_at"); if(error) throw error; return data||[]; },
+  /* v1.15 · Solo mis tarjetas (antes se bajaban todas para filtrar en el celular) */
+  async listMyCards(sid,pid){ const {data,error}=await this.client.from("ws_cards").select("*").eq("session_id",sid).eq("participant_id",pid).order("created_at",{ascending:false}); if(error) throw error; return data||[]; },
   async setVote(v){
     if(v.points<=0){ const {error}=await this.client.from("ws_votes").delete().eq("session_id",v.session_id).eq("participant_id",v.participant_id).eq("card_id",v.card_id); if(error) throw error; return; }
     const {error}=await this.client.from("ws_votes").upsert(v,{onConflict:"session_id,participant_id,card_id"}); if(error) throw error;
@@ -2734,6 +2736,12 @@ const SupaStore = {
   async addIdea(i){ const {data,error}=await this.client.from("ws_ideas").insert(i).select().single(); if(error) throw error; return data; },
   async deleteIdea(id){ const {error}=await this.client.from("ws_ideas").delete().eq("id",id); if(error) throw error; },
   async listIdeas(sid){ const {data,error}=await this.client.from("ws_ideas").select("*").eq("session_id",sid).order("created_at"); if(error) throw error; return data||[]; },
+  /* v1.15 · Ideas del reto para el celular: solo columnas necesarias y, si hay «since», solo las nuevas */
+  async listIdeasSince(sid,since){ let q=this.client.from("ws_ideas").select("id,card_id,participant_id,texto,created_at,kind").eq("session_id",sid).eq("kind","idea"); if(since) q=q.gt("created_at",since);
+    const {data,error}=await q.order("created_at"); if(error) throw error; return data||[]; },
+  async listMyIdeas(sid,pid,kind){ const {data,error}=await this.client.from("ws_ideas").select("*").eq("session_id",sid).eq("participant_id",pid).eq("kind",kind).order("created_at"); if(error) throw error; return data||[]; },
+  /* v1.15 · Pulso: fase + versión del taller + avance, en una sola consulta mínima (sin tiempo real) */
+  async pulse(code){ const {data,error}=await this.client.rpc("ws_pulse",{p_code:code}); if(error) throw error; return (data&&data[0])||null; },
   async listMyIdeaVotes(sid,pid){ const {data,error}=await this.client.from("ws_idea_votes").select("idea_id").eq("session_id",sid).eq("participant_id",pid); if(error) throw error; return data||[]; },
   async listIdeaVotes(sid){ const {data,error}=await this.client.from("ws_idea_votes").select("*").eq("session_id",sid); if(error) throw error; return data||[]; },
   async setIdeaVote(v,on){
@@ -2742,12 +2750,12 @@ const SupaStore = {
   },
   async ideaTotals(sid){ const {data,error}=await this.client.rpc("ws_idea_totals",{p_session:sid}); if(error) throw error; const t={}; (data||[]).forEach(r=>t[r.idea_id]=Number(r.votes)||0); return t; },
 
-  subscribe(sid, cb){
+  subscribe(sid, cb, onStatus){
     const ch = this.client.channel("ws-"+sid);
     ["ws_sessions","ws_participants","ws_cards","ws_votes","ws_qw_ratings","ws_ideas","ws_idea_votes"].forEach(tb=>{
       ch.on("postgres_changes",{event:"*",schema:"public",table:tb,filter: tb==="ws_sessions" ? "id=eq."+sid : "session_id=eq."+sid}, ()=>cb(tb));
     });
-    ch.subscribe();
+    ch.subscribe(st=>{ if(onStatus) onStatus(st); });
     return ()=>{ try{ this.client.removeChannel(ch); }catch(e){} };
   }
 };
@@ -2847,6 +2855,7 @@ const DemoStore = {
   async addCard(c){ const db=this.db(); c={id:uid(),created_at:now(),...c}; db.cards.push(c); this.save(db); return c; },
   async deleteCard(id){ const db=this.db(); const gone=new Set(db.ideas.filter(i=>i.card_id===id).map(i=>i.id)); db.cards=db.cards.filter(c=>c.id!==id); db.votes=db.votes.filter(v=>v.card_id!==id); db.ideas=db.ideas.filter(i=>!gone.has(i.id)); db.ideaVotes=db.ideaVotes.filter(v=>!gone.has(v.idea_id)); this.save(db); },
   async listCards(sid){ return this.db().cards.filter(c=>c.session_id===sid); },
+  async listMyCards(sid,pid){ return this.db().cards.filter(c=>c.session_id===sid&&c.participant_id===pid).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at))); },
   async setVote(v){ const db=this.db(); const i=db.votes.findIndex(x=>x.session_id===v.session_id&&x.participant_id===v.participant_id&&x.card_id===v.card_id); if(i>=0){ if(v.points<=0) db.votes.splice(i,1); else db.votes[i].points=v.points; } else if(v.points>0){ db.votes.push({id:uid(),...v}); } this.save(db); },
   async listMyVotes(sid,pid){ return this.db().votes.filter(v=>v.session_id===sid && v.participant_id===pid); },
   async listVotes(sid){ return this.db().votes.filter(v=>v.session_id===sid); },
@@ -2860,6 +2869,11 @@ const DemoStore = {
   async addIdea(i){ const db=this.db(); i={id:uid(),created_at:now(),...i}; if(i.kind!=="idea") i.card_id=null; db.ideas.push(i); this.save(db); return i; },
   async deleteIdea(id){ const db=this.db(); db.ideas=db.ideas.filter(i=>i.id!==id); db.ideaVotes=db.ideaVotes.filter(v=>v.idea_id!==id); this.save(db); },
   async listIdeas(sid){ return this.db().ideas.filter(i=>i.session_id===sid); },
+  async listIdeasSince(sid,since){ return this.db().ideas.filter(i=>i.session_id===sid&&i.kind==="idea"&&(!since||String(i.created_at)>since)).sort((a,b)=>String(a.created_at).localeCompare(String(b.created_at))); },
+  async listMyIdeas(sid,pid,kind){ return this.db().ideas.filter(i=>i.session_id===sid&&i.participant_id===pid&&i.kind===kind); },
+  async pulse(code){ const s=await this.getMySession(code); if(!s) return null; const ps=this.db().participants.filter(p=>p.session_id===s.id), ph=s.phase||"lobby";
+    const ver=JSON.stringify([ph,s.name,s.facilitator,s.votes_per_user,s.areas,s.stages,s.q_checkin,s.q_expect,s.q_pain,s.brand,s.roles,s.tools,s.quickwins,s.q_idea,s.idea_votes,s.idea_top,s.tasks,s.caso]);
+    return {phase:ph, ver, total:ps.length, listos:ps.filter(p=>(p.done_phases||[]).includes(ph)).length}; },
   async listMyIdeaVotes(sid,pid){ return this.db().ideaVotes.filter(v=>v.session_id===sid&&v.participant_id===pid); },
   async listIdeaVotes(sid){ return this.db().ideaVotes.filter(v=>v.session_id===sid); },
   async setIdeaVote(v,on){ const db=this.db(); const i=db.ideaVotes.findIndex(x=>x.session_id===v.session_id&&x.participant_id===v.participant_id&&x.idea_id===v.idea_id);
@@ -2931,7 +2945,7 @@ function peersText(){
   if(me && pr.listos===1) return `Eres la primera persona en terminar; van ${pr.listos} de ${pr.total}.`;
   return `${pr.listos} de ${pr.total} ya terminaron.`;
 }
-async function loadProgress(){ try{ P.progress=await Store.phaseProgress(P.session.id); }catch(e){ return; } const el=$("#peers"); if(el) el.textContent=peersText(); }
+async function loadProgress(){ try{ const pr=await Store.phaseProgress(P.session.id); P.progress=pr?{...pr, at:Date.now()}:null; }catch(e){ return; } const el=$("#peers"); if(el) el.textContent=peersText(); }
 function isDone(ph){ return (P.me&&P.me.done_phases||[]).includes(ph); }
 async function setDone(ph,on){
   const cur=new Set(P.me.done_phases||[]); if(on===cur.has(ph)) return;
@@ -3134,7 +3148,7 @@ async function renderPhase(){
     setTimeout(()=>lostDraftSheet(old),300);
   }
   P.lastPh=ph;
-  if(actIndex(ph)>=0) loadProgress();
+  if(actIndex(ph)>=0 && !(P.progress && P.progress.phase===ph && Date.now()-(P.progress.at||0)<10000)) loadProgress();
   if(ph==="lobby"){
     $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
       ${waitBlock(avatar(P.me.emoji,"xl"), "Ya estás dentro, "+esc(P.me.nombre), "Son "+ACTS.length+" actividades cortas. Cuando "+facName()+" abra la primera, tu pantalla cambia sola.")}
@@ -3189,7 +3203,7 @@ function renderCheckin(){
 /* ---------- Dolores: texto + etapa + actividad/herramienta (opcional) + severidad ---------- */
 async function renderPains(){
   const s=P.session;
-  P.myCards = (await Store.listCards(s.id)).filter(c=>c.participant_id===P.me.id).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)));
+  P.myCards = await Store.listMyCards(s.id, P.me.id);
   const done=isDone("pains") && P.myCards.length>0;
   if(isDone("pains") && !P.myCards.length) setDone("pains",false);
   let sev=3, stage="", tool="", task="";
@@ -3336,9 +3350,8 @@ function ratingSection(kind, items, et){
 const KIND_SHORT={qw:"Mejoras rápidas",gate:"Reglas",time:"Tiempos"};
 async function renderQuickwins(){
   const s=P.session, qws=s.quickwins||[];
-  const [mine, ideas] = await Promise.all([Store.listMyQwRatings(s.id,P.me.id), Store.listIdeas(s.id)]);
+  const [mine, myProps] = await Promise.all([Store.listMyQwRatings(s.id,P.me.id), Store.listMyIdeas(s.id,P.me.id,"qw")]);
   P.qw.ratings = Object.fromEntries(mine.map(r=>[r.qw_id, r.score]));
-  const myProps = ideas.filter(i=>i.kind==="qw" && i.participant_id===P.me.id);
   const et=new Set(P.me.etapas||[]);
   const steps=["qw","gate","time"].filter(k=>qws.some(q=>kindOf(q)===k));
   const anyMine = et.size && qws.some(q=>et.has(q.stage));
@@ -3459,14 +3472,20 @@ async function renderIdeas(){
     catch(e){ console.error(e); toast("No se pudo publicar la idea"); $("#ideaGo").disabled=false; }
     P.sending=false; };
   const db=$("#ideasDoneBtn"); if(db) db.onclick=async()=>{ await setDone("ideas",true); window.scrollTo(0,0); renderIdeas(); };
-  await refreshIdeas();
+  await refreshIdeas(true);
 }
-async function refreshIdeas(){
-  const s=P.session;
+/* v1.15 · Con mucha gente: la lista completa se baja al entrar y cada ~90 s (para ver ideas borradas);
+   entre medio solo se piden las ideas nuevas (con 10 s de traslape para no perder ninguna). */
+async function refreshIdeas(full){
+  const s=P.session, I=P.ideas, t=Date.now();
+  const whole = full || !I.fullAt || t-I.fullAt>90000;
+  const since = !whole && I.maxAt ? new Date(new Date(I.maxAt).getTime()-10000).toISOString() : null;
   try{
-    const [ideas, mv] = await Promise.all([Store.listIdeas(s.id), Store.listMyIdeaVotes(s.id, P.me.id)]);
-    P.ideas.list = ideas.filter(i=>i.kind==="idea");
-    P.ideas.mine = new Set(mv.map(v=>v.idea_id));
+    const [ideas, mv] = await Promise.all([Store.listIdeasSince(s.id, since), Store.listMyIdeaVotes(s.id, P.me.id)]);
+    if(whole){ I.list = ideas; I.fullAt = t; }
+    else { const m=new Map(I.list.map(i=>[i.id,i])); ideas.forEach(i=>m.set(i.id,i)); I.list=[...m.values()]; }
+    I.maxAt = I.list.reduce((a,i)=>{ const c=String(i.created_at||""); return c>a?c:a; }, "");
+    I.mine = new Set(mv.map(v=>v.idea_id));
   }catch(e){ return; }
   drawIdeaList();
 }
@@ -3491,7 +3510,7 @@ function drawIdeaList(){
     try{ await Store.setIdeaVote({session_id:s.id, participant_id:P.me.id, idea_id:id}, !on); if(on) P.ideas.mine.delete(id); else P.ideas.mine.add(id); drawIdeaList(); }
     catch(e){ console.error(e); toast(/apoyos/.test(String(e&&e.message))?"Ya usaste todos tus apoyos":"No se pudo guardar tu apoyo"); }
     P.sending=false; });
-  $$("#ideaList [data-del]").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteIdea(b.dataset.del); await refreshIdeas(); }catch(e){ toast("No se pudo eliminar"); } });
+  $$("#ideaList [data-del]").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteIdea(b.dataset.del); await refreshIdeas(true); }catch(e){ toast("No se pudo eliminar"); } });
 }
 
 /* ---------- Resultados: dolores, ideas, quick wins, reglas y tiempos ---------- */
@@ -3544,22 +3563,37 @@ async function startParticipant(code){
     $("#app").innerHTML = `<div class="p-shell">${pTop(false)}${waitBlock(glass("flag",{size:"xl"}),"Esta sesión ya terminó","Gracias por tu interés. Si crees que es un error, avísale a quien facilita.")}</div>`;
     return;
   }
+  /* v1.15 · Talleres grandes: el celular no abre conexión en tiempo real. Cada 6–8.5 s (al azar, para que
+     200 celulares no pregunten al mismo tiempo) hace una consulta mínima: fase, versión del taller y avance.
+     Solo si la versión cambió vuelve a pedir el taller completo. Con la pantalla apagada no pregunta; si falla,
+     espera cada vez más (hasta 30 s) para no saturar. */
+  const S = { t:null, fails:0, ver:null, busy:false, ideasAt:0, resultsAt:0 };
   const refresh = async ()=>{
-    let ns=null; try{ ns=await Store.lookupSession(code); }catch(e){ setOffline(true); return; }
-    setOffline(false);
-    if(!ns) return;
-    P.session=ns;
+    let pr=null;
+    try{ pr=await Store.pulse(code); S.fails=0; setOffline(false); }
+    catch(e){ S.fails++; if(S.fails>=2) setOffline(true); return; }
+    if(!pr) return;
+    if(pr.ver!==S.ver){
+      let ns=null; try{ ns=await Store.lookupSession(code); }catch(e){ S.fails++; return; }
+      if(!ns) return; P.session=ns; S.ver=pr.ver;
+    }
+    P.progress={phase:pr.phase, total:pr.total, listos:pr.listos, at:Date.now()};
     if(!P.me) return;
-    /* v1.12 · si la última vez no se pudo pintar la fase (internet inestable), se reintenta en cada sondeo */
-    if(P.renderedPh!==ns.phase) return renderPhaseSafe();
+    const ph=P.session.phase, t=Date.now();
+    /* v1.12 · si la última vez no se pudo pintar la fase (internet inestable), se reintenta en cada pulso */
+    if(P.renderedPh!==ph){ S.ideasAt=S.resultsAt=t; return renderPhaseSafe(); }
     /* Misma actividad: solo se refresca el avance de compañeros y, en Ideas, la lista. Lo que escribes no se toca. */
-    if(actIndex(ns.phase)>=0) loadProgress();
-    if(ns.phase==="results") return renderPhase();
-    if(ns.phase==="ideas") return refreshIdeas();
+    const el=$("#peers"); if(el) el.textContent=peersText();
+    if(ph==="results" && t-S.resultsAt>60000){ S.resultsAt=t; return renderPhase(); }
+    if(ph==="ideas" && t-S.ideasAt>11000){ S.ideasAt=t; return refreshIdeas(); }
   };
-  P.unsub = Store.subscribe(s.id, ()=>refresh());
-  P.poll = setInterval(refresh, 7000);
-  window.addEventListener("online",()=>setOffline(false)); window.addEventListener("offline",()=>setOffline(true));
+  const wait = ()=> S.fails ? Math.min(30000, 4000*Math.pow(2,S.fails)) : 6000+Math.random()*2500;
+  const schedule = ms => { clearTimeout(S.t); if(document.hidden) return; S.t=setTimeout(tick, ms!=null?ms:wait()); };
+  const tick = async ()=>{ if(S.busy) return; S.busy=true; try{ await refresh(); }catch(e){ console.error(e); } finally{ S.busy=false; schedule(); } };
+  document.addEventListener("visibilitychange",()=>{ if(document.hidden) clearTimeout(S.t); else schedule(300+Math.random()*1200); });
+  window.addEventListener("online",()=>{ setOffline(false); schedule(500+Math.random()*1500); }); window.addEventListener("offline",()=>setOffline(true));
+  P.stopPulse = ()=>clearTimeout(S.t);
+  schedule();
   if(P.me) renderPhaseSafe(); else screenWelcome();
 }
 function setOffline(on){ let b=$("#offline"); if(on && !b){ b=document.createElement("div"); b.id="offline"; b.className="offline"; b.textContent="Sin conexión. Cuando vuelva, tu pantalla se pone al día sola."; document.body.appendChild(b); } if(!on && b) b.remove(); }
@@ -5172,18 +5206,25 @@ function parseQws(v){ let kind="qw"; const n={qw:0,gate:0,time:0}; const out=[];
     n[kind]++; const it={id:RATING_KINDS[kind].id+"-"+String(n[kind]).padStart(2,"0"), kind, stage, text}; if(help) it.help=help; out.push(it); });
   return out; }
 
-function stopAdmin(){ closePopSafe(); if(A.unsub) A.unsub(); if(A.poll) clearInterval(A.poll); clearTimeout(A._t); A.unsub=null; A.poll=null; }
+function stopAdmin(){ closePopSafe(); if(A.unsub) A.unsub(); if(A.poll) clearInterval(A.poll); clearTimeout(A._t); A._t=null; A.unsub=null; A.poll=null; }
 function closePopSafe(){ try{ closePop(); }catch(e){} }
 function currentCode(){ return (new URLSearchParams(location.search).get("s")||"").trim().toUpperCase(); }
 
-async function refetchAll(){
-  const s=A.session;
-  const [ns,ps,cs,vs,qr,ids,ivs] = await Promise.all([
-    Store.getMySession(s.code), Store.listParticipants(s.id), Store.listCards(s.id), Store.listVotes(s.id),
-    Store.listQwRatings(s.id), Store.listIdeas(s.id), Store.listIdeaVotes(s.id)
-  ]);
-  if(ns) A.session=ns; A.participants=ps; A.cards=cs; A.votes=vs; A.qwRatings=qr; A.ideas=ids; A.ideaVotes=ivs;
+/* v1.15 · El panel pide solo las tablas que cambiaron (el aviso en tiempo real dice cuál) */
+const RT_TABLES=["ws_sessions","ws_participants","ws_cards","ws_votes","ws_qw_ratings","ws_ideas","ws_idea_votes"];
+async function refetchTables(tabs){
+  const s=A.session, want=new Set(tabs&&tabs.length?tabs:RT_TABLES), jobs=[];
+  const add=(tb,fn,set)=>{ if(want.has(tb)) jobs.push(fn().then(set)); };
+  add("ws_sessions",   ()=>Store.getMySession(s.code),  v=>{ if(v) A.session=v; });
+  add("ws_participants",()=>Store.listParticipants(s.id), v=>{ A.participants=v; });
+  add("ws_cards",      ()=>Store.listCards(s.id),       v=>{ A.cards=v; });
+  add("ws_votes",      ()=>Store.listVotes(s.id),       v=>{ A.votes=v; });
+  add("ws_qw_ratings", ()=>Store.listQwRatings(s.id),   v=>{ A.qwRatings=v; });
+  add("ws_ideas",      ()=>Store.listIdeas(s.id),       v=>{ A.ideas=v; });
+  add("ws_idea_votes", ()=>Store.listIdeaVotes(s.id),   v=>{ A.ideaVotes=v; });
+  await Promise.all(jobs);
 }
+async function refetchAll(){ return refetchTables(RT_TABLES); }
 
 function startAdmin(s){
   stopAdmin();
@@ -5193,12 +5234,26 @@ function startAdmin(s){
   A.readonly = !!(s.owner_id && ME.uid && s.owner_id!==ME.uid);
   A.ownerName = A.readonly ? staffName(s.owner_id) : "";
   try{ history.replaceState(null,"",location.pathname+"?s="+encodeURIComponent(s.code)+"#admin"); }catch(e){}
-  const kick=()=>{ clearTimeout(A._t); A._t=setTimeout(async()=>{
-      try{ await refetchAll(); A.fails=0; A.okAt=Date.now(); staleBanner(false); }
-      catch(e){ console.error(e); A.fails=(A.fails||0)+1; if(A.fails>=2) staleBanner(true, e); return; }
-      if(!A.hold) renderAdmin(); else { const sm=$("#shSum"); if(sm) sm.innerHTML=shareSummary(); } },350); };
-  A.unsub=Store.subscribe(s.id, kick);
-  A.poll=setInterval(kick, 8000);
+  /* v1.15 · Con 200 personas llegan muchos avisos por segundo: se juntan y el panel se actualiza como máximo
+     cada 2.5 s (nunca se queda congelado esperando a que «se calme»), pidiendo solo lo que cambió. */
+  A.dirty=new Set(RT_TABLES); A.lastRun=0; A.running=false; A.again=false; A._t=null; A.rt=null;
+  const GAP=2500;
+  const run=async()=>{
+    A._t=null;
+    if(A.running){ A.again=true; return; }
+    A.running=true; A.lastRun=Date.now();
+    const tabs=[...A.dirty]; A.dirty.clear();
+    try{ await refetchTables(tabs); A.fails=0; A.okAt=Date.now(); staleBanner(false); }
+    catch(e){ console.error(e); tabs.forEach(t=>A.dirty.add(t)); A.fails=(A.fails||0)+1; if(A.fails>=2) staleBanner(true, e); A.running=false; return; }
+    A.running=false;
+    if(!A.hold) renderAdmin(); else { const sm=$("#shSum"); if(sm) sm.innerHTML=shareSummary(); }
+    if(A.again || A.dirty.size){ A.again=false; kick(); }
+  };
+  const kick=tb=>{ if(tb && RT_TABLES.includes(tb)) A.dirty.add(tb); else RT_TABLES.forEach(t=>A.dirty.add(t));
+    if(A._t) return; const gap=Date.now()-A.lastRun; A._t=setTimeout(run, gap>=GAP?200:GAP-gap); };
+  A.unsub=Store.subscribe(s.id, kick, st=>{ A.rt=st; });
+  /* Respaldo: cada 12 s revisa la fase; todo completo cada minuto, o cada 12 s si el tiempo real se cayó */
+  let n=0; A.poll=setInterval(()=>{ n++; if(A.rt && A.rt!=="SUBSCRIBED") return kick(); if(n%5===0) kick(); else kick("ws_sessions"); }, 12000);
   kick();
 }
 

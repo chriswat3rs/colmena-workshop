@@ -280,6 +280,7 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `migracion-v113-borradores.sql` | v1.13: borradores del creador guardados en tu cuenta (tabla ws_drafts, solo los ve su dueño). |
 | `migracion-v112-acceso-ia.sql` | v1.12: invitaciones con estado y reenvío, alta con Face ID, reinicio de acceso, «caso» del taller y límite diario de IA. |
 | `tools/escala.py`, `tools/px2rem.py` | v1.14: el armado duplica los cortes de pantalla para letra Grande / Muy grande; `px2rem` fue la conversión única de px a rem. |
+| `migracion-v115-talleres-grandes.sql` | v1.15: «pulso» de los celulares (una consulta mínima en lugar de tiempo real) e índices para talleres de hasta ~200 personas. |
 
 ## v1.12 · Acceso sin contraseñas y creador con IA
 
@@ -322,4 +323,23 @@ Sin `SUPABASE_URL`, la app corre en **modo demo**: todo funciona en tu navegador
 **Por qué rem.** La tipografía, espaciados, íconos, botones y anchos de tarjetas y paneles están en `rem` (1 rem = 16 px con el tamaño normal, así que el diseño se ve idéntico). Bordes, sombras, radios, posiciones y los códigos QR se quedan en px. Los cortes de pantalla (media queries) no entienden de rem, así que al armar `index.html` cada corte se duplica escalado ×1.125 y ×1.25 para Grande y Muy grande: el diseño compacto entra antes y nada se encima. Al «Proyectar» resultados se usa siempre el tamaño normal (la sala manda).
 
 **Cambio de encabezado.** «Cerrar sesión» ya no está en la barra superior: está al final de tu perfil (en celular y en computadora).
+
+## v1.15 · Talleres grandes (hasta ~200 personas en el plan gratis)
+
+**Qué cambió.** Los celulares ya no abren conexión en tiempo real. Cada 6–8 segundos (al azar, para no llegar todos juntos) hacen una sola consulta mínima: en qué actividad va el taller, si cambió algo de su configuración y cuántos compañeros ya terminaron. Con la pantalla apagada no preguntan, y si algo falla esperan cada vez más (hasta 30 s) para no saturar. En Ideas, la lista se actualiza cada ~12 s pidiendo solo las ideas nuevas. Tu panel sigue en tiempo real, pero se actualiza como máximo cada 2.5 s y solo pide lo que cambió.
+
+**Qué notarás.** Cuando cambias de actividad, los celulares pasan a la siguiente en unos segundos (no al instante). Tu panel se siente igual.
+
+**Prueba local (200 personas simuladas, mismas reglas de seguridad):** antes ~220 consultas por segundo a la base, ahora ~30; cada pulso tarda ~2 ms. Ya no se usan las 200 conexiones en vivo ni el tope de 100 avisos por segundo del plan gratis.
+
+**Antes de un taller grande (una sola vez, en Supabase → Authentication → Rate Limits):**
+
+| Límite | Valor normal | Ponlo en |
+|---|---|---|
+| Usuarios anónimos (por hora, por red) | 30 | 500 |
+| Renovación de sesión (cada 5 min, por red) | 150 | 1000 |
+
+Sin esto, si muchas personas comparten la misma red (oficina, Wi-Fi del evento), después de las primeras 30 el resto no puede entrar con el QR.
+
+**El día anterior** abre Colmena (tu panel) para que el plan gratis no pause el proyecto por inactividad.
 
