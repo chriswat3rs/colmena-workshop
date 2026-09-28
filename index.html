@@ -1862,6 +1862,89 @@ a.abtn{text-decoration:none}
 .stale-bn{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 32px);padding:10px 12px 10px 14px;border-radius:14px;background:#01133B;color:#fff;box-shadow:0 10px 30px rgba(1,19,59,.3);font-size:14px;font-weight:600}
 .stale-bn svg{width:18px;height:18px;flex:none}
 .stale-bn .abtn{flex:none;background:#fff;color:#01133B;border-color:#fff;min-height:36px}
+
+/* ============ v1.12.1 · Creador: dos pasos, pestañas de secciones y «Cuéntanos» a dos columnas ============ */
+.wz-steps{display:flex!important;align-items:center;gap:10px;padding:6px;border-radius:16px;background:#E7EEF7;overflow:visible!important;grid-template-columns:none!important}
+.wz-steps .wz-s{flex:1;min-width:0;list-style:none}
+.wz-steps .wz-sep{flex:0 0 32px;height:2px;border-radius:2px;background:#C5D3E4;list-style:none}
+.wz-steps .wz-s button{justify-content:flex-start;gap:12px;height:auto;min-height:54px;padding:8px 14px;text-align:left;width:100%}
+.wz-steps .wz-n{width:28px;height:28px;border-radius:9px;font-size:13px}
+.wz-tt{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+.wz-tt .wz-t{display:block!important;font-size:14px;font-weight:800;color:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wz-tt small{font-size:12px;font-weight:500;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wz-sub{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.wz-sub[hidden]{display:none}
+.wz-back{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 12px 0 8px;border-radius:10px;font-weight:700;font-size:13.5px;color:var(--accent-strong)}
+.wz-back:hover{background:var(--accent-soft)}
+.wz-back svg{width:16px;height:16px}
+.wz-tabs{display:flex;gap:6px;flex-wrap:wrap;min-width:0}
+.wz-tab{min-height:38px;padding:0 14px;border-radius:var(--r-chip);border:1.5px solid var(--line);background:var(--card);font-weight:600;font-size:13.5px;color:var(--ink-2);white-space:nowrap}
+.wz-tab:hover{border-color:var(--accent)}
+.wz-tab.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.bf-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:32px;align-items:start}
+.bf{max-width:none!important}
+.bf-side{position:sticky;top:96px;display:grid;gap:14px}
+.bf-card{border:1px solid var(--line);border-radius:16px;padding:18px;background:linear-gradient(180deg,#F6FAFE,#FFFFFF)}
+.bf-card.alt{background:var(--card)}
+.bf-card>b{display:flex;align-items:center;gap:8px;font-size:14.5px;margin-bottom:12px;color:var(--ink)}
+.bf-card>b svg{width:18px;height:18px;color:var(--accent-strong)}
+.bf-list{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.bf-list li{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;line-height:1.45;color:var(--ink-2)}
+.bf-list li>svg{width:17px;height:17px;flex:none;margin-top:1px;color:var(--accent-strong)}
+.bf-list strong{color:var(--ink);font-weight:700}
+.bf-foot{display:flex;gap:8px;align-items:flex-start;margin:14px 0 0;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.45;color:var(--ink-3)}
+.bf-foot svg{width:15px;height:15px;flex:none;color:var(--ok);margin-top:1px}
+.bf-opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);margin-bottom:10px}
+.bf-opt:hover{border-color:var(--accent)}
+.bf-opt>svg{width:20px;height:20px;flex:none;color:var(--accent-strong)}
+.bf-opt span{display:flex;flex-direction:column;gap:2px}
+.bf-opt strong{font-size:14px}
+.bf-opt small{font-size:12.5px;color:var(--ink-3)}
+.bf-card .bf-copy{display:flex!important;flex-direction:column;align-items:stretch!important;gap:8px;margin:0!important;color:var(--ink)!important;font-size:14px!important}
+.bf-card .bf-copy>span{display:flex;align-items:center;gap:8px}
+.bf-card .bf-copy svg{width:18px;height:18px;color:var(--accent-strong)}
+.bf-card .bf-copy select{max-width:none;width:100%;min-height:42px;font-size:14px}
+.bf-cta{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.bf-cta .bf-note{margin:0!important;text-align:left;font-size:12.5px}
+.bf-have{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 14px;border-radius:14px;background:#E3F4EC;color:#135C43;font-size:13.5px;font-weight:600}
+.bf-have>svg{width:18px;height:18px;flex:none}
+.bf-have span{flex:1}
+.bf-have .abtn{flex:none;background:#fff}
+@media (max-width:1060px){ .bf-grid{grid-template-columns:minmax(0,1fr) 280px;gap:24px} }
+@media (max-width:900px){
+  .bf-grid{grid-template-columns:1fr}
+  .bf-side{position:static}
+  .wz-steps .wz-tt small{display:none}
+  .wz-steps .wz-s button{min-height:46px;padding:6px 10px;gap:8px}
+  .wz-steps .wz-sep{flex-basis:14px}
+}
+@media (max-width:720px){
+  .wz-sub{gap:6px}
+  .wz-tabs{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:2px;scrollbar-width:none}
+  .wz-tabs::-webkit-scrollbar{display:none}
+  .wz-tab{flex:none}
+  .wz-tt .wz-t{font-size:13px}
+  .bf-have{flex-wrap:wrap}
+  .bf-have .abtn{width:100%}
+}
+.bio-hint{margin:8px 2px 0!important;font-size:12.5px;line-height:1.5}
+.bio-ok{display:flex;align-items:center;gap:6px;margin:0;color:var(--ok);font-weight:600;font-size:13.5px}
+.bio-ok svg{width:16px;height:16px}
+.bio-code{display:grid;gap:8px}
+.bio-code .hint{margin:0}
+.bio-code-row{display:flex;gap:8px}
+.bio-code-row .input{flex:1;min-width:0;letter-spacing:.3em;text-align:center;font-size:18px!important;padding:10px!important}
+.bio-code-row .abtn{flex:none}
+.abtn.ghost-d{border-color:transparent;background:transparent;padding-left:0;padding-right:0;min-height:36px;font-size:13px}
+.wz-short{display:none}
+.sum-it p strong{font-weight:700;color:var(--ink);text-transform:none;letter-spacing:0}
+@media (max-width:720px){ .wz-long{display:none} .wz-short{display:inline} }
+/* v1.12.1 · Perfil en escritorio: fijo bajo tu avatar y con su propio scroll (no mueve la página) */
+.me-pop:not(.sheet){position:fixed;width:min(340px,calc(100vw - 24px));max-height:calc(100dvh - 96px);overflow-y:auto;overscroll-behavior:contain}
+.me-pw>b,.me-bio>b,.me-prefs>b{display:block;font-size:13px;font-weight:800;color:var(--ink)}
+.me-bio>.bio-code,.me-bio>.me-pw{align-self:stretch}
+.me-bio .me-pw{margin-top:4px}
+.me-pw .me-acts{margin:0}
 </style>
 </head>
 <body>
@@ -2072,7 +2155,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260928035542";
+const APP_BUILD="20260928045116";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -2224,6 +2307,12 @@ const SupaStore = {
     if(error) throw error;
   },
   async sessionIsCode(){ const {data} = await this.client.auth.mfa.getAuthenticatorAssuranceLevel(); return data && data.currentLevel==="aal2"; },
+  /* v1.12.1 · Supabase exige el código de la app (aal2) para agregar o quitar llaves si la cuenta tiene app autenticadora */
+  async securityState(){
+    const [{data:a},{data:f}] = await Promise.all([this.client.auth.mfa.getAuthenticatorAssuranceLevel(), this.client.auth.mfa.listFactors()]);
+    const t=((f&&f.totp)||[]).find(x=>x.status==="verified");
+    return { aal:a&&a.currentLevel, totpId:t?t.id:null, needCode: !!t && !(a&&a.currentLevel==="aal2") };
+  },
   _pk:{},
   async pkPrepare(kind){
     const a=this.client.auth;
@@ -2248,6 +2337,7 @@ const SupaStore = {
         if(after) return after(id);
         const {data:n,error:e2}=await this.client.rpc("ws_trust_passkeys",id?{p_cred:id}:{}); if(e2) throw e2; return n;
       }
+      this.lastAttach = cred.authenticatorAttachment || null;   /* "platform" = la llave vive en este dispositivo; "cross-platform" = teléfono o llave USB */
       const r=await a._verifyPasskeyAuthentication({challengeId:p.data.challenge_id, credential}); if(r.error) throw r.error; return true;
     });
   },
@@ -2489,6 +2579,7 @@ const DemoStore = {
   _pk:{}, async pkPrepare(kind){ this._pk[kind]=Date.now(); return true; }, pkFresh(kind){ return !!this._pk[kind]; },
   pkRun(kind, after){ this._pk[kind]=null; return new Promise(r=>setTimeout(r,400)).then(()=>{ if(kind==="reg" && after) return after("demo-cred"); if(kind==="reg"){ const db=this.db(); db.faceIdOn=true; db.faceId=(db.faceId||0)+1; this.save(db); return db.faceId; } return true; }); },
   async sessionIsCode(){ return !this.db().faceIdOn; },
+  async securityState(){ return {aal:"aal2", totpId:null, needCode:false}; }, lastAttach:"platform",
   async enableFaceId(){ await new Promise(r=>setTimeout(r,600)); const db=this.db(); db.faceIdOn=true; db.faceId=1; this.save(db); return 1; },
   async trustPasskeys(){ return 1; },
   async passkeyStatus(){ const db=this.db(); return {trusted:db.faceId||0, untrusted:0, last_used:null}; },
@@ -3296,7 +3387,6 @@ async function adminBoot(openCode){
   if(st.state==="verify")    return adminVerify(st);
   if(st.state==="forbidden") return adminForbidden(st.email, st.reason);
   Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"", title:st.title||"", avatar:st.avatar||"", passkey:!!st.passkey });
-  if(st.passkey) storageSet("colmena_face_here","1");
   clearInvite();                                   /* ya estás dentro: la invitación guardada ya no hace falta */
   if(isAdminRole()) await loadStaff();
   if(!viewOk(AH.view)) AH.view="home";
@@ -3312,12 +3402,25 @@ async function adminBoot(openCode){
 }
 
 /* v1.11 · Face ID / Touch ID / huella: nombre según el dispositivo */
-function bioName(){ const ua=navigator.userAgent; return (typeof APP!=="undefined"&&APP.ios())? "Face ID" : /Macintosh/.test(ua)? "Touch ID" : /Android/i.test(ua)? "tu huella" : "Face ID o huella"; }
+/* v1.12.1 · ¿Este equipo tiene lector propio (Face ID, Touch ID, Windows Hello, huella)? Se consulta una vez al cargar */
+let UVPAA=null;
+try{ if(window.PublicKeyCredential && PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable) PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().then(v=>{ UVPAA=!!v; }).catch(()=>{ UVPAA=false; }); else UVPAA=false; }catch(e){ UVPAA=false; }
+const IS_WIN=/Windows/i.test(navigator.userAgent), IS_MAC=/Macintosh/.test(navigator.userAgent)&&!(navigator.maxTouchPoints>1);
+function bioName(){ const ua=navigator.userAgent;
+  if(typeof APP!=="undefined"&&APP.ios()) return "Face ID";
+  if(/Android/i.test(ua)) return "tu huella";
+  if(UVPAA===false) return "tu llave de acceso";
+  if(IS_WIN) return "Windows Hello";
+  if(IS_MAC) return "Touch ID";
+  return "tu llave de acceso"; }
+function faceHere(){ return storageGet("colmena_face_here")==="1"; }
+function markFaceHere(){ storageSet("colmena_face_here","1"); }
 const BIO_IC='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M9 9v1M15 9v1M12 9v4h-1M9.5 15.5a3.5 3.5 0 0 0 5 0"/></svg>';
 function passkeyError(e){ const m=String(e&&(e.name||"")+" "+(e.message||"")); 
   if(/InvalidState|already registered|excluded/i.test(m)) return `Este dispositivo ya tiene ${bioName()} activado para Colmena.`;
   if(/NotSupported|SecurityError|rp.?id|origin/i.test(m)) return `Este navegador no permite ${bioName()} aquí. En iPhone usa Safari o la app instalada desde Safari.`;
-  if(/NotAllowed|abort|cancel/i.test(m)) return `No se completó ${bioName()}. Si es la primera vez en este dispositivo, entra con tu correo y código, y actívalo desde Inicio o tu perfil.`;
+  if(/insufficient_aal|AAL2 session is required/i.test(m)) return "Para agregar o quitar llaves, confirma primero con el código de 6 dígitos de tu app autenticadora.";
+  if(/NotAllowed|abort|cancel/i.test(m)) return (typeof APP!=="undefined"&&APP.mobile()) ? `No se completó ${bioName()}. Toca de nuevo o entra con tu correo.` : `No se completó. Si tu llave está en tu celular, toca de nuevo y elige «Usar un teléfono o tableta». Si no, entra con tu correo.`;
   if(/not found|no credential|passkey.*not|Invalid credential|not registered/i.test(m)) return `Este dispositivo aún no tiene ${bioName()} activado para Colmena. Entra con tu correo y actívalo en tu perfil.`;
   return friendlyAuthError(e); }
 
@@ -3334,7 +3437,7 @@ function wirePasskeyBtn(btn, kind, onOk, onErr, after){
     btn.dataset.busy="1";
     const run=Store.pkRun(kind, after);          /* Face ID se abre aquí mismo, dentro del toque */
     btn.innerHTML=`<span class="spin" aria-hidden="true"></span>${bioName()}…`;
-    run.then(r=>{ storageSet("colmena_face_here","1"); onOk(r); }).catch(e=>{ btn.innerHTML=label; delete btn.dataset.busy; prep(); onErr(e); });
+    run.then(r=>{ if(kind==="reg" || Store.lastAttach==="platform") markFaceHere(); onOk(r); }).catch(e=>{ btn.innerHTML=label; delete btn.dataset.busy; prep(); onErr(e); });
   };
 }
 
@@ -3350,6 +3453,7 @@ function adminLogin(msg, email){
   aShell(`<div class="panel auth">
       <h2>Inicia sesión</h2>
       ${bio?`<button class="abtn primary bio-go" id="lg-bio" type="button">${BIO_IC}Entrar con ${bioName()}</button>
+      ${APP.mobile()?"":`<p class="hint bio-hint">¿Tu llave está en tu celular? Toca el botón y elige <b>«Usar un teléfono o tableta»</b>: escaneas un QR y confirmas con Face ID o tu huella.</p>`}
       <div class="or-sep"><span>o con tu correo</span></div>`:""}
       <form id="lgForm" autocomplete="on">
         <div class="field"><label for="lg-mail">Correo</label><input id="lg-mail" class="input" type="email" autocomplete="username" value="${esc(email||"")}" required></div>
@@ -3726,7 +3830,7 @@ function openMe(){
   if(sheet){ pop.classList.add("sheet"); const bk=document.createElement("div"); bk.className="me-back"; bk.onclick=closeMe; document.body.appendChild(bk); document.documentElement.classList.add("me-lock"); }
   document.body.appendChild(pop); drawPrefs(); drawBio(); drawPw();
   const b=$("#meBtn"), r=b.getBoundingClientRect();
-  if(!sheet){ const w=pop.offsetWidth; pop.style.top=(r.bottom+8+window.scrollY)+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px"; }
+  if(!sheet){ const w=pop.offsetWidth; pop.style.top=(r.bottom+8)+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px"; }
   else requestAnimationFrame(()=>{ pop.classList.add("in"); const bk=$(".me-back"); if(bk) bk.classList.add("in"); });
   b.setAttribute("aria-expanded","true");
   setTimeout(()=>document.addEventListener("click",meOutside),0);
@@ -3794,7 +3898,7 @@ function openNotifs(){
   if(!NT.loaded) loadNotifs();
 }
 function placeNotifs(){ const pop=$(".nt-pop"), b=$("#ntBell"); if(!pop||!b) return; const r=b.getBoundingClientRect(), w=pop.offsetWidth;
-  pop.style.top=(r.bottom+8+window.scrollY)+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px"; }
+  pop.style.top=(r.bottom+8+(getComputedStyle(pop).position==="fixed"?0:window.scrollY))+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px"; }
 function drawNotifs(){
   const pop=$(".nt-pop"); if(!pop) return; const keep=(pop.querySelector(".nt-list")||{}).scrollTop||0;
   const un=ntUnread(), list=NT.tab==="unread" ? NT.items.filter(n=>!n.read_at) : NT.items;
@@ -3859,29 +3963,42 @@ async function adminHome(){
 /* ---------- Inicio ---------- */
 /* v1.11 · Perfil: activar / revisar / desactivar Face ID */
 async function drawBio(){
-  const box=$("#meBio"); if(!box) return; const B=bioName();
-  let st, code=false;
-  try{ [st, code]=await Promise.all([Store.passkeyStatus(), Store.sessionIsCode()]); }catch(e){ box.innerHTML=`<b>Entrar con ${B}</b><p class="err">${esc(friendlyAuthError(e))}</p>`; return; }
-  const canAdd = code || ME.passkey, only = !!st.passkey_only;
-  const needCode=`<p class="hint">Para cambiar esto entra con tu correo y código (no con ${B}).</p>`;
+  const box=$("#meBio"); if(!box) return; const B=bioName(), here=faceHere();
+  let st, sec;
+  try{ [st, sec]=await Promise.all([Store.passkeyStatus(), Store.securityState()]); }catch(e){ box.innerHTML=`<b>Entrar con ${B}</b><p class="err">${esc(friendlyAuthError(e))}</p>`; return; }
+  if(!$("#meBio")) return;
+  const code=sec.aal==="aal2", only=!!st.passkey_only, gate=sec.needCode;   /* gate: Supabase pide el código de la app para agregar/quitar llaves */
+  const n=st.trusted||0, local=UVPAA!==false;
   let html=`<b>Entrar con ${B}</b>`;
   if(st.untrusted>0){
     html+=`<p class="err">Hay ${st.untrusted===1?"una llave":st.untrusted+" llaves"} de acceso que no aprobaste. Mientras tanto, ${B} no te deja entrar.</p>`+
-      (code?`<div class="me-acts"><button class="abtn primary" id="bioTrust">Es mía: aprobar</button><button class="abtn danger" id="bioOff">No la reconozco: apagar</button></div>`:needCode);
-  } else if(st.trusted>0){
-    html+=`<p class="hint">Activo en ${st.trusted===1?"1 dispositivo":st.trusted+" dispositivos"}${st.last_used?` · último uso ${esc(new Date(st.last_used).toLocaleDateString("es-MX",{day:"numeric",month:"short"}))}`:""}. Entras de un toque, sin contraseña ni código.</p>`+
-      `<div class="me-acts">${canAdd && storageGet("colmena_face_here")!=="1"?`<button class="abtn" id="bioOn">${BIO_IC}Agregar este dispositivo</button>`:""}${only?"":`<button class="abtn danger" id="bioOff">${code?"Apagar":"Apagar en todos"}</button>`}</div>`;
-    if(only) html+=`<div class="me-pw"><b>Respaldo por si pierdes tu teléfono</b><p class="hint">Hoy solo entras con ${B}. Agrega tu app autenticadora (Microsoft o Google) para poder entrar con un código si algún día no tienes tu dispositivo.</p><div class="me-acts"><button class="abtn" id="bioApp">${APP_IC}Agregar app de respaldo</button></div></div>`;
+      (code?`<div class="me-acts"><button class="abtn primary" id="bioTrust">Es mía: aprobar</button><button class="abtn danger" id="bioOff">No la reconozco: apagar</button></div>`:`<div class="bio-code" id="bioCode"></div>`);
   } else {
-    html+=`<p class="hint">Entra de un toque, sin contraseña ni código de 6 dígitos. Se activa una vez por dispositivo.</p>`+
-      (canAdd?`<div class="me-acts"><button class="abtn primary" id="bioOn">${BIO_IC}Activar ${B}</button></div>`:needCode);
+    html+= here ? `<p class="bio-ok">${icon("check")}Activo en este dispositivo${n>1?` · ${n} dispositivos en total`:""}.</p>`
+      : n>0 ? `<p class="hint">Lo tienes en ${n===1?"otro dispositivo":n+" dispositivos"}. ${local?`Actívalo también aquí para entrar de un toque con ${B}.`:"Aquí puedes entrar con tu celular: en la pantalla de inicio toca «Entrar con llave de acceso» y elige «Usar un teléfono»."}</p>`
+      : `<p class="hint">Entra de un toque, sin contraseña ni código de 6 dígitos. Se activa una vez en cada dispositivo.</p>`;
+    if(!here && local) html+= gate ? `<div class="bio-code" id="bioCode"></div>` : `<div class="me-acts"><button class="abtn primary" id="bioOn">${BIO_IC}Activar ${B}${n>0?" aquí":""}</button></div>`;
+    if(n>0 && !only) html+= (gate ? "" : `<div class="me-acts"><button class="abtn danger ghost-d" id="bioOff">Apagar en todos mis dispositivos</button></div>`);
+    if(only) html+=`<div class="me-pw"><b>Respaldo por si pierdes tu teléfono</b><p class="hint">Hoy solo entras con ${B}. Agrega tu app autenticadora (Microsoft o Google) para poder entrar con un código si algún día no tienes tu dispositivo.</p><div class="me-acts"><button class="abtn" id="bioApp">${APP_IC}Agregar app de respaldo</button></div></div>`;
   }
   box.innerHTML=html;
+  const cb=$("#bioCode");
+  if(cb){ cb.innerHTML=`<p class="hint">Por seguridad, para ${st.untrusted>0?"revisar tus llaves":"agregar este dispositivo"} escribe el código de 6 dígitos de tu app autenticadora.</p>
+      <div class="bio-code-row"><input id="bioOtp" class="input otp sm" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000" aria-label="Código de 6 dígitos"><button class="abtn primary" id="bioOtpGo">Confirmar</button></div><p class="err" id="bioOtpErr" hidden></p>`;
+    const inp=$("#bioOtp"), go=$("#bioOtpGo");
+    inp.addEventListener("input",()=>{ inp.value=inp.value.replace(/\D/g,"").slice(0,6); if(inp.value.length===6) go.click(); });
+    go.onclick=async()=>{ if(inp.value.length!==6) return inp.focus(); go.disabled=true;
+      try{ await Store.mfaVerify(null, inp.value); toast(`Listo. Ahora toca «Activar ${B}»`); drawBio(); }
+      catch(e){ const m=$("#bioOtpErr"); m.hidden=false; m.textContent=friendlyAuthError(e); inp.value=""; go.disabled=false; inp.focus(); } };
+  }
   const on=$("#bioOn"), tr=$("#bioTrust"), off=$("#bioOff"), ap=$("#bioApp");
-  wirePasskeyBtn(on, "reg", ()=>{ toast(`${B} activado: la próxima vez entra con un toque`); const c=$("#faceCard"); if(c) c.remove(); drawBio(); }, e=>toast(passkeyError(e)));
+  wirePasskeyBtn(on, "reg", ()=>{ toast(`${B} activado en este dispositivo`); const c=$("#faceCard"); if(c) c.remove(); drawBio(); },
+    e=>{ const m=String(e&&((e.name||"")+" "+(e.message||"")));
+      if(/InvalidState|already registered|excluded/i.test(m)){ markFaceHere(); toast(`Ya tienes una llave de Colmena guardada aquí (Google o iCloud). Úsala con «Entrar con ${B}».`); const c=$("#faceCard"); if(c) c.remove(); drawBio(); return; }
+      toast(passkeyError(e)); if(/insufficient_aal|AAL2/i.test(m)) drawBio(); });
   if(tr) tr.onclick=async()=>{ tr.disabled=true; try{ await Store.trustPasskeys(); toast("Llave aprobada"); drawBio(); }catch(e){ toast(friendlyAuthError(e)); tr.disabled=false; } };
-  if(off) off.onclick=async()=>{ if(!(await askDialog({kind:"danger",title:`¿Apagar ${B}?`,text:"Volverás a entrar con tu correo y tu código de la app. Puedes activarlo de nuevo cuando quieras.",ok:"Apagar"}))) return;
-    try{ await Store.disableFaceId(); toast(`${B} apagado`); drawBio(); }catch(e){ toast(friendlyAuthError(e)); } };
+  if(off) off.onclick=async()=>{ if(!(await askDialog({kind:"danger",title:`¿Apagar ${B}?`,text:"Se apaga en todos tus dispositivos. Volverás a entrar con tu correo y tu código de la app. Puedes activarlo de nuevo cuando quieras.",ok:"Apagar"}))) return;
+    try{ await Store.disableFaceId(); try{ localStorage.removeItem("colmena_face_here"); }catch(x){} toast(`${B} apagado`); drawBio(); }catch(e){ toast(friendlyAuthError(e)); } };
   if(ap) ap.onclick=()=>{ closeMe(); backupAppDialog(); };
 }
 /* v1.12 · Quien entra solo con Face ID agrega su app autenticadora como respaldo */
@@ -3918,14 +4035,18 @@ function drawPw(){
 }
 /* v1.11 · Inicio: invitación a activar Face ID (solo si el dispositivo lo permite y aún no lo tienes) */
 async function faceNudge(){
-  if(!(Store.passkeySupported&&Store.passkeySupported()) || ME.passkey || storageGet("colmena_face_off")==="1" || $("#faceCard")) return;
-  let st, code; try{ [st, code]=await Promise.all([Store.passkeyStatus(), Store.sessionIsCode()]); }catch(e){ return; }
-  if(!code || storageGet("colmena_face_here")==="1" || AH.view!=="home" || !$(".hello") || $("#faceCard")) return;
-  const B=bioName();
-  const html=`<section class="inst face" id="faceCard"><span class="inst-ic bio">${BIO_IC}</span><div><b>${st.trusted>0?`Agrega ${B} en este dispositivo`:`Entra con ${B} la próxima vez`}</b><p>Sin contraseña ni código de 6 dígitos: un toque y listo. Se activa una vez en cada dispositivo.</p></div>
+  if(!(Store.passkeySupported&&Store.passkeySupported()) || faceHere() || storageGet("colmena_face_off")==="1" || $("#faceCard")) return;
+  if(UVPAA===null) await new Promise(r=>setTimeout(r,300));
+  if(UVPAA===false) return;                                   /* sin lector en este equipo: se entra con el teléfono */
+  let st, sec; try{ [st, sec]=await Promise.all([Store.passkeyStatus(), Store.securityState()]); }catch(e){ return; }
+  if(!st || st.untrusted>0 || AH.view!=="home" || !$(".hello") || $("#faceCard")) return;
+  const B=bioName(), pc=!(typeof APP!=="undefined"&&APP.mobile());
+  const html=`<section class="inst face" id="faceCard"><span class="inst-ic bio">${BIO_IC}</span><div><b>${st.trusted>0?`Activa ${B} en ${pc?"esta computadora":"este dispositivo"}`:`Entra con ${B} la próxima vez`}</b><p>Sin contraseña ni código de 6 dígitos: un toque y listo. Se activa una vez en cada dispositivo.</p></div>
     <div class="inst-r"><button class="abtn primary" id="faceGo">${BIO_IC}Activar ${B}</button><button class="ib sm inst-x" id="faceX" aria-label="Ahora no">${icon("close")}</button></div></section>`;
   $(".hello").insertAdjacentHTML("afterend",html);
-  wirePasskeyBtn($("#faceGo"), "reg", ()=>{ const c=$("#faceCard"); if(c) c.remove(); toast(`${B} activado: la próxima vez entra con un toque`); }, e=>toast(passkeyError(e)));
+  if(sec.needCode){ $("#faceGo").onclick=()=>{ openMe(); setTimeout(()=>{ const i=$("#bioOtp"); if(i){ i.scrollIntoView({block:"center"}); i.focus(); } },450); }; }
+  else wirePasskeyBtn($("#faceGo"), "reg", ()=>{ const c=$("#faceCard"); if(c) c.remove(); toast(`${B} activado: la próxima vez entra con un toque`); },
+    e=>{ const m=String(e&&((e.name||"")+" "+(e.message||""))); if(/InvalidState|already registered|excluded/i.test(m)){ markFaceHere(); const c=$("#faceCard"); if(c) c.remove(); toast(`Ya tienes una llave de Colmena guardada aquí. Úsala con «Entrar con ${B}».`); return; } toast(passkeyError(e)); });
   $("#faceX").onclick=()=>{ storageSet("colmena_face_off","1"); $("#faceCard").remove(); toast("Puedes activarlo después desde tu perfil"); };
 }
 
@@ -4066,15 +4187,24 @@ async function createView(){
   const dr=loadWzDraft();
   if(!W.d && !W.b){ if(dr){ W.d=dr.d||null; W.b=dr.b||null; W.step=W.d?Math.min(dr.step||0, W_STEPS.length-1):0; W.seen=new Set([...Array(W.step+1).keys()]); } else { W.d=null; W.b=null; W.step=0; W.seen=new Set([0]); } }
   $("#app").innerHTML=shellHTML(`<div class="wz"><div class="wz-top"><h1 class="adm-t">Crear taller</h1><span class="hint" id="wDraft">${dr?"Borrador recuperado":""}</span><button type="button" class="linkbtn" id="wQuit">Salir</button></div>
-    <ol class="wz-steps" id="wSteps"></ol><div class="panel wz-body" id="wBody"></div><div class="wz-foot" id="wFoot"></div></div>`,"create"); wireTop();
+    <ol class="wz-steps" id="wSteps"></ol><div class="wz-sub" id="wSub" hidden></div><div class="panel wz-body" id="wBody"></div><div class="wz-foot" id="wFoot"></div></div>`,"create"); wireTop();
   $("#wQuit").onclick=async()=>{ if((W.d||W.b) && !(await askDialog({kind:"bee",title:"¿Salir del creador?",text:"Tu avance queda guardado como borrador en este navegador. Puedes continuarlo desde Mis talleres.",ok:"Salir"}))) return; W.d=W.d||null; AH.view="mine"; adminHome(); };
   drawWizard();
 }
+/* v1.12.1 · Dos pasos claros (Cuéntanos → Revisa y crea); las secciones se editan desde la propuesta */
 function drawSteps(){
-  $("#wSteps").innerHTML=W_STEPS.map((s,i)=>{ const st=i===W.step?"on":(!W.d&&i>0)?"todo":(W.seen.has(i)&&i<W.step)?"done":"seen";
-    return `<li class="wz-s ${st}"><button type="button" data-st="${i}" ${st==="todo"?"disabled":""} ${i===W.step?'aria-current="step"':""}><span class="wz-n">${st==="done"?icon("check"):i+1}</span><span class="wz-t">${s.t}</span></button></li>`; }).join("");
-  $$("#wSteps [data-st]").forEach(b=>b.onclick=()=>{ if(!W.d && +b.dataset.st>0) return; W.step=+b.dataset.st; drawWizard(); });
-  const on=$("#wSteps .wz-s.on"), ol=$("#wSteps"); if(on&&ol&&ol.scrollWidth>ol.clientWidth) ol.scrollLeft=on.offsetLeft-ol.clientWidth/2+on.clientWidth/2;
+  const last=W_STEPS.length-1, cur=W.step===0?0:1, inEdit=W.step>0&&W.step<last;
+  const mac=[["Cuéntanos<span class=\"wz-long\"> del taller</span>","Cliente, proceso y qué duele"],["Revisa y crea",W.d?(inEdit?"Editando: "+W_STEPS[W.step].t:"Ajusta lo que quieras y crea"):"Aparece al generar la propuesta"]];
+  $("#wSteps").innerHTML=mac.map(([t,sub],i)=>{ const st=i===cur?"on":(i<cur?"done":(W.d?"seen":"todo"));
+    return `<li class="wz-s ${st}"><button type="button" data-mac="${i}" ${st==="todo"?"disabled":""} ${i===cur?'aria-current="step"':""}><span class="wz-n">${st==="done"?icon("check"):i+1}</span><span class="wz-tt"><span class="wz-t">${t}</span><small>${esc(sub)}</small></span></button></li>`; }).join('<li class="wz-sep" aria-hidden="true"></li>');
+  $$("#wSteps [data-mac]").forEach(b=>b.onclick=()=>{ const i=+b.dataset.mac; if(i===1&&!W.d) return; W.step=i===0?0:last; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); });
+  const sub=$("#wSub"); if(!sub) return;
+  sub.hidden=!inEdit;
+  sub.innerHTML=inEdit?`<button type="button" class="wz-back" id="wBack">${icon("arrowleft")}Volver a la propuesta</button>
+    <nav class="wz-tabs" aria-label="Secciones del taller">${W_STEPS.slice(1,last).map((x,j)=>`<button type="button" class="wz-tab${j+1===W.step?" on":""}" data-st="${j+1}"${j+1===W.step?' aria-current="page"':""}>${x.t}</button>`).join("")}</nav>`:"";
+  if(inEdit){ $("#wBack").onclick=()=>{ W.step=last; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
+    $$("#wSub [data-st]").forEach(b=>b.onclick=()=>{ W.step=+b.dataset.st; saveWzDraftNow(); drawWizard(); });
+    const on=$("#wSub .wz-tab.on"), nav=$("#wSub .wz-tabs"); if(on&&nav&&nav.scrollWidth>nav.clientWidth) nav.scrollLeft=on.offsetLeft-nav.clientWidth/2+on.clientWidth/2; }
 }
 function drawWizard(){
   drawSteps(); const B=$("#wBody"), d=W.d, k=W_STEPS[W.step].k;
@@ -4119,16 +4249,22 @@ function drawWizard(){
   }
   else if(k==="sum") drawReview(B, head);
   /* pie */
-  const last=W.step===W_STEPS.length-1, errs=W.d?validateDraft(W.d):[];
-  $("#wFoot").innerHTML=`<button type="button" class="abtn" id="wPrev" ${W.step===0?"disabled":""}>${icon("arrowleft")}Anterior</button>
-    <span class="hint wz-pos">${W.step+1} de ${W_STEPS.length} · ${W_STEPS[W.step].s}</span>
-    ${last?`<button type="button" class="abtn primary ah-create" id="wCreate" ${errs.length?"disabled":""}>${icon("sparkle")}Crear taller</button>`
-         :W.step===0?(W.d?`<button type="button" class="abtn" id="wNext">Ver propuesta${icon("arrowright")}</button>`:`<span></span>`)
-         :`<button type="button" class="abtn primary" id="wNext">Siguiente${icon("arrowright")}</button>`}`;
-  $("#wFoot").hidden = W.step===0 && (!W.d || W.aiBusy);
-  $("#wPrev").onclick=()=>{ W.step--; if(W.d) saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
-  const nx=$("#wNext"); if(nx) nx.onclick=()=>{ W.step = W.step===0 ? W_STEPS.length-1 : W.step+1; if(W.d) saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
-  const cr=$("#wCreate"); if(cr) cr.onclick=createFromWizard;
+  const last=W_STEPS.length-1, errs=W.d?validateDraft(W.d):[], ft=$("#wFoot");
+  ft.hidden = W.step===0;
+  if(W.step===last){
+    ft.innerHTML=`<button type="button" class="abtn" id="wPrev">${icon("arrowleft")}Cuéntanos</button>
+      <span class="hint wz-pos">${errs.length?"Completa lo que falta para crear":"Al crear se genera el código y el QR"}</span>
+      <button type="button" class="abtn primary ah-create" id="wCreate" ${errs.length?"disabled":""}>${icon("sparkle")}Crear taller</button>`;
+    $("#wPrev").onclick=()=>{ W.step=0; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
+    $("#wCreate").onclick=createFromWizard;
+  } else if(W.step>0){
+    const prev=W.step>1?W_STEPS[W.step-1].t:"Propuesta", next=W.step<last-1?W_STEPS[W.step+1].t:null;
+    ft.innerHTML=`<button type="button" class="abtn" id="wPrev">${icon("arrowleft")}<span class="wz-long">${prev}</span><span class="wz-short">Atrás</span></button>
+      <span class="hint wz-pos">Los cambios se guardan solos</span>
+      <button type="button" class="abtn primary" id="wNext">${next?`Siguiente<span class="wz-long">: ${next}</span>`:`Ver propuesta`}${icon("arrowright")}</button>`;
+    $("#wPrev").onclick=()=>{ W.step=W.step>1?W.step-1:last; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
+    $("#wNext").onclick=()=>{ W.step=next?W.step+1:last; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
+  } else ft.innerHTML="";
 
   function bind(sel,key,fn){ const el=$(sel); el.oninput=()=>{ d[key]=fn?fn(el.value):el.value.trim(); saveWzDraft(); }; }
 }
@@ -4154,8 +4290,11 @@ function drawBrief(B, head){
     return;
   }
   const noAI = AH.ai===false;
-  B.innerHTML=head("Cuéntanos del taller","Con esto armamos una propuesta completa: etapas, quick wins, reglas y preguntas. Tú la revisas antes de crear.")+`
+  const nums=briefNumbers(b), maxSt={"60":5,"90":6,"120":7,"240":8}[b.duracion]||6;
+  B.innerHTML=head("Cuéntanos del taller","Con esto armamos una propuesta completa. Tú la revisas y ajustas antes de crear.")+`
+    <div class="bf-grid">
     <div class="bf">
+      ${W.d&&!W.aiErr?`<div class="bf-have">${icon("check")}<span>Ya tienes una propuesta. Si cambias algo aquí, puedes generar otra.</span><button type="button" class="abtn sm" id="bfSee">Ver propuesta${icon("arrowright")}</button></div>`:""}
       ${W.aiErr?`<div class="bf-warn" role="alert">${icon("clock")}<div><b>${esc(W.aiErr)}</b><div class="bf-wa"><button type="button" class="abtn primary sm" id="bfRetry">Reintentar</button><button type="button" class="abtn sm" id="bfManual2">Armar a mano</button></div></div></div>`:""}
       <div class="field"><label for="bf-cli">¿Para quién es el taller?</label><input id="bf-cli" class="input" maxlength="80" value="${esc(b.cliente)}" placeholder="Ej. Aseguradora del Valle, Mesa de ayuda interna"><p class="hint">Cliente o área. Lo usamos para el nombre del taller. Si prefieres, escribe «Cliente A».</p></div>
       <div class="field"><span class="lbl">Industria <span class="opt">opcional</span></span>${picksHTML("industria", BF_IND.map(x=>[x,x]), b.industria, "Industria")}</div>
@@ -4170,17 +4309,38 @@ function drawBrief(B, head){
         <div class="field"><span class="lbl">¿Cómo le hablamos a la sala?</span>${picksHTML("trato", [["tu","Tú"],["usted","Usted"]], b.trato, "Trato")}</div>
       </details>
       <p class="err" id="bfErr" hidden></p>
-      <button type="button" class="abtn primary wide" id="bfGo">${noAI?`${icon("clipboard")}Armar a mano`:`${icon("sparkle")}Generar propuesta`}</button>
-      <p class="hint bf-note">${noAI?"La IA no está disponible por ahora: armamos un borrador con lo que escribiste para que lo completes.":"Tarda unos 15 segundos. La IA solo propone; nada se crea sin tu OK. Lo que escribes aquí se envía a la IA (Anthropic) para armar la propuesta."}</p>
-      <div class="bf-alt">${noAI?"":`<button type="button" class="linkbtn" id="bfManual">Prefiero armarlo a mano</button>`}
-        ${mine.length?`<label class="bf-copy"><span>o copia un taller anterior</span><select class="input" id="tplCopy"><option value="">Elige un taller…</option>${mine.map(x=>`<option value="${esc(x.code)}">${esc(x.name)} · ${esc(x.code)}</option>`).join("")}</select></label>`:""}</div>
+      <div class="bf-cta">
+        <button type="button" class="abtn primary wide" id="bfGo">${noAI?`${icon("clipboard")}Armar a mano`:`${icon("sparkle")}Generar propuesta`}</button>
+        <p class="hint bf-note">${noAI?"La IA no está disponible por ahora: armamos un borrador con lo que escribiste para que lo completes.":"Tarda unos 15 segundos. Lo que escribes se envía a la IA (Anthropic) solo para armar la propuesta."}</p>
+      </div>
+    </div>
+    <aside class="bf-side" aria-label="Qué vas a recibir">
+      <section class="bf-card">
+        <b>${icon("sparkle")}Qué te propone la IA</b>
+        <ul class="bf-list">
+          <li>${icon("flag")}<span><strong>Hasta ${maxSt} etapas</strong> del proceso, con actividades y herramientas</span></li>
+          <li>${icon("bolt")}<span><strong>Quick wins</strong> ligados a cada etapa y a lo que duele</span></li>
+          <li>${icon("clipboard")}<span><strong>Reglas del nuevo flujo</strong> que se pueden exigir</span></li>
+          <li>${icon("clock")}<span><strong>Tiempos</strong> por etapa y <strong>preguntas</strong> para la sala</span></li>
+          <li>${icon("target")}<span><strong>${nums.votes_per_user} votos</strong> por persona y <strong>${nums.idea_top} retos</strong>, según personas y duración</span></li>
+        </ul>
+        <p class="bf-foot">${icon("check")}Nada se crea sin tu OK: revisas, ajustas y luego creas.</p>
+      </section>
+      <section class="bf-card alt">
+        <b>Otras formas de empezar</b>
+        ${noAI?"":`<button type="button" class="bf-opt" id="bfManual">${icon("clipboard")}<span><strong>Armar a mano</strong><small>Con lo que escribiste, sin IA</small></span></button>`}
+        ${mine.length?`<label class="bf-copy" for="tplCopy"><span>${icon("copy")}<strong>Copiar un taller anterior</strong></span><select class="input" id="tplCopy"><option value="">Elige un taller…</option>${mine.map(x=>`<option value="${esc(x.code)}">${esc(x.name)} · ${esc(x.code)}</option>`).join("")}</select></label>`
+          :`<p class="hint">Cuando tengas talleres, aquí podrás copiar uno como base.</p>`}
+      </section>
+    </aside>
     </div>`;
   const keep=()=>{ saveWzDraft(); };
   const inp=(sel,key)=>{ const el=$(sel); el.oninput=()=>{ b[key]=el.value; if(key==="dolor") $("#bf-cnt").textContent=el.value.length+"/300"; const e=$("#bfErr"); if(e) e.hidden=true; keep(); }; };
   inp("#bf-cli","cliente"); inp("#bf-pro","proceso"); inp("#bf-dol","dolor"); inp("#bf-her","herramientas");
   wireChips("bf-par", v=>{ b.participantes=v; keep(); });
   $$("#wBody [data-pk]").forEach(x=>x.onclick=()=>{ const key=x.dataset.pk, v=x.dataset.v; b[key] = (key==="industria" && b[key]===v) ? "" : v;
-    $$(`#wBody [data-pk="${key}"]`).forEach(y=>{ const on=b[key]===y.dataset.v; y.classList.toggle("on",on); y.setAttribute("aria-checked",on); }); keep(); });
+    $$(`#wBody [data-pk="${key}"]`).forEach(y=>{ const on=b[key]===y.dataset.v; y.classList.toggle("on",on); y.setAttribute("aria-checked",on); }); keep();
+    if(key==="gente"||key==="duracion"){ const n=briefNumbers(b), ms={"60":5,"90":6,"120":7,"240":8}[b.duracion]||6, li=$$(".bf-list li strong"); if(li.length>=7){ li[0].textContent="Hasta "+ms+" etapas"; li[5].textContent=n.votes_per_user+" votos"; li[6].textContent=n.idea_top+" retos"; } } });
   $("#bfGo").onclick=()=>{ const e=$("#bfErr");
     if(b.cliente.trim().length<2 || b.proceso.trim().length<3){ e.hidden=false; e.textContent="Escribe al menos el cliente y el proceso."; ($("#bf-cli").value.trim()?$("#bf-pro"):$("#bf-cli")).focus(); return; }
     if(noAI) return manualDraft();
@@ -4188,6 +4348,7 @@ function drawBrief(B, head){
     runAI({}); };
   const mm=()=>manualDraft(); [$("#bfManual"),$("#bfManual2")].forEach(x=>{ if(x) x.onclick=mm; });
   const rt=$("#bfRetry"); if(rt) rt.onclick=()=>runAI(W.aiLast||{});
+  const sv=$("#bfSee"); if(sv) sv.onclick=()=>{ W.step=W_STEPS.length-1; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
   const cp=$("#tplCopy"); if(cp) cp.onchange=async e=>{ const code=e.target.value; if(!code) return; if(W.d && !(await askDialog({kind:"bee",title:"¿Reemplazar la propuesta?",text:"Se cargará la copia y se pierde lo que hayas editado.",ok:"Reemplazar"}))) return (e.target.value="");
     const x=await Store.getMySession(code).catch(()=>null); if(!x) return toast("No se pudo leer ese taller");
     W.d=fromPreset({...x, template:"copy", name:x.name+" (copia)"}); saveWzDraft(); W.step=W_STEPS.length-1; drawWizard(); window.scrollTo(0,0); };
@@ -4249,7 +4410,7 @@ function drawReview(B, head){
     ${L.uncovered.length?`<div class="bf-warn cov">${icon("target")}<div><b>Tu propuesta no toca: ${L.uncovered.map(x=>"«"+esc(x)+"»").join(", ")}</b>${canAI&&left>0?`<div class="bf-wa"><button type="button" class="abtn sm" id="rvCover">Incluirlo</button></div>`:`<p class="hint">Agrégalo a mano en Validación.</p>`}</div></div>`:""}
     ${L.warn.length?`<details class="rv-lint"${L.warn.length<=3?" open":""}><summary>${L.warn.length===1?"1 cosa para revisar":L.warn.length+" cosas para revisar"}</summary><ul>${L.warn.map(w=>`<li><span>${esc(w.t)}</span><button type="button" class="linkbtn" data-st="${w.step}">Ir</button></li>`).join("")}</ul></details>`:(isAI?`<p class="rv-ok">${icon("check")}Todo cuadra: etapas con verbo, herramientas y reglas exigibles.</p>`:"")}
     <div class="sum-list">
-      ${row(1,"Datos",`<b>${esc(d.name||"Sin nombre")}</b> · facilita ${esc(d.facilitator||"—")} · ${d.votes_per_user} votos por persona`)}
+      ${row(1,"Datos",`<strong>${esc(d.name||"Sin nombre")}</strong> · facilita ${esc(d.facilitator||"—")} · ${d.votes_per_user} votos por persona`)}
       ${row(2,"Participantes",`${d.areas.length} áreas${d.areas.length?": "+esc(d.areas.slice(0,5).join(", "))+(d.areas.length>5?"…":""):""} · ${d.roles.length?d.roles.length+" roles":"puesto libre"}`)}
       ${row(3,"Proceso",`${stN} etapas${stN?": "+esc(d.stages.filter(Boolean).slice(0,3).map(x=>x.replace(/^\d+\s*/,"")).join(" → "))+(stN>3?"…":""):""} · ${stTools} con herramientas · ${stTasks} con actividades`)}
       ${row(4,"Validación e ideas",`${qw} quick wins · ${rg} reglas · ${tm} tiempos · ${d.idea_votes} apoyos por persona`)}

@@ -291,6 +291,12 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 
 **Creador con IA.** El paso 1 es «Cuéntanos del taller» (cliente, proceso, qué duele, objetivo, personas y duración). La IA propone el taller completo y el código decide los números (votos, retos, tiempos). En la propuesta hay advertencias («cosas para revisar»), aviso si algún dolor no quedó cubierto, «Ajustar con una instrucción» y «Otra propuesta» (5 por borrador; 30 por persona al día). Sin IA disponible, «Armar a mano» usa lo que escribiste.
 
+**Entrar en computadora (Mac y Windows, v1.12.1).** Funciona igual en Chrome, Edge, Safari y Firefox:
+- **Mac:** «Entrar con Touch ID». Si tu llave está en tu iPhone, toca el botón y elige «Usar un teléfono o tableta».
+- **Windows:** «Entrar con Windows Hello» (PIN, huella o cara del equipo). Si tu llave está en el celular, elige «Usar un teléfono o tableta» y escanea el QR; la computadora necesita Bluetooth encendido.
+- **Primera vez en una computadora:** entra con tu teléfono (QR) o con tu correo + código, y en Inicio toca «Activa Touch ID / Windows Hello en esta computadora». Si tu cuenta tiene app autenticadora, Supabase pide el código de 6 dígitos antes de agregar la llave (por seguridad); Colmena lo pide ahí mismo.
+- **Recomendación para cada facilitador:** Face ID/huella en el celular + app autenticadora de respaldo. Así nunca se queda fuera si cambia de equipo.
+
 **Pasos para activarla (una vez):**
 1. SQL Editor → correr `migracion-v112-acceso-ia.sql`.
 2. Edge Functions → crear la función `account` con `supabase/functions/account/index.ts` (apaga «Verify JWT with legacy secret»). Usa los mismos secretos de correo que `send-invite`.
