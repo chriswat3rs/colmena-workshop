@@ -1371,9 +1371,7 @@ kbd{font-family:var(--sans);font-size:.6875rem;font-weight:700;padding:1px .3125
   .adm-row>span:nth-child(3){grid-column:1}
   .adm-date{grid-column:1}
   .adm-row>span:last-child{grid-column:2;grid-row:2/5}
-  .tm-row{grid-template-columns:2.5rem minmax(0,1fr)}
-  .tm-meta,.tm-acts{grid-column:2;justify-content:flex-start}
-}@media (max-width:968px){:where(html[data-ts="l"]) .adm-row{grid-template-columns:minmax(0,1fr) auto;gap:.375rem .75rem}:where(html[data-ts="l"]) .adm-th{display:none}:where(html[data-ts="l"]) .adm-name{grid-column:1/-1}:where(html[data-ts="l"]) .adm-owner{grid-column:1}:where(html[data-ts="l"]) .adm-row>span:nth-child(3){grid-column:1}:where(html[data-ts="l"]) .adm-date{grid-column:1}:where(html[data-ts="l"]) .adm-row>span:last-child{grid-column:2;grid-row:2/5}:where(html[data-ts="l"]) .tm-row{grid-template-columns:2.5rem minmax(0,1fr)}:where(html[data-ts="l"]) .tm-meta,:where(html[data-ts="l"]) .tm-acts{grid-column:2;justify-content:flex-start}}@media (max-width:1075px){:where(html[data-ts="xl"]) .adm-row{grid-template-columns:minmax(0,1fr) auto;gap:.375rem .75rem}:where(html[data-ts="xl"]) .adm-th{display:none}:where(html[data-ts="xl"]) .adm-name{grid-column:1/-1}:where(html[data-ts="xl"]) .adm-owner{grid-column:1}:where(html[data-ts="xl"]) .adm-row>span:nth-child(3){grid-column:1}:where(html[data-ts="xl"]) .adm-date{grid-column:1}:where(html[data-ts="xl"]) .adm-row>span:last-child{grid-column:2;grid-row:2/5}:where(html[data-ts="xl"]) .tm-row{grid-template-columns:2.5rem minmax(0,1fr)}:where(html[data-ts="xl"]) .tm-meta,:where(html[data-ts="xl"]) .tm-acts{grid-column:2;justify-content:flex-start}}
+}@media (max-width:968px){:where(html[data-ts="l"]) .adm-row{grid-template-columns:minmax(0,1fr) auto;gap:.375rem .75rem}:where(html[data-ts="l"]) .adm-th{display:none}:where(html[data-ts="l"]) .adm-name{grid-column:1/-1}:where(html[data-ts="l"]) .adm-owner{grid-column:1}:where(html[data-ts="l"]) .adm-row>span:nth-child(3){grid-column:1}:where(html[data-ts="l"]) .adm-date{grid-column:1}:where(html[data-ts="l"]) .adm-row>span:last-child{grid-column:2;grid-row:2/5}}@media (max-width:1075px){:where(html[data-ts="xl"]) .adm-row{grid-template-columns:minmax(0,1fr) auto;gap:.375rem .75rem}:where(html[data-ts="xl"]) .adm-th{display:none}:where(html[data-ts="xl"]) .adm-name{grid-column:1/-1}:where(html[data-ts="xl"]) .adm-owner{grid-column:1}:where(html[data-ts="xl"]) .adm-row>span:nth-child(3){grid-column:1}:where(html[data-ts="xl"]) .adm-date{grid-column:1}:where(html[data-ts="xl"]) .adm-row>span:last-child{grid-column:2;grid-row:2/5}}
 @media (max-width:720px){
   .adm-filters{grid-template-columns:1fr}
   .ah-tab{padding:0 .375rem;gap:.375rem;min-width:0;flex:1 1 0}
@@ -1925,7 +1923,7 @@ a.abtn{text-decoration:none}
 .iv-st.soon{background:var(--warn-soft-2);color:var(--warn-ink-2)}
 .iv-st.exp{background:var(--danger-soft);color:var(--danger)}
 .tm-row.exp .tm-who b{color:var(--ink-2)}
-@media (max-width:560px){ .tm-acts{grid-column:1/-1!important} .tm-acts .abtn{flex:1 1 auto} }@media (max-width:630px){:where(html[data-ts="l"]) .tm-acts{grid-column:1/-1!important}:where(html[data-ts="l"]) .tm-acts .abtn{flex:1 1 auto}}@media (max-width:700px){:where(html[data-ts="xl"]) .tm-acts{grid-column:1/-1!important}:where(html[data-ts="xl"]) .tm-acts .abtn{flex:1 1 auto}}
+
 .me-pw{border-top:1px solid var(--line);padding-top:.875rem;margin-top:.25rem;display:grid;gap:.5rem}
 .me-pw form{display:grid;gap:.625rem}
 .me-pw .field{margin:0}
@@ -2300,7 +2298,7 @@ body.admin-theme{background:var(--surface)}
 /* --- Shell: barra superior en celular/tableta; barra lateral fija desde 1024 px --- */
 .nt-l,.ah-ind{display:none}
 .ah-wide,.ah-main{gap:var(--gap-page)}
-@media (min-width:1024px){:where(html:not([data-ts])) .ah-shell{padding-left:var(--side-w)}:where(html:not([data-ts])) body:has(.ah-shell) #banner{padding-left:var(--side-w)}:where(html:not([data-ts])) .ah-top{position:fixed;top:0;bottom:0;left:0;z-index:30;width:var(--side-w);display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:0;padding:1.25rem .75rem .75rem;background:var(--card);border-bottom:0;border-right:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none;overflow-y:auto;overscroll-behavior:contain}:where(html:not([data-ts])) .ah-top .brand-row{flex-direction:column;align-items:flex-start;gap:.625rem;padding:0 .5rem 1.125rem;margin-bottom:.75rem;border-bottom:1px solid var(--line)}:where(html:not([data-ts])) .ah-top .brand-name{font-size:var(--fs-label);line-height:1.25}:where(html:not([data-ts])) .ah-top .brand-by{font-size:var(--fs-meta)}:where(html:not([data-ts])) .ah-tabs{position:relative;order:0;width:auto;display:flex;flex-direction:column;gap:2px;padding:0;background:none;border-radius:0}:where(html:not([data-ts])) .ah-tab{position:relative;z-index:1;flex:none;width:100%;height:2.5rem;justify-content:flex-start;gap:.75rem;padding:0 .75rem;border-radius:var(--r-sm);font-size:var(--fs-label);font-weight:600;color:var(--ink-2);transition:background-color var(--t-fast),color var(--t-fast),transform 80ms ease-out}:where(html:not([data-ts])) .ah-tab svg{width:1.125rem;height:1.125rem;color:var(--ink-3);transition:color var(--t-fast)}:where(html:not([data-ts])) .ah-tab:hover{background:var(--surface);color:var(--ink)}:where(html:not([data-ts])) .ah-tab.on{background:var(--accent-soft);color:var(--ink);font-weight:700;box-shadow:none}:where(html:not([data-ts])) .ah-tab.on svg{color:var(--accent-strong)}:where(html:not([data-ts])) .ah-tabs.ind-on .ah-tab.on{background:transparent}:where(html:not([data-ts])) .ah-ind{display:block;position:absolute;top:0;left:0;right:0;height:2.5rem;border-radius:var(--r-sm);background:var(--accent-soft);pointer-events:none;transition:transform var(--dur-quick) var(--spring-quick),height var(--dur-quick) var(--spring-quick)}:where(html:not([data-ts])) .ah-user{flex-direction:column;align-items:stretch;gap:2px;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--line);min-width:0}:where(html:not([data-ts])) .ah-user .nt-bell{display:flex;align-items:center;gap:.75rem;width:100%;height:2.5rem;padding:0 .75rem;border:0;border-radius:var(--r-sm);font-size:var(--fs-label);font-weight:600;color:var(--ink-2);text-align:left}:where(html:not([data-ts])) .ah-user .nt-bell svg{width:1.125rem;height:1.125rem;color:var(--ink-3)}:where(html:not([data-ts])) .ah-user .nt-bell:hover,:where(html:not([data-ts])) .ah-user .nt-bell[aria-expanded="true"]{background:var(--surface);border-color:transparent;color:var(--ink)}:where(html:not([data-ts])) .ah-user .nt-l{display:inline}:where(html:not([data-ts])) .ah-user .nt-badge{position:static;margin-left:auto;border:0;box-sizing:border-box;min-width:1.375rem;height:1.25rem;line-height:1.25rem;padding:0 .375rem;border-radius:999px}:where(html:not([data-ts])) .ah-user .me-btn{width:100%;padding:.5rem;border:0;border-radius:var(--r-sm);gap:.625rem}:where(html:not([data-ts])) .ah-user .me-btn:hover,:where(html:not([data-ts])) .ah-user .me-btn[aria-expanded="true"]{background:var(--surface)}:where(html:not([data-ts])) .ah-user .me-t{flex:1;min-width:0}:where(html:not([data-ts])) .ah-user .me-t .ah-mail{max-width:100%;font-size:var(--fs-help)}:where(html:not([data-ts])) .ah-wide,:where(html:not([data-ts])) .ah-main{max-width:var(--page-max);margin:0 auto;padding:2rem clamp(1.5rem,2.5vw,2.5rem) 3rem}:where(html:not([data-ts])) .ah-side{top:2rem}:where(html:not([data-ts])) .me-pop:not(.sheet){max-height:calc(100dvh - 24px)}:where(html:not([data-ts])) body:has(.ah-shell) .toast{left:calc(50% + var(--side-w) / 2)}}@media (min-width:1152px){:where(html[data-ts="l"]) .ah-shell{padding-left:var(--side-w)}:where(html[data-ts="l"]) body:has(.ah-shell) #banner{padding-left:var(--side-w)}:where(html[data-ts="l"]) .ah-top{position:fixed;top:0;bottom:0;left:0;z-index:30;width:var(--side-w);display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:0;padding:1.25rem .75rem .75rem;background:var(--card);border-bottom:0;border-right:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none;overflow-y:auto;overscroll-behavior:contain}:where(html[data-ts="l"]) .ah-top .brand-row{flex-direction:column;align-items:flex-start;gap:.625rem;padding:0 .5rem 1.125rem;margin-bottom:.75rem;border-bottom:1px solid var(--line)}:where(html[data-ts="l"]) .ah-top .brand-name{font-size:var(--fs-label);line-height:1.25}:where(html[data-ts="l"]) .ah-top .brand-by{font-size:var(--fs-meta)}:where(html[data-ts="l"]) .ah-tabs{position:relative;order:0;width:auto;display:flex;flex-direction:column;gap:2px;padding:0;background:none;border-radius:0}:where(html[data-ts="l"]) .ah-tab{position:relative;z-index:1;flex:none;width:100%;height:2.5rem;justify-content:flex-start;gap:.75rem;padding:0 .75rem;border-radius:var(--r-sm);font-size:var(--fs-label);font-weight:600;color:var(--ink-2);transition:background-color var(--t-fast),color var(--t-fast),transform 80ms ease-out}:where(html[data-ts="l"]) .ah-tab svg{width:1.125rem;height:1.125rem;color:var(--ink-3);transition:color var(--t-fast)}:where(html[data-ts="l"]) .ah-tab:hover{background:var(--surface);color:var(--ink)}:where(html[data-ts="l"]) .ah-tab.on{background:var(--accent-soft);color:var(--ink);font-weight:700;box-shadow:none}:where(html[data-ts="l"]) .ah-tab.on svg{color:var(--accent-strong)}:where(html[data-ts="l"]) .ah-tabs.ind-on .ah-tab.on{background:transparent}:where(html[data-ts="l"]) .ah-ind{display:block;position:absolute;top:0;left:0;right:0;height:2.5rem;border-radius:var(--r-sm);background:var(--accent-soft);pointer-events:none;transition:transform var(--dur-quick) var(--spring-quick),height var(--dur-quick) var(--spring-quick)}:where(html[data-ts="l"]) .ah-user{flex-direction:column;align-items:stretch;gap:2px;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--line);min-width:0}:where(html[data-ts="l"]) .ah-user .nt-bell{display:flex;align-items:center;gap:.75rem;width:100%;height:2.5rem;padding:0 .75rem;border:0;border-radius:var(--r-sm);font-size:var(--fs-label);font-weight:600;color:var(--ink-2);text-align:left}:where(html[data-ts="l"]) .ah-user .nt-bell svg{width:1.125rem;height:1.125rem;color:var(--ink-3)}:where(html[data-ts="l"]) .ah-user .nt-bell:hover,:where(html[data-ts="l"]) .ah-user .nt-bell[aria-expanded="true"]{background:var(--surface);border-color:transparent;color:var(--ink)}:where(html[data-ts="l"]) .ah-user .nt-l{display:inline}:where(html[data-ts="l"]) .ah-user .nt-badge{position:static;margin-left:auto;border:0;box-sizing:border-box;min-width:1.375rem;height:1.25rem;line-height:1.25rem;padding:0 .375rem;border-radius:999px}:where(html[data-ts="l"]) .ah-user .me-btn{width:100%;padding:.5rem;border:0;border-radius:var(--r-sm);gap:.625rem}:where(html[data-ts="l"]) .ah-user .me-btn:hover,:where(html[data-ts="l"]) .ah-user .me-btn[aria-expanded="true"]{background:var(--surface)}:where(html[data-ts="l"]) .ah-user .me-t{flex:1;min-width:0}:where(html[data-ts="l"]) .ah-user .me-t .ah-mail{max-width:100%;font-size:var(--fs-help)}:where(html[data-ts="l"]) .ah-wide,:where(html[data-ts="l"]) .ah-main{max-width:var(--page-max);margin:0 auto;padding:2rem clamp(1.5rem,2.5vw,2.5rem) 3rem}:where(html[data-ts="l"]) .ah-side{top:2rem}:where(html[data-ts="l"]) .me-pop:not(.sheet){max-height:calc(100dvh - 24px)}:where(html[data-ts="l"]) body:has(.ah-shell) .toast{left:calc(50% + var(--side-w) / 2)}}@media (min-width:1280px){:where(html[data-ts="xl"]) .ah-shell{padding-left:var(--side-w)}:where(html[data-ts="xl"]) body:has(.ah-shell) #banner{padding-left:var(--side-w)}:where(html[data-ts="xl"]) .ah-top{position:fixed;top:0;bottom:0;left:0;z-index:30;width:var(--side-w);display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:0;padding:1.25rem .75rem .75rem;background:var(--card);border-bottom:0;border-right:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none;overflow-y:auto;overscroll-behavior:contain}:where(html[data-ts="xl"]) .ah-top .brand-row{flex-direction:column;align-items:flex-start;gap:.625rem;padding:0 .5rem 1.125rem;margin-bottom:.75rem;border-bottom:1px solid var(--line)}:where(html[data-ts="xl"]) .ah-top .brand-name{font-size:var(--fs-label);line-height:1.25}:where(html[data-ts="xl"]) .ah-top .brand-by{font-size:var(--fs-meta)}:where(html[data-ts="xl"]) .ah-tabs{position:relative;order:0;width:auto;display:flex;flex-direction:column;gap:2px;padding:0;background:none;border-radius:0}:where(html[data-ts="xl"]) .ah-tab{position:relative;z-index:1;flex:none;width:100%;height:2.5rem;justify-content:flex-start;gap:.75rem;padding:0 .75rem;border-radius:var(--r-sm);font-size:var(--fs-label);font-weight:600;color:var(--ink-2);transition:background-color var(--t-fast),color var(--t-fast),transform 80ms ease-out}:where(html[data-ts="xl"]) .ah-tab svg{width:1.125rem;height:1.125rem;color:var(--ink-3);transition:color var(--t-fast)}:where(html[data-ts="xl"]) .ah-tab:hover{background:var(--surface);color:var(--ink)}:where(html[data-ts="xl"]) .ah-tab.on{background:var(--accent-soft);color:var(--ink);font-weight:700;box-shadow:none}:where(html[data-ts="xl"]) .ah-tab.on svg{color:var(--accent-strong)}:where(html[data-ts="xl"]) .ah-tabs.ind-on .ah-tab.on{background:transparent}:where(html[data-ts="xl"]) .ah-ind{display:block;position:absolute;top:0;left:0;right:0;height:2.5rem;border-radius:var(--r-sm);background:var(--accent-soft);pointer-events:none;transition:transform var(--dur-quick) var(--spring-quick),height var(--dur-quick) var(--spring-quick)}:where(html[data-ts="xl"]) .ah-user{flex-direction:column;align-items:stretch;gap:2px;margin-top:auto;padding-top:.75rem;border-top:1px solid var(--line);min-width:0}:where(html[data-ts="xl"]) .ah-user .nt-bell{display:flex;align-items:center;gap:.75rem;width:100%;height:2.5rem;padding:0 .75rem;border:0;border-radius:var(--r-sm);font-size:var(--fs-label);font-weight:600;color:var(--ink-2);text-align:left}:where(html[data-ts="xl"]) .ah-user .nt-bell svg{width:1.125rem;height:1.125rem;color:var(--ink-3)}:where(html[data-ts="xl"]) .ah-user .nt-bell:hover,:where(html[data-ts="xl"]) .ah-user .nt-bell[aria-expanded="true"]{background:var(--surface);border-color:transparent;color:var(--ink)}:where(html[data-ts="xl"]) .ah-user .nt-l{display:inline}:where(html[data-ts="xl"]) .ah-user .nt-badge{position:static;margin-left:auto;border:0;box-sizing:border-box;min-width:1.375rem;height:1.25rem;line-height:1.25rem;padding:0 .375rem;border-radius:999px}:where(html[data-ts="xl"]) .ah-user .me-btn{width:100%;padding:.5rem;border:0;border-radius:var(--r-sm);gap:.625rem}:where(html[data-ts="xl"]) .ah-user .me-btn:hover,:where(html[data-ts="xl"]) .ah-user .me-btn[aria-expanded="true"]{background:var(--surface)}:where(html[data-ts="xl"]) .ah-user .me-t{flex:1;min-width:0}:where(html[data-ts="xl"]) .ah-user .me-t .ah-mail{max-width:100%;font-size:var(--fs-help)}:where(html[data-ts="xl"]) .ah-wide,:where(html[data-ts="xl"]) .ah-main{max-width:var(--page-max);margin:0 auto;padding:2rem clamp(1.5rem,2.5vw,2.5rem) 3rem}:where(html[data-ts="xl"]) .ah-side{top:2rem}:where(html[data-ts="xl"]) .me-pop:not(.sheet){max-height:calc(100dvh - 24px)}:where(html[data-ts="xl"]) body:has(.ah-shell) .toast{left:calc(50% + var(--side-w) / 2)}}
+@media (min-width:1024px){:where(html:not([data-ts])) .ah-shell{padding-left:var(--side-w)}:where(html:not([data-ts])) body:has(.ah-shell) #banner{padding-left:var(--side-w)}:where(html:not([data-ts])) .ah-top{position:fixed;top:0;bottom:0;left:0;z-index:30;width:var(--side-w);display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:0;padding:1.25rem .75rem .75rem;background:var(--card);border-bottom:0;border-right:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none;overflow-y:auto;overscroll-behavior:contain}:where(html:not([data-ts])) .ah-top .brand-row{flex-direction:column;align-items:flex-start;gap:.625rem;padding:0 .5rem 1.125rem;margin-bottom:.75rem;border-bottom:1px solid var(--line)}:where(html:not([data-ts])) .ah-top .brand-name{font-size:var(--fs-label);line-height:1.25}:where(html:not([data-ts])) .ah-top .brand-by{font-size:var(--fs-meta)}:where(html:not([data-ts])) .ah-tabs{position:relative;order:0;width:auto;display:flex;flex-direction:column;gap:2px;padding:0;background:none;border-radius:0}:where(html:not([data-ts])) .ah-tab{position:relative;z-index:1;flex:none;width:100%;height:2.5rem;justify-content:flex-start;gap:.75rem;padding:0 .75rem;border-radius:var(--r-sm);font-size:var(--fs-label);font-weight:600;color:var(--ink-2);transition:background-color var(--t-fast),color var(--t-fast),transform 80ms ease-out}:where(html:not([data-ts])) .ah-tab svg{width:1.125rem;height:1.125rem;color:var(--ink-3);transition:color var(--t-fast)}:where(html:not([data-ts])) .ah-tab:hover{background:var(--surface);color:var(--ink)}:where(html:not([data-ts])) .ah-tab.on{background:var(--accent-soft);color:var(--ink);font-weight:700;box-shadow:none}:where(html:not([data-ts])) .ah-tab.on svg{color:var(--accent-strong)}:where(html:not([data-ts])) .ah-tabs.ind-on .ah-tab.on{background:transparent}:where(html:not([data-ts])) .ah-ind{display:block;position:absolute;top:0;left:0;right:0;height:2.5rem;border-radius:var(--r-sm);background:var(--accent-soft);pointer-events:none;transition:transform var(--dur-quick) var(--spring-quick),height var(--dur-quick) var(--spring-quick)}:where(html:not([data-ts])) .ah-wide,:where(html:not([data-ts])) .ah-main{max-width:var(--page-max);margin:0 auto;padding:2rem clamp(1.5rem,2.5vw,2.5rem) 3rem}:where(html:not([data-ts])) .ah-side{top:calc(var(--bar-h) + 1rem)}:where(html:not([data-ts])) body:has(.ah-shell) .toast{left:calc(50% + var(--side-w) / 2)}}@media (min-width:1152px){:where(html[data-ts="l"]) .ah-shell{padding-left:var(--side-w)}:where(html[data-ts="l"]) body:has(.ah-shell) #banner{padding-left:var(--side-w)}:where(html[data-ts="l"]) .ah-top{position:fixed;top:0;bottom:0;left:0;z-index:30;width:var(--side-w);display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:0;padding:1.25rem .75rem .75rem;background:var(--card);border-bottom:0;border-right:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none;overflow-y:auto;overscroll-behavior:contain}:where(html[data-ts="l"]) .ah-top .brand-row{flex-direction:column;align-items:flex-start;gap:.625rem;padding:0 .5rem 1.125rem;margin-bottom:.75rem;border-bottom:1px solid var(--line)}:where(html[data-ts="l"]) .ah-top .brand-name{font-size:var(--fs-label);line-height:1.25}:where(html[data-ts="l"]) .ah-top .brand-by{font-size:var(--fs-meta)}:where(html[data-ts="l"]) .ah-tabs{position:relative;order:0;width:auto;display:flex;flex-direction:column;gap:2px;padding:0;background:none;border-radius:0}:where(html[data-ts="l"]) .ah-tab{position:relative;z-index:1;flex:none;width:100%;height:2.5rem;justify-content:flex-start;gap:.75rem;padding:0 .75rem;border-radius:var(--r-sm);font-size:var(--fs-label);font-weight:600;color:var(--ink-2);transition:background-color var(--t-fast),color var(--t-fast),transform 80ms ease-out}:where(html[data-ts="l"]) .ah-tab svg{width:1.125rem;height:1.125rem;color:var(--ink-3);transition:color var(--t-fast)}:where(html[data-ts="l"]) .ah-tab:hover{background:var(--surface);color:var(--ink)}:where(html[data-ts="l"]) .ah-tab.on{background:var(--accent-soft);color:var(--ink);font-weight:700;box-shadow:none}:where(html[data-ts="l"]) .ah-tab.on svg{color:var(--accent-strong)}:where(html[data-ts="l"]) .ah-tabs.ind-on .ah-tab.on{background:transparent}:where(html[data-ts="l"]) .ah-ind{display:block;position:absolute;top:0;left:0;right:0;height:2.5rem;border-radius:var(--r-sm);background:var(--accent-soft);pointer-events:none;transition:transform var(--dur-quick) var(--spring-quick),height var(--dur-quick) var(--spring-quick)}:where(html[data-ts="l"]) .ah-wide,:where(html[data-ts="l"]) .ah-main{max-width:var(--page-max);margin:0 auto;padding:2rem clamp(1.5rem,2.5vw,2.5rem) 3rem}:where(html[data-ts="l"]) .ah-side{top:calc(var(--bar-h) + 1rem)}:where(html[data-ts="l"]) body:has(.ah-shell) .toast{left:calc(50% + var(--side-w) / 2)}}@media (min-width:1280px){:where(html[data-ts="xl"]) .ah-shell{padding-left:var(--side-w)}:where(html[data-ts="xl"]) body:has(.ah-shell) #banner{padding-left:var(--side-w)}:where(html[data-ts="xl"]) .ah-top{position:fixed;top:0;bottom:0;left:0;z-index:30;width:var(--side-w);display:flex;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:flex-start;gap:0;padding:1.25rem .75rem .75rem;background:var(--card);border-bottom:0;border-right:1px solid var(--line);-webkit-backdrop-filter:none;backdrop-filter:none;overflow-y:auto;overscroll-behavior:contain}:where(html[data-ts="xl"]) .ah-top .brand-row{flex-direction:column;align-items:flex-start;gap:.625rem;padding:0 .5rem 1.125rem;margin-bottom:.75rem;border-bottom:1px solid var(--line)}:where(html[data-ts="xl"]) .ah-top .brand-name{font-size:var(--fs-label);line-height:1.25}:where(html[data-ts="xl"]) .ah-top .brand-by{font-size:var(--fs-meta)}:where(html[data-ts="xl"]) .ah-tabs{position:relative;order:0;width:auto;display:flex;flex-direction:column;gap:2px;padding:0;background:none;border-radius:0}:where(html[data-ts="xl"]) .ah-tab{position:relative;z-index:1;flex:none;width:100%;height:2.5rem;justify-content:flex-start;gap:.75rem;padding:0 .75rem;border-radius:var(--r-sm);font-size:var(--fs-label);font-weight:600;color:var(--ink-2);transition:background-color var(--t-fast),color var(--t-fast),transform 80ms ease-out}:where(html[data-ts="xl"]) .ah-tab svg{width:1.125rem;height:1.125rem;color:var(--ink-3);transition:color var(--t-fast)}:where(html[data-ts="xl"]) .ah-tab:hover{background:var(--surface);color:var(--ink)}:where(html[data-ts="xl"]) .ah-tab.on{background:var(--accent-soft);color:var(--ink);font-weight:700;box-shadow:none}:where(html[data-ts="xl"]) .ah-tab.on svg{color:var(--accent-strong)}:where(html[data-ts="xl"]) .ah-tabs.ind-on .ah-tab.on{background:transparent}:where(html[data-ts="xl"]) .ah-ind{display:block;position:absolute;top:0;left:0;right:0;height:2.5rem;border-radius:var(--r-sm);background:var(--accent-soft);pointer-events:none;transition:transform var(--dur-quick) var(--spring-quick),height var(--dur-quick) var(--spring-quick)}:where(html[data-ts="xl"]) .ah-wide,:where(html[data-ts="xl"]) .ah-main{max-width:var(--page-max);margin:0 auto;padding:2rem clamp(1.5rem,2.5vw,2.5rem) 3rem}:where(html[data-ts="xl"]) .ah-side{top:calc(var(--bar-h) + 1rem)}:where(html[data-ts="xl"]) body:has(.ah-shell) .toast{left:calc(50% + var(--side-w) / 2)}}
 
 /* --- Encabezados de página: un solo patrón (H1 24/800, línea de contexto y acciones a la derecha) --- */
 .hello,.page-h{display:flex;align-items:flex-end;justify-content:space-between;gap:.75rem 1.5rem;flex-wrap:wrap;padding:0}
@@ -2315,33 +2313,39 @@ body.admin-theme{background:var(--surface)}
   .hello-acts .abtn:not(.primary) svg{display:none}
 }@media (max-width:810px){:where(html[data-ts="l"]) .hello-acts,:where(html[data-ts="l"]) .page-acts{width:100%}:where(html[data-ts="l"]) .hello-acts .abtn,:where(html[data-ts="l"]) .page-acts .abtn{flex:1;white-space:nowrap}:where(html[data-ts="l"]) .hello-acts .abtn:not(.primary) svg{display:none}}@media (max-width:900px){:where(html[data-ts="xl"]) .hello-acts,:where(html[data-ts="xl"]) .page-acts{width:100%}:where(html[data-ts="xl"]) .hello-acts .abtn,:where(html[data-ts="xl"]) .page-acts .abtn{flex:1;white-space:nowrap}:where(html[data-ts="xl"]) .hello-acts .abtn:not(.primary) svg{display:none}}
 
-/* --- Indicadores compactos (Inicio y Todos los talleres): una franja con divisiones, no tarjetas sueltas --- */
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg)}
+/* --- v1.19 · Indicadores (Inicio y Todos los talleres): tarjetas separadas con jerarquía. Ícono de línea en un cuadro
+   con fondo suave del acento · etiqueta (meta) · número (display) · contexto (help). 4/3 columnas → 2 → 1 (compacta) --- */
+.kpi-w{container-type:inline-size}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--kpi-gap);margin:0}
 .stats.k3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.stat{display:flex;flex-direction:column;gap:.125rem;min-width:0;padding:.875rem 1.25rem}
-.stat+.stat{border-left:1px solid var(--line)}
-.stat dt{display:flex;align-items:center;gap:.5rem;font-size:var(--fs-help);font-weight:600;color:var(--ink-2);line-height:1.3}
-.stat dd{margin:0;min-width:0}
-.stat-v{display:block;font-size:var(--fs-h1);font-weight:700;line-height:1.25;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.stat-c{display:block;font-size:var(--fs-meta);font-weight:500;line-height:1.4;color:var(--ink-3)}
-.stat .sk-b+.sk-b{margin-top:.375rem}
+.stat{display:flex;flex-direction:column;gap:.875rem;min-width:0;padding:1rem 1.125rem 1.125rem;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg)}
+.stat-hd{display:flex;align-items:center;gap:.625rem;min-width:0;margin:0}
+.stat-ic{flex:none;display:grid;place-items:center;width:2.25rem;height:2.25rem;border-radius:var(--r-sm);background:var(--accent-soft);color:var(--accent-strong)}
+.stat-ic svg{width:1.125rem;height:1.125rem}
+.stat-l{display:inline-flex;align-items:center;gap:.5rem;min-width:0;font-size:var(--fs-meta);font-weight:600;line-height:1.3;color:var(--ink-2)}
+.stat-bd{display:flex;flex-direction:column;gap:.25rem;margin:0;min-width:0}
+.stat-v{display:block;font-family:var(--display);font-size:var(--fs-display);font-weight:700;line-height:1.05;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat-c{display:block;font-size:var(--fs-help);font-weight:500;line-height:1.4;color:var(--ink-3)}
+.stat .sk-b+.sk-b{margin-top:0}
 .sd{flex:none;width:.5rem;height:.5rem;border-radius:50%;background:var(--ink-3)}
 .sd-live{background:var(--ok)}
 .sd-live.on{animation:dotpulse 1.6s ease-in-out infinite}
-.sd-ready{background:var(--accent)}
-.sd-draft{background:transparent;box-shadow:inset 0 0 0 1.5px var(--ink-3)}
-.sd-people{background:var(--primary)}
 .ph-pill{align-items:center}
-@media (max-width:720px){
+@container (max-width:40rem){
   .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .stat{padding:.75rem 1rem}
-  .stat+.stat{border-left:0}
-  .stat:nth-child(even){border-left:1px solid var(--line)}
-  .stat:nth-child(n+3){border-top:1px solid var(--line)}
   .stats.k3{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .stats.k3 .stat{padding:.75rem;border-top:0;border-left:0}
-  .stats.k3 .stat+.stat{border-left:1px solid var(--line)}
-}@media (max-width:810px){:where(html[data-ts="l"]) .stats{grid-template-columns:repeat(2,minmax(0,1fr))}:where(html[data-ts="l"]) .stat{padding:.75rem 1rem}:where(html[data-ts="l"]) .stat+.stat{border-left:0}:where(html[data-ts="l"]) .stat:nth-child(even){border-left:1px solid var(--line)}:where(html[data-ts="l"]) .stat:nth-child(n+3){border-top:1px solid var(--line)}:where(html[data-ts="l"]) .stats.k3{grid-template-columns:repeat(3,minmax(0,1fr))}:where(html[data-ts="l"]) .stats.k3 .stat{padding:.75rem;border-top:0;border-left:0}:where(html[data-ts="l"]) .stats.k3 .stat+.stat{border-left:1px solid var(--line)}}@media (max-width:900px){:where(html[data-ts="xl"]) .stats{grid-template-columns:repeat(2,minmax(0,1fr))}:where(html[data-ts="xl"]) .stat{padding:.75rem 1rem}:where(html[data-ts="xl"]) .stat+.stat{border-left:0}:where(html[data-ts="xl"]) .stat:nth-child(even){border-left:1px solid var(--line)}:where(html[data-ts="xl"]) .stat:nth-child(n+3){border-top:1px solid var(--line)}:where(html[data-ts="xl"]) .stats.k3{grid-template-columns:repeat(3,minmax(0,1fr))}:where(html[data-ts="xl"]) .stats.k3 .stat{padding:.75rem;border-top:0;border-left:0}:where(html[data-ts="xl"]) .stats.k3 .stat+.stat{border-left:1px solid var(--line)}}
+  .stats.k3 .stat{padding:.875rem}
+}
+/* Una columna (celular): fila compacta, misma jerarquía. Ícono · etiqueta sobre el contexto · número a la derecha */
+@container (max-width:30rem){
+  .stats,.stats.k3{grid-template-columns:minmax(0,1fr);gap:.5rem}
+  .stat,.stats.k3 .stat{display:grid;grid-template-columns:2.25rem minmax(0,1fr) auto;grid-template-areas:"ic l v" "ic c v";align-items:center;gap:.125rem .875rem;padding:.75rem 1rem}
+  .stat-hd,.stat-bd{display:contents}
+  .stat-ic{grid-area:ic}
+  .stat-l{grid-area:l;align-self:end}
+  .stat-c{grid-area:c;align-self:start}
+  .stat-v{grid-area:v;font-size:var(--fs-h1);text-align:right}
+}
 
 /* --- Inicio: columna principal (tus talleres) + rail (ahora mismo, pendientes, avisos). En celular el rail se parte:
    «Ahora mismo» arriba de la tabla y el resto abajo --- */
@@ -2487,20 +2491,23 @@ body.admin-theme{background:var(--surface)}
 .adm-row .ph-pill{font-size:var(--fs-meta);border-radius:var(--r-sm)}
 .team-list{container-type:inline-size}
 .tm-row{transition:background-color var(--t-fast)}
-@container (max-width:56.25rem){
-  .tm-row{grid-template-columns:2.5rem minmax(0,1fr) auto;grid-template-areas:"av who meta" ". acts acts";row-gap:.5rem}
-  .tm-row>:first-child{grid-area:av}
-  .tm-who{grid-area:who}
-  .tm-meta{grid-area:meta}
-  .tm-acts{grid-area:acts;justify-content:flex-start}
-}
+/* v1.19 · Fila de persona: avatar · nombre (puesto · correo) · rol, talleres y estado · menú ⋯ (todas las acciones) */
+.tm-row{grid-template-columns:2.5rem minmax(0,1fr) auto 2.25rem;grid-template-areas:"av who meta acts";column-gap:.875rem}
+.tm-row>:first-child{grid-area:av}
+.tm-who{grid-area:who}
+.tm-meta{grid-area:meta}
+.tm-acts{grid-area:acts;display:flex;justify-content:flex-end}
+.tm-busy{display:inline-flex;align-items:center;font-size:var(--fs-meta);font-weight:600;color:var(--ink-2);white-space:nowrap}
+.tm-more:disabled{cursor:default;opacity:1}
+.tm-more .spin{width:1rem;height:1rem;border-width:2px;border-color:var(--accent-soft);border-top-color:var(--accent)}
 @container (max-width:35rem){
-  .tm-row{grid-template-columns:2.5rem minmax(0,1fr);grid-template-areas:"av who" ". meta" ". acts"}
+  .tm-row{grid-template-columns:2.5rem minmax(0,1fr) 2.25rem;grid-template-areas:"av who acts" ". meta meta";row-gap:.375rem;align-items:start}
+  .tm-row>:first-child{align-self:center}
   .tm-meta{justify-content:flex-start}
 }
 .ah-shell .abtn.sm{min-height:2.25rem}
 .ah-team .ah-side .input{font-size:var(--fs-body);padding:.6875rem .875rem}
-@media (min-width:1024px){:where(html:not([data-ts])) .ah-main.ah-team{grid-template-columns:minmax(18rem,22.5rem) minmax(0,1fr)}:where(html:not([data-ts])) .ah-team .ah-side{position:sticky;top:2rem;display:flex}}@media (min-width:1152px){:where(html[data-ts="l"]) .ah-main.ah-team{grid-template-columns:minmax(18rem,22.5rem) minmax(0,1fr)}:where(html[data-ts="l"]) .ah-team .ah-side{position:sticky;top:2rem;display:flex}}@media (min-width:1280px){:where(html[data-ts="xl"]) .ah-main.ah-team{grid-template-columns:minmax(18rem,22.5rem) minmax(0,1fr)}:where(html[data-ts="xl"]) .ah-team .ah-side{position:sticky;top:2rem;display:flex}}
+@media (min-width:1024px){:where(html:not([data-ts])) .ah-main.ah-team{grid-template-columns:minmax(18rem,22.5rem) minmax(0,1fr)}:where(html:not([data-ts])) .ah-team .ah-side{position:sticky;top:calc(var(--bar-h) + 1rem);display:flex}}@media (min-width:1152px){:where(html[data-ts="l"]) .ah-main.ah-team{grid-template-columns:minmax(18rem,22.5rem) minmax(0,1fr)}:where(html[data-ts="l"]) .ah-team .ah-side{position:sticky;top:calc(var(--bar-h) + 1rem);display:flex}}@media (min-width:1280px){:where(html[data-ts="xl"]) .ah-main.ah-team{grid-template-columns:minmax(18rem,22.5rem) minmax(0,1fr)}:where(html[data-ts="xl"]) .ah-team .ah-side{position:sticky;top:calc(var(--bar-h) + 1rem);display:flex}}
 .ah-team>.page-h{grid-column:1/-1}
 
 /* --- Crear taller: ancho útil (formulario + panel lateral; en «Revisa y crea», agenda y detalle lado a lado) --- */
@@ -2524,7 +2531,7 @@ body.admin-theme{background:var(--surface)}
   .rv-grid .agenda{margin:0}
   .rv-side>.rv-sub:first-child{margin-top:0}
 }
-@media (min-width:1024px){:where(html:not([data-ts])) .bf-side{top:1.5rem}}@media (min-width:1152px){:where(html[data-ts="l"]) .bf-side{top:1.5rem}}@media (min-width:1280px){:where(html[data-ts="xl"]) .bf-side{top:1.5rem}}
+@media (min-width:1024px){:where(html:not([data-ts])) .bf-side{top:calc(var(--bar-h) + 1rem)}}@media (min-width:1152px){:where(html[data-ts="l"]) .bf-side{top:calc(var(--bar-h) + 1rem)}}@media (min-width:1280px){:where(html[data-ts="xl"]) .bf-side{top:calc(var(--bar-h) + 1rem)}}
 .rv-side>:first-child{margin-top:0}
 
 /* --- Esqueletos de carga: la misma forma que el contenido; brillo suave que se apaga con «Reducir animaciones» --- */
@@ -2608,7 +2615,7 @@ html.dark :is(.ib,.st-b,.at-code,.dlg-act button):focus-visible,html.dark .tgl i
 /* Hover sobre tarjeta: en claro baja al fondo; en oscuro sube un tono (bajar al fondo lo «hunde») */
 html.dark .wt-more.on,html.dark .wt-more:hover{background:var(--hover);border-color:var(--line-2)}
 html.dark .qa:hover,html.dark .nt-it:not(.unread):hover,html.dark .res-nav a:hover,html.dark .st-main .ib.sm:hover{background:var(--hover)}
-@media (min-width:1024px){html:where(:not([data-ts])).dark .ah-tab:not(.on):hover,html:where(:not([data-ts])).dark .ah-user .nt-bell:hover,html:where(:not([data-ts])).dark .ah-user .nt-bell[aria-expanded="true"],html:where(:not([data-ts])).dark .ah-user .me-btn:hover,html:where(:not([data-ts])).dark .ah-user .me-btn[aria-expanded="true"]{background:var(--hover)}}@media (min-width:1152px){html:where([data-ts="l"]).dark .ah-tab:not(.on):hover,html:where([data-ts="l"]).dark .ah-user .nt-bell:hover,html:where([data-ts="l"]).dark .ah-user .nt-bell[aria-expanded="true"],html:where([data-ts="l"]).dark .ah-user .me-btn:hover,html:where([data-ts="l"]).dark .ah-user .me-btn[aria-expanded="true"]{background:var(--hover)}}@media (min-width:1280px){html:where([data-ts="xl"]).dark .ah-tab:not(.on):hover,html:where([data-ts="xl"]).dark .ah-user .nt-bell:hover,html:where([data-ts="xl"]).dark .ah-user .nt-bell[aria-expanded="true"],html:where([data-ts="xl"]).dark .ah-user .me-btn:hover,html:where([data-ts="xl"]).dark .ah-user .me-btn[aria-expanded="true"]{background:var(--hover)}}
+@media (min-width:1024px){html:where(:not([data-ts])).dark .ah-tab:not(.on):hover{background:var(--hover)}}@media (min-width:1152px){html:where([data-ts="l"]).dark .ah-tab:not(.on):hover{background:var(--hover)}}@media (min-width:1280px){html:where([data-ts="xl"]).dark .ah-tab:not(.on):hover{background:var(--hover)}}
 
 /* ============ v1.18 · Movimiento con «feeling de app» (Figma Smart Animate / Motion) ============
    Resortes: tokens --spring-* / --dur-* (arriba, generados por tools/springs.py). Quick = casi todo · Gentle = pantallas y hojas
@@ -2621,7 +2628,9 @@ html.dark .qa:hover,html.dark .nt-it:not(.unread):hover,html.dark .res-nav a:hov
 /* --- Transiciones entre pantallas (View Transitions). html[data-vt] solo existe mientras dura una transición --- */
 /* Barras fijas con nombre propio (no se mueven) solo cuando existen en ambos lados; al abrir o cerrar un taller («push»)
    todo es raíz salvo el título compartido, para que nada viejo tape lo nuevo */
-html:is([data-vt="axis"],[data-vt="wz"]) .ah-top{view-transition-name:ah-nav}
+/* v1.19 · Escritorio: barra lateral (.ah-top) y encabezado (.ah-bar) quietos. Celular/tableta: toda la barra superior (.ah-head) */
+@media (min-width:1024px){html:where(:not([data-ts])):is([data-vt="axis"],[data-vt="wz"]) .ah-top{view-transition-name:ah-nav}html:where(:not([data-ts])):is([data-vt="axis"],[data-vt="wz"]) .ah-bar{view-transition-name:ah-bar}}@media (min-width:1152px){html:where([data-ts="l"]):is([data-vt="axis"],[data-vt="wz"]) .ah-top{view-transition-name:ah-nav}html:where([data-ts="l"]):is([data-vt="axis"],[data-vt="wz"]) .ah-bar{view-transition-name:ah-bar}}@media (min-width:1280px){html:where([data-ts="xl"]):is([data-vt="axis"],[data-vt="wz"]) .ah-top{view-transition-name:ah-nav}html:where([data-ts="xl"]):is([data-vt="axis"],[data-vt="wz"]) .ah-bar{view-transition-name:ah-bar}}
+@media (max-width:1023px){ html:is([data-vt="axis"],[data-vt="wz"]) .ah-head{view-transition-name:ah-nav} }@media (max-width:1151px){html:where([data-ts="l"]):is([data-vt="axis"],[data-vt="wz"]) .ah-head{view-transition-name:ah-nav}}@media (max-width:1279px){html:where([data-ts="xl"]):is([data-vt="axis"],[data-vt="wz"]) .ah-head{view-transition-name:ah-nav}}
 html:is([data-vt="axis"],[data-vt="fade"]) .a-top{view-transition-name:a-top}
 html:is([data-vt="axis"],[data-vt="fade"]) .stepper{view-transition-name:a-steps}
 html[data-vt="axis"] .p-top{view-transition-name:p-top}
@@ -2638,11 +2647,11 @@ html[data-vt] .v-in .vi,html[data-vt] .ah-team.v-in>*{animation:none}
 ::view-transition-group(root){animation-duration:200ms}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:200ms;animation-timing-function:var(--ease-out)}
 /* Barra lateral, barras superiores y fases: no se mueven */
-::view-transition-group(ah-nav),::view-transition-group(a-top),::view-transition-group(a-steps),::view-transition-group(p-top){animation:none}
-::view-transition-old(ah-nav),::view-transition-old(a-top),::view-transition-old(a-steps),::view-transition-old(p-top){animation:none;opacity:0}
-::view-transition-new(ah-nav),::view-transition-new(a-top),::view-transition-new(a-steps),::view-transition-new(p-top){animation:none}
-::view-transition-old(ah-nav):only-child,::view-transition-old(a-top):only-child,::view-transition-old(a-steps):only-child,::view-transition-old(p-top):only-child{opacity:1;animation:vt-fade-out 160ms var(--ease-exit) both}
-::view-transition-new(ah-nav):only-child,::view-transition-new(a-top):only-child,::view-transition-new(a-steps):only-child,::view-transition-new(p-top):only-child{animation:vt-fade-in 200ms var(--ease-out) both}
+::view-transition-group(ah-nav),::view-transition-group(ah-bar),::view-transition-group(a-top),::view-transition-group(a-steps),::view-transition-group(p-top){animation:none}
+::view-transition-old(ah-nav),::view-transition-old(ah-bar),::view-transition-old(a-top),::view-transition-old(a-steps),::view-transition-old(p-top){animation:none;opacity:0}
+::view-transition-new(ah-nav),::view-transition-new(ah-bar),::view-transition-new(a-top),::view-transition-new(a-steps),::view-transition-new(p-top){animation:none}
+::view-transition-old(ah-nav):only-child,::view-transition-old(ah-bar):only-child,::view-transition-old(a-top):only-child,::view-transition-old(a-steps):only-child,::view-transition-old(p-top):only-child{opacity:1;animation:vt-fade-out 160ms var(--ease-exit) both}
+::view-transition-new(ah-nav):only-child,::view-transition-new(ah-bar):only-child,::view-transition-new(a-top):only-child,::view-transition-new(a-steps):only-child,::view-transition-new(p-top):only-child{animation:vt-fade-in 200ms var(--ease-out) both}
 /* Contenido: lo anterior se va rápido; lo nuevo entra desde el lado de la dirección con Gentle.
    El contenedor no viaja de la posición vieja a la nueva (al volver arriba con scroll el contenido «caería» desde arriba) */
 ::view-transition-group(page){animation:none}
@@ -2706,6 +2715,143 @@ details>summary::after,details>summary::before{transition-duration:var(--dur-qui
 html.rm .seg-ind,html.rm .ah-ind,html.rm details::details-content{transition:none!important}
 @media (prefers-reduced-motion:reduce){ details::details-content{transition:none!important} ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important} }
 html.rm::view-transition-group(*),html.rm::view-transition-old(*),html.rm::view-transition-new(*){animation:none!important}
+
+/* ============ v1.19 · Encabezado, Notificaciones y Ajustes como vistas, menús ⋯ y botón de tema ============
+   Colores solo con tokens (claro y oscuro). Sin barras ni bordes de acento a la izquierda. Movimiento con los resortes. */
+:root{--bar-h:3.5rem;--kpi-gap:clamp(.75rem,1.2vw,1rem)}
+
+/* --- Encabezado: celular/tableta = una barra superior (marca · tema/campana/avatar · pestañas);
+       escritorio = barra lateral (marca + navegación) y encabezado arriba a la derecha del contenido --- */
+.ah-user{display:flex;align-items:center;gap:.25rem;min-width:0}
+.hb{position:relative;flex:none;display:inline-grid;place-items:center;width:2.5rem;height:2.5rem;padding:0;border-radius:var(--r-md);border:1px solid transparent;background:transparent;color:var(--ink-2)}
+.hb svg{width:1.25rem;height:1.25rem}
+.hb:hover,.hb[aria-expanded="true"]{background:var(--card);border-color:var(--line);color:var(--ink)}
+.hb[aria-current="page"]{background:var(--accent-soft);border-color:transparent;color:var(--accent-strong)}
+.hb:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.ah-user .hb.me-btn{width:2.5rem;height:2.5rem;padding:0;gap:0;border-radius:50%;border:1px solid transparent}
+.ah-user .hb.me-btn .av-i{width:2.125rem;height:2.125rem;font-size:.75rem}
+.ah-user .hb.me-btn:hover,.ah-user .hb.me-btn[aria-expanded="true"]{background:var(--card);border-color:var(--line)}
+.hb .nt-badge{top:2px;right:2px;box-sizing:border-box;min-width:1.125rem;height:1.125rem;padding:0 .25rem;border-width:2px;line-height:.875rem;font-size:.625rem;border-color:var(--surface)}
+.hb.nt-bell.ring svg{animation:ring .9s ease}
+html.dark .hb:hover,html.dark .hb[aria-expanded="true"],html.dark .ah-user .hb.me-btn:hover,html.dark .ah-user .hb.me-btn[aria-expanded="true"]{background:var(--hover);border-color:var(--line-2)}
+.ah-tabs:not(.ind-on) .ah-ind{visibility:hidden}
+@media (max-width:1023px){
+  .ah-head{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:.625rem 1.25rem;flex-wrap:wrap;
+    padding:.625rem clamp(1rem,3vw,2.25rem) .75rem;background:color-mix(in srgb,var(--surface) 96%,transparent);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid var(--line)}
+  .ah-top{display:contents}
+  .ah-head .brand-row{order:1}
+  .ah-head .ah-bar{order:2;margin-left:auto}
+  .ah-head .ah-tabs{order:3;width:100%}
+  .ah-head .ah-tab{flex:1;justify-content:center}
+}@media (max-width:1151px){:where(html[data-ts="l"]) .ah-head{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:.625rem 1.25rem;flex-wrap:wrap;
+    padding:.625rem clamp(1rem,3vw,2.25rem) .75rem;background:color-mix(in srgb,var(--surface) 96%,transparent);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid var(--line)}:where(html[data-ts="l"]) .ah-top{display:contents}:where(html[data-ts="l"]) .ah-head .brand-row{order:1}:where(html[data-ts="l"]) .ah-head .ah-bar{order:2;margin-left:auto}:where(html[data-ts="l"]) .ah-head .ah-tabs{order:3;width:100%}:where(html[data-ts="l"]) .ah-head .ah-tab{flex:1;justify-content:center}}@media (max-width:1279px){:where(html[data-ts="xl"]) .ah-head{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:.625rem 1.25rem;flex-wrap:wrap;
+    padding:.625rem clamp(1rem,3vw,2.25rem) .75rem;background:color-mix(in srgb,var(--surface) 96%,transparent);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid var(--line)}:where(html[data-ts="xl"]) .ah-top{display:contents}:where(html[data-ts="xl"]) .ah-head .brand-row{order:1}:where(html[data-ts="xl"]) .ah-head .ah-bar{order:2;margin-left:auto}:where(html[data-ts="xl"]) .ah-head .ah-tabs{order:3;width:100%}:where(html[data-ts="xl"]) .ah-head .ah-tab{flex:1;justify-content:center}}
+@media (max-width:720px){
+  .ah-head{padding:calc(.5rem + env(safe-area-inset-top,0px)) var(--gutter) .625rem;gap:.5rem}
+  .ah-user{gap:.125rem}
+}@media (max-width:810px){:where(html[data-ts="l"]) .ah-head{padding:calc(.5rem + env(safe-area-inset-top,0px)) var(--gutter) .625rem;gap:.5rem}:where(html[data-ts="l"]) .ah-user{gap:.125rem}}@media (max-width:900px){:where(html[data-ts="xl"]) .ah-head{padding:calc(.5rem + env(safe-area-inset-top,0px)) var(--gutter) .625rem;gap:.5rem}:where(html[data-ts="xl"]) .ah-user{gap:.125rem}}
+@media (min-width:1024px){:where(html:not([data-ts])) .ah-head{display:contents}:where(html:not([data-ts])) .ah-bar{position:sticky;top:0;z-index:25;display:flex;align-items:center;height:var(--bar-h);background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);border-bottom:1px solid transparent;transition:border-color var(--t-fast)}:where(html:not([data-ts])) .ah-bar.sc{border-bottom-color:var(--line)}:where(html:not([data-ts])) .ah-bar-in{display:flex;justify-content:flex-end;width:100%;max-width:var(--page-max);margin:0 auto;padding:0 clamp(1.5rem,2.5vw,2.5rem)}:where(html:not([data-ts])) .ah-wide,:where(html:not([data-ts])) .ah-main{padding-top:.5rem}}@media (min-width:1152px){:where(html[data-ts="l"]) .ah-head{display:contents}:where(html[data-ts="l"]) .ah-bar{position:sticky;top:0;z-index:25;display:flex;align-items:center;height:var(--bar-h);background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);border-bottom:1px solid transparent;transition:border-color var(--t-fast)}:where(html[data-ts="l"]) .ah-bar.sc{border-bottom-color:var(--line)}:where(html[data-ts="l"]) .ah-bar-in{display:flex;justify-content:flex-end;width:100%;max-width:var(--page-max);margin:0 auto;padding:0 clamp(1.5rem,2.5vw,2.5rem)}:where(html[data-ts="l"]) .ah-wide,:where(html[data-ts="l"]) .ah-main{padding-top:.5rem}}@media (min-width:1280px){:where(html[data-ts="xl"]) .ah-head{display:contents}:where(html[data-ts="xl"]) .ah-bar{position:sticky;top:0;z-index:25;display:flex;align-items:center;height:var(--bar-h);background:color-mix(in srgb,var(--surface) 92%,transparent);-webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);border-bottom:1px solid transparent;transition:border-color var(--t-fast)}:where(html[data-ts="xl"]) .ah-bar.sc{border-bottom-color:var(--line)}:where(html[data-ts="xl"]) .ah-bar-in{display:flex;justify-content:flex-end;width:100%;max-width:var(--page-max);margin:0 auto;padding:0 clamp(1.5rem,2.5vw,2.5rem)}:where(html[data-ts="xl"]) .ah-wide,:where(html[data-ts="xl"]) .ah-main{padding-top:.5rem}}
+
+/* --- Botón de tema en el participante: junto a «Aa», mismo tamaño y borde --- */
+.th-btn.p-th{flex:none;margin-left:auto;margin-top:-.4375rem;margin-bottom:-.4375rem;display:inline-grid;place-items:center;width:2.75rem;height:2.75rem;padding:0;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.th-btn.p-th svg{width:1.25rem;height:1.25rem}
+.th-btn.p-th:hover{border-color:var(--ink-3)}
+.th-btn.p-th:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.p-th+.a11y-btn,.pb-pill+.p-th{margin-left:0}
+.th-btn{transition:background-color var(--t-fast),border-color var(--t-fast),color var(--t-fast),transform var(--dur-quick) var(--spring-quick)}
+.th-btn:active{transform:scale(.94);transition:transform 90ms ease-out}
+
+/* --- Menú ⋯ (tabla, Equipo, Invitaciones, avatar): en celular, hoja inferior con manija --- */
+.rm-back{position:fixed;inset:0;z-index:199;background:rgb(var(--scrim) / .38)}
+.rm-pop.rm-sheet{left:0!important;right:0;bottom:0;top:auto!important;width:auto;min-width:0;max-width:none;max-height:85dvh;overflow-y:auto;overscroll-behavior:contain;
+  padding:1.25rem .5rem calc(.75rem + env(safe-area-inset-bottom,0px));border-radius:20px 20px 0 0;border-bottom:0;box-shadow:0 -12px 40px rgb(var(--sh) / .22)}
+.rm-pop.rm-sheet::before{content:"";position:absolute;top:.375rem;left:50%;translate:-50% 0;width:2.25rem;height:.25rem;border-radius:999px;background:var(--line-2);pointer-events:none}
+.rm-h{margin:0 .25rem .375rem;padding:.25rem .5rem .625rem;border-bottom:1px solid var(--line);font-size:var(--fs-help);font-weight:700;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;touch-action:none}
+.rm-sheet .rm-it{min-height:3rem;align-items:center;padding:.75rem}
+.rm-sheet .rm-it b{font-size:var(--fs-label)}
+.rm-it svg{flex:none}
+.me-menu{min-width:16.5rem}
+.me-menu .rm-it{align-items:center}
+.rm-me{display:flex;align-items:center;gap:.75rem;margin:0 0 .375rem;padding:.5rem .625rem .75rem;border-bottom:1px solid var(--line);touch-action:none}
+.rm-me-t{display:flex;flex-direction:column;align-items:flex-start;gap:.125rem;min-width:0}
+.rm-me-t b{max-width:100%;font-size:var(--fs-label);font-weight:700;line-height:1.3;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rm-me-t small{max-width:100%;font-size:var(--fs-meta);color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rm-me-t .role-tag{margin-top:.25rem;padding:1px .4375rem;font-size:.625rem}
+html.dark .rm-pop.rm-sheet{box-shadow:0 0 0 1px var(--line-2),0 -16px 48px rgb(0 0 0 / .45)}
+
+/* --- Notificaciones (vista propia) --- */
+.nt-panel{container-type:inline-size;padding:1rem 1.25rem 1.25rem}
+.nt-bar{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.5rem}
+.nt-bar .wt-filters{margin:0}
+.nt-view .nt-list{overflow:visible;padding:0}
+.nt-view .nt-g{margin:1rem 0 .25rem;padding:0 .75rem;font-size:var(--fs-meta);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.nt-view .nt-g:first-child{margin-top:.875rem}
+.nt-ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.nt-view .nt-it{display:grid;grid-template-columns:2.25rem minmax(0,1fr) auto auto;grid-template-areas:"ic tx side acts";align-items:center;gap:.25rem 1rem;width:auto;padding:.75rem;border-radius:var(--r-md);text-align:left;cursor:pointer;transition:background-color var(--t-fast)}
+.nt-view .nt-it::after{content:none}
+.nt-view .nt-it:hover{background:var(--row-hover)}
+.nt-view .nt-it.unread{background:var(--accent-tint)}
+.nt-view .nt-it.unread:hover{background:var(--accent-tint-2)}
+.nt-view .nt-ic{grid-area:ic;border-radius:var(--r-sm)}
+.nt-view .nt-tx{grid-area:tx;padding:0}
+.nt-view .nt-tx b{font-size:var(--fs-label);font-weight:600;line-height:1.35}
+.nt-view .nt-it.unread .nt-tx b{font-weight:700}
+.nt-view .nt-tx p{margin-top:.125rem;font-size:var(--fs-help);line-height:1.45;-webkit-line-clamp:3}
+.nt-side{grid-area:side;display:flex;align-items:center;gap:.5rem;white-space:nowrap}
+.nt-side time{font-size:var(--fs-meta);font-weight:500;color:var(--ink-3)}
+.nt-dot{flex:none;width:.5rem;height:.5rem;border-radius:50%;background:var(--accent)}
+.nt-acts{grid-area:acts;display:flex;justify-content:flex-end}
+.nt-view .nt-act{min-height:2.25rem;padding:.3125rem .75rem;border:1px solid var(--line-ctl);border-radius:var(--r-md);background:var(--card);color:var(--ink);font-size:var(--fs-help);font-weight:600;white-space:nowrap}
+.nt-view .nt-act:hover{background:var(--card);border-color:var(--ink-3)}
+.nt-view .nt-act.ghost-n{border-color:transparent;background:transparent;color:var(--ink-2)}
+.nt-view .nt-act.ghost-n:hover{background:var(--hover);color:var(--ink)}
+.nt-view .nt-empty{padding:2.5rem 1.25rem 2.75rem}
+.nt-view .nt-empty .linkbtn{margin-top:.25rem}
+.sk-nt{display:grid;grid-template-columns:2.25rem minmax(0,1fr) 4rem;gap:1rem;align-items:center;padding:.75rem}
+@container (max-width:40rem){
+  .nt-view .nt-it{grid-template-columns:2.25rem minmax(0,1fr) auto;grid-template-areas:"ic tx side" ". acts acts";align-items:start;gap:.5rem .75rem}
+  .nt-view .nt-ic{align-self:start}
+  .nt-acts{justify-content:flex-start}
+  .nt-acts:empty{display:none}
+  .nt-view .nt-act.ghost-n{margin-left:-.75rem}
+}
+
+/* --- Ajustes (vista propia): secciones en tarjetas; dos columnas en escritorio ancho --- */
+/* Una columna: el orden de lectura (Perfil · Acceso · Correos · Accesibilidad · Ayuda). Dos columnas: columnas
+   independientes y parejas (Perfil · Acceso · Ayuda | Correos · Accesibilidad), sin huecos entre tarjetas */
+.set-grid{display:flex;flex-direction:column;gap:var(--gap-page)}
+.set-col{display:contents}
+.set-help{order:9}
+@media (min-width:1200px){:where(html:not([data-ts])) .set-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}:where(html:not([data-ts])) .set-col{display:flex;flex-direction:column;gap:var(--gap-page);min-width:0}}@media (min-width:1350px){:where(html[data-ts="l"]) .set-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}:where(html[data-ts="l"]) .set-col{display:flex;flex-direction:column;gap:var(--gap-page);min-width:0}}@media (min-width:1500px){:where(html[data-ts="xl"]) .set-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}:where(html[data-ts="xl"]) .set-col{display:flex;flex-direction:column;gap:var(--gap-page);min-width:0}}
+.panel.set-card{padding:1.25rem 1.375rem 1.375rem}
+.set-h{margin:0 0 1rem}
+.ah-shell .set-h h2{display:block;margin:0;font-size:var(--fs-h3);font-weight:700;line-height:1.3}
+.set-h .hint{margin:.25rem 0 0;line-height:1.45}
+.set-card :is(.me-prefs,.me-help,.me-app,.me-bio,.me-pw,.me-a11y){border-top:0;padding-top:0;margin-top:0}
+.set-card .me-bio+.me-pw,.set-card .me-help+.me-app{margin-top:1.125rem;padding-top:1.125rem;border-top:1px solid var(--line)}
+.set-card :is(.me-pw,.me-bio,.me-app)>b{display:block;font-size:var(--fs-label);font-weight:700;color:var(--ink)}
+.set-card .me-bio,.set-card .me-pw,.set-card .me-app,.set-card .me-help{gap:.625rem}
+.set-card .me-hero{gap:1.125rem}
+.set-card .me-who b{max-width:100%;font-size:var(--fs-h3);white-space:normal;overflow-wrap:anywhere}
+.set-card .me-who span:not(.role-tag){max-width:100%;font-size:var(--fs-help);white-space:normal;overflow-wrap:anywhere}
+.set-card .me-who .role-tag{margin-top:.25rem}
+.set-card .me-acts{flex-wrap:wrap;margin-top:1.125rem}
+.set-card .me-acts .abtn.primary{flex:none}
+.set-card .me-form{margin-top:1.125rem;padding-top:1.125rem;border-top:1px solid var(--line)}
+.set-card .me-form .me-acts{margin-top:.25rem}
+.set-card .me-profile>.hint,.set-card .me-profile>.err{margin:.75rem 0 0}
+.set-card .ok-t{color:var(--ok-ink)}
+.set-card .pf-row{min-height:3rem;padding:.625rem 0;border-top:1px solid var(--line);font-size:var(--fs-help);color:var(--ink)}
+.set-card .pf-row:first-child{border-top:0;padding-top:0}
+.set-card .me-prefs{gap:0}
+.set-card .a11y{gap:.75rem}
+.set-card .a11y .set-h{margin-bottom:.25rem}
+.set-card .a11y .pf-row:first-of-type{border-top:0}
+.set-card .sk-lines{padding:0}
+@media (max-width:720px){
+  .panel.set-card{padding:1.125rem 1rem 1.25rem}
+  .set-card .me-acts .abtn{flex:1 1 auto}
+}@media (max-width:810px){:where(html[data-ts="l"]) .panel.set-card{padding:1.125rem 1rem 1.25rem}:where(html[data-ts="l"]) .set-card .me-acts .abtn{flex:1 1 auto}}@media (max-width:900px){:where(html[data-ts="xl"]) .panel.set-card{padding:1.125rem 1rem 1.25rem}:where(html[data-ts="xl"]) .set-card .me-acts .abtn{flex:1 1 auto}}
 </style>
 </head>
 <body>
@@ -2793,7 +2939,12 @@ const GLYPHS = {
   close:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
   plus:'<path d="M12 5v14M5 12h14"/>',
   bell:'<path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
-  camera:'<path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.2l1.4-2h5.8l1.4 2h2.2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="12.8" r="3.4"/>'
+  camera:'<path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h2.2l1.4-2h5.8l1.4 2h2.2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="12.8" r="3.4"/>',
+  /* v1.19 · Ajustes, cerrar sesión, en curso y desactivar */
+  sliders:'<path d="M4 7.5h8.6M17.4 7.5H20M4 16.5h2.6M11.4 16.5H20"/><circle cx="15" cy="7.5" r="2.4"/><circle cx="9" cy="16.5" r="2.4"/>',
+  logout:'<path d="M14.5 4.2H18a1.8 1.8 0 0 1 1.8 1.8v12a1.8 1.8 0 0 1-1.8 1.8h-3.5"/><path d="M10 16.5 5.5 12 10 7.5"/><path d="M5.5 12h10"/>',
+  play:'<circle cx="12" cy="12" r="8.8"/><path d="M10.2 8.6v6.8l5.4-3.4z"/>',
+  ban:'<circle cx="12" cy="12" r="8.8"/><path d="M5.8 5.8l12.4 12.4"/>'
 };
 function icon(name){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${GLYPHS[name]||GLYPHS.hexagon}</svg>`; }
 function glass(name, o){ o=o||{}; return `<span class="glass t-${o.tone||"blue"}${o.size?" "+o.size:""}${o.tint?" tint":""}"${o.label?` role="img" aria-label="${o.label}"`:' aria-hidden="true"'}>${icon(name)}</span>`; }
@@ -2869,11 +3020,11 @@ function storageGet(k){ try{ return localStorage.getItem(k); }catch(e){ return (
 function storageSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){ (window.__mem=window.__mem||{})[k]=v; } }
 /* ---------- v1.14 · Accesibilidad: tamaño de texto, alto contraste y menos movimiento ----------
    Se guarda en este dispositivo (colmena_a11y). Un script en <head> lo aplica antes de pintar.
-   v1.17 · Tema: th = "s" (sigue al sistema, por defecto) | "l" (claro) | "d" (oscuro) → clase «dark» en <html>. */
+   v1.17 · Tema: th = "s" (sigue al sistema, por defecto) | "l" (claro) | "d" (oscuro) → clase «dark» en <html>.
+   v1.19 · El tema se cambia con el botón de luna/sol (themeBtnHTML); «s» solo existe mientras no se ha tocado. */
 const A11Y = {
   KEY:"colmena_a11y",
   TS:[["m","Normal","s1"],["l","Grande","s2"],["xl","Muy grande","s3"]],
-  TH:[["s","Sistema","monitor"],["l","Claro","sun"],["d","Oscuro","moon"]],
   THEME_COLOR:{l:"#01133B", d:"#0C1424"},   /* barra del navegador / de estado: marino en claro, superficie en oscuro */
   sys(m){ try{ return matchMedia(m).matches; }catch(e){ return false; } },
   get(){ try{ const v=JSON.parse(storageGet(this.KEY)||"{}"); return v&&typeof v==="object"?v:{}; }catch(e){ return {}; } },
@@ -2898,19 +3049,17 @@ const A11Y = {
       h.classList.add("th-switch"); h.classList.toggle("dark",dk); void getComputedStyle(h).color;
       requestAnimationFrame(()=>requestAnimationFrame(()=>h.classList.remove("th-switch")));
     }
-    const m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute("content", this.THEME_COLOR[dk?"d":"l"]); },
+    const m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute("content", this.THEME_COLOR[dk?"d":"l"]);
+    if(typeof syncThemeBtns==="function") syncThemeBtns(); },
   /* Con «Sistema», si el sistema cambia de claro a oscuro (o al revés) la app lo sigue al momento */
   watch(){ try{ const mq=matchMedia("(prefers-color-scheme: dark)"), on=()=>{ if(this.state().th==="s") this.theme("s"); };
       if(mq.addEventListener) mq.addEventListener("change",on); else if(mq.addListener) mq.addListener(on); }catch(e){} }
 };
 A11Y.watch();
-function a11yHTML(id){ const st=A11Y.state(), ic=n=>typeof icon==="function"?icon(n):"";
+function a11yHTML(id){ const st=A11Y.state();
+  /* v1.19 · El tema ya no vive aquí: es el botón de luna/sol del encabezado (y junto a «Aa» en el participante) */
   return `<div class="a11y" role="group" aria-labelledby="${id}-t">
     <b id="${id}-t">Accesibilidad</b>
-    <div class="a11y-l" id="${id}-thl">Tema</div>
-    <div class="a11y-ts a11y-th" role="radiogroup" aria-labelledby="${id}-thl">
-      ${A11Y.TH.map(([k,t,i])=>`<label class="a11y-opt"><input type="radio" name="${id}-th" value="${k}"${st.th===k?" checked":""}><span class="a11y-box"><span class="th-ic" aria-hidden="true">${ic(i)}</span><small>${t}</small></span></label>`).join("")}
-    </div>
     <div class="a11y-l" id="${id}-tl">Tamaño de texto</div>
     <div class="a11y-ts" role="radiogroup" aria-labelledby="${id}-tl">
       ${A11Y.TS.map(([k,t,c])=>`<label class="a11y-opt"><input type="radio" name="${id}-ts" value="${k}"${st.ts===k?" checked":""}><span class="a11y-box"><span class="aa ${c}" aria-hidden="true">Aa</span><small>${t}</small></span></label>`).join("")}
@@ -2919,17 +3068,44 @@ function a11yHTML(id){ const st=A11Y.state(), ic=n=>typeof icon==="function"?ico
     <label class="pf-row"><span><em>Reducir animaciones</em><small>Menos movimiento en pantalla</small></span><input type="checkbox" data-a11y="rm"${st.rm?" checked":""}><i class="pf-sw" aria-hidden="true"></i></label>
     <p class="hint">Se guarda en este dispositivo.</p>
   </div>`; }
-/* v1.18 · Tema y Tamaño de texto: el aro de la opción elegida se desliza a la nueva (Motion.seg) */
+/* v1.18 · Tamaño de texto: el aro de la opción elegida se desliza a la nueva (Motion.seg) */
 function segA11y(root){ if(typeof Motion==="undefined" || !root) return; $$(".a11y-ts",root).forEach(g=>Motion.seg(g, ".a11y-opt:has(input:checked)", "a11y-"+(g.getAttribute("aria-labelledby")||""))); }
 function wireA11y(root){
   $$('input[type=radio]',root).forEach(r=>{
-    if(/-th$/.test(r.name)) r.onchange=()=>{ if(r.checked){ A11Y.set({th:r.value}); segA11y(root); toast("Tema: "+A11Y.TH.find(x=>x[0]===r.value)[1]); } };
-    else if(/-ts$/.test(r.name)) r.onchange=()=>{ if(r.checked){ A11Y.set({ts:r.value}); segA11y(root); toast("Tamaño de texto: "+A11Y.TS.find(x=>x[0]===r.value)[1]); } }; });
+    if(/-ts$/.test(r.name)) r.onchange=()=>{ if(r.checked){ A11Y.set({ts:r.value}); segA11y(root); toast("Tamaño de texto: "+A11Y.TS.find(x=>x[0]===r.value)[1]); } }; });
   $$('[data-a11y]',root).forEach(cb=>cb.onchange=()=>{ A11Y.set({[cb.dataset.a11y]:cb.checked}); segA11y(root); });
   requestAnimationFrame(()=>segA11y(root));
 }
-/* Botón «Aa» del participante: hoja con los mismos controles */
-function a11yBtnHTML(){ return `<button type="button" class="a11y-btn" data-a11y-open aria-haspopup="dialog" aria-label="Tema, tamaño de texto y contraste" title="Tema, tamaño de texto y contraste">Aa</button>`; }
+/* ---------- v1.19 · Modo oscuro: un botón de ícono estándar (luna en claro, sol en oscuro) ----------
+   Sin elección guardada sigue al sistema; al tocarlo se guarda claro u oscuro (colmena_a11y.th = "l" | "d"). */
+function themeLabel(dk){ return dk?"Activar modo claro":"Activar modo oscuro"; }
+function themeBtnHTML(cls){ const dk=A11Y.dark(A11Y.state().th), t=themeLabel(dk), ic=n=>typeof icon==="function"?icon(n):"";
+  return `<button type="button" class="th-btn${cls?" "+cls:""}" data-theme-btn aria-pressed="${dk}" aria-label="${t}" data-tip="${t}">${ic(dk?"sun":"moon")}</button>`; }
+function syncThemeBtns(pop){ const dk=document.documentElement.classList.contains("dark"), t=themeLabel(dk);
+  $$("[data-theme-btn]").forEach(b=>{ if(b.getAttribute("aria-pressed")===String(dk)) return;
+    b.setAttribute("aria-pressed",dk); b.setAttribute("aria-label",t); b.setAttribute("data-tip",t);
+    if(typeof icon==="function") b.innerHTML=icon(dk?"sun":"moon");
+    if(pop && typeof Motion!=="undefined") Motion.pop(b.querySelector("svg"),{from:.5, fade:false}); }); }
+function toggleTheme(){ A11Y.set({th: A11Y.dark(A11Y.state().th) ? "l" : "d"}); syncThemeBtns(true); }
+document.addEventListener("click",e=>{ const b=e.target.closest&&e.target.closest("[data-theme-btn]"); if(b){ e.preventDefault(); toggleTheme(); } });
+/* Tooltip único para todo lo que tenga data-tip (texto plano, nunca HTML).
+   v1.19 · Vive aquí (lo usan el facilitador y el participante): con el dedo no aparece (solo ratón o teclado) y,
+   si el botón cambia su texto al tocarlo (p. ej. el de tema), el tooltip a la vista se actualiza */
+function installTips(){
+  if(window.__tips || !document.body) return; window.__tips=true;
+  const tip=document.createElement("div"); tip.className="vtip"; tip.setAttribute("role","tooltip"); document.body.appendChild(tip);
+  const place=(x,y)=>{ const r=tip.getBoundingClientRect(); let L=x+14, T=y+16;
+    if(L+r.width>innerWidth-8) L=x-r.width-14; if(T+r.height>innerHeight-8) T=y-r.height-16;
+    tip.style.left=Math.max(8,L)+"px"; tip.style.top=Math.max(8,T)+"px"; };
+  const find=t=>t&&t.closest?t.closest("[data-tip]"):null;
+  document.addEventListener("pointermove",e=>{ if(e.pointerType==="touch") return; const el=find(e.target); if(!el){ tip.classList.remove("on"); return; } tip.textContent=el.getAttribute("data-tip"); tip.classList.add("on"); place(e.clientX,e.clientY); });
+  document.addEventListener("focusin",e=>{ const el=find(e.target); if(!el) return; let fv=true; try{ fv=el.matches(":focus-visible"); }catch(x){} if(!fv) return; tip.textContent=el.getAttribute("data-tip"); tip.classList.add("on"); const r=el.getBoundingClientRect(); place(r.left+r.width/2,r.bottom); });
+  document.addEventListener("click",e=>{ const el=find(e.target); if(el && tip.classList.contains("on")) setTimeout(()=>{ if(el.isConnected) tip.textContent=el.getAttribute("data-tip"); },0); });
+  ["focusout","scroll","pointerleave","pointerdown"].forEach(ev=>document.addEventListener(ev,e=>{ if(ev==="pointerdown" && e.pointerType!=="touch") return; tip.classList.remove("on"); },true));
+}
+installTips();
+/* Botón «Aa» del participante: hoja con tamaño de texto, contraste y movimiento */
+function a11yBtnHTML(){ return `<button type="button" class="a11y-btn" data-a11y-open aria-haspopup="dialog" aria-label="Tamaño de texto y contraste" title="Tamaño de texto y contraste">Aa</button>`; }
 function closeA11ySheet(dragged){ const s=$(".a11y-sheet:not(.m-out)"), b=$(".a11y-back:not(.m-out)");
   if(s && typeof Motion!=="undefined") Motion.dismiss(s,{to:getComputedStyle(s).bottom==="0px"?"bottom":"center", fromY:typeof dragged==="number"?dragged:0, back:b}); else { if(s) s.remove(); if(b) b.remove(); }
   document.removeEventListener("keydown",a11yKey);
@@ -2938,7 +3114,7 @@ function a11yKey(e){ if(e.key==="Escape"){ e.preventDefault(); closeA11ySheet();
 function openA11ySheet(opener){ closeA11ySheet(); window.__a11yOpener=opener||null;
   const bk=document.createElement("div"); bk.className="a11y-back"; bk.onclick=closeA11ySheet;
   const sh=document.createElement("div"); sh.className="a11y-sheet"; sh.setAttribute("role","dialog"); sh.setAttribute("aria-modal","true"); sh.setAttribute("aria-label","Accesibilidad");
-  sh.innerHTML=`<div class="as-h"><b>Tema, texto y contraste</b><button type="button" class="ib sm" id="asClose" aria-label="Cerrar">${typeof icon==="function"?icon("close"):"×"}</button></div>${a11yHTML("as").replace('<b id="as-t">Accesibilidad</b>','<b id="as-t" class="sr">Accesibilidad</b>')}
+  sh.innerHTML=`<div class="as-h"><b>Texto y contraste</b><button type="button" class="ib sm" id="asClose" aria-label="Cerrar">${typeof icon==="function"?icon("close"):"×"}</button></div>${a11yHTML("as").replace('<b id="as-t">Accesibilidad</b>','<b id="as-t" class="sr">Accesibilidad</b>')}
     <button type="button" class="btn btn-primary" id="asOk" style="width:100%;margin-top:.875rem">Listo</button>`;
   document.body.append(bk, sh); wireA11y(sh);
   if(typeof Motion!=="undefined"){ Motion.show(sh,{from:getComputedStyle(sh).bottom==="0px"?"bottom":"center", back:bk}); Motion.drag(sh, $(".as-h",sh), dy=>closeA11ySheet(dy)); }
@@ -3013,7 +3189,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261007185410";
+const APP_BUILD="20261007215650";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -3877,12 +4053,12 @@ function pTop(withDots, totalDots, onDot, status){
     return `<div class="p-top">
       ${brandLockup("xs")}
       <span class="sname">${esc(s? s.name : CONFIG.BRAND)}</span>
-      ${a11yBtnHTML()}
+      ${themeBtnHTML("p-th")}${a11yBtnHTML()}
     </div>`;
   }
   const st=status||"curso";
   return `<div class="p-top pbar">
-    <div class="pb-row">${brandLockup("xs")}<span class="pb-pill ${st}" id="pbPill">${st==="listo"?"Listo ✓":st==="espera"?"Esperando":"En curso"}</span>${a11yBtnHTML()}</div>
+    <div class="pb-row">${brandLockup("xs")}<span class="pb-pill ${st}" id="pbPill">${st==="listo"?"Listo ✓":st==="espera"?"Esperando":"En curso"}</span>${themeBtnHTML("p-th")}${a11yBtnHTML()}</div>
     <p class="pb-t">Actividad ${i+1} de ${ACTS.length} · <b>${ACTS[i].t}</b></p>
     <div class="pb-segs" aria-hidden="true">${ACTS.map((a,k)=>`<span class="pb-seg ${k<i?"done":k===i?"cur":""}"><i></i><em>${a.t}</em></span>`).join("")}</div>
     ${P.banner===ph?`<div class="pb-new" id="pbNew"><b>${i===ACTS.length-1?"Última actividad":"Nueva actividad"}: ${ACTS[i].t}.</b> ${typeof ACTS[i].intro==="function"?ACTS[i].intro(s):ACTS[i].intro}</div>`:""}
@@ -4605,7 +4781,7 @@ const A = { session:null, participants:[], cards:[], votes:[], qwRatings:[], ide
    Es solo para mostrar la interfaz correcta: quien decide qué datos se entregan es la base de datos. */
 const ME = { role:"facilitator", uid:null, email:"", name:"", title:"", avatar:"" };
 const AH = { view:"home", owner:"", q:"", staff:[] };
-const VIEWS_ALL = ["home","mine","create","all","team"], VIEWS_FAC = ["home","mine","create"];
+const VIEWS_ALL = ["home","mine","create","all","team","notifs","settings"], VIEWS_FAC = ["home","mine","create","notifs","settings"];
 const viewOk = v => (isAdminRole()?VIEWS_ALL:VIEWS_FAC).includes(v);
 const isAdminRole = () => ME.role === "admin";
 const ROLE_T = { admin:"Admin", facilitator:"Facilitador" };
@@ -4687,7 +4863,7 @@ function passkeyError(e){ const m=String(e&&(e.name||"")+" "+(e.message||""));
   if(/NotSupported|SecurityError|rp.?id|origin/i.test(m)) return `Este navegador no permite ${bioName()} aquí. En iPhone usa Safari o la app instalada desde Safari.`;
   if(/insufficient_aal|AAL2 session is required/i.test(m)) return "Para agregar o quitar llaves, confirma primero con el código de 6 dígitos de tu app autenticadora.";
   if(/NotAllowed|abort|cancel/i.test(m)) return (typeof APP!=="undefined"&&APP.mobile()) ? `No se completó ${bioName()}. Toca de nuevo o entra con tu correo.` : `No se completó. Si tu llave está en tu celular, toca de nuevo y elige «Usar un teléfono o tableta». Si no, entra con tu correo.`;
-  if(/not found|no credential|passkey.*not|Invalid credential|not registered/i.test(m)) return `Este dispositivo aún no tiene ${bioName()} activado para Colmena. Entra con tu correo y actívalo en tu perfil.`;
+  if(/not found|no credential|passkey.*not|Invalid credential|not registered/i.test(m)) return `Este dispositivo aún no tiene ${bioName()} activado para Colmena. Entra con tu correo y actívalo en Ajustes → Acceso.`;
   return friendlyAuthError(e); }
 
 /* v1.11.1 · Botón de Face ID en dos tiempos: prepara antes y abre Face ID directo en el toque (requisito de iPhone) */
@@ -4765,7 +4941,7 @@ function adminLinkForm(msg, email, sent){
   }
   aShell(`<div class="panel auth">
       <h2>Entrar sin contraseña</h2>
-      <p class="hint" style="margin-bottom:.875rem">Te mandamos un enlace a tu correo para entrar. Sirve también si olvidaste tu contraseña: ya dentro, puedes crear una nueva en tu perfil.</p>
+      <p class="hint" style="margin-bottom:.875rem">Te mandamos un enlace a tu correo para entrar. Sirve también si olvidaste tu contraseña: ya dentro, puedes crear una nueva en Ajustes → Acceso.</p>
       <form id="lkForm">
         <div class="field"><label for="lk-mail">Tu correo</label><input id="lk-mail" class="input" type="email" autocomplete="username" value="${esc(email||"")}" required></div>
         ${msg?`<p class="err" role="alert">${esc(msg)}</p>`:""}
@@ -4921,7 +5097,7 @@ function adminVerify(st){
   }
   aShell(`<div class="panel auth">
       <h2>Verificación en dos pasos</h2>
-      ${st.passkeyFail?`<p class="err" style="margin-bottom:.75rem">Entraste con ${B}, pero esa llave aún no está aprobada en tu cuenta. Escribe tu código una vez y revísala en tu perfil.</p>`:""}
+      ${st.passkeyFail?`<p class="err" style="margin-bottom:.75rem">Entraste con ${B}, pero esa llave aún no está aprobada en tu cuenta. Escribe tu código una vez y revísala en Ajustes → Acceso.</p>`:""}
       ${st.hasFace&&bio&&!st.passkeyFail?`<button class="abtn primary bio-go" id="vfBio" type="button">${BIO_IC}Confirmar con ${B}</button><div class="or-sep"><span>o con tu código</span></div>`:""}
       <p class="hint" style="margin-bottom:.875rem">Escribe el código de 6 dígitos de tu app autenticadora${st.email?` para ${esc(st.email)}`:""}.</p>
       <div class="field"><label for="otp">Código</label><input id="otp" class="input otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="000000"></div>
@@ -5004,20 +5180,27 @@ async function adminSignup(msg){
   };
 }
 
-/* ---------- v1.5 · Inicio: encabezado con secciones (el admin ve «Todos los talleres» y «Equipo») ---------- */
+/* ---------- v1.5 · Inicio: encabezado con secciones (el admin ve «Todos los talleres» y «Equipo») ----------
+   v1.19 · La barra lateral queda solo con marca + navegación. Tema, campana y avatar viven en .ah-bar: arriba a la
+   derecha del contenido en escritorio (≥1024 px) y en la barra superior en celular/tableta. Un solo DOM: .ah-head
+   es la barra superior en celular y «se disuelve» (display:contents) en escritorio. */
 function ahTop(){
   const tabsDef = [["home","Inicio","hexagon","Inicio"],["mine","Mis talleres","grid","Míos"]].concat(isAdminRole()?[["all","Todos los talleres","chart","Todos"],["team","Equipo","users","Equipo"]]:[]);
   const cur = AH.view==="create" ? "mine" : AH.view;
-  /* v1.17 · En escritorio esta barra es la barra lateral; .ah-ind es el fondo de la sección activa, que se desliza */
+  /* v1.17 · En escritorio esta barra es la barra lateral; .ah-ind es el fondo de la sección activa, que se desliza.
+     v1.19 · Notificaciones y Ajustes no tienen pestaña: ninguna queda activa */
   const tabs = `<nav class="ah-tabs" aria-label="Secciones"><span class="ah-ind" aria-hidden="true"></span>${tabsDef
     .map(([k,t,ic,sh])=>`<button class="ah-tab${cur===k?" on":""}" data-view="${k}"${cur===k?' aria-current="page"':""} aria-label="${t}">${icon(ic)}<span class="t-l">${t}</span><span class="t-s" aria-hidden="true">${sh}</span></button>`).join("")}</nav>`;
-  return `<header class="ah-top">
+  return `<header class="ah-head">
+    <div class="ah-top">
       <div class="brand-row">${brandLockup("xs")}
         <div class="brand-txt"><div class="brand-name">Colmena · ${isAdminRole()?"Admin":"Facilitador"}</div><div class="brand-by">by ${BRAND_ORG}</div></div></div>
       ${tabs}
-      <div class="ah-user">${bellHTML()}<button class="me-btn" id="meBtn" aria-haspopup="dialog" aria-expanded="false" title="Tu perfil">${avatarHTML(ME,"md")}<span class="me-t"><span class="ah-mail">${esc(ME.name||ME.email)}</span><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span></span></button></div>
-    </header>`;
+    </div>
+    <div class="ah-bar"><div class="ah-bar-in"><div class="ah-user">${themeBtnHTML("hb")}${bellHTML("hb")}${meBtnHTML()}</div></div></div>
+  </header>`;
 }
+function meBtnHTML(){ return `<button type="button" class="hb me-btn" id="meBtn" aria-haspopup="menu" aria-expanded="false" aria-label="Tu cuenta: ${esc(ME.name||ME.email)}" data-tip="Tu cuenta">${avatarHTML(ME,"md")}</button>`; }
 window.addEventListener("colmena-signed-out",()=>{ if(window.__signingOut || !ME.uid) return; if($(".ah-shell")) staleBanner(true,{message:"JWT expired"}); });
 async function signOutAll(){ window.__signingOut=true; setTimeout(()=>{ window.__signingOut=false; },3000); if(NT.unsub) NT.unsub(); if(NT.poll) clearInterval(NT.poll); NT.unsub=NT.poll=NT.uid=null; NT.items=[]; NT.loaded=false;
   await flushDraft().catch(()=>{}); resetWizard(); clearInvite(); try{ sessionStorage.removeItem("colmena_totp"); }catch(e){}   /* no dejar datos del cliente en este navegador */
@@ -5038,22 +5221,23 @@ function staleBanner(on, err){
   $("#staleGo").onclick=()=>{ if(auth){ const c=currentCode(); stopAdmin(); adminBoot(c); } else location.reload(); };
 }
 function wireTop(){
-  $("#meBtn").onclick=e=>{ e.stopPropagation(); $(".me-pop:not(.m-out)") ? closeMe() : openMe(); };
+  const mb=$("#meBtn"); if(mb) mb.onclick=e=>{ e.stopPropagation(); openMe(); };
   wireBell();
   $$(".ah-tab").forEach(b=>b.onclick=()=>{ if(AH.view===b.dataset.view) return; navView(b.dataset.view); });
   placeNavInd();
 }
 /* v1.18 · Navegar entre secciones con transición de pantalla: la barra lateral se queda quieta, el contenido se desliza
    en la dirección de la sección (abajo/derecha = adelante) y se espera un instante a que lleguen los datos */
-const VIEW_ORDER=["home","mine","create","all","team"];
+const VIEW_ORDER=["home","mine","create","all","team","notifs","settings"];
 function navView(v, o){ o=o||{}; const from=VIEW_ORDER.indexOf(AH.view==="create"?"mine":AH.view), to=VIEW_ORDER.indexOf(v==="create"?"mine":v);
   return Motion.go(()=>{ if(o.before) o.before(); AH.view=v; const p=adminHome(); window.scrollTo(0,0); return p; }, {kind:"axis", dir:o.dir!=null?o.dir:Math.sign(to-from), wait:200}); }
 /* v1.17 · Barra lateral: el fondo de la sección activa se desliza desde donde estaba (cada vista vuelve a pintar el shell).
-   v1.18 · Con resorte (Quick) y también en las pestañas superiores de celular/tableta (horizontal) */
+   v1.18 · Con resorte (Quick) y también en las pestañas superiores de celular/tableta (horizontal).
+   v1.19 · Sin sección activa (Notificaciones, Ajustes) el fondo se oculta y la próxima vez nace en su lugar */
 function placeNavInd(instant){
   const nav=$(".ah-tabs"), ind=nav&&$(".ah-ind",nav), on=nav&&$(".ah-tab.on",nav);
   if(!ind) return;
-  if(!on || getComputedStyle(ind).display==="none"){ nav.classList.remove("ind-on"); return; }
+  if(!on || getComputedStyle(ind).display==="none"){ nav.classList.remove("ind-on"); if(!on) AH._ind=null; return; }
   const side=getComputedStyle(nav).flexDirection==="column";
   const r={x:side?0:on.offsetLeft, y:on.offsetTop, w:on.offsetWidth, h:on.offsetHeight}, p=AH._ind;
   const slide=!instant && p && p.side===side && (p.x!==r.x || p.y!==r.y);
@@ -5067,77 +5251,86 @@ function placeNavInd(instant){
   AH._ind={...r, side};
 }
 window.addEventListener("resize",()=>placeNavInd(true));
-/* v1.17 · ¿El botón vive en la barra lateral de escritorio? Entonces sus menús se abren a la derecha, alineados abajo */
-function inSidebar(el){ const h=el&&el.closest(".ah-top"); return !!h && getComputedStyle(h).position==="fixed"; }
-function placeBySidebar(pop, btn){
-  const r=btn.getBoundingClientRect(), side=btn.closest(".ah-top").getBoundingClientRect();
-  Object.assign(pop.style,{position:"fixed", top:"auto", left:(side.right+8)+"px", bottom:Math.max(12, innerHeight-r.bottom)+"px"});
+/* v1.19 · El encabezado de escritorio muestra su línea inferior solo cuando el contenido pasa por debajo */
+window.addEventListener("scroll",()=>{ const b=$(".ah-bar"); if(b) b.classList.toggle("sc", window.scrollY>2); },{passive:true});
+
+/* ---------- v1.19 · Avatar: menú chico estándar (quién eres, Ajustes, Cerrar sesión). Mismo componente que el ⋯ ---------- */
+function openMe(){ const b=$("#meBtn"); if(!b) return;
+  openRowMenu(b, [
+    {ic:"sliders", t:"Ajustes", k:"settings", fn:()=>openSettings()},
+    {ic:"compass", t:"Ver recorrido", k:"tour", fn:()=>TOUR.restart()},
+    {sep:true},
+    {ic:"logout", t:"Cerrar sesión", k:"signout", fn:()=>signOutAll()}
+  ], {cls:"me-menu", label:`Tu cuenta: ${ME.name||ME.email}`,
+      head:`<div class="rm-me" aria-hidden="true">${avatarHTML(ME,"lg")}<span class="rm-me-t"><b>${esc(ME.name||"Sin nombre")}</b><small>${esc(ME.email)}</small><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span></span></div>`});
 }
-/* ---------- v1.5 · Tu perfil: foto ---------- */
-function closeMe(){ const p=$(".me-pop:not(.m-out)"), bk=$(".me-back:not(.m-out)"), b=$("#meBtn");
-  if(p) Motion.dismiss(p,{to:p.classList.contains("sheet")?"right":"origin", origin:b, back:bk}); else if(bk) bk.remove();
-  document.documentElement.classList.remove("me-lock"); if(b) b.setAttribute("aria-expanded","false"); document.removeEventListener("click",meOutside); }
-function meOutside(e){ const p=$(".me-pop:not(.m-out)"); if(p && !e.composedPath().includes(p)) closeMe(); }
-function openMe(){
-  closeMe(); closeNotifs();
-  const pop=document.createElement("div"); pop.className="me-pop"; pop.setAttribute("role","dialog"); pop.setAttribute("aria-label","Tu perfil");
-  const draw=(msg,busy)=>{ pop.innerHTML=`
-    <div class="me-sh"><b>Tu perfil</b><button class="ib sm" id="meClose" aria-label="Cerrar">${icon("close")}</button></div>
-    <div class="me-hero">
+function closeMe(){ const m=$(".rm-pop.me-menu:not(.m-out)"); if(m) closeRowMenu(); }
+/* Ajustes desde cualquier lugar (también desde el panel en vivo); `then` corre cuando la vista ya está pintada */
+function openSettings(then){ closeMe();
+  if(A.session){ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); A.session=null; }
+  const go = AH.view==="settings" && $(".set-view") ? Promise.resolve() : Promise.resolve(navView("settings"));
+  return go.then(()=>{ if(then) setTimeout(then, 60); });
+}
+
+/* ---------- v1.19 · Ajustes: vista propia (antes era el popover del avatar) ----------
+   Perfil · Acceso (Face ID/Touch ID y contraseña) · Correos de avisos · Accesibilidad · Ayuda.
+   En escritorio ancho, dos columnas; las secciones que cargan solas (Face ID, avisos) muestran su esqueleto. */
+async function settingsView(){
+  document.body.classList.add("admin-theme");
+  const B=bioName(), bio=Store.passkeySupported&&Store.passkeySupported();
+  const card=(i,id,t,h,inner,cls)=>`<section class="panel set-card vi${cls?" "+cls:""}" style="--i:${i}" aria-labelledby="${id}"><div class="set-h"><h2 id="${id}">${t}</h2>${h?`<p class="hint">${h}</p>`:""}</div>${inner}</section>`;
+  const a11y=a11yHTML("meA").replace('<b id="meA-t">Accesibilidad</b>','<div class="set-h"><h2 id="meA-t">Accesibilidad</h2><p class="hint">Se guarda en este dispositivo.</p></div>').replace('<p class="hint">Se guarda en este dispositivo.</p>\n  </div>','</div>');
+  const app=APP.standalone()? "" : `<div class="me-app"><b>App en tu celular</b>${APP.prompt?`<button class="abtn" id="meInstall">${icon("download")}Instalar Colmena</button>`:`<p class="hint">${APP.ios()?"En Safari: Compartir → Agregar a inicio.":APP.mobile()?"En Chrome: menú ⋮ → Instalar app.":"Abre Colmena en tu celular y agrégala a tu pantalla de inicio."}</p>`}</div>`;
+  const html=`<header class="page-h vi" style="--i:0"><div><h1 class="page-t">Ajustes</h1><p class="page-s">Tu perfil y tu acceso valen en todos tus dispositivos; la accesibilidad, solo en este.</p></div></header>
+    <div class="set-grid">
+      <div class="set-col">
+        ${card(1,"setPT","Perfil","Así te ve tu equipo en Colmena.",`<div class="me-profile" id="meProfile"></div>`)}
+        ${card(2,"setAT","Acceso","Cómo entras a Colmena.",`${bio?`<div class="me-bio" id="meBio"><b>Entrar con ${B}</b>${skLines("Cargando Face ID…",2)}</div>`:""}<div class="me-pw" id="mePw"></div>`)}
+        ${card(5,"setHT","Ayuda","",`<div class="me-help"><p class="hint">¿Primera vez o quieres repasar? El recorrido toma 1 minuto.</p><button type="button" class="abtn" id="meTour">${icon("compass")}Ver recorrido otra vez</button></div>${app}`,"set-help")}
+      </div>
+      <div class="set-col">
+        ${card(3,"setNT","Correos de avisos","Todos los avisos llegan a Notificaciones; aquí eliges cuáles también te llegan por correo.",`<div class="me-prefs" id="mePrefs">${skLines("Cargando avisos por correo…",4,true)}</div>`)}
+        <section class="panel set-card vi" style="--i:4" aria-labelledby="meA-t"><div class="me-a11y" id="meA11y">${a11y}</div></section>
+      </div>
+    </div>`;
+  $("#app").innerHTML=shellHTML(html,"set-view"); wireTop();
+  drawProfile(); drawBio(); drawPw(); drawPrefs(); wireA11y($("#meA11y"));
+  $("#meTour").onclick=()=>TOUR.restart();
+  const mi=$("#meInstall"); if(mi) mi.onclick=async()=>{ const ok=await APP.install(); if(ok){ const a=$(".me-app"); if(a) a.remove(); } };
+}
+/* Perfil: foto (se recorta y comprime), nombre y puesto */
+function drawProfile(msg, busy){
+  const box=$("#meProfile"); if(!box) return;
+  box.innerHTML=`<div class="me-hero">
       <label class="me-ph${busy?" busy":""}" for="meFile" title="Cambiar foto">${avatarHTML(ME,"xl")}<span class="me-cam" aria-hidden="true">${icon("camera")}</span></label>
       <input type="file" id="meFile" accept="image/*" class="sr">
-      <div class="me-who"><b>${esc(ME.name||"Sin nombre")}</b>${ME.title?`<span>${esc(ME.title)}</span>`:""}<span>${esc(ME.email)}</span><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span>
-        <button type="button" class="linkbtn me-edit" id="meEdit">${ME.name?"Editar nombre y puesto":"Poner mi nombre"}</button></div>
+      <div class="me-who"><b>${esc(ME.name||"Sin nombre")}</b>${ME.title?`<span>${esc(ME.title)}</span>`:""}<span>${esc(ME.email)}</span><span class="role-tag ${esc(ME.role)}">${ROLE_T[ME.role]||""}</span></div>
     </div>
     <form class="me-form" id="meForm" hidden>
       <div class="field"><label for="me-name">Nombre</label><input id="me-name" class="input" maxlength="120" value="${esc(ME.name)}" placeholder="Ej. Ana López" required></div>
       <div class="field"><label for="me-title">Puesto <span class="opt">opcional</span></label><input id="me-title" class="input" maxlength="120" value="${esc(ME.title)}" placeholder="Ej. Consultora de procesos"></div>
       <div class="me-acts"><button class="abtn primary" type="submit">Guardar</button><button class="abtn" type="button" id="meCancel">Cancelar</button></div>
     </form>
-    <div class="me-acts">
-      <label class="abtn primary" for="meFile">${icon("camera")}${ME.avatar?"Cambiar foto":"Subir foto"}</label>
-      ${ME.avatar?`<button class="abtn" id="meDel">Quitar</button>`:""}
+    <div class="me-acts" id="meActs">
+      <button type="button" class="abtn" id="meEdit">${icon("users")}${ME.name?"Editar nombre y puesto":"Poner mi nombre"}</button>
+      <label class="abtn" for="meFile">${icon("camera")}${ME.avatar?"Cambiar foto":"Subir foto"}</label>
+      ${ME.avatar?`<button type="button" class="abtn" id="meDel">Quitar foto</button>`:""}
     </div>
-    ${msg?`<p class="${msg.err?"err":"hint"}" role="status">${esc(msg.t)}</p>`:`<p class="hint">JPG o PNG. Se recorta en cuadrado y se guarda ligera. La ve tu equipo.</p>`}
-    ${Store.passkeySupported&&Store.passkeySupported()?`<div class="me-bio" id="meBio"><b>Entrar con ${bioName()}</b>${skLines("Cargando Face ID…",2)}</div>`:""}
-    <div class="me-help"><b>Ayuda</b><p class="hint">¿Primera vez o quieres repasar? El recorrido toma 1 minuto.</p><button type="button" class="abtn" id="meTour">${icon("compass")}Ver recorrido otra vez</button></div>
-    <div class="me-prefs" id="mePrefs"><b>Correos de avisos</b>${skLines("Cargando avisos por correo…",4,true)}</div>
-    <div class="me-a11y" id="meA11y">${a11yHTML("meA")}</div>
-    <div class="me-pw" id="mePw"></div>
-    ${APP.standalone()? "" : `<div class="me-app"><b>App en tu celular</b>${APP.prompt?`<button class="abtn" id="meInstall">${icon("download")}Instalar Colmena</button>`:`<p class="hint">${APP.ios()?"En Safari: Compartir → Agregar a inicio.":APP.mobile()?"En Chrome: menú ⋮ → Instalar app.":"Abre Colmena en tu celular y agrégala a tu pantalla de inicio."}</p>`}</div>`}`;
-    pop.insertAdjacentHTML("beforeend", `<button class="abtn me-out" id="meOut" type="button">${icon("arrowleft")}Cerrar sesión</button>`);
-    drawPrefs(); drawBio(); drawPw(); wireA11y(pop.querySelector("#meA11y"));
-    pop.querySelector("#meClose").onclick=closeMe;
-    pop.querySelector("#meTour").onclick=()=>TOUR.restart();
-    pop.querySelector("#meOut").onclick=()=>{ closeMe(); signOutAll(); };
-    const mi=pop.querySelector("#meInstall"); if(mi) mi.onclick=async()=>{ const ok=await APP.install(); if(ok) closeMe(); };
-    const f=pop.querySelector("#meFile");
-    f.onchange=async()=>{ const file=f.files&&f.files[0]; if(!file) return; draw(null,true);
-      try{ const d=await shrinkImage(file); await Store.setMyAvatar(d); ME.avatar=d; syncMe(); draw({t:"Foto actualizada"}); }
-      catch(e){ draw({t:friendlyAuthError(e),err:true}); } };
-    const form=pop.querySelector("#meForm"), ed=pop.querySelector("#meEdit");
-    ed.onclick=()=>{ form.hidden=false; ed.hidden=true; pop.querySelector("#me-name").focus(); };
-    pop.querySelector("#meCancel").onclick=()=>{ form.hidden=true; ed.hidden=false; };
-    form.onsubmit=async e=>{ e.preventDefault(); const nm=pop.querySelector("#me-name").value.trim(), tt=pop.querySelector("#me-title").value.trim();
-      if(nm.length<2) return toast("Escribe tu nombre");
-      try{ await Store.setMyProfile(nm,tt); ME.name=nm; ME.title=tt; const m=AH.staff.find(x=>x.user_id===ME.uid); if(m){ m.name=nm; m.title=tt; }
-        const nb=$("#meBtn .ah-mail"); if(nb) nb.textContent=nm; const ht=$(".hello-t"); if(ht) ht.textContent=greeting()+", "+firstName(nm); const hn=$(".hello-nn"); if(hn) hn.remove();
-        draw({t:"Perfil actualizado"}); }
-      catch(ex){ toast(friendlyAuthError(ex)); } };
-    const del=pop.querySelector("#meDel");
-    if(del) del.onclick=async()=>{ del.disabled=true; try{ await Store.setMyAvatar(""); ME.avatar=""; syncMe(); draw({t:"Foto quitada"}); }catch(e){ draw({t:friendlyAuthError(e),err:true}); } };
-  };
-  draw();
-  /* v1.11.2 · En celular el perfil es un panel lateral que entra desde la derecha */
-  const sheet = window.innerWidth<=A11Y.bp(720);
-  if(sheet){ pop.classList.add("sheet"); const bk=document.createElement("div"); bk.className="me-back"; bk.onclick=closeMe; document.body.appendChild(bk); document.documentElement.classList.add("me-lock"); }
-  document.body.appendChild(pop); drawPrefs(); drawBio(); drawPw();
-  const b=$("#meBtn"), r=b.getBoundingClientRect();
-  if(!sheet && inSidebar(b)) placeBySidebar(pop, b);
-  else if(!sheet){ const w=pop.offsetWidth; pop.style.top=(r.bottom+8)+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px"; }
-  Motion.show(pop, sheet?{from:"right", back:$(".me-back:not(.m-out)")}:{from:"origin", origin:b});
-  b.setAttribute("aria-expanded","true");
-  setTimeout(()=>document.addEventListener("click",meOutside),0);
+    ${msg?`<p class="${msg.err?"err":"hint ok-t"}" role="status">${esc(msg.t)}</p>`:`<p class="hint">Foto en JPG o PNG: se recorta en cuadrado y se guarda ligera.</p>`}`;
+  const f=$("#meFile");
+  f.onchange=async()=>{ const file=f.files&&f.files[0]; if(!file) return; drawProfile(null,true);
+    try{ const d=await shrinkImage(file); await Store.setMyAvatar(d); ME.avatar=d; syncMe(); drawProfile({t:"Foto actualizada"}); }
+    catch(e){ drawProfile({t:friendlyAuthError(e),err:true}); } };
+  const form=$("#meForm"), acts=$("#meActs");
+  $("#meEdit").onclick=()=>{ form.hidden=false; acts.hidden=true; $("#me-name").focus(); };
+  $("#meCancel").onclick=()=>{ form.hidden=true; acts.hidden=false; $("#meEdit").focus(); };
+  form.onsubmit=async e=>{ e.preventDefault(); const nm=$("#me-name").value.trim(), tt=$("#me-title").value.trim();
+    if(nm.length<2) return toast("Escribe tu nombre");
+    try{ await Store.setMyProfile(nm,tt); ME.name=nm; ME.title=tt; const m=AH.staff.find(x=>x.user_id===ME.uid); if(m){ m.name=nm; m.title=tt; }
+      syncMe(); drawProfile({t:"Perfil actualizado"}); }
+    catch(ex){ toast(friendlyAuthError(ex)); } };
+  const del=$("#meDel");
+  if(del) del.onclick=async()=>{ del.disabled=true; try{ await Store.setMyAvatar(""); ME.avatar=""; syncMe(); drawProfile({t:"Foto quitada"}); }catch(e){ drawProfile({t:friendlyAuthError(e),err:true}); } };
 }
 /* v1.6 · Preferencias de correo: cada aviso importante se puede apagar por tipo */
 const PREF_T = [
@@ -5148,38 +5341,43 @@ const PREF_T = [
 ];
 async function drawPrefs(){
   const box=$("#mePrefs"); if(!box) return;
-  let prefs={}; try{ prefs=await Store.getEmailPrefs(); }catch(e){ box.innerHTML=`<b>Correos de avisos</b><p class="err">${esc(friendlyAuthError(e))}</p>`; return; }
+  let prefs={}; try{ prefs=await Store.getEmailPrefs(); }catch(e){ box.innerHTML=`<p class="err">${esc(friendlyAuthError(e))}</p>`; return; }
   if(!$("#mePrefs")) return;
   const rows=PREF_T.filter(x=>!x.admin||isAdminRole());
-  box.innerHTML=`<b>Correos de avisos</b>${rows.map(x=>`<label class="pf-row"><span>${x.t}</span><input type="checkbox" data-pf="${x.k}" ${prefs[x.k]===false?"":"checked"}><i class="pf-sw" aria-hidden="true"></i></label>`).join("")}<p class="hint">Todos los avisos aparecen en la campana; esto solo decide cuáles también te llegan por correo.</p>`;
+  box.innerHTML=rows.map(x=>`<label class="pf-row"><span>${x.t}</span><input type="checkbox" data-pf="${x.k}" ${prefs[x.k]===false?"":"checked"}><i class="pf-sw" aria-hidden="true"></i></label>`).join("");
   $$("#mePrefs [data-pf]").forEach(cb=>cb.onchange=async()=>{ prefs={...prefs,[cb.dataset.pf]:cb.checked};
     try{ await Store.setEmailPrefs(prefs); toast(cb.checked?"Te llegará por correo":"Ya no te llegará por correo"); }
     catch(e){ cb.checked=!cb.checked; toast(friendlyAuthError(e)); } });
 }
 
-/* ---------- v1.6 · Centro de notificaciones (campana) ---------- */
-const NT = { items:[], tab:"unread", unsub:null, poll:null, uid:null, loaded:false };
+/* ---------- v1.6 · Centro de notificaciones (campana) · v1.19: vista propia, no popover ---------- */
+const NT = { items:[], tab:"all", unsub:null, poll:null, uid:null, loaded:false };
 const NT_ICON = {
   invite_accepted:["users","t-team"], invite_expiring:["mail","t-warn"], invite_expired:["mail","t-warn"],
   session_created:["grid",""], session_closed:["flag",""], phase_done:["check","t-team"],
   retention:["trash","t-warn"], welcome:["sparkle",""], role_changed:["users","t-acct"], reactivated:["check","t-acct"]
 };
 const ntUnread = () => NT.items.filter(n=>!n.read_at).length;
-function bellHTML(cls){ const n=ntUnread();
-  return `<button class="${cls||""} nt-bell" id="ntBell" aria-haspopup="dialog" aria-expanded="${!!$(".nt-pop:not(.m-out)")}" aria-label="Notificaciones${n?`, ${n} sin leer`:""}" data-tip="Notificaciones">${icon("bell")}<span class="nt-l" aria-hidden="true">Notificaciones</span>${n?`<span class="nt-badge">${n>9?"9+":n}</span>`:""}</button>`; }
-function wireBell(){ const b=$("#ntBell"); if(b) b.onclick=e=>{ e.stopPropagation(); $(".nt-pop:not(.m-out)") ? closeNotifs() : openNotifs(); }; }
+function bellHTML(cls){ const n=ntUnread(), here=AH.view==="notifs" && !A.session;
+  return `<button type="button" class="${cls||""} nt-bell" id="ntBell"${here?' aria-current="page"':""} aria-label="Notificaciones${n?`, ${n} sin leer`:""}" data-tip="Notificaciones">${icon("bell")}${n?`<span class="nt-badge" aria-hidden="true">${n>9?"9+":n}</span>`:""}</button>`; }
+function wireBell(){ const b=$("#ntBell"); if(b) b.onclick=e=>{ e.stopPropagation(); goNotifs(); }; }
 function refreshBell(ring){ const b=$("#ntBell"); if(!b) return; const cls=b.className.replace(/\s*ring/,"");
   const tmp=document.createElement("div"); tmp.innerHTML=bellHTML(); const nb=tmp.firstElementChild; nb.className=cls+(ring?" ring":"");
   b.replaceWith(nb); wireBell(); }
+/* La campana lleva a Notificaciones (desde el panel en vivo también: la sala sigue funcionando) */
+function goNotifs(){ closeMe(); $$(".nt-toast:not(.m-out)").forEach(t=>Motion.dismiss(t));
+  if(A.session){ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); A.session=null; }
+  else if(AH.view==="notifs" && $(".nt-view")){ window.scrollTo({top:0, behavior:Motion.ok()?"smooth":"auto"}); return; }
+  return navView("notifs"); }
 function timeAgo(iso){ const s=(Date.now()-new Date(iso).getTime())/1000;
   if(s<60) return "hace un momento"; if(s<3600) return `hace ${Math.round(s/60)} min`; if(s<86400) return `hace ${Math.round(s/3600)} h`;
   if(s<172800) return "ayer"; if(s<604800) return `hace ${Math.round(s/86400)} días`; return fmtDate(iso,{day:"numeric",month:"short"}); }
-async function loadNotifs(){ try{ NT.items=await Store.listNotifications(); NT.loaded=true; }catch(e){ console.error(e); } refreshBell(); if($(".nt-pop:not(.m-out)")) drawNotifs(); }
+async function loadNotifs(){ try{ NT.items=await Store.listNotifications(); NT.loaded=true; }catch(e){ console.error(e); } refreshBell(); drawNotifs(); }
 function startNotifications(){
   if(NT.uid===ME.uid && NT.unsub){ loadNotifs(); return; }
   if(NT.unsub) NT.unsub(); if(NT.poll) clearInterval(NT.poll);
   NT.uid=ME.uid; NT.items=[];
-  NT.unsub=Store.subscribeNotifications(ME.uid, n=>{ if(!n||NT.items.some(x=>x.id===n.id)) return; NT.items.unshift(n); refreshBell(true); if($(".nt-pop:not(.m-out)")) drawNotifs(); else ntToast(n); });
+  NT.unsub=Store.subscribeNotifications(ME.uid, n=>{ if(!n||NT.items.some(x=>x.id===n.id)) return; NT.items.unshift(n); refreshBell(true); if(AH.view==="notifs" && $(".nt-view")) drawNotifs(); else ntToast(n); });
   NT.poll=setInterval(loadNotifs, 60000);
   loadNotifs();
 }
@@ -5188,63 +5386,63 @@ function ntToast(n){
   const [ic,tone]=NT_ICON[n.type]||["bell",""]; const t=document.createElement("div"); t.className="nt-toast"; t.setAttribute("role","status");
   t.innerHTML=`<span class="nt-ic ${tone}">${icon(ic)}</span><div><b>${esc(n.title)}</b>${n.body?`<p>${esc(n.body)}</p>`:""}</div><button class="ib sm" aria-label="Cerrar">${icon("close")}</button>`;
   t.querySelector("button").onclick=ev=>{ ev.stopPropagation(); Motion.dismiss(t); };
-  t.onclick=()=>{ Motion.dismiss(t); openNotifs(); };
+  t.onclick=()=>{ Motion.dismiss(t); goNotifs(); };
   document.body.appendChild(t); setTimeout(()=>Motion.dismiss(t), 7000);
 }
-function closeNotifs(){ const p=$(".nt-pop:not(.m-out)"); if(p) Motion.dismiss(p,{to:"origin", origin:$("#ntBell")}); const b=$("#ntBell"); if(b) b.setAttribute("aria-expanded","false"); document.removeEventListener("click",ntOutside); }
-function ntOutside(e){ const p=$(".nt-pop:not(.m-out)"); if(p && !e.composedPath().includes(p)) closeNotifs(); }
-function openNotifs(){
-  closeMe(); closeNotifs(); $$(".nt-toast:not(.m-out)").forEach(t=>Motion.dismiss(t));
-  const pop=document.createElement("div"); pop.className="nt-pop"; pop.setAttribute("role","dialog"); pop.setAttribute("aria-label","Notificaciones");
-  document.body.appendChild(pop); drawNotifs(); placeNotifs();
-  const b=$("#ntBell"); if(b) b.setAttribute("aria-expanded","true");
-  Motion.show(pop,{from:"origin", origin:b});
-  setTimeout(()=>document.addEventListener("click",ntOutside),0);
-  if(!NT.loaded) loadNotifs();
+async function notifsView(){
+  document.body.classList.add("admin-theme");
+  $("#app").innerHTML=shellHTML(skNotifs(),"nt-view"); wireTop();
+  if(!NT.loaded) await loadNotifs(); else drawNotifs();
 }
-function placeNotifs(){ const pop=$(".nt-pop:not(.m-out)"), b=$("#ntBell"); if(!pop||!b) return; const r=b.getBoundingClientRect(), w=pop.offsetWidth;
-  if(inSidebar(b)) return placeBySidebar(pop, b);
-  pop.style.position=""; pop.style.bottom="";
-  pop.style.top=(r.bottom+8+(getComputedStyle(pop).position==="fixed"?0:window.scrollY))+"px"; pop.style.left=Math.max(12, Math.min(window.innerWidth-w-12, r.right-w))+"px"; }
+/* Lista agrupada (Hoy · Esta semana · Antes), filtro Todas / Sin leer y «Marcar todo como leído».
+   Se redibuja con llaves: un aviso nuevo entra con su animación; marcar como leído no mueve nada */
 function drawNotifs(){
-  const pop=$(".nt-pop:not(.m-out)"); if(!pop) return; const keep=(pop.querySelector(".nt-list")||{}).scrollTop||0;
+  const main=$(".ah-wide.nt-view"); if(!main || AH.view!=="notifs" || !NT.loaded) return;
   const un=ntUnread(), list=NT.tab==="unread" ? NT.items.filter(n=>!n.read_at) : NT.items;
   const day=d=>{ const x=new Date(d), t=new Date(); t.setHours(0,0,0,0); if(x>=t) return "Hoy"; const w=new Date(t); w.setDate(t.getDate()-6); return x>=w ? "Esta semana" : "Antes"; };
   const groups=[]; list.forEach(n=>{ const g=day(n.created_at); let G=groups.find(x=>x.g===g); if(!G) groups.push(G={g,items:[]}); G.items.push(n); });
-  pop.innerHTML=`<div class="nt-h"><b>Notificaciones</b><button type="button" class="linkbtn" id="ntAll" ${un?"":"disabled"}>Marcar todo como leído</button></div>
-    <div class="nt-tabs" role="tablist"><button role="tab" aria-selected="${NT.tab==="unread"}" class="${NT.tab==="unread"?"on":""}" data-tab="unread">No leídas${un?` · ${un}`:""}</button><button role="tab" aria-selected="${NT.tab==="all"}" class="${NT.tab==="all"?"on":""}" data-tab="all">Todas</button></div>
-    <div class="nt-list">${!NT.loaded?`<div class="nt-empty"><span class="spin"></span></div>`
-      : list.length ? groups.map(G=>`<div class="nt-g">${G.g}</div>${G.items.map(n=>{ const [ic,tone]=NT_ICON[n.type]||["bell",""], a=n.action||{};
-        return `<div class="nt-it${n.read_at?"":" unread"}" data-id="${esc(n.id)}" role="button" tabindex="0">
-          <span class="nt-ic ${tone}">${icon(ic)}</span>
-          <span class="nt-tx"><b>${esc(n.title)}</b>${n.body?`<p>${esc(n.body)}</p>`:""}
-            <span class="nt-meta"><time datetime="${esc(n.created_at)}">${esc(timeAgo(n.created_at))}</time>${a.label?`<button type="button" class="nt-act" data-go="${esc(n.id)}">${esc(a.label)}</button>`:""}</span></span></div>`; }).join("")}`).join("")
-      : `<div class="nt-empty">${glass("check",{size:"md"})}<b>${NT.tab==="unread"?"Todo al día":"Aún no tienes avisos"}</b><span>${NT.tab==="unread"?"No tienes avisos sin leer.":"Aquí verás cuando alguien acepte una invitación, termine una actividad y más."}</span></div>`}</div>`;
-  pop.querySelector(".nt-list").scrollTop=keep;
-  $$(".nt-tabs [data-tab]",pop).forEach(b=>b.onclick=()=>{ NT.tab=b.dataset.tab; drawNotifs(); });
-  const all=$("#ntAll"); all.onclick=async()=>{ const ids=NT.items.filter(n=>!n.read_at).map(n=>n.id); NT.items.forEach(n=>{ if(!n.read_at) n.read_at=new Date().toISOString(); }); drawNotifs(); refreshBell();
-    try{ await Store.markAllRead(); }catch(e){ toast(friendlyAuthError(e)); loadNotifs(); } };
-  $$(".nt-it",pop).forEach(el=>{ const go=()=>ntOpen(el.dataset.id); el.onclick=go; el.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } }; });
+  const item=n=>{ const [ic,tone]=NT_ICON[n.type]||["bell",""], a=n.action||{}, u=!n.read_at;
+    return `<li class="nt-it${u?" unread":""}" data-k="n-${esc(n.id)}" data-id="${esc(n.id)}">
+      <span class="nt-ic ${tone}" aria-hidden="true">${icon(ic)}</span>
+      <div class="nt-tx"><b>${u?'<span class="sr">Sin leer: </span>':""}${esc(n.title)}</b>${n.body?`<p>${esc(n.body)}</p>`:""}</div>
+      <div class="nt-side"><time datetime="${esc(n.created_at)}">${esc(timeAgo(n.created_at))}</time>${u?'<i class="nt-dot" aria-hidden="true"></i>':""}</div>
+      <div class="nt-acts">${a.label?`<button type="button" class="abtn sm nt-act" data-go="${esc(n.id)}">${esc(a.label)}</button>`
+        : u?`<button type="button" class="abtn sm nt-act ghost-n" data-read="${esc(n.id)}">Marcar como leído</button>`:""}</div></li>`; };
+  const empty=`<div class="nt-empty">${glass("check",{size:"md"})}<b>${NT.tab==="unread"?"Todo al día":"Aún no tienes avisos"}</b><span>${NT.tab==="unread"?"No tienes avisos sin leer.":"Aquí verás cuando alguien acepte una invitación, termine una actividad y más."}</span>${NT.tab==="unread"&&NT.items.length?`<button type="button" class="linkbtn" data-tab="all">Ver todas</button>`:""}</div>`;
+  const first=!main._drawn; main._drawn=true;
+  Motion.morph(main, `<header class="page-h vi" style="--i:0"><div><h1 class="page-t">Notificaciones</h1><p class="page-s">${un?`Tienes <b>${un} ${un===1?"aviso sin leer":"avisos sin leer"}</b>.`:"Estás al día."} Aquí ves cuando alguien acepta una invitación, cuando termina una actividad y más.</p></div>
+      <div class="page-acts"><button type="button" class="abtn" id="ntAll"${un?"":" disabled"}>${icon("check")}Marcar todo como leído</button></div></header>
+    <section class="panel nt-panel vi" style="--i:1" aria-labelledby="ntLT">
+      <h2 id="ntLT" class="sr">Avisos</h2>
+      <div class="nt-bar"><div class="wt-filters" role="tablist" aria-label="Filtrar avisos">${[["all","Todas",NT.items.length],["unread","Sin leer",un]].map(([k,t,c])=>`<button type="button" role="tab" class="wt-f${NT.tab===k?" on":""}" aria-selected="${NT.tab===k}" aria-controls="ntList" data-tab="${k}">${t}<span class="wt-c">${c}</span></button>`).join("")}</div></div>
+      <div class="nt-list" id="ntList" role="tabpanel">${list.length?groups.map(G=>`<h3 class="nt-g" data-k="g-${G.g}">${G.g}</h3><ul class="nt-ul" data-k="u-${G.g}">${G.items.map(item).join("")}</ul>`).join(""):empty}</div>
+    </section>`, {animate:!first});
+  Motion.seg($(".nt-bar .wt-filters"), ".wt-f.on", "nt-f");
+  $$(".nt-view [data-tab]").forEach(b=>b.onclick=()=>{ if(NT.tab===b.dataset.tab) return; NT.tab=b.dataset.tab; drawNotifs(); });
+  $("#ntAll").onclick=async()=>{ NT.items.forEach(n=>{ if(!n.read_at) n.read_at=new Date().toISOString(); }); drawNotifs(); refreshBell();
+    try{ await Store.markAllRead(); toast("Listo: todo marcado como leído"); }catch(e){ toast(friendlyAuthError(e)); loadNotifs(); } };
+  $$(".nt-view .nt-it").forEach(el=>{ el.onclick=e=>{ if(e.target.closest("button")) return; ntOpen(el.dataset.id); }; });
+  $$(".nt-view [data-go]").forEach(b=>b.onclick=()=>ntOpen(b.dataset.go));
+  $$(".nt-view [data-read]").forEach(b=>b.onclick=()=>ntRead(b.dataset.read));
 }
+function ntRead(id){ const n=NT.items.find(x=>x.id===id); if(!n || n.read_at) return false;
+  n.read_at=new Date().toISOString(); refreshBell(); drawNotifs(); Store.markRead([id]).catch(e=>console.error(e)); return true; }
 async function ntOpen(id){
   const n=NT.items.find(x=>x.id===id); if(!n) return;
-  if(!n.read_at){ n.read_at=new Date().toISOString(); refreshBell(); Store.markRead([id]).catch(e=>console.error(e)); }
-  const a=n.action||{}; closeNotifs();
+  ntRead(id);
+  const a=n.action||{};
   if(a.code){ const s=await Store.getMySession(a.code).catch(()=>null); if(s){ navOpen(s); return; } toast("Ese taller ya no existe o no tienes acceso"); return; }
   if(a.view){ if(A.session){ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); A.session=null; }
     if(a.view==="create"){ startNewWorkshop(); return; }   /* v1.16 · el aviso de bienvenida abre el creador */
     navView(viewOk(a.view) ? a.view : "home"); return; }
 }
-document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $(".nt-pop:not(.m-out)")) closeNotifs(); });
-window.addEventListener("resize",()=>{ if($(".nt-pop:not(.m-out)")) placeNotifs(); });
 
-/* Refleja la foto nueva en el encabezado y en las listas sin recargar */
+/* Refleja la foto y el nombre nuevos en el encabezado y en las listas sin recargar */
 function syncMe(){
   const m=AH.staff.find(x=>x.user_id===ME.uid); if(m) m.avatar=ME.avatar;
-  const b=$("#meBtn"); if(b){ const old=b.querySelector(".av-i"); if(old) old.outerHTML=avatarHTML(ME,"md"); }
+  const b=$("#meBtn"); if(b){ const old=b.querySelector(".av-i"); if(old) old.outerHTML=avatarHTML(ME,"md"); b.setAttribute("aria-label","Tu cuenta: "+(ME.name||ME.email)); }
   $$("[data-av]").forEach(el=>{ if(el.dataset.av===ME.uid) el.innerHTML=avatarHTML(ME, el.dataset.cls||""); });
 }
-document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $(".me-pop:not(.m-out)")) closeMe(); });
 
 async function loadStaff(){ try{ AH.staff = await Store.listStaff(); }catch(e){ console.error(e); } return AH.staff; }
 
@@ -5264,7 +5462,8 @@ const skb=(w,h,cls)=>`<i class="sk-b${cls?" "+cls:""}" style="width:${w};height:
 const skN=(n,f)=>Array.from({length:n},(_,i)=>f(i)).join("");
 function skPage(label, inner){ return `<div class="sk-page" aria-busy="true"><span class="sr" role="status">${esc(label)}</span>${inner}</div>`; }
 function skHead(acts){ return `<header class="page-h" aria-hidden="true"><div class="sk-col">${skb("13rem","1.5rem")}${skb("min(22rem,80vw)",".875rem")}</div>${acts?`<div class="page-acts">${acts}</div>`:""}</header>`; }
-function skStats(n){ return `<div class="stats${n===3?" k3":""}" aria-hidden="true">${skN(n,()=>`<div class="stat">${skb("5.5rem",".75rem")}${skb("2.5rem","1.5rem")}${skb("7rem",".625rem")}</div>`)}</div>`; }
+function skStats(n){ return `<div class="kpi-w" aria-hidden="true"><div class="stats${n===3?" k3":""}">${skN(n,()=>`<div class="stat"><div class="stat-hd">${skb("2.25rem","2.25rem","ctl")}${skb("5.5rem",".75rem")}</div><div class="stat-bd">${skb("3rem","1.75rem")}${skb("7.5rem",".625rem")}</div></div>`)}</div></div>`; }
+function skNotifs(){ return skPage("Cargando notificaciones…", skHead(skb("12rem","2.5rem","ctl"))+`<section class="panel nt-panel" aria-hidden="true"><div class="sk-chips">${skb("5.5rem","2rem","ctl")}${skb("6.5rem","2rem","ctl")}</div>${skN(5,i=>`<div class="sk-nt">${skb("2.25rem","2.25rem","ctl")}<div class="sk-col">${skb(["58%","72%","46%"][i%3],".875rem")}${skb(["80%","64%","70%"][i%3],".6875rem")}</div>${skb("4rem",".625rem")}</div>`)}</section>`); }
 function skRows(n){ return skN(n,i=>`<div class="sk-row"><div class="sk-col">${skb(["70%","52%","62%"][i%3],".875rem")}${skb("4.5rem",".625rem")}</div>${skb("5.5rem","1.375rem","pill")}${skb("2rem",".75rem")}${skb("4rem",".75rem")}${skb("1.75rem","1.75rem","ctl")}</div>`); }
 function skTable(title, n){ const chips=`<div class="sk-chips">${[4.5,5.75,6.25,6.25,6.75].map(w=>skb(w+"rem","2rem","ctl")).join("")}</div>`, q=skb("17rem","2.375rem","ctl");
   return `<section class="panel wt-panel" aria-hidden="true">${title?`<div class="wt-head"><div class="wt-title sk-col">${skb("9rem","1.25rem")}${skb("min(20rem,70vw)",".75rem")}</div>${q}</div>${chips}`:`<div class="wt-head wt-bar">${chips}${q}</div>`}${skRows(n)}</section>`; }
@@ -5279,6 +5478,13 @@ function skTeam(){ return skPage("Cargando equipo…", skHead()+`<div class="sk-
   <section class="panel">${skb("8rem","1.125rem")}<div style="margin-top:.75rem">${skN(5,()=>`<div class="sk-tm">${skb("2.5rem","2.5rem","circ")}<div class="sk-col">${skb("10rem",".875rem")}${skb("14rem",".625rem")}</div>${skb("6rem","2rem","ctl")}</div>`)}</div></section></div>`); }
 function skLines(label, n, toggles){ return `<div class="sk-lines" aria-busy="true"><span class="sr" role="status">${esc(label)}</span>${skN(n,i=>`<div class="sk-line" aria-hidden="true">${skb(["82%","64%","74%","58%"][i%4],".75rem")}${toggles?skb("2.25rem","1.3125rem","pill"):""}</div>`)}</div>`; }
 /* v1.17 · Conteo de los indicadores de Inicio: solo la primera vez en la sesión y nunca con «Reducir animaciones» */
+/* v1.19 · Indicadores en tarjetas separadas (Inicio y Todos los talleres): ícono de línea en un cuadro con fondo suave
+   del acento, etiqueta (meta), número grande (display) y contexto (help). Misma altura y alineación en cada fila */
+function kpiCards(list, cls){
+  return `<div class="kpi-w vi" style="--i:1"><dl class="stats${cls?" "+cls:""}" aria-label="Resumen">${list.map(x=>`<div class="stat" data-k="st-${x.k}">
+      <dt class="stat-hd"><span class="stat-ic" aria-hidden="true">${icon(x.ic)}</span><span class="stat-l">${x.t}${x.live?'<i class="sd sd-live on" aria-hidden="true"></i>':""}</span></dt>
+      <dd class="stat-bd"><b class="stat-v" data-k="${x.k}"${x.count?` data-n="${x.n}"`:""}>${x.n}</b><span class="stat-c">${esc(x.c)}</span></dd></div>`).join("")}</dl></div>`;
+}
 function countUp(root){
   const els=root?$$(".stat-v[data-n]",root):[]; if(!els.length || AH._counted) return; AH._counted=true;
   if(document.documentElement.classList.contains("rm")) return;
@@ -5307,6 +5513,8 @@ async function adminHome(){
   if(isAdminRole() && AH.view==="team") return adminTeamView();
   if(AH.view==="create") return createView();
   if(AH.view==="mine")   return mineView();
+  if(AH.view==="notifs") return notifsView();
+  if(AH.view==="settings") return settingsView();
   return homeView();
 }
 
@@ -5349,7 +5557,7 @@ async function drawBio(){
   if(tr) tr.onclick=async()=>{ tr.disabled=true; try{ await Store.trustPasskeys(); toast("Llave aprobada"); drawBio(); }catch(e){ toast(friendlyAuthError(e)); tr.disabled=false; } };
   if(off) off.onclick=async()=>{ if(!(await askDialog({kind:"danger",title:`¿Apagar ${B}?`,text:"Se apaga en todos tus dispositivos. Volverás a entrar con tu correo y tu código de la app. Puedes activarlo de nuevo cuando quieras.",ok:"Apagar"}))) return;
     try{ await Store.disableFaceId(); try{ localStorage.removeItem("colmena_face_here"); }catch(x){} toast(`${B} apagado`); drawBio(); }catch(e){ toast(friendlyAuthError(e)); } };
-  if(ap) ap.onclick=()=>{ closeMe(); backupAppDialog(); };
+  if(ap) ap.onclick=()=>backupAppDialog();
 }
 /* v1.12 · Quien entra solo con Face ID agrega su app autenticadora como respaldo */
 async function backupAppDialog(){
@@ -5394,10 +5602,10 @@ async function faceNudge(){
   const html=`<section class="inst face" id="faceCard"><span class="inst-ic bio">${BIO_IC}</span><div><b>${st.trusted>0?`Activa ${B} en ${pc?"esta computadora":"este dispositivo"}`:`Entra con ${B} la próxima vez`}</b><p>Sin contraseña ni código de 6 dígitos: un toque y listo. Se activa una vez en cada dispositivo.</p></div>
     <div class="inst-r"><button class="abtn primary" id="faceGo">${BIO_IC}Activar ${B}</button><button class="ib sm inst-x" id="faceX" aria-label="Ahora no">${icon("close")}</button></div></section>`;
   homeNote(html, "#railNotes", "afterbegin");
-  if(sec.needCode){ $("#faceGo").onclick=()=>{ openMe(); setTimeout(()=>{ const i=$("#bioOtp"); if(i){ i.scrollIntoView({block:"center"}); i.focus(); } },450); }; }
+  if(sec.needCode){ $("#faceGo").onclick=()=>openSettings(()=>setTimeout(()=>{ const i=$("#bioOtp"); if(i){ i.scrollIntoView({block:"center"}); i.focus(); } },400)); }
   else wirePasskeyBtn($("#faceGo"), "reg", ()=>{ const c=$("#faceCard"); if(c) c.remove(); toast(`${B} activado: la próxima vez entra con un toque`); },
     e=>{ const m=String(e&&((e.name||"")+" "+(e.message||""))); if(/InvalidState|already registered|excluded/i.test(m)){ markFaceHere(); const c=$("#faceCard"); if(c) c.remove(); toast(`Ya tienes una llave de Colmena guardada aquí. Úsala con «Entrar con ${B}».`); return; } toast(passkeyError(e)); });
-  $("#faceX").onclick=()=>{ storageSet("colmena_face_off","1"); $("#faceCard").remove(); toast("Puedes activarlo después desde tu perfil"); };
+  $("#faceX").onclick=()=>{ storageSet("colmena_face_off","1"); $("#faceCard").remove(); toast("Puedes activarlo después desde Ajustes → Acceso"); };
 }
 
 /* v1.10 · Tarjeta «Lleva Colmena en tu celular» (se oculta si ya está instalada o si la cerraste) */
@@ -5413,7 +5621,7 @@ function installCardHTML(){
 }
 function wireInstall(){
   const g=$("#instGo"); if(g) g.onclick=async()=>{ const ok=await APP.install(); const c=$("#instCard"); if(ok&&c) c.remove(); };
-  const x=$("#instX"); if(x) x.onclick=()=>{ APP.dismiss(); const c=$("#instCard"); if(c) c.remove(); toast("Listo. Puedes instalarla después desde tu perfil"); };
+  const x=$("#instX"); if(x) x.onclick=()=>{ APP.dismiss(); const c=$("#instCard"); if(c) c.remove(); toast("Listo. Puedes instalarla después desde Ajustes → Ayuda"); };
 }
 window.addEventListener("colmena-installable",()=>{ if(AH.view==="home" && $(".hello")){ const c=$("#instCard"), h=installCardHTML(); if(c) c.outerHTML=h||""; else if(h) homeNote(h, "#railNotes", "beforeend"); wireInstall(); } });
 /* v1.17 · Los avisos de Inicio (recorrido, Face ID, instalar la app) viven en el rail, compactos; no son banners de ancho completo */
@@ -5442,7 +5650,7 @@ async function homeView(){
     if(h<=0) pend.push({ic:"clock",tone:"t-warn",t:`La invitación de ${i.name||i.email} venció`,s:"Reenvíala con un toque: código nuevo por 7 días",go:{resend:i.id},label:"Reenviar"});
     else if(h<=24) pend.push({ic:"clock",tone:"t-warn",t:`La invitación de ${i.name||i.email} vence hoy`,s:"Aún no entra a Colmena",go:{resend:i.id},label:"Reenviar"}); });
   mine.filter(s=>s.phase==="closed" && s.closed_at && daysSince(s.closed_at)>=30).forEach(s=>pend.push({ic:"trash",tone:"t-warn",t:`«${s.name}» lleva ${daysSince(s.closed_at)} días cerrado`,s:"Exporta los resultados y bórralo",go:{code:s.code},label:"Abrir"}));
-  if(un) pend.unshift({ic:"bell",tone:"",t:`Tienes ${un} ${un===1?"aviso sin leer":"avisos sin leer"}`,s:"Ábrelos en la campana",go:{bell:true},label:"Ver avisos"});
+  if(un) pend.unshift({ic:"bell",tone:"",t:`Tienes ${un} ${un===1?"aviso sin leer":"avisos sin leer"}`,s:"Ábrelos en Notificaciones",go:{bell:true},label:"Ver avisos"});
   /* v1.17 · Mismo criterio que los filtros de la tabla: «en curso» = ya empezó una actividad; «por iniciar» = sala de espera */
   const going=live.filter(s=>ACTIVE_PH.includes(s.phase)), lobby=live.filter(s=>s.phase==="lobby"), withRes=live.filter(s=>s.phase==="results");
   const ctx=[going.length?`${going.length} en curso`:"", lobby.length?`${lobby.length} por iniciar`:"", withRes.length?`${withRes.length} con resultados`:""].filter(Boolean).join(" · ") || "Sin talleres en curso";
@@ -5455,10 +5663,10 @@ async function homeView(){
   let monthName="este mes"; try{ monthName=new Date().toLocaleDateString("es-MX",{month:"long"}); }catch(e){}
   const ready=(drafts||[]).filter(r=>(r.step||0)>0).length;
   const stats=[
-    {k:"live",   t:"En curso",    n:going.length, c:cap(going,"en sala","Ninguno ahora")},
-    {k:"ready",  t:"Por iniciar", n:lobby.length, c:cap(lobby,"ya entraron","Ninguno en sala de espera")},
-    {k:"draft",  t:"Borradores",  n:drafts.length, c:drafts.length?(ready?`${ready} con propuesta lista`:"Sin propuesta todavía"):"Sin borradores"},
-    {k:"people", t:"Participantes", n:ppl(month), c:`${monthName.charAt(0).toUpperCase()+monthName.slice(1)} · ${per(month.length,"taller","talleres")}${team&&others(month)?" del equipo":""}`}];
+    {k:"live",   ic:"play",      t:"En curso",    n:going.length, live:going.length>0, count:true, c:cap(going,"en sala","Ninguno ahora")},
+    {k:"ready",  ic:"qr",        t:"Por iniciar", n:lobby.length, count:true, c:cap(lobby,"ya entraron","Ninguno en sala de espera")},
+    {k:"draft",  ic:"clipboard", t:"Borradores",  n:drafts.length, count:true, c:drafts.length?(ready?`${ready} con propuesta lista`:"Sin propuesta todavía"):"Sin borradores"},
+    {k:"people", ic:"users",     t:"Participantes", n:ppl(month), count:true, c:`${monthName.charAt(0).toUpperCase()+monthName.slice(1)} · ${per(month.length,"taller","talleres")}${team&&others(month)?" del equipo":""}`}];
   const showStats = d.sessions.length || drafts.length;
   const NOW_MAX=5;
   const nowRow=s=>{ const mineS=isMine(s), act=ACTIVE_PH.includes(s.phase);
@@ -5475,7 +5683,7 @@ async function homeView(){
         ${ME.name?"":`<p class="hello-nn">${icon("users")}Tu cuenta no tiene nombre. <button type="button" class="linkbtn" id="hlName">Ponle tu nombre</button> para que tu equipo te reconozca.</p>`}</div>
       <div class="hello-acts">${team?`<button class="abtn" id="hInvite">${icon("mail")}Invitar a alguien</button>`:""}<button class="abtn primary" id="hCreate">${icon("plus")}Crear taller</button></div>
     </section>
-    ${showStats?`<dl class="stats vi" style="--i:1" aria-label="Resumen">${stats.map(x=>`<div class="stat"><dt><i class="sd sd-${x.k}${x.k==="live"&&x.n?" on":""}" aria-hidden="true"></i>${x.t}</dt><dd><b class="stat-v" data-k="${x.k}" data-n="${x.n}">${x.n}</b><span class="stat-c">${esc(x.c)}</span></dd></div>`).join("")}</dl>`:""}
+    ${showStats?kpiCards(stats):""}
     <div class="home-layout">
       <div class="home-main"><section class="panel wt-panel vi" style="--i:2" id="wtBox" aria-labelledby="wtT"></section></div>
       <div class="rail-a">
@@ -5509,10 +5717,10 @@ async function homeView(){
   TOUR.maybe("home", fresh);
   $("#hCreate").onclick=startNewWorkshop;
   const hi=$("#hInvite"); if(hi) hi.onclick=()=>navView("team");
-  const nn=$("#hlName"); if(nn) nn.onclick=()=>{ openMe(); setTimeout(()=>{ const e=$("#meEdit"); if(e) e.click(); },50); };
+  const nn=$("#hlName"); if(nn) nn.onclick=()=>openSettings(()=>{ const e=$("#meEdit"); if(e) e.click(); });
   $$("[data-open]").forEach(b=>b.onclick=()=>openSession(b.dataset.open,b,b.closest(".rail-it")&&b.closest(".rail-it").querySelector(".now-n")));
   $$("[data-view-go]").forEach(b=>b.onclick=()=>navView(b.dataset.viewGo));
-  $$("[data-pend]").forEach(b=>b.onclick=()=>{ const p=pend[+b.dataset.pend]; if(p.go.bell) return openNotifs(); if(p.go.resend) return resendInvite(p.go.resend, b); if(p.go.code) return openSession(p.go.code,b); navView(p.go.view); });
+  $$("[data-pend]").forEach(b=>b.onclick=()=>{ const p=pend[+b.dataset.pend]; if(p.go.bell) return goNotifs(); if(p.go.resend) return resendInvite(p.go.resend, b); if(p.go.code) return openSession(p.go.code,b); navView(p.go.view); });
 }
 
 /* ---------- Mis talleres ---------- */
@@ -5602,7 +5810,7 @@ function wsTable(box, sessions, drafts, opt){
       tr.onclick=e=>{ if(e.target.closest(".wt-act")) return; wsOpen(r, tr); };
       tr.onkeydown=e=>{ if(e.target!==tr) return; if(e.key==="Enter"){ e.preventDefault(); wsOpen(r, tr); } };
       const mbtn=tr.querySelector(".wt-more");
-      mbtn.onclick=e=>{ e.stopPropagation(); openRowMenu(mbtn, wsMenu(r, refresh)); };
+      mbtn.onclick=e=>{ e.stopPropagation(); openRowMenu(mbtn, wsMenu(r, refresh), {title:r.name}); };
     });
   };
   draw();
@@ -5642,26 +5850,42 @@ async function wsDelete(r, refresh){
     toast(isD?"Borrador eliminado":"Taller eliminado"); refresh(); }
   catch(e){ toast("No se pudo eliminar: "+friendlyAuthError(e)); }
 }
-/* Menú ⋮ accesible: flechas para moverse, Enter para elegir, Esc para cerrar */
-function closeRowMenu(){ const m=$(".rm-pop:not(.m-out)"); if(m){ const b=m._btn; Motion.dismiss(m,{to:"origin", origin:b}); if(b){ b.setAttribute("aria-expanded","false"); b.classList.remove("on"); } } document.removeEventListener("click",rmOutside,true); window.removeEventListener("scroll",closeRowMenu,true); window.removeEventListener("resize",closeRowMenu); }
+/* Menú ⋮ accesible: flechas para moverse, Enter para elegir, Esc para cerrar.
+   v1.19 · Un solo componente para la tabla de talleres, Equipo, Invitaciones y el avatar. En celular sale como hoja
+   inferior (fondo, manija, se arrastra hacia abajo para cerrar). o: {label, title, head, cls} */
+function closeRowMenu(dy){ const m=$(".rm-pop:not(.m-out)");
+  if(m){ const b=m._btn, sheet=m.classList.contains("rm-sheet");
+    Motion.dismiss(m, sheet?{to:"bottom", back:m._back, fromY:typeof dy==="number"?dy:0}:{to:"origin", origin:b});
+    if(b){ b.setAttribute("aria-expanded","false"); b.classList.remove("on"); }
+    if(sheet) document.documentElement.classList.remove("me-lock"); }
+  else $$(".rm-back:not(.m-out)").forEach(x=>x.remove());
+  document.removeEventListener("click",rmOutside,true); window.removeEventListener("scroll",closeRowMenu,true); window.removeEventListener("resize",closeRowMenu); }
 function rmOutside(e){ const m=$(".rm-pop:not(.m-out)"); if(m && !m.contains(e.target) && e.target!==m._btn && !m._btn.contains(e.target)) closeRowMenu(); }
-function openRowMenu(btn, items){
+function openRowMenu(btn, items, o){ o=o||{};
   const was=$(".rm-pop:not(.m-out)"); if(was && was._btn===btn){ closeRowMenu(); return; } closeRowMenu();
-  const m=document.createElement("div"); m.className="rm-pop"; m.setAttribute("role","menu"); m._btn=btn;
-  m.innerHTML=items.map((it,i)=>it.sep?'<div class="rm-sep" role="separator"></div>':`<button type="button" role="menuitem" class="rm-it${it.danger?" danger":""}" data-i="${i}">${icon(it.ic)}<span><b>${esc(it.t)}</b>${it.d?`<small>${esc(it.d)}</small>`:""}</span></button>`).join("");
+  const sheet=innerWidth<=A11Y.bp(720);
+  const m=document.createElement("div"); m.className="rm-pop"+(o.cls?" "+o.cls:"")+(sheet?" rm-sheet":""); m.setAttribute("role","menu"); m._btn=btn;
+  const lbl=o.label||btn.getAttribute("aria-label")||""; if(lbl) m.setAttribute("aria-label",lbl);
+  m.innerHTML=(sheet&&o.title&&!o.head?`<div class="rm-h" aria-hidden="true">${esc(o.title)}</div>`:"")+(o.head||"")+
+    items.map((it,i)=>it.sep?'<div class="rm-sep" role="separator"></div>':`<button type="button" role="menuitem" class="rm-it${it.danger?" danger":""}" data-i="${i}"${it.k?` data-mi="${esc(it.k)}"`:""}>${icon(it.ic)}<span><b>${esc(it.t)}</b>${it.d?`<small>${esc(it.d)}</small>`:""}</span></button>`).join("");
+  if(sheet){ const bk=document.createElement("div"); bk.className="rm-back"; document.body.appendChild(bk); m._back=bk; document.documentElement.classList.add("me-lock"); }
   document.body.appendChild(m); btn.setAttribute("aria-expanded","true"); btn.classList.add("on");
-  const r=btn.getBoundingClientRect(), w=m.offsetWidth, h=m.offsetHeight;
-  const top = (r.bottom+6+h > innerHeight-8) ? Math.max(8, r.top-6-h) : r.bottom+6;
-  m.style.top=top+"px"; m.style.left=Math.max(8, Math.min(innerWidth-w-8, r.right-w))+"px";
-  Motion.show(m,{from:"origin", origin:btn});
+  if(sheet){ Motion.show(m,{from:"bottom", back:m._back}); Motion.drag(m, m.querySelector(".rm-h,.rm-me")||m, dy=>closeRowMenu(dy)); }
+  else {
+    const r=btn.getBoundingClientRect(), w=m.offsetWidth, h=m.offsetHeight;
+    const top = (r.bottom+6+h > innerHeight-8) ? Math.max(8, r.top-6-h) : r.bottom+6;
+    m.style.top=top+"px"; m.style.left=Math.max(8, Math.min(innerWidth-w-8, r.right-w))+"px";
+    Motion.show(m,{from:"origin", origin:btn});
+  }
   const its=[...m.querySelectorAll(".rm-it")];
-  its.forEach(b=>b.onclick=e=>{ e.stopPropagation(); const it=items[+b.dataset.i]; closeRowMenu(); btn.focus(); it.fn(); });
+  its.forEach(b=>b.onclick=e=>{ e.stopPropagation(); const it=items[+b.dataset.i]; closeRowMenu(); if(btn.isConnected) btn.focus({preventScroll:true}); it.fn(); });
   m.onkeydown=e=>{ const k=its.indexOf(document.activeElement);
     if(e.key==="ArrowDown"){ e.preventDefault(); its[(k+1)%its.length].focus(); }
     else if(e.key==="ArrowUp"){ e.preventDefault(); its[(k-1+its.length)%its.length].focus(); }
+    else if(e.key==="Home"||e.key==="End"){ e.preventDefault(); its[e.key==="Home"?0:its.length-1].focus(); }
     else if(e.key==="Escape"||e.key==="Tab"){ e.preventDefault(); closeRowMenu(); btn.focus(); } };
   its[0].focus({preventScroll:true});
-  setTimeout(()=>{ document.addEventListener("click",rmOutside,true); window.addEventListener("scroll",closeRowMenu,true); window.addEventListener("resize",closeRowMenu); },0);
+  setTimeout(()=>{ document.addEventListener("click",rmOutside,true); if(!sheet) window.addEventListener("scroll",closeRowMenu,true); window.addEventListener("resize",closeRowMenu); },0);
 }
 
 /* ---------- Creador paso a paso ---------- */
@@ -6120,11 +6344,10 @@ async function adminAllView(){
   /* v1.17 · Mismo encabezado e indicadores que Inicio; filtros y tabla a todo el ancho */
   Motion.morph($(".ah-wide"),`
     <header class="page-h vi" style="--i:0"><div><h1 class="page-t">Todos los talleres</h1><p class="page-s">Los tuyos los operas; los de otros facilitadores los ves y exportas en <b>solo lectura</b>.</p></div></header>
-    <dl class="stats k3 vi" style="--i:1" aria-label="Resumen">
-      <div class="stat"><dt><i class="sd" aria-hidden="true"></i>Talleres</dt><dd><b class="stat-v">${all.length}</b><span class="stat-c">de ${owners.length} ${owners.length===1?"facilitador":"facilitadores"}</span></dd></div>
-      <div class="stat"><dt><i class="sd sd-live${live?" on":""}" aria-hidden="true"></i>En curso</dt><dd><b class="stat-v">${live}</b><span class="stat-c">en este momento</span></dd></div>
-      <div class="stat"><dt><i class="sd sd-people" aria-hidden="true"></i>Con acceso</dt><dd><b class="stat-v">${active}</b><span class="stat-c">${active===1?"cuenta activa":"cuentas activas"}</span></dd></div>
-    </dl>
+    ${kpiCards([
+      {k:"all",    ic:"grid",  t:"Talleres",   n:all.length, c:`de ${owners.length} ${owners.length===1?"facilitador":"facilitadores"}`},
+      {k:"live",   ic:"play",  t:"En curso",   n:live, live:live>0, c:"en este momento"},
+      {k:"access", ic:"key",   t:"Con acceso", n:active, c:active===1?"cuenta activa":"cuentas activas"}], "k3")}
     <div class="panel all-panel vi" style="--i:2">
       <div class="adm-filters">
         <div class="field"><label for="fOwner">Facilitador</label>
@@ -6291,11 +6514,7 @@ async function adminTeamView(lastInvite){
             <span class="av-w" data-av="${esc(m.user_id)}" data-cls="lg">${avatarHTML(m,"lg")}</span>
             <div class="tm-who"><b>${esc(m.name||m.email)}${me?' <span class="tm-me">Tú</span>':""}</b><span>${esc(m.title?m.title+" · ":"")}${esc(m.email||"")}</span></div>
             <div class="tm-meta"><span class="role-tag ${esc(m.role)}">${ROLE_T[m.role]}</span><span class="tm-n">${n} ${n===1?"taller":"talleres"}</span>${m.active?"":'<span class="tm-off">Desactivado</span>'}</div>
-            <div class="tm-acts">${me?"":`
-              <button class="abtn sm" data-role="${esc(m.user_id)}" data-to="${m.role==="admin"?"facilitator":"admin"}">${m.role==="admin"?"Hacer facilitador":"Hacer admin"}</button>
-              ${m.active?`<button class="abtn sm" data-reset="${esc(m.user_id)}" title="Si perdió o cambió su teléfono">${icon("key")}Reiniciar acceso</button>`:""}
-              <button class="abtn sm${m.active?" danger":""}" data-act="${esc(m.user_id)}" data-to="${m.active?"0":"1"}">${m.active?"Desactivar":"Reactivar"}</button>
-              ${m.active?"":`<button class="abtn sm danger" data-remove="${esc(m.user_id)}" aria-label="Eliminar a ${esc(m.name||m.email)} del equipo">Eliminar</button>`}`}</div>
+            <div class="tm-acts">${me?"":`<button type="button" class="ib wt-more tm-more" data-menu="${esc(m.user_id)}" aria-haspopup="menu" aria-expanded="false" aria-label="Acciones de ${esc(m.name||m.email)}">${icon("more")}</button>`}</div>
           </div>`; }).join("")}</div>
         </section>
         <section class="panel" aria-labelledby="pendT">
@@ -6304,8 +6523,7 @@ async function adminTeamView(lastInvite){
             <i class="av-i lg pend" aria-hidden="true">${icon(x?"clock":"mail")}</i>
             <div class="tm-who"><b>${esc(i.name||i.email)}</b><span>${esc(i.email)}</span></div>
             <div class="tm-meta"><span class="role-tag ${esc(i.role)}">${ROLE_T[i.role]}</span>${inviteChip(i)}</div>
-            <div class="tm-acts"><button class="abtn sm${x?" primary":""}" data-resend="${esc(i.id)}" aria-label="Reenviar invitación a ${esc(i.email)}">${icon("refresh")}Reenviar</button>
-              <button class="abtn sm" data-revoke="${esc(i.id)}" aria-label="Cancelar invitación de ${esc(i.email)}">Cancelar</button></div>
+            <div class="tm-acts"><button type="button" class="ib wt-more tm-more" data-imenu="${esc(i.id)}" aria-haspopup="menu" aria-expanded="false" aria-label="Acciones de la invitación de ${esc(i.name||i.email)}">${icon("more")}</button></div>
           </div>`; }).join("")}</div>`:`<p class="hint">No hay invitaciones esperando respuesta.</p>`}
         </section>
       </div>
@@ -6347,26 +6565,49 @@ async function adminTeamView(lastInvite){
     $("#invPrev").onclick=()=>previewEmail(mail);
   }
   const who=id=>{ const m=AH.staff.find(x=>x.user_id===id)||{}; return m.name||m.email||"esta cuenta"; };
-  $$("[data-act]").forEach(b=>b.onclick=async()=>{ const on=b.dataset.to==="1", id=b.dataset.act;
+  /* v1.19 · Mientras una acción trabaja, el ⋯ de la fila se desactiva con un indicador y la fila dice qué está pasando */
+  const busy=(k, on, label)=>{ const row=$(`.ah-team .tm-row[data-k="${k}"]`); if(!row) return; const b=row.querySelector(".tm-more");
+    row.classList.toggle("busy",on); if(b){ b.disabled=on; b.innerHTML=on?'<span class="spin" aria-hidden="true"></span>':icon("more"); }
+    let st=row.querySelector(".tm-busy");
+    if(on){ if(!st){ st=document.createElement("span"); st.className="tm-busy"; st.setAttribute("role","status"); row.querySelector(".tm-meta").appendChild(st); } st.textContent=label; }
+    else if(st) st.remove(); };
+  const setActive=async(id, on)=>{
     if(!on && !(await askDialog({kind:"danger", title:`¿Desactivar a ${who(id)}?`, text:"Ya no podrá entrar al panel ni ver sus talleres. Sus talleres y lo capturado se conservan y tú los sigues viendo. Puedes reactivarla cuando quieras. Después podrás eliminarla.", ok:"Desactivar"}))) return;
-    b.disabled=true; try{ await Store.setStaff(id,{active:on}); toast(on?"Cuenta reactivada":"Cuenta desactivada"); adminTeamView(); }catch(e){ toast(friendlyAuthError(e)); b.disabled=false; } });
+    busy("m-"+id, true, on?"Reactivando…":"Desactivando…");
+    try{ await Store.setStaff(id,{active:on}); toast(on?"Cuenta reactivada":"Cuenta desactivada"); adminTeamView(); }catch(e){ toast(friendlyAuthError(e)); busy("m-"+id, false); } };
   /* v1.17 · Eliminar (solo cuentas desactivadas): sus talleres, borradores y lo capturado pasan a ti; su cuenta se borra */
-  $$(".ah-team [data-remove]").forEach(b=>b.onclick=async()=>{ const id=b.dataset.remove, nm=who(id), n=count(id);
+  const remove=async id=>{ const nm=who(id), n=count(id);
     const what = n===0 ? "No tiene talleres a su nombre; si dejó borradores, pasan a ti." : n===1 ? "Su taller y todo lo capturado pasan a ti." : `Sus ${n} talleres y todo lo capturado pasan a ti.`;
     if(!(await askDialog({kind:"danger", title:`¿Eliminar a ${nm}?`, text:`Se borran su cuenta y su acceso. ${what} No se puede deshacer.`, ok:"Eliminar cuenta"}))) return;
-    const label=b.innerHTML; b.disabled=true; Motion.label(b,`<span class="spin" aria-hidden="true"></span>Eliminando…`);
+    busy("m-"+id, true, "Eliminando…");
     try{ const r=await Store.adminRemoveMember(id); const k=r&&typeof r.talleres==="number"?r.talleres:n;
       if(r&&r.account_deleted===false) console.warn("[Colmena] Salió del equipo, pero su cuenta no se borró. Bórrala en Supabase → Authentication → Users:", r.email||id);
       toast(k>0?`${nm} ya no está en el equipo · ${k} ${k===1?"taller pasó":"talleres pasaron"} a ti`:`${nm} ya no está en el equipo`); adminTeamView(); }
-    catch(e){ const m=friendlyAuthError(e); toast(/^Acción no válida/.test(m)?"Falta actualizar la función «account» en Supabase (v1.17).":m); b.disabled=false; Motion.label(b,label); } });
-  $$(".tm-acts [data-role]").forEach(b=>b.onclick=async()=>{ const id=b.dataset.role, to=b.dataset.to;
+    catch(e){ const m=friendlyAuthError(e); toast(/^Acción no válida/.test(m)?"Falta actualizar la función «account» en Supabase (v1.17).":m); busy("m-"+id, false); } };
+  const setRole=async(id, to)=>{
     if(to==="admin" && !(await askDialog({kind:"bee", title:`¿Hacer admin a ${who(id)}?`, text:"Podrá ver y exportar los talleres de todo el equipo, e invitar o desactivar cuentas.", ok:"Hacer admin"}))) return;
-    b.disabled=true; try{ await Store.setStaff(id,{role:to}); toast(to==="admin"?"Ahora es admin":"Ahora es facilitador"); adminTeamView(); }catch(e){ toast(friendlyAuthError(e)); b.disabled=false; } });
-  $$("[data-revoke]").forEach(b=>b.onclick=async()=>{ b.disabled=true; try{ await Store.revokeInvite(b.dataset.revoke); toast("Invitación cancelada"); adminTeamView(); }catch(e){ toast(friendlyAuthError(e)); b.disabled=false; } });
-  $$("[data-resend]").forEach(b=>b.onclick=()=>resendInvite(b.dataset.resend, b));
-  $$("[data-reset]").forEach(b=>b.onclick=async()=>{ const id=b.dataset.reset;
+    busy("m-"+id, true, "Guardando…");
+    try{ await Store.setStaff(id,{role:to}); toast(to==="admin"?"Ahora es admin":"Ahora es facilitador"); adminTeamView(); }catch(e){ toast(friendlyAuthError(e)); busy("m-"+id, false); } };
+  const reset=async id=>{
     if(!(await askDialog({kind:"bee", title:`¿Reiniciar el acceso de ${who(id)}?`, text:"Úsalo si perdió o cambió su teléfono. Se borran su Face ID y su app autenticadora, y le llega un correo para activarlos de nuevo en 1 minuto. Sus talleres no se tocan.", ok:"Reiniciar acceso"}))) return;
-    b.disabled=true; try{ const r=await Store.adminResetAccess(id); toast(r&&r.sent===false?"Acceso reiniciado. No se pudo enviar el correo: dile que use «Entrar sin contraseña».":`Listo: le enviamos un enlace a ${r&&r.email||who(id)}`); }catch(e){ toast(friendlyAuthError(e)); } b.disabled=false; });
+    busy("m-"+id, true, "Reiniciando…");
+    try{ const r=await Store.adminResetAccess(id); toast(r&&r.sent===false?"Acceso reiniciado. No se pudo enviar el correo: dile que use «Entrar sin contraseña».":`Listo: le enviamos un enlace a ${r&&r.email||who(id)}`); }catch(e){ toast(friendlyAuthError(e)); }
+    busy("m-"+id, false); };
+  /* v1.19 · Las acciones de cada persona viven en su menú ⋯ (en celular, hoja inferior) */
+  $$(".ah-team [data-menu]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); const m=AH.staff.find(x=>x.user_id===b.dataset.menu); if(!m) return; const id=m.user_id, adm=m.role==="admin";
+    openRowMenu(b, [
+      {ic:adm?"users":"eye", t:adm?"Hacer facilitador":"Hacer admin", d:adm?"Solo creará y operará sus talleres":"Verá y exportará los talleres de todo el equipo", k:"role", fn:()=>setRole(id, adm?"facilitator":"admin")},
+      ...(m.active?[{ic:"key", t:"Reiniciar acceso", d:"Si perdió o cambió su teléfono", k:"reset", fn:()=>reset(id)}]:[]),
+      m.active?{ic:"ban", t:"Desactivar", d:"Ya no podrá entrar; sus talleres se conservan", k:"active", fn:()=>setActive(id, false)}
+              :{ic:"check", t:"Reactivar", d:"Vuelve a tener acceso", k:"active", fn:()=>setActive(id, true)},
+      ...(m.active?[]:[{sep:true},{ic:"trash", t:"Eliminar", d:"Borra su cuenta; sus talleres pasan a ti", danger:true, k:"remove", fn:()=>remove(id)}])
+    ], {title:m.name||m.email}); });
+  $$(".ah-team [data-imenu]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); const i=invites.find(x=>x.id===b.dataset.imenu); if(!i) return; const k="i-"+i.id;
+    openRowMenu(b, [
+      {ic:"refresh", t:"Reenviar", d:"Código nuevo, vigente 7 días", k:"resend", fn:async()=>{ busy(k, true, "Reenviando…"); if(!(await resendInvite(i.id))) busy(k, false); }},
+      {sep:true},
+      {ic:"close", t:"Cancelar invitación", danger:true, k:"revoke", fn:async()=>{ busy(k, true, "Cancelando…"); try{ await Store.revokeInvite(i.id); toast("Invitación cancelada"); adminTeamView(); }catch(e){ toast(friendlyAuthError(e)); busy(k, false); } }}
+    ], {title:i.name||i.email}); });
 }
 /* v1.12 · Estado de una invitación y reenvío en un toque (código nuevo, 7 días más) */
 function inviteChip(i){ const ms=new Date(i.expires_at).getTime()-Date.now(), d=Math.ceil(ms/864e5);
@@ -6375,8 +6616,8 @@ function inviteChip(i){ const ms=new Date(i.expires_at).getTime()-Date.now(), d=
   return `<span class="iv-st ok">Vigente · ${d} días</span>`; }
 async function resendInvite(id, btn){
   if(btn){ btn.disabled=true; Motion.label(btn,`<span class="spin" aria-hidden="true"></span>Reenviando…`); }
-  try{ const r=await Store.resendInvite(id); AH.view="team"; adminTeamView({...r}); toast("Invitación nueva creada: la estamos enviando"); }
-  catch(e){ toast(friendlyAuthError(e)); if(btn){ btn.disabled=false; Motion.label(btn,`${icon("refresh")}Reenviar`); } }
+  try{ const r=await Store.resendInvite(id); AH.view="team"; adminTeamView({...r}); toast("Invitación nueva creada: la estamos enviando"); return true; }
+  catch(e){ toast(friendlyAuthError(e)); if(btn){ btn.disabled=false; Motion.label(btn,`${icon("refresh")}Reenviar`); } return false; }
 }
 
 function toolsText(t){ return Object.entries(t||{}).map(([k,v])=>k+" | "+(v||[]).join(", ")).join("\n"); }
@@ -7032,19 +7273,6 @@ function kpiTile(o){
 }
 /* Estado vacío, igual en todas las tarjetas */
 function emptyState(ic,title,hint){ return `<div class="empty-st">${glass(ic,{size:"md",tone:"slate"})}<b>${title}</b>${hint?`<span>${hint}</span>`:""}</div>`; }
-/* Tooltip único para todo lo que tenga data-tip (texto plano, nunca HTML) */
-function installTips(){
-  if(window.__tips) return; window.__tips=true;
-  const tip=document.createElement("div"); tip.className="vtip"; tip.setAttribute("role","tooltip"); document.body.appendChild(tip);
-  const place=(x,y)=>{ const r=tip.getBoundingClientRect(); let L=x+14, T=y+16;
-    if(L+r.width>innerWidth-8) L=x-r.width-14; if(T+r.height>innerHeight-8) T=y-r.height-16;
-    tip.style.left=Math.max(8,L)+"px"; tip.style.top=Math.max(8,T)+"px"; };
-  const find=t=>t&&t.closest?t.closest("[data-tip]"):null;
-  document.addEventListener("pointermove",e=>{ const el=find(e.target); if(!el){ tip.classList.remove("on"); return; } tip.textContent=el.dataset.tip||el.getAttribute("data-tip"); tip.classList.add("on"); place(e.clientX,e.clientY); });
-  document.addEventListener("focusin",e=>{ const el=find(e.target); if(!el) return; tip.textContent=el.getAttribute("data-tip"); tip.classList.add("on"); const r=el.getBoundingClientRect(); place(r.left+r.width/2,r.bottom); });
-  ["focusout","scroll","pointerleave"].forEach(ev=>document.addEventListener(ev,()=>tip.classList.remove("on"),true));
-}
-
 /* Unidades de la colmena: un hexágono por voto o apoyo (se lee a 3 m sin eje) */
 function hexUnits(on, total, cls){ return `<span class="hxu ${cls||""}">${'<i class="on"></i>'.repeat(on)}${'<i></i>'.repeat(Math.max(0,total-on))}</span>`; }
 const durShort = v => ["< 1 día","1–5 d","1–2 sem","> 2 sem"][v] || "—";
@@ -7300,7 +7528,7 @@ function askDialog(o){
    v1.16 · Recorrido de primera vez para facilitadores (walkthrough)
    Contextual: cada paso aparece la primera vez que se llega a su pantalla (Inicio → Crear → Revisa y crea →
    Panel en vivo), así acompaña el primer taller de principio a fin. Se puede saltar (Esc o «Saltar recorrido»)
-   y repetir desde el perfil → Ayuda. Se recuerda por cuenta en este dispositivo.
+   y repetir desde Ajustes → Ayuda. Se recuerda por cuenta en este dispositivo.
    Quien ya tiene talleres no lo ve solo: en Inicio aparece una vez «¿Nuevo en Colmena?».
    ============================================================ */
 const TOUR_TOTAL=6;
@@ -7346,16 +7574,16 @@ const TOUR={
       <div><b>¿Nuevo en Colmena?</b><p>En 1 minuto te mostramos cómo crear un taller y guiarlo en la sala.</p></div>
       <div class="inst-r"><button class="abtn primary" id="tourGo">Ver recorrido</button><button class="ib sm inst-x" id="tourNo" aria-label="No, gracias">${icon("close")}</button></div></section>`, "#railTop", "afterbegin");   /* v1.17 · en el rail de Inicio */
     $("#tourGo").onclick=()=>this.restart();
-    $("#tourNo").onclick=()=>{ const s=this.st(); s.done=true; this.save(s); const c=$("#tourOffer"); if(c) c.remove(); toast("Puedes verlo cuando quieras desde tu perfil → Ayuda"); };
+    $("#tourNo").onclick=()=>{ const s=this.st(); s.done=true; this.save(s); const c=$("#tourOffer"); if(c) c.remove(); toast("Puedes verlo cuando quieras desde Ajustes → Ayuda"); };
   },
   restart(){
     this.close(); this.save({started:true, seen:{}});
-    closeMe(); closeNotifs();
+    closeMe();
     if(A.session){ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); A.session=null; }
     navView("home",{dir:0});
   },
   finishScreen(screen, all){ const s=this.st(); s.seen=s.seen||{}; s.seen[screen]=true; if(all||screen==="panel") s.done=true; this.save(s); },
-  skip(){ const s=this.st(); s.done=true; this.save(s); this.close(); toast("Puedes ver el recorrido cuando quieras desde tu perfil → Ayuda"); },
+  skip(){ const s=this.st(); s.done=true; this.save(s); this.close(); toast("Puedes ver el recorrido cuando quieras desde Ajustes → Ayuda"); },
   run(screen, steps, i){
     /* v1.18 · En la misma pantalla el recorte y la tarjeta viajan al siguiente objetivo (Gentle) en vez de reaparecer */
     const reuse=!!(this.root && this.root.isConnected && this._screen===screen);
@@ -7390,7 +7618,7 @@ const TOUR={
     root.querySelector(".tour-skip").onclick=()=>this.skip();
     root.querySelector(".tour-ok").onclick=()=>{
       if(st.go==="create"){ this.finishScreen(screen); this.close(); startNewWorkshop(); return; }
-      if(last){ this.finishScreen(screen); this.close(); if(screen==="panel") toast("¡Listo! Ya sabes lo básico. Repite el recorrido desde tu perfil → Ayuda"); return; }
+      if(last){ this.finishScreen(screen); this.close(); if(screen==="panel") toast("¡Listo! Ya sabes lo básico. Repite el recorrido desde Ajustes → Ayuda"); return; }
       this.run(screen, steps, i+1); };
     setTimeout(()=>{ const b=root.querySelector(".tour-ok"); if(b) b.focus({preventScroll:true}); }, 60);
   },
