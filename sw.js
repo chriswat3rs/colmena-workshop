@@ -3,7 +3,7 @@
      Si no hay conexión, se abre la última copia guardada.
    - Íconos, manifiesto y librerías propias se guardan para abrir más rápido.
    - Nunca guarda nada de Supabase (datos, sesiones, IA): eso siempre va directo a internet. */
-const VERSION = "20260928193011";
+const VERSION = "20261007050553";
 const CACHE = "colmena-" + VERSION;
 const CORE = ["./", "./index.html", "./manifest.json", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png"];
 

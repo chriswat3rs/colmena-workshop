@@ -1028,7 +1028,7 @@ body.project .hxu i{width:1.125rem;height:1.3125rem}
 .rsec+.rsec{border-top:1px solid var(--line);margin-top:1.375rem;padding-top:.25rem}
 .qwcard.seg4 .seg button{font-size:.75rem;padding:.5625rem .25rem}
 .qwcard.seg4 .seg button[data-v="0"].on{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff}
-/* Actividades: número LOCFY24 discreto */
+/* Actividades: número de actividad discreto */
 .tnum{font-size:.65625rem;font-weight:700;color:var(--ink-3);letter-spacing:.02em;margin-right:.375rem;vertical-align:1px}
 .chip .tnum{color:inherit;opacity:.55}
 /* «¿Qué significa?» en cada tarjeta a calificar */
@@ -1372,6 +1372,39 @@ kbd{font-family:var(--sans);font-size:.6875rem;font-weight:700;padding:1px .3125
 .sum-it b{display:block;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.25rem}
 .sum-it p{font-size:.90625rem;line-height:1.45;color:var(--ink)}
 .sum-it .linkbtn{flex:none;font-size:.84375rem;text-decoration:none}
+/* v1.16 · «Así será tu taller»: agenda de la sala en Revisa y crea */
+.agenda{margin:0 0 1.25rem;padding:1rem 1.125rem 1.125rem;border:1px solid var(--line);border-radius:var(--r-card);background:var(--card)}
+.agenda h3{display:flex;align-items:center;gap:.5rem;font-size:1.0625rem;font-weight:700;color:var(--ink);margin:0 0 .25rem}
+.agenda h3 svg{width:1.125rem;height:1.125rem;color:var(--accent)}
+.ag-lead{font-size:.875rem;line-height:1.5;color:var(--ink-2);margin:0 0 .5rem}
+.ag-list{list-style:none;margin:0;padding:0}
+.ag-it{display:grid;grid-template-columns:2rem minmax(0,1fr) auto;gap:.75rem;align-items:start;padding:.75rem 0;border-top:1px solid var(--line)}
+.ag-it:first-child{border-top:none}
+.ag-n{width:2rem;height:2rem;border-radius:50%;background:var(--accent-soft);color:var(--accent-strong);font-weight:700;font-size:.875rem;display:grid;place-items:center}
+.ag-t{font-size:.9375rem;font-weight:600;color:var(--ink);line-height:2rem}
+.ag-t small{font-weight:500;font-size:.8125rem;color:var(--ink-3);margin-left:.5rem}
+.ag-d{font-size:.875rem;line-height:1.5;color:var(--ink-2);margin:0;overflow-wrap:anywhere}
+.ag-it .linkbtn{font-size:.8125rem;font-weight:600;text-decoration:none;line-height:2rem;white-space:nowrap}
+.rv-sub{font-size:1.0625rem;font-weight:700;color:var(--ink);margin:1.25rem 0 .5rem}
+/* v1.16 · Recorrido de primera vez */
+.tour{position:fixed;inset:0;z-index:300}
+.tour-spot{position:fixed;border-radius:12px;box-shadow:0 0 0 9999px rgba(1,19,59,.55);outline:2px solid var(--accent);outline-offset:2px;pointer-events:none}
+.tour-card{position:fixed;width:min(22.5rem,calc(100vw - 32px));background:var(--card);color:var(--ink);border-radius:var(--r-card);box-shadow:0 12px 40px rgba(1,19,59,.28);padding:1.125rem 1.25rem 1rem}
+html:not(.rm) .tour-card{transition:top .2s ease,left .2s ease}
+html:not(.rm) .tour-spot{transition:left .2s ease,top .2s ease,width .2s ease,height .2s ease}
+.tour-k{display:block;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:.375rem}
+.tour-card h2{font-size:1.25rem;font-weight:700;line-height:1.25;margin:0 0 .375rem;color:var(--ink)}
+.tour-card p{font-size:.9375rem;line-height:1.5;color:var(--ink-2);margin:0 0 1rem}
+.tour-act{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+.tour-act .linkbtn{font-size:.875rem;font-weight:600;color:var(--ink-3)}
+.tour-card.tour-sheet{left:16px!important;right:16px;width:auto;bottom:16px;top:auto!important}
+.tour-card.tour-sheet.tour-top{top:16px!important;bottom:auto}
+.tour-ic{background:var(--accent-soft);color:var(--accent-strong);display:grid;place-items:center}
+.tour-ic svg{width:1.5rem;height:1.5rem}
+.me-help{border-top:1px solid var(--line);padding-top:.75rem;display:flex;flex-direction:column;gap:.5rem;align-items:flex-start}
+.me-help>b{display:block;font-size:.8125rem;font-weight:800;color:var(--ink)}
+.me-help .abtn{display:inline-flex;align-items:center;gap:.5rem}
+.me-help .abtn svg{width:1rem;height:1rem}
 .me-edit{align-self:flex-start;font-size:.78125rem;text-decoration:none;margin-top:2px}
 .me-form{border-top:1px solid var(--line);padding-top:.75rem}
 .me-form .field{margin-bottom:.625rem}
@@ -2155,6 +2188,7 @@ const BRAND_ORG = "Quality & Knowledge";
 
 /* ---------- Iconos: glifos SVG propios (24×24, trazo) dentro de vidrio «liquid glass» ---------- */
 const GLYPHS = {
+  alert:'<path d="M12 3.5 2.6 20h18.8z"/><path d="M12 10v4.2"/><path d="M12 17.4h.01"/>',
   star:'<path d="M12 3.3l2.63 5.33 5.87.85-4.25 4.15 1 5.85L12 16.73l-5.25 2.75 1-5.85L3.5 9.48l5.87-.85z"/>',
   bolt:'<path d="M13.2 2.8L5.5 13.4h5.6l-.8 7.8 7.7-10.6h-5.6z"/>',
   leaf:'<path d="M5.2 18.8C4.4 11 9 5.3 19 4.6c.3 9.3-4.6 14.6-13.8 14.2z"/><path d="M5.2 18.8l7.3-7.3"/>',
@@ -2229,7 +2263,7 @@ const MOODS = [
 function colmenaMark(size){ return `<span class="cm-wrap${size?" "+size:""}" aria-hidden="true"><span class="cm-mark"><span>C</span></span></span>`; }
 function brandLockup(size){ return `<div class="lockup${size?" "+size:""}" role="img" aria-label="Colmena + ${BRAND_ORG}"><span class="hex hex-avatar bee-mark" aria-hidden="true">🐝</span><span class="lockup-plus" aria-hidden="true">+</span><img class="brand-mark${size?"":" lg"}" src="${BRAND_IMG.imagotipo}" alt=""></div>`; }
 const PHASES = [
-  {id:"lobby",   t:"Lobby"},
+  {id:"lobby",   t:"Sala de espera"},
   {id:"checkin", t:"Check-in"},
   {id:"pains",   t:"Dolores"},
   {id:"votes",   t:"Votación"},
@@ -2364,7 +2398,7 @@ function toolsFor(session, stage){
   const own = (session && session.tools && session.tools[stage]) || [];
   return [...new Set([...own, ...COMMON_TOOLS])];
 }
-/* «3.7 Validación de bajas» → número LOCFY24 chico y gris + texto (el número es para cruzar con el tracking, no para el equipo) */
+/* «3.7 Validación de bajas» → número de actividad chico y gris + texto (el número es para cruzar con el tracking, no para el equipo) */
 function taskHTML(t){ const m=String(t||"").match(/^(\d+(?:\.\d+)*)\s+(.+)$/); return m ? `<small class="tnum">${esc(m[1])}</small>${esc(m[2])}` : esc(t); }
 /* Actividades configuradas para una etapa (v1.3); vacío si el taller no las define */
 function tasksFor(session, stage){ return (session && session.tasks && session.tasks[stage]) || []; }
@@ -2393,7 +2427,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20260928193011";
+const APP_BUILD="20261007050553";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -2449,9 +2483,22 @@ const LINK_KEY="colmena_lt";
 (function captureLink(){ try{ const u=new URL(location.href), t=(u.searchParams.get("lt")||"").trim();
   if(t){ try{ sessionStorage.setItem(LINK_KEY,t); }catch(e){ window.__lt=t; } u.searchParams.delete("lt"); if(!u.hash) u.hash="#admin"; history.replaceState(null,"",u.pathname+u.search+u.hash); } }catch(e){} })();
 function takeLinkToken(){ let t=""; try{ t=sessionStorage.getItem(LINK_KEY)||""; sessionStorage.removeItem(LINK_KEY); }catch(e){ t=window.__lt||""; window.__lt=""; } return t; }
-async function fnError(error, fallback){ let m=""; try{ const b=await error.context.json(); m=b&&b.error; }catch(e){}
-  if(!m && /Failed to send a request|FunctionsFetchError/i.test(String(error.name||error.message))) m="Esta función aún no está activada en Supabase.";
-  return new Error(m||fallback); }
+/* v1.12.2 · Error de una función de Supabase → mensaje claro. Antes cualquier falla de red o tiempo agotado se
+   leía como «Esta función aún no está activada»; ahora solo un 404 sin mensaje propio significa eso.
+   El Error lleva .status (código HTTP, 0 = sin respuesta) y .kind ("http" | "missing" | "timeout" | "network"). */
+async function fnError(error, fallback, fn){
+  const ctx=error&&error.context, name=String(error&&error.name||"");
+  let m="", status=0, kind="http";
+  if(name==="FunctionsHttpError" && ctx && typeof ctx.status==="number"){
+    status=ctx.status; try{ const b=await ctx.json(); m=(b&&b.error)||""; }catch(e){}
+    if(status===404 && !m){ kind="missing"; m="Esta función aún no está activada en Supabase."; }
+  } else if(name==="FunctionsFetchError" || name==="FunctionsRelayError"){
+    kind=/Abort|Timeout/i.test(String(ctx&&(ctx.name||ctx.message)||"")) ? "timeout" : "network";
+    m = kind==="timeout" ? "El servidor tardó demasiado en responder. Revisa tu internet e intenta de nuevo."
+      : (navigator.onLine===false ? "Sin conexión a internet. Revisa tu red e intenta de nuevo." : "No pudimos conectar con el servidor. Revisa tu internet e intenta de nuevo.");
+  }
+  console.error("[Colmena] función "+(fn||"")+" falló:", {status, kind, message:m||(error&&error.message)||"", detail:ctx||error});
+  const out=new Error(m||fallback); out.status=status; out.kind=kind; return out; }
 
 /* v1.11.1 · Passkeys en dos tiempos: las opciones se piden ANTES del toque y Face ID se abre directo en el toque
    (iPhone/Safari exige que Face ID arranque en el mismo toque; si antes hay que esperar a internet, lo bloquea). */
@@ -2588,7 +2635,7 @@ const SupaStore = {
   },
   async trustPasskeys(){ const {data,error} = await this.client.rpc("ws_trust_passkeys",{}); if(error) throw error; return data; },
   /* v1.12 · Alta y acceso sin contraseñas (función account) */
-  async _account(body){ const {data,error}=await this.client.functions.invoke("account",{body}); if(error) throw await fnError(error,"No se pudo completar. Intenta de nuevo."); return data; },
+  async _account(body){ const {data,error}=await this.client.functions.invoke("account",{body, timeout:30000}); if(error) throw await fnError(error,"No se pudo completar. Intenta de nuevo.","account"); return data; },
   async _useLinkToken(token_hash){ const {error}=await this.client.auth.verifyOtp({token_hash, type:"email"}); if(error) throw error; },
   async inviteStart(code){ const u=await this.currentUser(); if(u && !u.is_anonymous) await this.client.auth.signOut({scope:"local"});
     const d=await this._account({action:"invite-start", code}); await this._useLinkToken(d.token_hash); return d.email; },
@@ -2633,14 +2680,24 @@ const SupaStore = {
       if(!m && /Failed to send a request|FunctionsFetchError/i.test(String(error.name||error.message))) m="El envío automático aún no está activado en Supabase (función send-invite).";
       throw new Error(m||error.message||"No se pudo enviar"); }
     return data; },
-  /* v1.9 · Sugerir taller con IA (función suggest-workshop; la llave vive en Supabase) */
-  async aiStatus(){ if(this._ai!==undefined) return this._ai;
-    try{ const {data,error}=await this.client.functions.invoke("suggest-workshop",{body:{ping:true}}); this._ai = !error && !!(data&&data.enabled); }catch(e){ this._ai=false; }
-    return this._ai; },
+  /* v1.9 · Sugerir taller con IA (función suggest-workshop; la llave vive en Supabase)
+     v1.12.2 · aiStatus devuelve true (hay IA), false (la función contestó que no hay llave) o null (no se pudo
+     saber: red, tiempo agotado, 503…). Solo se recuerda una respuesta CONTESTADA, por 10 min; un fallo no se
+     recuerda, así que se vuelve a preguntar la próxima vez que se abre «Crear taller». */
+  _ai:undefined, _aiAt:0,
+  async aiStatus(){
+    if(this._ai!==undefined && Date.now()-this._aiAt<600000) return this._ai;
+    try{
+      const {data,error}=await this.client.functions.invoke("suggest-workshop",{body:{ping:true}, timeout:15000});
+      if(error){ await fnError(error,"","suggest-workshop (ping)"); return null; }
+      this._ai=!!(data&&data.enabled); this._aiAt=Date.now(); return this._ai;
+    }catch(e){ console.error("[Colmena] ping de la IA falló:", e); return null; } },
   async suggestWorkshop(payload){
     const body = typeof payload==="string" ? {brief:payload} : payload;
-    const {data,error}=await this.client.functions.invoke("suggest-workshop",{body});
-    if(error) throw await fnError(error,"No pudimos armar la propuesta esta vez. Intenta de nuevo o ármala a mano.");
+    const {data,error}=await this.client.functions.invoke("suggest-workshop",{body, timeout:45000});
+    if(error) throw await fnError(error,"No pudimos armar la propuesta esta vez. Intenta de nuevo o ármala a mano.","suggest-workshop");
+    if(!data || !data.draft) throw new Error("No pudimos armar la propuesta esta vez. Intenta de nuevo o ármala a mano.");
+    this._ai=true; this._aiAt=Date.now();
     return data.draft; },
   /* v1.6 · Centro de notificaciones */
   async listNotifications(){ const {data,error}=await this.client.from("ws_notifications").select("id,type,title,body,action,data,read_at,created_at").order("created_at",{ascending:false}).limit(60); if(error) throw error; return data||[]; },
@@ -3185,7 +3242,7 @@ function renderCheckin(){
   $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,mood&&!P.editCheckin?"listo":"curso")}
     <div class="p-body">
       <p class="p-kicker">Check-in</p>
-      <h1 class="p-title">${esc(s.q_checkin||"¿Cómo llegas a esta sesión?")}</h1>
+      <h1 class="p-title">${esc(s.q_checkin||"¿Cómo llegas a este taller?")}</h1>
       <div class="mood-row" id="moods">${MOODS.map(m=>`<button class="mood-opt ${mood===m.v?"on":""}" data-v="${m.v}">${glass(m.ic,{tone:m.tone,tint:true})} ${m.t}</button>`).join("")}</div>
       <div class="field" style="margin-top:1.25rem"><label for="f-exp">${esc(s.q_expect||"En una frase: ¿qué esperas de este taller?")} <span class="opt">(opcional)</span></label>
         <input id="f-exp" class="input" maxlength="140" placeholder="Escríbelo en corto…" value="${esc(expect)}"></div>
@@ -4082,6 +4139,7 @@ function openMe(){
     </div>
     ${msg?`<p class="${msg.err?"err":"hint"}" role="status">${esc(msg.t)}</p>`:`<p class="hint">JPG o PNG. Se recorta en cuadrado y se guarda ligera. La ve tu equipo.</p>`}
     ${Store.passkeySupported&&Store.passkeySupported()?`<div class="me-bio" id="meBio"><b>Entrar con ${bioName()}</b><p class="hint">Cargando…</p></div>`:""}
+    <div class="me-help"><b>Ayuda</b><p class="hint">¿Primera vez o quieres repasar? El recorrido toma 1 minuto.</p><button type="button" class="abtn" id="meTour">${icon("compass")}Ver recorrido otra vez</button></div>
     <div class="me-prefs" id="mePrefs"><b>Correos de avisos</b><p class="hint">Cargando…</p></div>
     <div class="me-a11y" id="meA11y">${a11yHTML("meA")}</div>
     <div class="me-pw" id="mePw"></div>
@@ -4089,6 +4147,7 @@ function openMe(){
     pop.insertAdjacentHTML("beforeend", `<button class="abtn me-out" id="meOut" type="button">${icon("arrowleft")}Cerrar sesión</button>`);
     drawPrefs(); drawBio(); drawPw(); wireA11y(pop.querySelector("#meA11y"));
     pop.querySelector("#meClose").onclick=closeMe;
+    pop.querySelector("#meTour").onclick=()=>TOUR.restart();
     pop.querySelector("#meOut").onclick=()=>{ closeMe(); signOutAll(); };
     const mi=pop.querySelector("#meInstall"); if(mi) mi.onclick=async()=>{ const ok=await APP.install(); if(ok) closeMe(); };
     const f=pop.querySelector("#meFile");
@@ -4208,6 +4267,7 @@ async function ntOpen(id){
   const a=n.action||{}; closeNotifs();
   if(a.code){ const s=await Store.getMySession(a.code).catch(()=>null); if(s){ startAdmin(s); return; } toast("Ese taller ya no existe o no tienes acceso"); return; }
   if(a.view){ if(A.session){ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); A.session=null; }
+    if(a.view==="create"){ startNewWorkshop(); return; }   /* v1.16 · el aviso de bienvenida abre el creador */
     AH.view = viewOk(a.view) ? a.view : "home"; adminHome(); window.scrollTo(0,0); return; }
 }
 document.addEventListener("keydown",e=>{ if(e.key==="Escape" && $(".nt-pop")) closeNotifs(); });
@@ -4362,6 +4422,9 @@ async function homeView(){
   const mine=d.sessions.filter(s=>s.owner_id===ME.uid);
   const live=d.sessions.filter(s=>!["closed"].includes(s.phase)).sort((a,b)=>(ACTIVE_PH.includes(b.phase)-ACTIVE_PH.includes(a.phase)) || (b.participants-a.participants));
   const lastClosed=mine.find(s=>s.phase==="closed");
+  /* v1.16 · Recorrido: quien no tiene talleres ni borradores es «nuevo»; mientras el recorrido esté en Inicio no se
+     pintan la tarjeta de instalar ni la invitación a Face ID (competían arriba de la tabla) */
+  const fresh=!mine.length && !(drafts||[]).length, touring=TOUR.wants("home", fresh);
   const un=ntUnread();
   /* pendientes */
   const pend=[];
@@ -4370,7 +4433,9 @@ async function homeView(){
     else if(h<=24) pend.push({ic:"clock",tone:"t-warn",t:`La invitación de ${i.name||i.email} vence hoy`,s:"Aún no entra a Colmena",go:{resend:i.id},label:"Reenviar"}); });
   mine.filter(s=>s.phase==="closed" && s.closed_at && daysSince(s.closed_at)>=30).forEach(s=>pend.push({ic:"trash",tone:"t-warn",t:`«${s.name}» lleva ${daysSince(s.closed_at)} días cerrado`,s:"Exporta los resultados y bórralo",go:{code:s.code},label:"Abrir"}));
   if(un) pend.unshift({ic:"bell",tone:"",t:`Tienes ${un} ${un===1?"aviso sin leer":"avisos sin leer"}`,s:"Ábrelos en la campana",go:{bell:true},label:"Ver avisos"});
-  const ctx = live.length ? `${live.length} ${live.length===1?"taller en curso":"talleres en curso"}` : "Sin talleres en curso";
+  /* v1.16 · Mismo criterio que los filtros: «en curso» = ya empezó una actividad; «por iniciar» = sala de espera */
+  const going=live.filter(s=>ACTIVE_PH.includes(s.phase)).length, waiting=live.length-going;
+  const ctx = live.length ? [going?`${going} en curso`:"", waiting?`${waiting} por iniciar`:""].filter(Boolean).join(" · ") : "Sin talleres en curso";
   const nowCard = s => { const mineS=s.owner_id===ME.uid, act=ACTIVE_PH.includes(s.phase);
     return `<div class="now-it${act?" live":""}">
       <div class="now-h"><span class="ph-pill ph-${esc(s.phase)}">${act?'<i class="dot"></i>':""}${esc(phaseName(s.phase))}</span>${mineS?"":`<span class="now-own">${esc(staffName(s.owner_id))} · solo lectura</span>`}</div>
@@ -4384,7 +4449,7 @@ async function homeView(){
         ${ME.name?"":`<p class="hello-nn">${icon("users")}Tu cuenta no tiene nombre. <button type="button" class="linkbtn" id="hlName">Ponle tu nombre</button> para que tu equipo te reconozca.</p>`}</div>
       <div class="hello-acts"><button class="abtn primary" id="hCreate">${icon("sparkle")}Crear taller</button>${isAdminRole()?`<button class="abtn" id="hInvite">${icon("mail")}Invitar a alguien</button>`:""}</div>
     </section>
-    ${installCardHTML()}
+    ${touring?"":installCardHTML()}
     ${live.length?`<section class="panel wg wg-now" aria-labelledby="wgNow">
         <h2 id="wgNow">Ahora mismo <span class="sub">${live.length}</span></h2>
         <div class="now-list">${live.slice(0,6).map(nowCard).join("")}</div>${live.length>6?`<p class="hint">Y ${live.length-6} más en <button type="button" class="linkbtn" data-view-go="${isAdminRole()?"all":"mine"}">${isAdminRole()?"Todos los talleres":"Mis talleres"}</button>.</p>`:""}
@@ -4409,7 +4474,8 @@ async function homeView(){
       </div>
     </div>`;
   wsTable($("#wtBox"), d.sessions, drafts, {});
-  wireInstall(); faceNudge();
+  wireInstall(); if(!touring) faceNudge();
+  TOUR.maybe("home", fresh);
   const goCreate=startNewWorkshop;
   ["#hCreate","#hCreate2","#qaCreate"].forEach(k=>{ const b=$(k); if(b) b.onclick=goCreate; });
   ["#hInvite","#qaInvite"].forEach(k=>{ const b=$(k); if(b) b.onclick=()=>{ AH.view="team"; adminHome(); window.scrollTo(0,0); }; });
@@ -4470,7 +4536,7 @@ function wsTable(box, sessions, drafts, opt){
         <td class="wt-date" data-l="${r.kind==="draft"?"Editado":r.st==="closed"?"Cerrado":"Creado"}"><span title="${esc(new Date(r.date).toLocaleString("es-MX"))}">${esc(timeAgo(r.date))}</span></td>
         <td class="wt-act"><button type="button" class="ib wt-more" aria-haspopup="menu" aria-expanded="false" aria-label="Acciones de ${esc(r.name)}">${icon("more")}</button></td>
       </tr>`).join("");
-    const empty = !all.length ? `<div class="nt-empty">${glass("hexagon",{size:"md"})}<b>Aún no tienes talleres</b><span>Cuéntale a la IA el cliente, el proceso y qué duele: te propone el taller completo y en 5 minutos tienes el QR.</span><button class="abtn primary" id="wtCreate2">${icon("sparkle")}Crear taller</button></div>`
+    const empty = !all.length ? `<div class="nt-empty">${glass("hexagon",{size:"md"})}<b>Crea tu primer taller</b><span>1. Cuenta para quién es y qué le duele al proceso · 2. Revisa la propuesta de la IA · 3. Proyecta el QR y guía la sesión desde aquí.</span><button class="abtn primary" id="wtCreate2">${icon("sparkle")}Crear taller</button></div>`
       : `<div class="wt-empty">${icon("grid")}<b>${q?`Nada coincide con «${esc(T.q)}»`:`No tienes talleres ${({live:"en curso",ready:"por iniciar",draft:"en borrador",fin:"finalizados"})[T.f]||""}`}</b>${q||T.f!=="all"?`<button type="button" class="linkbtn" id="wtClear">Ver todos</button>`:""}</div>`;
     box.innerHTML=`<div class="wt-head">
         <div class="wt-title"><h2 id="wtT">${opt.page?"Mis talleres":"Tus talleres"} <span class="sub">${all.length}</span></h2>${all.length?`<p class="hint">Todos tus talleres y borradores en un lugar. Usa ⋯ para abrir, duplicar o eliminar.</p>`:""}</div>
@@ -4586,7 +4652,9 @@ function persistDraft(now){
   W._srv=setTimeout(go,1200); return Promise.resolve();
 }
 async function flushDraft(){ clearTimeout(W._t); clearTimeout(W._srv); if(draftHasContent()){ wzLocal(); await persistDraft(true); } else if(W._saving) await W._saving; }
-function resetWizard(){ W.d=null; W.b=null; W.draftId=null; W.step=0; W.seen=new Set([0]); W.aiErr=null; W.aiBusy=false; clearWzDraft(); }
+function resetWizard(){ W.d=null; W.b=null; W.draftId=null; W.step=0; W.seen=new Set([0]); W.aiErr=null; W.aiBusy=false;
+  W.aiRun=(W.aiRun||0)+1; clearInterval(W._msg);   /* v1.12.2 · una propuesta que aún venía en camino ya no se mete al taller nuevo */
+  clearWzDraft(); }
 async function startNewWorkshop(){ await flushDraft().catch(()=>{}); resetWizard(); AH.view="create"; adminHome(); window.scrollTo(0,0); }
 async function openDraft(id, btn){
   if(btn && "disabled" in btn) btn.disabled=true;
@@ -4612,6 +4680,7 @@ function fromPreset(p){ const c=JSON.parse(JSON.stringify(p)); return {
 
 async function createView(){
   document.body.classList.add("admin-theme");
+  AH.ai=undefined;   /* v1.12.2 · cada vez que se abre «Crear taller» se vuelve a preguntar si hay IA (un fallo anterior no se queda para siempre) */
   if(!W.d && !W.b){ W.step=0; W.seen=new Set([0]); }
   $("#app").innerHTML=shellHTML(`<div class="wz"><div class="wz-top"><h1 class="adm-t">Crear taller</h1><span class="hint" id="wDraft">${W.draftId?"Borrador guardado":""}</span><button type="button" class="linkbtn" id="wQuit">Salir</button></div>
     <ol class="wz-steps" id="wSteps"></ol><div class="wz-sub" id="wSub" hidden></div><div class="panel wz-body" id="wBody"></div><div class="wz-foot" id="wFoot"></div></div>`,"create"); wireTop();
@@ -4658,11 +4727,11 @@ function drawWizard(){
     $("#wAddStage").onclick=()=>{ d.stages.push(""); saveWzDraft(); drawStages(); const last=$$("#wStages .st-name").pop(); if(last) last.focus(); };
   }
   else if(k==="val"){
-    const kinds=[["qw","Quick wins","Mejoras rápidas ya identificadas. La sala dirá cuánto le ayudaría cada una."],["gate","Reglas del nuevo flujo","Candados obligatorios. La sala dirá si le ayudan o le estorban."],["time","Tiempos","Etapas cuya duración actual quieres medir."]];
+    const kinds=[["qw","Quick wins","Mejoras rápidas ya identificadas. La sala dirá cuánto le ayudaría cada una."],["gate","Reglas obligatorias","Lo que el flujo nuevo exigirá (ej. «No se cierra sin firma»). La sala dirá si le ayuda o le estorba."],["time","Tiempos","Etapas cuya duración actual quieres medir."]];
     B.innerHTML=head("Validación e ideas","Listas que la sala califica. Puedes dejar vacías las que no apliquen.")+kinds.map(([kk,t,h])=>`<section class="val-sec" data-kind="${kk}"><div class="val-h"><h3>${t} <span class="sub" id="cnt-${kk}"></span></h3><p class="hint">${h}</p></div><div class="val-rows" id="rows-${kk}"></div><button type="button" class="abtn sm" data-add="${kk}">Agregar</button></section>`).join("")+`
       <div class="wz-h" style="margin-top:1.375rem"><h2>Ideas</h2></div><div class="g3">
       <div class="field" style="grid-column:span 2"><label for="w-qidea">Pregunta de ideas</label><input id="w-qidea" class="input" maxlength="280" value="${esc(d.q_idea)}"></div>
-      <div class="field"><label for="w-iv">Apoyos por persona</label><input id="w-iv" class="input" type="number" min="1" max="10" value="${d.idea_votes}"></div></div>`;
+      <div class="field"><label for="w-iv">Votos para ideas por persona</label><input id="w-iv" class="input" type="number" min="1" max="10" value="${d.idea_votes}"></div></div>`;
     ["qw","gate","time"].forEach(drawVal);
     $$("[data-add]").forEach(b=>b.onclick=()=>{ d.quickwins.push({kind:b.dataset.add,stage:"",text:"",help:""}); saveWzDraft(); drawVal(b.dataset.add); const r=$$(`#rows-${b.dataset.add} .val-txt`).pop(); if(r) r.focus(); });
     bind("#w-qidea","q_idea"); bind("#w-iv","idea_votes",v=>Math.max(1,Math.min(10,+v||3)));
@@ -4670,8 +4739,8 @@ function drawWizard(){
   else if(k==="ask"){
     B.innerHTML=head("Preguntas a la sala","Cómo se formulan en el celular. Cortas y en segunda persona funcionan mejor.")+`
       <div class="field"><label for="w-qpain">Dolores</label><textarea id="w-qpain" class="input" rows="2" maxlength="280">${esc(d.q_pain)}</textarea></div>
-      <div class="grid2"><div class="field"><label for="w-qcheck">Check-in · ánimo</label><input id="w-qcheck" class="input" maxlength="200" value="${esc(d.q_checkin)}"></div>
-      <div class="field"><label for="w-qexp">Check-in · expectativa</label><input id="w-qexp" class="input" maxlength="200" value="${esc(d.q_expect)}"></div></div>`;
+      <div class="grid2"><div class="field"><label for="w-qcheck">Al llegar: ánimo</label><input id="w-qcheck" class="input" maxlength="200" value="${esc(d.q_checkin)}"></div>
+      <div class="field"><label for="w-qexp">Al llegar: qué esperan</label><input id="w-qexp" class="input" maxlength="200" value="${esc(d.q_expect)}"></div></div>`;
     bind("#w-qpain","q_pain"); bind("#w-qcheck","q_checkin"); bind("#w-qexp","q_expect");
   }
   else if(k==="sum") drawReview(B, head);
@@ -4679,8 +4748,8 @@ function drawWizard(){
   const last=W_STEPS.length-1, errs=W.d?validateDraft(W.d):[], ft=$("#wFoot");
   ft.hidden = W.step===0;
   if(W.step===last){
-    ft.innerHTML=`<button type="button" class="abtn" id="wPrev">${icon("arrowleft")}Cuéntanos</button>
-      <span class="hint wz-pos">${errs.length?"Completa lo que falta para crear":"Al crear se genera el código y el QR"}</span>
+    ft.innerHTML=`<button type="button" class="abtn" id="wPrev">${icon("arrowleft")}Mis respuestas</button>
+      <span class="hint wz-pos">${errs.length?"Completa lo que falta para crear":"Al crear se abre la sala: código y QR listos"}</span>
       <button type="button" class="abtn primary ah-create" id="wCreate" ${errs.length?"disabled":""}>${icon("sparkle")}Crear taller</button>`;
     $("#wPrev").onclick=()=>{ W.step=0; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
     $("#wCreate").onclick=createFromWizard;
@@ -4692,13 +4761,15 @@ function drawWizard(){
     $("#wPrev").onclick=()=>{ W.step=W.step>1?W.step-1:last; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
     $("#wNext").onclick=()=>{ W.step=next?W.step+1:last; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); };
   } else ft.innerHTML="";
+  /* v1.16 · Recorrido: paso de «Cuéntanos» y de «Revisa y crea» */
+  if(W.step===0 && !W.aiBusy) TOUR.maybe("brief"); else if(W.step===last) TOUR.maybe("review");
 
   function bind(sel,key,fn){ const el=$(sel); el.oninput=()=>{ d[key]=fn?fn(el.value):el.value.trim(); saveWzDraft(); }; }
 }
 function validateDraft(d){ const e=[]; if(!d.name.trim()) e.push("nombre del taller"); if(!d.stages.filter(Boolean).length) e.push("al menos una etapa"); if(!d.areas.length) e.push("al menos un área"); if(d.quickwins.some(q=>!q.text.trim())) e.push("hay elementos de validación sin texto"); return e; }
 /* ============ v1.12 · Creador con IA: «Cuéntanos» → propuesta → revisar y crear ============ */
 const BF_IND=["Seguros","Banca","Retail","Salud","Gobierno","Manufactura","Servicios","Tecnología","Otra"];
-const BF_OBJ=[["dolores","Encontrar dolores y quick wins"],["validar","Validar un nuevo flujo"],["priorizar","Priorizar mejoras"],["sistema","Arrancar un sistema"]];
+const BF_OBJ=[["dolores","Detectar problemas y mejoras rápidas"],["validar","Probar las reglas de un flujo nuevo"],["priorizar","Priorizar una lista de mejoras"],["sistema","Definir cómo operará un sistema nuevo"]];
 const BF_GEN=[["10","Hasta 10"],["25","11–25"],["50","26–50"],["60","Más de 50"]];
 const BF_DUR=[["60","60 min"],["90","90 min"],["120","2 h"],["240","Medio día"]];
 const AI_MAX=5;
@@ -4707,7 +4778,12 @@ function briefReady(b){ const L=(b.cliente+b.proceso+b.dolor).trim().length; ret
 function picksHTML(key, opts, cur, label){ return `<div class="picks" role="radiogroup" aria-label="${esc(label)}">${opts.map(([v,t])=>`<button type="button" class="pick${cur===v?" on":""}" role="radio" aria-checked="${cur===v}" data-pk="${key}" data-v="${esc(v)}">${esc(t)}</button>`).join("")}</div>`; }
 function drawBrief(B, head){
   const b = W.b || (W.b=briefBlank()); const mine=(AH.dash&&AH.dash.sessions||[]).filter(x=>x.owner_id===ME.uid);
-  if(AH.ai===undefined){ AH.ai=null; Store.aiStatus().then(v=>{ AH.ai=!!v; if(W.step===0 && $("#bfGo") && !W.aiBusy) drawWizard(); }).catch(()=>{ AH.ai=false; }); }
+  /* v1.12.2 · AH.ai: undefined = sin preguntar · null = preguntando · true = hay IA · false = la función dijo que no hay llave
+     · "unknown" = no se pudo saber (red, 503…). Con "unknown" el botón de IA sigue disponible: si de verdad falla,
+     la propuesta muestra el error real con «Reintentar» y «Armar a mano». */
+  if(AH.ai===undefined){ AH.ai=null;
+    Store.aiStatus().then(v=>{ AH.ai = v===null||v===undefined ? "unknown" : !!v; if(AH.ai===false) redrawBrief(); })
+      .catch(e=>{ console.error("[Colmena] aiStatus:", e); AH.ai="unknown"; }); }
   if(W.aiBusy){
     const msgs=["Leyendo tu contexto…","Ordenando las etapas del proceso…","Pensando quick wins y reglas…","Revisando que todo cuadre…"];
     B.innerHTML=`<div class="ai-load" role="status" aria-live="polite"><span class="ai-orb">${icon("sparkle")}</span><b id="aiMsg">${msgs[0]}</b><p class="hint">Tarda unos 15 segundos. La IA solo propone: tú decides.</p>
@@ -4718,16 +4794,16 @@ function drawBrief(B, head){
   }
   const noAI = AH.ai===false;
   const nums=briefNumbers(b), maxSt={"60":5,"90":6,"120":7,"240":8}[b.duracion]||6;
-  B.innerHTML=head("Cuéntanos del taller","Con esto armamos una propuesta completa. Tú la revisas y ajustas antes de crear.")+`
+  B.innerHTML=head("¿De qué se trata tu taller?","Con 3 respuestas la IA arma las actividades, lo que la sala va a calificar y las preguntas. Nada se publica hasta que lo crees.")+`
     <div class="bf-grid">
     <div class="bf">
-      ${W.d&&!W.aiErr?`<div class="bf-have">${icon("check")}<span>Ya tienes una propuesta. Si cambias algo aquí, puedes generar otra.</span><button type="button" class="abtn sm" id="bfSee">Ver propuesta${icon("arrowright")}</button></div>`:""}
-      ${W.aiErr?`<div class="bf-warn" role="alert">${icon("clock")}<div><b>${esc(W.aiErr)}</b><div class="bf-wa"><button type="button" class="abtn primary sm" id="bfRetry">Reintentar</button><button type="button" class="abtn sm" id="bfManual2">Armar a mano</button></div></div></div>`:""}
+      ${W.d&&!W.aiErr?`<div class="bf-have">${icon("check")}<span>Ya tienes una propuesta. Si generas otra, reemplaza los cambios que le hiciste.</span><button type="button" class="abtn sm" id="bfSee">Ver propuesta${icon("arrowright")}</button></div>`:""}
+      ${W.aiErr?`<div class="bf-warn" role="alert">${icon("alert")}<div><b>${esc(W.aiErr)}</b><div class="bf-wa"><button type="button" class="abtn primary sm" id="bfRetry">Reintentar</button><button type="button" class="abtn sm" id="bfManual2">Armar a mano</button></div></div></div>`:""}
       <div class="field"><label for="bf-cli">¿Para quién es el taller?</label><input id="bf-cli" class="input" maxlength="80" value="${esc(b.cliente)}" placeholder="Ej. Aseguradora del Valle, Mesa de ayuda interna"><p class="hint">Cliente o área. Lo usamos para el nombre del taller. Si prefieres, escribe «Cliente A».</p></div>
       <div class="field"><span class="lbl">Industria <span class="opt">opcional</span></span>${picksHTML("industria", BF_IND.map(x=>[x,x]), b.industria, "Industria")}</div>
       <div class="field"><label for="bf-pro">¿Qué proceso vamos a revisar?</label><input id="bf-pro" class="input" maxlength="120" value="${esc(b.proceso)}" placeholder="Ej. Siniestros de autos, desde el reporte hasta el pago"><p class="hint">Dinos dónde empieza y dónde termina.</p></div>
-      <div class="field"><div class="lbl-row"><label for="bf-dol">¿Qué duele hoy?</label><span class="hint" id="bf-cnt">${b.dolor.length}/300</span></div><textarea id="bf-dol" class="input" rows="3" maxlength="300" placeholder="Ej. Tardan en dictaminar, hay retrabajo con los talleres y el cliente no sabe en qué va su caso.">${esc(b.dolor)}</textarea><p class="hint">Separa con comas. Cada dolor que escribas se vuelve una propuesta a validar.</p></div>
-      <div class="field"><span class="lbl">¿Qué quieres llevarte?</span>${picksHTML("objetivo", BF_OBJ, b.objetivo, "Objetivo")}</div>
+      <div class="field"><div class="lbl-row"><label for="bf-dol">¿Qué problemas tiene hoy ese proceso?</label><span class="hint" id="bf-cnt">${b.dolor.length}/300</span></div><textarea id="bf-dol" class="input" rows="3" maxlength="300" placeholder="Ej. Tardan en dictaminar, hay retrabajo con los talleres y el cliente no sabe en qué va su caso.">${esc(b.dolor)}</textarea><p class="hint">Escribe 2 a 4, separados por comas. La IA propone una mejora para cada uno y la sala las califica.</p></div>
+      <div class="field"><span class="lbl">¿Qué buscas con el taller?</span>${picksHTML("objetivo", BF_OBJ, b.objetivo, "Objetivo")}</div>
       <div class="bf-2"><div class="field"><span class="lbl">¿Cuántas personas?</span>${picksHTML("gente", BF_GEN, b.gente, "Personas")}</div>
         <div class="field"><span class="lbl">¿Cuánto dura?</span>${picksHTML("duracion", BF_DUR, b.duracion, "Duración")}</div></div>
       <details class="bf-more"${b.participantes.length||b.herramientas||b.trato==="usted"?" open":""}><summary>Más detalle <span class="opt">opcional</span></summary>
@@ -4738,18 +4814,18 @@ function drawBrief(B, head){
       <p class="err" id="bfErr" hidden></p>
       <div class="bf-cta">
         <button type="button" class="abtn primary wide" id="bfGo">${noAI?`${icon("clipboard")}Armar a mano`:`${icon("sparkle")}Generar propuesta`}</button>
-        <p class="hint bf-note">${noAI?"La IA no está disponible por ahora: armamos un borrador con lo que escribiste para que lo completes.":"Tarda unos 15 segundos. Lo que escribes se envía a la IA (Anthropic) solo para armar la propuesta."}</p>
+        <p class="hint bf-note">${noAI?"La IA no responde en este momento. Arma el taller a mano con lo que escribiste o intenta en unos minutos.":"Tarda unos 15 segundos. Lo que escribes se envía a la IA (Anthropic) solo para armar la propuesta."}</p>
       </div>
     </div>
     <aside class="bf-side" aria-label="Qué vas a recibir">
       <section class="bf-card">
-        <b>${icon("sparkle")}Qué te propone la IA</b>
+        <b>${icon("sparkle")}Qué vas a obtener</b>
         <ul class="bf-list">
           <li>${icon("flag")}<span><strong>Hasta ${maxSt} etapas</strong> del proceso, con actividades y herramientas</span></li>
-          <li>${icon("bolt")}<span><strong>Quick wins</strong> ligados a cada etapa y a lo que duele</span></li>
-          <li>${icon("clipboard")}<span><strong>Reglas del nuevo flujo</strong> que se pueden exigir</span></li>
+          <li>${icon("bolt")}<span><strong>Mejoras rápidas</strong> (quick wins) ligadas a cada etapa y a cada problema</span></li>
+          <li>${icon("clipboard")}<span><strong>Reglas obligatorias</strong> del flujo nuevo, para que la sala diga si le ayudan o estorban</span></li>
           <li>${icon("clock")}<span><strong>Tiempos</strong> por etapa y <strong>preguntas</strong> para la sala</span></li>
-          <li>${icon("target")}<span><strong>${nums.votes_per_user} votos</strong> por persona y <strong>${nums.idea_top} retos</strong>, según personas y duración</span></li>
+          <li>${icon("target")}<span><strong>${nums.votes_per_user} votos</strong> por persona; los <strong>${nums.idea_top} problemas</strong> más votados pasan a lluvia de ideas</span></li>
         </ul>
         <p class="bf-foot">${icon("check")}Nada se crea sin tu OK: revisas, ajustas y luego creas.</p>
       </section>
@@ -4769,9 +4845,9 @@ function drawBrief(B, head){
     $$(`#wBody [data-pk="${key}"]`).forEach(y=>{ const on=b[key]===y.dataset.v; y.classList.toggle("on",on); y.setAttribute("aria-checked",on); }); keep();
     if(key==="gente"||key==="duracion"){ const n=briefNumbers(b), ms={"60":5,"90":6,"120":7,"240":8}[b.duracion]||6, li=$$(".bf-list li strong"); if(li.length>=7){ li[0].textContent="Hasta "+ms+" etapas"; li[5].textContent=n.votes_per_user+" votos"; li[6].textContent=n.idea_top+" retos"; } } });
   $("#bfGo").onclick=()=>{ const e=$("#bfErr");
-    if(b.cliente.trim().length<2 || b.proceso.trim().length<3){ e.hidden=false; e.textContent="Escribe al menos el cliente y el proceso."; ($("#bf-cli").value.trim()?$("#bf-pro"):$("#bf-cli")).focus(); return; }
+    if(b.cliente.trim().length<2 || b.proceso.trim().length<3){ e.hidden=false; e.textContent="Falta decir para quién es el taller y qué proceso revisarán."; ($("#bf-cli").value.trim()?$("#bf-pro"):$("#bf-cli")).focus(); return; }
     if(noAI) return manualDraft();
-    if(!briefReady(b)){ e.hidden=false; e.textContent="Cuéntanos un poco más del proceso o de lo que duele."; $("#bf-dol").focus(); return; }
+    if(!briefReady(b)){ e.hidden=false; e.textContent="Describe al menos un problema concreto del proceso (ej. «tardan en dictaminar»)."; $("#bf-dol").focus(); return; }
     runAI({}); };
   const mm=()=>manualDraft(); [$("#bfManual"),$("#bfManual2")].forEach(x=>{ if(x) x.onclick=mm; });
   const rt=$("#bfRetry"); if(rt) rt.onclick=()=>runAI(W.aiLast||{});
@@ -4780,6 +4856,13 @@ function drawBrief(B, head){
     const x=await Store.getMySession(code).catch(()=>null); if(!x) return toast("No se pudo leer ese taller");
     W.d=fromPreset({...x, template:"copy", name:x.name+" (copia)"}); saveWzDraft(); W.step=W_STEPS.length-1; drawWizard(); window.scrollTo(0,0); };
 }
+/* v1.12.2 · Vuelve a pintar «Cuéntanos» solo si sigue en pantalla, sin quitarle el cursor a quien está escribiendo */
+function redrawBrief(){
+  if(W.step!==0 || W.aiBusy || !$("#bfGo")) return;
+  const a=document.activeElement, id=a&&a.id, pos=a&&typeof a.selectionStart==="number"?a.selectionStart:null;
+  drawWizard();
+  const n=id&&document.getElementById(id); if(n){ n.focus({preventScroll:true}); try{ if(pos!=null) n.setSelectionRange(pos,pos); }catch(e){} }
+}
 /* Números del taller: los decide el código, no la IA (R9) */
 function briefNumbers(b){ const dur=+b.duracion||90, gente=+b.gente||25, cpp=dur===60?2:3;
   return { votes_per_user:Math.min(6,Math.max(3,Math.round(1.6*cpp)-(gente>25?1:0))), idea_top:dur===60?2:3, idea_votes:3 }; }
@@ -4787,7 +4870,7 @@ function manualDraft(){
   const b=W.b||briefBlank(), usted=b.trato==="usted";
   W.d=fromPreset({ template:"manual", name:[b.cliente.trim(),b.proceso.trim()].filter(Boolean).join(" · "), areas:b.participantes.slice(), roles:[], stages:["","","","",""], tools:{}, tasks:{}, quickwins:[],
     q_pain:`Piensa en tu día a día en ${b.proceso.trim()||"este proceso"}. ¿Qué es lo que más tiempo te roba o más te frustra?`,
-    q_checkin:usted?"¿Cómo llega a esta sesión?":"¿Cómo llegas a esta sesión?", q_expect:usted?"En una frase: ¿qué espera de este taller?":"En una frase: ¿qué esperas de este taller?",
+    q_checkin:usted?"¿Cómo llega a este taller?":"¿Cómo llegas a este taller?", q_expect:usted?"En una frase: ¿qué espera de este taller?":"En una frase: ¿qué esperas de este taller?",
     q_idea:"¿Cómo podríamos resolverlo?", ...briefNumbers(b) });
   W.aiErr=null; W.step=3; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0); toast("Borrador listo: escribe las etapas de tu proceso");
 }
@@ -4795,16 +4878,26 @@ async function runAI(opt){
   const b=W.b; if(!b) return; opt=opt||{};
   if(W.d && (W.d.aiCount||0)>=AI_MAX){ toast("Ya usaste los ajustes de este borrador; edita a mano o empieza uno nuevo."); return; }
   const run=W.aiRun=(W.aiRun||0)+1; W.aiLast=opt; W.aiErr=null; W.aiBusy=true; const back=W.step; W.step=0; drawWizard(); window.scrollTo(0,0);
+  /* v1.12.2 · Si mientras la IA trabajaba la persona se fue a otra pestaña (Inicio, Equipo…), no se pinta el creador encima */
+  const onScreen=()=>AH.view==="create" && !!$("#wBody");
   try{
     const payload={ fields:{...b}, adjust:opt.adjust||"", keepStages:opt.adjust&&W.d?W.d.stages.filter(Boolean):[], regen:!!opt.regen };
-    const draft=await Promise.race([Store.suggestWorkshop(payload), new Promise((_,rej)=>setTimeout(()=>rej(new Error("No pudimos armar la propuesta esta vez. Intenta de nuevo o ármala a mano.")),35000))]);
+    /* La página espera 45 s (Store.suggestWorkshop); esto es solo un respaldo por si algo se queda colgado */
+    const draft=await Promise.race([Store.suggestWorkshop(payload), new Promise((_,rej)=>setTimeout(()=>rej(new Error("La IA tardó demasiado en responder. Intenta de nuevo o arma el taller a mano.")),50000))]);
     if(run!==W.aiRun) return;                     /* cancelada */
+    AH.ai=true;
     const count=(W.d&&W.d.aiCount||0)+1;
     W.d=fromPreset({...draft, template:"ai", facilitator:ME.name||"", aiCount:count}); W.aiBusy=false; clearInterval(W._msg);
-    W.step=W_STEPS.length-1; saveWzDraftNow(); drawWizard(); window.scrollTo(0,0);
+    W.step=W_STEPS.length-1; saveWzDraftNow();
+    if(!onScreen()){ toast("Tu propuesta quedó lista: la encuentras en Mis talleres, en Borradores"); return; }
+    drawWizard(); window.scrollTo(0,0);
     toast(opt.adjust?"Propuesta ajustada":"¡Listo! Revisa la propuesta y ajusta lo que quieras.");
-  }catch(e){ if(run!==W.aiRun) return; W.aiBusy=false; clearInterval(W._msg); W.aiErr=friendlyAuthError(e); W.step=opt.adjust||opt.regen?back:0;
-    if(W.step!==0){ drawWizard(); toast(W.aiErr); } else drawWizard(); }
+  }catch(e){ if(run!==W.aiRun) return; W.aiBusy=false; clearInterval(W._msg);
+    console.error("[Colmena] propuesta con IA:", e);
+    if(e && e.status===501) AH.ai=false;          /* la función dijo que no hay llave: se ofrece «Armar a mano» */
+    W.aiErr=friendlyAuthError(e); W.step=opt.adjust||opt.regen?back:0;
+    if(!onScreen()) return;
+    drawWizard(); if(W.step!==0) toast(W.aiErr); }
 }
 /* Advertencias (no bloquean): etapas sin verbo, listas vacías, quick wins vagos, reglas que no se pueden exigir, cobertura */
 function lintDraft(d, b){
@@ -4826,21 +4919,47 @@ function lintDraft(d, b){
   if(b && b.dolor && d.q_idea){ const pains=b.dolor.split(/[,;.\n]| y /).map(x=>x.trim()).filter(x=>x.length>8); if(pains.some(p=>ov(d.q_idea,p)>=0.5 && words(d.q_idea).size>2)) out.push({t:"La pregunta de ideas nombra un dolor: debe servir para los 3 retos.", step:4}); }
   return {warn:out, uncovered};
 }
+/* v1.16 · «Así será tu taller»: la secuencia de la sala antes de crear, con lo que usa cada momento y minutos
+   sugeridos según la duración que eligió en «Cuéntanos» (UX-01). Cada momento lleva a la pestaña donde se edita. */
+const AG_W={checkin:1, pains:4, votes:2, quickwins:4, ideas:5, results:2};
+function agendaMinutes(dur){
+  const total=+dur||0; if(!total) return null; const sum=Object.values(AG_W).reduce((a,b)=>a+b,0), out={};
+  Object.entries(AG_W).forEach(([k,w])=>out[k]=Math.max(5, Math.round(total*w/sum/5)*5)); return out; }
+function agendaHTML(d, b){
+  const stN=d.stages.filter(Boolean).length, qw=d.quickwins.filter(q=>q.kind==="qw").length, rg=d.quickwins.filter(q=>q.kind==="gate").length, tm=d.quickwins.filter(q=>q.kind==="time").length;
+  const top=d.idea_top||3, mins=agendaMinutes(b&&b.duracion);
+  const val=[qw?`${qw} ${qw===1?"mejora rápida":"mejoras rápidas"}`:"", rg?`${rg} ${rg===1?"regla obligatoria":"reglas obligatorias"}`:"", tm?`cuánto tarda hoy ${tm===1?"una etapa":`cada una de ${tm} etapas`}`:""].filter(Boolean);
+  const andJoin=a=>a.length>1?a.slice(0,-1).join(", ")+" y "+a[a.length-1]:a.join("");
+  const items=[
+    ["checkin","Check-in",`Cada quien elige su ánimo y responde «${esc(d.q_checkin||"¿Cómo llegas a este taller?")}».`,5],
+    ["pains","Dolores",`Escriben en su celular los problemas que viven en ${stN||"las"} ${stN===1?"etapa":"etapas"} del proceso.`,3],
+    ["votes","Votación",`${d.votes_per_user} votos por persona. Los ${top} problemas más votados pasan a Ideas.`,1],
+    ["quickwins","Validación", val.length?`Califican ${andJoin(val)}.`:"No hay nada que calificar: esta actividad quedará vacía.",4],
+    ["ideas","Ideas",`Proponen ideas para los ${top} problemas más votados y apoyan las mejores (${d.idea_votes} votos por persona).`,4],
+    ["results","Resultados","Proyectas el resumen, lo compartes en Excel, CSV o PDF y cierras el taller.",null]];
+  return `<section class="agenda" aria-labelledby="agT"><h3 id="agT">${icon("flag")}Lo que vivirá la sala</h3>
+    <p class="ag-lead">Antes de empezar proyectas el QR y cada persona entra desde su celular. Luego tú abres cada momento${mins?`; los minutos son una sugerencia para ${({"60":"60 min","90":"90 min","120":"2 h","240":"medio día"})[String(b.duracion)]||b.duracion+" min"}`:""}.</p>
+    <ol class="ag-list">${items.map(([k,t,txt,st],i)=>`<li class="ag-it"><span class="ag-n" aria-hidden="true">${i+1}</span>
+      <div><div class="ag-t">${t}${mins?`<small>${mins[k]} min</small>`:""}</div><p class="ag-d">${txt}</p></div>
+      ${st!=null?`<button type="button" class="linkbtn" data-st="${st}" aria-label="Editar ${t}">Editar</button>`:"<span></span>"}</li>`).join("")}</ol></section>`;
+}
 function drawReview(B, head){
   const d=W.d, errs=validateDraft(d); const qw=d.quickwins.filter(q=>q.kind==="qw").length, rg=d.quickwins.filter(q=>q.kind==="gate").length, tm=d.quickwins.filter(q=>q.kind==="time").length;
   const stN=d.stages.filter(Boolean).length, stTools=d.stages.filter(x=>(d.tools[x]||[]).length).length, stTasks=d.stages.filter(x=>(d.tasks[x]||[]).length).length;
   const isAI=d.template==="ai", L=lintDraft(d, W.b), left=AI_MAX-(d.aiCount||0), canAI=AH.ai!==false && !!W.b && briefReady(W.b);
-  const row=(i,t,v)=>`<div class="sum-it"><div><b>${t}</b><p>${v}</p></div><button type="button" class="linkbtn" data-st="${i}">Editar</button></div>`;
-  B.innerHTML=`<div class="wz-h rv-h"><h2>${isAI?`<span class="ai-dot" title="Propuesto por IA">${icon("sparkle")}</span>Tu propuesta`:"Resumen"}</h2>
-      <p class="hint">${stN} etapas · ${qw} quick wins · ${rg} reglas · ${d.votes_per_user} votos por persona. Revisa, ajusta lo que quieras y crea: se genera el código y el QR.</p></div>
-    ${errs.length?`<div class="inv-st warn" style="margin-bottom:.875rem">${icon("clock")}<span><b>Faltan datos para crear</b><small>${errs.map(esc).join(" · ")}</small></span></div>`:""}
-    ${L.uncovered.length?`<div class="bf-warn cov">${icon("target")}<div><b>Tu propuesta no toca: ${L.uncovered.map(x=>"«"+esc(x)+"»").join(", ")}</b>${canAI&&left>0?`<div class="bf-wa"><button type="button" class="abtn sm" id="rvCover">Incluirlo</button></div>`:`<p class="hint">Agrégalo a mano en Validación.</p>`}</div></div>`:""}
+  const row=(i,t,v)=>`<div class="sum-it"><div><b>${t}</b><p>${v}</p></div><button type="button" class="linkbtn" data-st="${i}">Ver y editar</button></div>`;
+  B.innerHTML=`<div class="wz-h rv-h"><h2>${isAI?`<span class="ai-dot" title="Propuesto por IA">${icon("sparkle")}</span>`:""}Así será tu taller</h2>
+      <p class="hint">Revisa cada momento. Al crear se abre la sala con su QR; después no podrás editarlo, solo duplicarlo.</p></div>
+    ${errs.length?`<div class="inv-st warn" style="margin-bottom:.875rem">${icon("alert")}<span><b>Para crear falta</b><small>${errs.map(esc).join(" · ")}</small></span></div>`:""}
+    ${agendaHTML(d, W.b)}
+    ${L.uncovered.length?`<div class="bf-warn cov">${icon("target")}<div><b>Ninguna mejora atiende: ${L.uncovered.map(x=>"«"+esc(x)+"»").join(", ")}</b>${canAI&&left>0?`<div class="bf-wa"><button type="button" class="abtn sm" id="rvCover">Incluirlo</button></div>`:`<p class="hint">Agrégalo a mano en Validación.</p>`}</div></div>`:""}
     ${L.warn.length?`<details class="rv-lint"${L.warn.length<=3?" open":""}><summary>${L.warn.length===1?"1 cosa para revisar":L.warn.length+" cosas para revisar"}</summary><ul>${L.warn.map(w=>`<li><span>${esc(w.t)}</span><button type="button" class="linkbtn" data-st="${w.step}">Ir</button></li>`).join("")}</ul></details>`:(isAI?`<p class="rv-ok">${icon("check")}Todo cuadra: etapas con verbo, herramientas y reglas exigibles.</p>`:"")}
+    <h3 class="rv-sub">Detalle del taller</h3>
     <div class="sum-list">
       ${row(1,"Datos",`<strong>${esc(d.name||"Sin nombre")}</strong> · facilita ${esc(d.facilitator||"—")} · ${d.votes_per_user} votos por persona`)}
       ${row(2,"Participantes",`${d.areas.length} áreas${d.areas.length?": "+esc(d.areas.slice(0,5).join(", "))+(d.areas.length>5?"…":""):""} · ${d.roles.length?d.roles.length+" roles":"puesto libre"}`)}
       ${row(3,"Proceso",`${stN} etapas${stN?": "+esc(d.stages.filter(Boolean).slice(0,3).map(x=>x.replace(/^\d+\s*/,"")).join(" → "))+(stN>3?"…":""):""} · ${stTools} con herramientas · ${stTasks} con actividades`)}
-      ${row(4,"Validación e ideas",`${qw} quick wins · ${rg} reglas · ${tm} tiempos · ${d.idea_votes} apoyos por persona`)}
+      ${row(4,"Validación e ideas",`${qw} quick wins · ${rg} reglas · ${tm} tiempos · ${d.idea_votes} votos para ideas por persona`)}
       ${row(5,"Preguntas",`«${esc(d.q_pain||"—")}»`)}</div>
     ${canAI?`<div class="rv-ai"><div><b>¿No te convence?</b><span class="hint">${left>0?`Te quedan ${left} ${left===1?"ajuste":"ajustes"} con IA para este taller.`:"Ya usaste los ajustes de este borrador; edita a mano o empieza uno nuevo."}</span></div>
       <div class="rv-ai-b"><button type="button" class="abtn" id="rvAdjust" ${left>0?"":"disabled"}>${icon("sparkle")}Ajustar con una instrucción</button><button type="button" class="abtn" id="rvRegen" ${left>0?"":"disabled"}>${icon("refresh")}Otra propuesta</button><button type="button" class="linkbtn" id="rvBrief">Cambiar lo que conté</button></div></div>`:""}`;
@@ -4924,7 +5043,7 @@ function drawVal(kind){
   host.innerHTML=items.map(([q,i],n)=>`<div class="val-row" data-i="${i}"><span class="wz-n">${RATING_KINDS[kind].id}-${String(n+1).padStart(2,"0")}</span>
     <select class="input val-st" aria-label="Etapa"><option value="">Etapa…</option>${d.stages.filter(Boolean).map(s=>`<option ${q.stage===s?"selected":""}>${esc(s)}</option>`).join("")}</select>
     <input class="input val-txt" value="${esc(q.text)}" placeholder="${kind==="time"?"Ej. Solicitar información al cliente":kind==="gate"?"Ej. No se envía propuesta sin firma de Compliance":"Ej. Plantilla única de layout"}" aria-label="Texto">
-    <input class="input val-help" value="${esc(q.help)}" placeholder="Explicación (opcional)" aria-label="Explicación">
+    <input class="input val-help" value="${esc(q.help)}" placeholder="Ayuda que verá la sala (opcional)" aria-label="Ayuda que verá la sala">
     <button type="button" class="ib sm danger" data-rm="${i}" aria-label="Quitar">${icon("trash")}</button></div>`).join("") || `<p class="hint">Nada por ahora.</p>`;
   $$(".val-row",host).forEach(r=>{ const q=d.quickwins[+r.dataset.i];
     r.querySelector(".val-st").onchange=e=>{ q.stage=e.target.value; saveWzDraft(); };
@@ -5427,7 +5546,7 @@ function renderAdmin(){
     return foot(`${gUnder? `${gUnder} regla${gUnder===1?"":"s"} por debajo de 50 merece${gUnder===1?"":"n"} conversación` : "Todas las reglas pasan de 50"}`, `Más acuerdo: ${esc(gTop.id)} (${gTop.st.idx}) · menos: ${esc(gLow.id)} (${gLow.st.idx}) · índice 0–100: ayuda = 100 · me da igual = 50 · estorba = 0`, "check"); };
   const panelGates = gateList.length ? `
       <div class="panel" id="sec-4">
-        ${head("Reglas del nuevo flujo: acuerdo y fricción", hasData("gate")? `${gateList.length} reglas de LOCFY24 calificadas por quienes las van a vivir · a la derecha, ayuda; a la izquierda, estorba` : `${gateList.length} candados del nuevo flujo · el equipo dice si le ayudan o le estorban`)}
+        ${head("Reglas del nuevo flujo: acuerdo y fricción", hasData("gate")? `${gateList.length} reglas calificadas por quienes las van a vivir · a la derecha, ayuda; a la izquierda, estorba` : `${gateList.length} candados del nuevo flujo · el equipo dice si le ayudan o le estorban`)}
         ${renderDiverging(gateList, {raters:nG, nP, all: live, k:"gate-all", max: A.project?6:0})}
         ${gFoot()}
       </div>` : "";
@@ -5472,7 +5591,7 @@ function renderAdmin(){
   const stat=(v,l,of)=>`<div class="fx-st"><b>${v}${of!=null?`<small>de ${of}</small>`:""}</b><span>${l}</span></div>`;
   const statT=(v,l)=>`<div class="fx-st"><b class="tx" title="${esc(v)}">${esc(v)}</b><span>${l}</span></div>`;
   const FX={
-    lobby:{ic:"users", t: nP? "La sala se está llenando" : "Esperando a la colmena", d:"Proyecta el QR en grande. Cada persona entra desde su celular con su nombre, área, rol y etapas; en cuanto entra aparece aquí.",
+    lobby:{ic:"users", t: nP? "La sala se está llenando" : "Esperando a la colmena", d:"Proyecta el QR. Cada persona aparece aquí al entrar desde su celular. <b>Tu siguiente paso:</b> cuando la mayoría haya entrado, abre el Check-in.",
       st: [stat(nP,"en la sala"), stat(recent,"entraron en 5 min"), stat(areaN.length,"áreas"), nSt? stat(new Set(A.participants.flatMap(p=>p.etapas||[])).size,"etapas cubiertas",nSt):""]},
     checkin:{ic:"cloudsun", t:"Check-in: cómo llega el equipo", d:"Cada quien elige su ánimo y escribe qué espera del taller. Úsalo para abrir la sesión y ajustar el ritmo.",
       st: [stat(checkins,"check-ins",nP), checkins? statT(topMood.t,"ánimo que predomina"):"", stat(expects.length,"expectativas")]},
@@ -5480,7 +5599,7 @@ function renderAdmin(){
       st: [stat(A.cards.length,"tarjetas"), stat(hiTotal,"duelen mucho o más"), stat(stWith,"etapas con dolores",nSt||undefined), stat(sevAvg||"—","dolor promedio de 5"), lastCard? stat(ago(lastCard),"última tarjeta"):""]},
     votes:{ic:"target", t:`Votación: ${vpp} votos por persona`, d:`Cada quien reparte sus ${vpp} votos entre los dolores del muro. Los ${s.idea_top||3} más votados se vuelven los retos de la fase de ideas.`,
       st: [stat(votesUsed,"votos",votesMax), stat(voters,"personas votaron",nP), targets.length? statT(targets[0].texto, `va adelante · ${targets[0].pts} votos`):""]},
-    quickwins:{ic:"clipboard", t:"Validación de la propuesta", d:`El equipo califica desde su celular${qwList.length?` ${qwList.length} quick wins`:""}${gateList.length?`, ${gateList.length} reglas del nuevo flujo`:""}${timeList.length?` y los tiempos de ${timeList.length} etapas`:""}. También puede proponer quick wins nuevos.`,
+    quickwins:{ic:"clipboard", t:"Validación de las mejoras", d:`El equipo califica desde su celular${qwList.length?` ${qwList.length} quick wins`:""}${gateList.length?`, ${gateList.length} reglas del nuevo flujo`:""}${timeList.length?` y los tiempos de ${timeList.length} etapas`:""}. También puede proponer quick wins nuevos.`,
       st: [stat(qwRaters,"personas calificaron",nP), stat(A.qwRatings.length,"calificaciones"), stat(props.length,"propuestas nuevas")]},
     ideas:{ic:"bulb", t:`Ideas para los ${targets.length||s.idea_top||3} retos`, d:`Cada quien propone ideas para cada reto y apoya las de otros con ${ipp} apoyos. La idea con más apoyo de cada reto se resalta.`,
       st: [stat(ideasOnly.length,"ideas"), stat(A.ideaVotes.length,"apoyos",supMax), stat(targets.length,"retos")]}
@@ -5496,7 +5615,7 @@ function renderAdmin(){
         <h1 class="fx-t">${fx.t}</h1><p class="fx-d">${fx.d}</p></div></div>
       <div class="fx-r">
         ${ACT_T[ph]? `<div class="fx-prog" data-tip="Cada quien marca «terminé» en su celular. Cuando la mayoría esté lista, abre la siguiente fase.">
-            <div class="fx-prog-t"><span><b>${listos}</b> de ${nP} listos con ${ACT_T[ph]}</span>${allDone?'<span class="ok">Todos listos</span>':""}</div>
+            <div class="fx-prog-t"><span><b>${listos}</b> de ${nP} tocaron «Terminé»</span>${allDone?'<span class="ok">Todos listos</span>':""}</div>
             <i class="fx-bar"><span style="width:${pctOf(listos,nP)}%"></span></i>
             ${nP&&nP<=24? `<div class="fx-faces" aria-hidden="true">${A.participants.map(p=>avatar(p.emoji,"xs").replace('class="glass',`class="glass${(p.done_phases||[]).includes(ph)?"":" off"}`)).join("")}</div>`:""}
           </div>` : (nP? `<div class="fx-prog"><div class="fx-prog-t"><span><b>${nP}</b> en la sala</span></div>${nP<=24?`<div class="fx-faces" aria-hidden="true">${A.participants.map(p=>avatar(p.emoji,"xs")).join("")}</div>`:""}</div>`:"")}
@@ -5541,7 +5660,7 @@ function renderAdmin(){
       </div>`;
   const resIdeas = wrapSec(2, panelIdeas, "Ideas para los "+(targets.length||s.idea_top||3)+" retos", `${ideasOnly.length} idea${ideasOnly.length===1?"":"s"} · ${A.ideaVotes.length} apoyo${A.ideaVotes.length===1?"":"s"} · ${ipp} por persona`);
   const resQW = qwList.length? wrapSec(3, panelQW, "Quick wins que más ayudarían", hasData("qw")? `${nQ} persona${nQ===1?"":"s"} calificaron ${qwList.length} quick wins: mucho, algo o poco` : "Nadie calificó los quick wins") : "";
-  const resGates = gateList.length? wrapSec(4, panelGates, "Reglas del nuevo flujo: acuerdo y fricción", hasData("gate")? `${gateList.length} reglas de LOCFY24 calificadas por quienes las van a vivir` : "Nadie calificó las reglas") : "";
+  const resGates = gateList.length? wrapSec(4, panelGates, "Reglas del nuevo flujo: acuerdo y fricción", hasData("gate")? `${gateList.length} reglas calificadas por quienes las van a vivir` : "Nadie calificó las reglas") : "";
   const resTimes = timeList.length? wrapSec(5, panelTimes, "Cuánto tarda hoy cada etapa", hasData("time")? "Duración típica según el equipo, en el orden del proceso · base para los semáforos" : "Nadie estimó los tiempos") : "";
   const ctxMood = checkins? `<div class="panel">${head("Ánimo al empezar", `${checkins} de ${nP} hicieron check-in`)}
         ${checkins===1? `<p class="ctx-line">${glass(topMood.ic,{size:"sm",tone:topMood.tone,tint:true})} 1 check-in: <b>${esc(topMood.t)}</b></p>`
@@ -5638,8 +5757,20 @@ function renderAdmin(){
     if(ph===s.phase) return;
     if(A.readonly) return toast("Solo lectura: solo quien facilita puede cambiar de fase");
     if(ph==="closed" && !(await askDialog({kind:"bee", title:"¿Cerrar el taller para todos?", text:"Los celulares mostrarán el cierre y nadie podrá enviar más respuestas. Todo lo capturado queda guardado para compartirlo.", ok:"Cerrar para todos"}))) return;
-    try{ await Store.updateSession(s.id,{phase:ph}); A.session.phase=ph; await refetchAll(); renderAdmin(); window.scrollTo(0,0); }
-    catch(e){ console.error(e); toast("No se pudo cambiar la fase: "+friendlyAuthError(e)); }
+    /* v1.16 · Saltar fases o regresar mueve a TODA la sala: se confirma. Abrir la siguiente fase no pregunta. */
+    if(ph!=="closed"){
+      const cur=PHASES.findIndex(p=>p.id===s.phase), to=PHASES.findIndex(p=>p.id===ph);
+      if(to!==cur+1 && !(await askDialog({kind:"bee", title:`¿Mover a la sala a ${phaseName(ph)}?`,
+          text:to<cur ? `Regresarás a todos de ${phaseName(s.phase)} a ${phaseName(ph)}. Los celulares cambiarán de pantalla ahora.`
+                      : `Te saltarás ${PHASES.slice(cur+1,to).map(p=>p.t).join(", ")}. Los celulares cambiarán de pantalla ahora.`,
+          ok:"Mover a todos"}))) return;
+    }
+    /* v1.16 · Si la fase sí cambió pero falla la recarga del panel, no se dice «No se pudo cambiar la fase» */
+    try{ await Store.updateSession(s.id,{phase:ph}); }
+    catch(e){ console.error(e); toast("No se pudo cambiar la fase: "+friendlyAuthError(e)); return; }
+    A.session.phase=ph;
+    try{ await refetchAll(); }catch(e){ console.error(e); toast(`La sala ya está en ${phaseName(ph)}. El panel se actualizará solo en unos segundos.`); }
+    renderAdmin(); window.scrollTo(0,0);
   };
   $$(".st-b").forEach(b=>b.onclick=()=>goPhase(b.dataset.ph));
   A.goPhase=goPhase;
@@ -5653,6 +5784,7 @@ function renderAdmin(){
   if($("#joinBig")) $("#joinBig").onclick=showQR;
   if($("#joinCopy")) $("#joinCopy").onclick=async()=>{ try{ await navigator.clipboard.writeText(participantURL()); toast("Liga copiada"); }catch(e){ toast(participantURL()); } };
   const fxn=$("#fxNext"); if(fxn) fxn.onclick=()=>goPhase(fxn.dataset.ph);
+  if(!A.readonly) TOUR.maybe("panel");   /* v1.16 · recorrido: QR y ritmo de la sala */
   $$(".vtab").forEach(b=>b.onclick=()=>{ A.vtab=b.dataset.tab; renderAdmin(); });
   if($("#resShare")) $("#resShare").onclick=e=>{ e.stopPropagation(); openPop("share"); };
   if($("#resPresent")) $("#resPresent").onclick=()=>startPresentation();
@@ -5698,7 +5830,7 @@ function renderPop(){
     const ph=A.session.phase||"lobby", pi=PHASES.findIndex(p=>p.id===ph), mnNext=A.readonly?null:PHASES[pi+1], mnRes=ph==="results"||ph==="closed";
     const nP=A.participants.length, mnAll=["checkin","pains","votes","quickwins","ideas"].includes(ph) && nP>0 && A.participants.every(p=>(p.done_phases||[]).includes(ph));
     L.innerHTML=`<div class="pop-back" id="popBack"></div><div class="pop menu" role="menu" aria-label="Más opciones">
-      ${mnNext?`<button role="menuitem" class="mn-next" id="mnNext" data-ph="${mnNext.id}">${icon("arrowright")}<span><b>${mnNext.id==="closed"?"Cerrar taller":"Siguiente: "+mnNext.t}</b><small>${mnNext.id==="closed"?"Termina la sesión en todos los celulares":mnAll?"Todos listos · puedes avanzar":"Abre la siguiente fase para todos"}</small></span></button>`:""}
+      ${mnNext?`<button role="menuitem" class="mn-next" id="mnNext" data-ph="${mnNext.id}">${icon("arrowright")}<span><b>${mnNext.id==="closed"?"Cerrar taller":"Siguiente: "+mnNext.t}</b><small>${mnNext.id==="closed"?"Termina el taller en todos los celulares":mnAll?"Todos listos · puedes avanzar":"Abre la siguiente fase para todos"}</small></span></button>`:""}
       ${mnRes?`<button role="menuitem" id="mnPresent">${icon("monitor")}<span><b>Presentar</b><small>Pantalla completa, una sección por pantalla</small></span></button>`:""}
       ${mnNext||mnRes?"<hr>":""}
       <button role="menuitem" id="mnShare">${icon("share")}<span><b>Compartir resultados</b><small>Excel, CSV o PDF</small></span></button>
@@ -6052,6 +6184,119 @@ function askDialog(o){
   });
 }
 
+/* ============================================================
+   v1.16 · Recorrido de primera vez para facilitadores (walkthrough)
+   Contextual: cada paso aparece la primera vez que se llega a su pantalla (Inicio → Crear → Revisa y crea →
+   Panel en vivo), así acompaña el primer taller de principio a fin. Se puede saltar (Esc o «Saltar recorrido»)
+   y repetir desde el perfil → Ayuda. Se recuerda por cuenta en este dispositivo.
+   Quien ya tiene talleres no lo ve solo: en Inicio aparece una vez «¿Nuevo en Colmena?».
+   ============================================================ */
+const TOUR_TOTAL=6;
+const TOUR_STEPS={
+  home:[
+    {n:1, sel:"#hCreate", t:"Tu taller en 3 pasos", d:"Cuentas el contexto, la IA propone el taller y tú lo revisas. Al crearlo obtienes un QR para que la sala entre.", ok:"Siguiente"},
+    {n:2, sel:"#wtBox .nt-empty", t:"Aquí vivirán tus talleres", d:"Aún no tienes ninguno. Lo que escribas se guarda como borrador; nada se publica hasta que lo crees.", ok:"Crear mi primer taller", go:"create"},
+    {n:2, sel:"#wtBox", skipIf:"#wtBox .nt-empty", t:"Aquí viven tus talleres", d:"Borradores, por iniciar, en curso y finalizados. Con ⋯ abres, duplicas o eliminas cada uno.", ok:"Entendido"}],
+  brief:[
+    {n:3, sel:"#bf-dol", t:"Problemas concretos, mejor propuesta",
+     d:()=>AH.ai===false ? "Escribe para quién es y qué proceso revisarán. Hoy armarás el taller a mano: te guiamos sección por sección."
+                         : "Escribe 2 a 4 problemas del proceso, separados por comas. La IA propone mejoras para cada uno y la sala las califica.", ok:"Entendido"}],
+  review:[
+    {n:4, sel:"#wCreate", t:"Crear abre la sala", d:"Revisa cada momento antes. Al crear se genera el QR y la sala ya puede entrar; después solo podrás duplicarlo.", ok:"Entendido"}],
+  panel:[
+    {n:5, sel:"#btnQR", t:"Proyecta el QR", d:"Ponlo en la pantalla de la sala. Cada persona entra desde su celular, sin cuenta ni descargas.", ok:"Siguiente"},
+    {n:6, sel:"#fxNext", alt:".stepper", t:"Tú marcas el ritmo", d:"La sala avanza solo cuando abres la siguiente actividad. Aquí ves cuántos terminaron. Al final, comparte en Excel o PDF.", ok:"Listo"}]
+};
+const TOUR={
+  on:false,
+  key(){ return "colmena_tour_v1_"+(ME.uid||"x"); },
+  st(){ try{ return JSON.parse(storageGet(this.key())||"{}")||{}; }catch(e){ return {}; } },
+  save(v){ storageSet(this.key(), JSON.stringify(v)); },
+  /* ¿Va a mostrarse algo en esta pantalla? (Inicio lo usa para no pintar la tarjeta de instalar ni Face ID encima) */
+  wants(screen, fresh){ const s=this.st(); if(s.done || (s.seen&&s.seen[screen])) return false; return s.started ? true : (screen==="home" && !!fresh); },
+  /* Inicio: recorrido para quien llega por primera vez; aviso «¿Nuevo en Colmena?» para quien ya tiene talleres */
+  maybe(screen, fresh){
+    if(this.on || A.readonly && screen==="panel") return;
+    const s=this.st(); if(s.done) return;
+    if(!s.started){
+      if(screen!=="home") return;
+      if(!fresh){ this.offer(); return; }
+      s.started=true; s.seen={}; this.save(s);
+    }
+    if(s.seen&&s.seen[screen]) return;
+    const steps=TOUR_STEPS[screen]||[];
+    if(this.pending) return; this.pending=true;     /* el panel se redibuja seguido: un solo arranque */
+    setTimeout(()=>{ this.pending=false; const s2=this.st(); if(this.on || s2.done || (s2.seen&&s2.seen[screen])) return; this.run(screen, steps, 0); }, screen==="panel"?700:250);
+  },
+  offer(){
+    if($("#tourOffer") || !$(".hello")) return;
+    $(".hello").insertAdjacentHTML("afterend", `<section class="inst tour-offer" id="tourOffer"><span class="inst-ic tour-ic">${icon("compass")}</span>
+      <div><b>¿Nuevo en Colmena?</b><p>En 1 minuto te mostramos cómo crear un taller y guiarlo en la sala.</p></div>
+      <div class="inst-r"><button class="abtn primary" id="tourGo">Ver recorrido</button><button class="ib sm inst-x" id="tourNo" aria-label="No, gracias">${icon("close")}</button></div></section>`);
+    $("#tourGo").onclick=()=>this.restart();
+    $("#tourNo").onclick=()=>{ const s=this.st(); s.done=true; this.save(s); const c=$("#tourOffer"); if(c) c.remove(); toast("Puedes verlo cuando quieras desde tu perfil → Ayuda"); };
+  },
+  restart(){
+    this.close(); this.save({started:true, seen:{}});
+    closeMe(); closeNotifs();
+    if(A.session){ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); A.session=null; }
+    AH.view="home"; adminHome(); window.scrollTo(0,0);
+  },
+  finishScreen(screen, all){ const s=this.st(); s.seen=s.seen||{}; s.seen[screen]=true; if(all||screen==="panel") s.done=true; this.save(s); },
+  skip(){ const s=this.st(); s.done=true; this.save(s); this.close(); toast("Puedes ver el recorrido cuando quieras desde tu perfil → Ayuda"); },
+  run(screen, steps, i){
+    this.close();
+    while(i<steps.length){ const st=steps[i];
+      if(st.skipIf && $(st.skipIf)) { i++; continue; }
+      if(!(st.sel && $(st.sel)) && !(st.alt && $(st.alt))) { i++; continue; }
+      break; }
+    if(i>=steps.length){ this.finishScreen(screen); return; }
+    const st=steps[i], el=$(st.sel)||$(st.alt);
+    this.on=true; this.prevHold=A.hold; if(screen==="panel") A.hold=true;
+    this.prevFocus=document.activeElement;
+    el.scrollIntoView({block:"center", behavior:document.documentElement.classList.contains("rm")?"auto":"smooth"});
+    const last=i===steps.length-1 || steps.slice(i+1).every(x=>x.n===st.n);
+    const root=document.createElement("div"); root.className="tour"; root.setAttribute("role","dialog"); root.setAttribute("aria-modal","true");
+    root.setAttribute("aria-labelledby","tourT"); root.setAttribute("aria-describedby","tourD");
+    const d=typeof st.d==="function"?st.d():st.d;
+    root.innerHTML=`<div class="tour-spot" aria-hidden="true"></div>
+      <div class="tour-card"><span class="tour-k">Paso ${st.n} de ${TOUR_TOTAL}</span><h2 id="tourT">${esc(st.t)}</h2><p id="tourD">${esc(d)}</p>
+        <div class="tour-act"><button type="button" class="linkbtn tour-skip">Saltar recorrido</button><button type="button" class="abtn primary tour-ok">${esc(st.ok)}</button></div></div>`;
+    document.body.appendChild(root); this.root=root; this.el=el; this.sel=st.sel; this.alt=st.alt;
+    const place=()=>this.place(); this._place=place; window.addEventListener("resize",place); window.addEventListener("scroll",place,true);
+    setTimeout(place, 20); setTimeout(place, 450);
+    const key=e=>{ if(e.key==="Escape"){ e.preventDefault(); e.stopPropagation(); this.skip(); }
+      else if(e.key==="Tab"){ const b=[...root.querySelectorAll("button")]; const k=b.indexOf(document.activeElement); e.preventDefault(); b[(k+(e.shiftKey?-1:1)+b.length)%b.length].focus(); } };
+    this._key=key; document.addEventListener("keydown",key,true);
+    root.querySelector(".tour-skip").onclick=()=>this.skip();
+    root.querySelector(".tour-ok").onclick=()=>{
+      if(st.go==="create"){ this.finishScreen(screen); this.close(); startNewWorkshop(); return; }
+      if(last){ this.finishScreen(screen); this.close(); if(screen==="panel") toast("¡Listo! Ya sabes lo básico. Repite el recorrido desde tu perfil → Ayuda"); return; }
+      this.run(screen, steps, i+1); };
+    setTimeout(()=>{ const b=root.querySelector(".tour-ok"); if(b) b.focus({preventScroll:true}); }, 60);
+  },
+  place(){
+    const root=this.root; if(!root) return;
+    let el=this.el; if(!el || !el.isConnected){ el=this.el=$(this.sel)||(this.alt&&$(this.alt)); if(!el){ this.close(); return; } }
+    const r=el.getBoundingClientRect(), pad=8, spot=root.querySelector(".tour-spot"), card=root.querySelector(".tour-card");
+    Object.assign(spot.style,{left:(r.left-pad)+"px", top:(r.top-pad)+"px", width:(r.width+pad*2)+"px", height:(r.height+pad*2)+"px"});
+    const vw=innerWidth, vh=innerHeight, cw=card.offsetWidth, ch=card.offsetHeight, m=16;
+    if(vw<600){ /* celular: hoja abajo, o arriba si el elemento está en la mitad de abajo */
+      card.classList.add("tour-sheet"); card.style.left=""; card.style.top=""; card.classList.toggle("tour-top", r.top+r.height/2>vh/2); return; }
+    card.classList.remove("tour-sheet","tour-top");
+    let top = r.bottom+pad+12+ch < vh-m ? r.bottom+pad+12 : (r.top-pad-12-ch > m ? r.top-pad-12-ch : Math.max(m, vh-ch-m));
+    let left = Math.min(Math.max(m, r.left+r.width/2-cw/2), vw-cw-m);
+    card.style.left=left+"px"; card.style.top=top+"px";
+  },
+  close(){
+    if(this._key) document.removeEventListener("keydown",this._key,true);
+    if(this._place){ window.removeEventListener("resize",this._place); window.removeEventListener("scroll",this._place,true); }
+    if(this.root) this.root.remove();
+    if(this.on){ A.hold=!!A.pop; const f=this.prevFocus; if(f&&f.isConnected&&f.focus) f.focus({preventScroll:true}); }
+    this.root=null; this.el=null; this.on=false; this._key=null; this._place=null;
+  }
+};
+
 </script>
 <script>
 /* ============================================================
@@ -6156,7 +6401,7 @@ function buildExport(opts){
   table("dolores","Dolores","Una fila por tarjeta de dolor, con sus votos y si se volvió reto.",
     [{k:"dolor_id",h:"dolor_id",t:"s",w:10,d:"ID de la tarjeta (orden de publicación)"},{k:"texto",h:"texto",t:"s",w:60,d:"Lo que escribió la persona"},
      {k:"etapa_num",h:"etapa_num",t:"n",w:10,d:"Número de la etapa"},{k:"etapa",h:"etapa",t:"s",w:32,d:"Etapa del proceso"},
-     {k:"actividad_num",h:"actividad_num",t:"s",w:12,d:"Número de la actividad LOCFY24 como texto (p. ej. 3.10). Para ordenar usa actividad_etapa y actividad_orden"},
+     {k:"actividad_num",h:"actividad_num",t:"s",w:12,d:"Número de la actividad como texto (p. ej. 3.10). Para ordenar usa actividad_etapa y actividad_orden"},
      {k:"actividad_etapa",h:"actividad_etapa",t:"n",w:12,d:"Primer número de la actividad (la etapa), p. ej. 3 en 3.10"},{k:"actividad_orden",h:"actividad_orden",t:"n",w:12,d:"Segundo número de la actividad, p. ej. 10 en 3.10"},{k:"actividad",h:"actividad",t:"s",w:40,d:"Actividad del proceso (opcional)"},
      {k:"herramienta",h:"herramienta",t:"s",w:26,d:"Herramienta o archivo (opcional)"},{k:"severidad",h:"severidad",t:"n",w:10,d:"Qué tanto duele, de 1 a 5"},
      {k:"severidad_texto",h:"severidad_texto",t:"s",w:16,d:"Etiqueta de la severidad"},{k:"votos",h:"votos",t:"n",w:9,d:"Votos recibidos"},
