@@ -2966,6 +2966,72 @@ html.dark{--dv1:#3987e5;--dv2:#d95926;--dv3:#199e70;--dv4:#c98500;--dv5:#d55181}
 html.rm .chart-tip{transition:none}
 /* v1.21 · Con 5 pestañas (admin) en celular angosto, solo texto para que respiren */
 @media (max-width:440px){ .ah-tabs:has(> .ah-tab:nth-of-type(5)) .ah-tab svg{display:none} .ah-tabs:has(> .ah-tab:nth-of-type(5)) .ah-tab{padding:0 .25rem} }@media (max-width:495px){:where(html[data-ts="l"]) .ah-tabs:has(> .ah-tab:nth-of-type(5)) .ah-tab svg{display:none}:where(html[data-ts="l"]) .ah-tabs:has(> .ah-tab:nth-of-type(5)) .ah-tab{padding:0 .25rem}}@media (max-width:550px){:where(html[data-ts="xl"]) .ah-tabs:has(> .ah-tab:nth-of-type(5)) .ah-tab svg{display:none}:where(html[data-ts="xl"]) .ah-tabs:has(> .ah-tab:nth-of-type(5)) .ah-tab{padding:0 .25rem}}
+/* v1.22 · Inicio como tablero */
+:root{--mv1:#15588F;--mv2:#6AAEE6;--mv3:#D5DBE4;--mv4:#EE958F;--mv5:#B53A34}
+html.dark{--mv1:#A3D2F7;--mv2:#3D8FD6;--mv3:#3A4660;--mv4:#C9483F;--mv5:#F2A39E}
+.db-top{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(17rem,1fr);gap:var(--kpi-gap,1rem);align-items:start}
+@media (max-width:1100px){ .db-top{grid-template-columns:minmax(0,1fr)} }@media (max-width:1238px){:where(html[data-ts="l"]) .db-top{grid-template-columns:minmax(0,1fr)}}@media (max-width:1375px){:where(html[data-ts="xl"]) .db-top{grid-template-columns:minmax(0,1fr)}}
+.db-side{display:flex;flex-direction:column;gap:var(--kpi-gap,1rem);min-width:0}
+.db-side .rail-notes:empty{display:none}
+.db-h{flex-direction:row;align-items:flex-start;justify-content:space-between;gap:.75rem}
+.db-h>div{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.db-h .rail-go{margin-top:.25rem}
+.db-h .rail-go::after{display:none}
+.dn-c:hover,.dr-list li:hover{border-color:var(--line-2)}
+.dn-c:has(.rail-go:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.dn-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:.75rem}
+.dn-c{position:relative;display:flex;flex-direction:column;gap:.3125rem;padding:.875rem 1rem;border:1px solid var(--line);border-radius:12px;background:var(--surface);min-width:0}
+.dn-c .now-n{font-size:.9375rem;line-height:1.3}
+.dn-own{font-size:.75rem;color:var(--ink-3)}
+.dn-prog{height:.375rem;border-radius:99px;background:var(--track);overflow:hidden;margin-top:.25rem}
+.dn-prog i{display:block;height:100%;background:var(--ok);border-radius:inherit;transition:width .5s var(--spring-quick,ease)}
+.dn-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:auto;padding-top:.25rem;font-size:.8125rem;color:var(--ink-2)}
+.ai-empty.sm{min-height:7rem;padding:1.25rem 1rem}
+.db-body{display:flex;flex-direction:column;gap:clamp(1rem,2vw,1.375rem);transition:opacity .2s}
+.db-body.busy{opacity:.5;pointer-events:none}
+.db-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--kpi-gap,1rem)}
+@media (max-width:900px){ .db-grid{grid-template-columns:minmax(0,1fr)} }@media (max-width:1012px){:where(html[data-ts="l"]) .db-grid{grid-template-columns:minmax(0,1fr)}}@media (max-width:1125px){:where(html[data-ts="xl"]) .db-grid{grid-template-columns:minmax(0,1fr)}}
+.db-kpis .stat-v small{font-size:.5em;font-weight:700;color:var(--ink-3);margin-left:.25rem;letter-spacing:0}
+.dk-row{display:flex;align-items:flex-end;justify-content:space-between;gap:.75rem;min-width:0}
+.cv.sp{flex:0 1 6.5rem;min-width:0;max-width:6.5rem;height:2.5rem;overflow:hidden}
+.dk-row .stat-v{flex:none}
+.dk .stat-c{overflow-wrap:anywhere}
+.dk-d{display:inline-flex;align-items:center;gap:.25rem;margin-right:.375rem;padding:1px .4375rem;border-radius:999px;font-weight:700;font-size:.75rem;white-space:nowrap}
+.dk-d.up{color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.dk-d.down{color:var(--danger);background:color-mix(in srgb,var(--danger) 12%,transparent)}
+.dk-d.eq{color:var(--ink-2);background:var(--track)}
+@container (max-width:30rem){ .db-kpis .dk-row{grid-area:v;display:block} .db-kpis .cv.sp{display:none} }
+.db-call{display:flex;gap:.625rem;align-items:flex-start;margin-top:1rem;padding:.75rem .875rem;border-radius:10px;background:var(--accent-soft);color:var(--ink-2);font-size:.8125rem;line-height:1.45}
+.db-call svg{flex:none;width:1.125rem;height:1.125rem;color:var(--accent-strong);margin-top:1px}
+.db-call b{color:var(--ink)}
+.dw{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr);gap:1.25rem;align-items:center}
+.dw .cv.donut{width:100%;max-width:13rem;margin:0}
+.dw .lgd{margin:0}
+@media (max-width:520px){ .dw{grid-template-columns:minmax(0,1fr)} .dw .cv.donut{margin:0 auto} }@media (max-width:585px){:where(html[data-ts="l"]) .dw{grid-template-columns:minmax(0,1fr)}:where(html[data-ts="l"]) .dw .cv.donut{margin:0 auto}}@media (max-width:650px){:where(html[data-ts="xl"]) .dw{grid-template-columns:minmax(0,1fr)}:where(html[data-ts="xl"]) .dw .cv.donut{margin:0 auto}}
+.cv-center small{line-height:1.3}
+.lgd li i.dash{background:none;border-top:2px dashed;height:0;border-radius:0;width:.875rem}
+.rings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.125rem 1.25rem}
+@media (max-width:520px){ .rings{grid-template-columns:minmax(0,1fr)} }@media (max-width:585px){:where(html[data-ts="l"]) .rings{grid-template-columns:minmax(0,1fr)}}@media (max-width:650px){:where(html[data-ts="xl"]) .rings{grid-template-columns:minmax(0,1fr)}}
+.ring{display:flex;gap:.875rem;align-items:center;min-width:0}
+.ring .cv{flex:none;width:4.75rem;height:4.75rem}
+.ring .cv-center b{font-size:1.0625rem}
+.ring p{margin:0;font-size:.8125rem;font-weight:600;color:var(--ink);line-height:1.35;min-width:0}
+.ring small{display:block;font-weight:500;color:var(--ink-3);font-size:.75rem;margin-top:.1875rem}
+.dr-list{list-style:none;margin:0;padding:0}
+.dr-list li{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.875rem;align-items:center;padding:.875rem 0;border-top:1px solid var(--line)}
+.dr-list li:first-child{border-top:0;padding-top:0}
+.dr-ic{display:grid;place-items:center;width:2.25rem;height:2.25rem;border-radius:var(--r-sm,10px);background:var(--accent-soft);color:var(--accent-strong)}
+.dr-ic svg{width:1.125rem;height:1.125rem}
+.dr-t{min-width:0}
+.dr-t b{display:block;color:var(--ink);font-size:.9375rem;font-weight:700;line-height:1.35}
+.dr-t small{display:block;margin-top:.1875rem;color:var(--ink-3);font-size:.78125rem}
+@media (max-width:600px){ .dr-list li{grid-template-columns:auto minmax(0,1fr)} .dr-list .rail-go{grid-column:2;justify-self:start;margin:0} }@media (max-width:675px){:where(html[data-ts="l"]) .dr-list li{grid-template-columns:auto minmax(0,1fr)}:where(html[data-ts="l"]) .dr-list .rail-go{grid-column:2;justify-self:start;margin:0}}@media (max-width:750px){:where(html[data-ts="xl"]) .dr-list li{grid-template-columns:auto minmax(0,1fr)}:where(html[data-ts="xl"]) .dr-list .rail-go{grid-column:2;justify-self:start;margin:0}}
+.db-bar{display:flex;align-items:flex-end;justify-content:space-between;gap:.75rem 1.5rem;flex-wrap:wrap;margin-top:.5rem}
+.db-bar>div:first-child{display:flex;flex-direction:column;gap:.25rem;min-width:0}
+.db-sec{margin:0;font-size:var(--fs-h2,1.25rem);font-weight:800;color:var(--ink);line-height:1.25}
+.db-bar .hint{margin:0;font-size:var(--fs-help,.8125rem);color:var(--ink-3)}
+@media (max-width:600px){ .db-bar .hs-per{width:100%} .db-bar .hs-per button{flex:1} }@media (max-width:675px){:where(html[data-ts="l"]) .db-bar .hs-per{width:100%}:where(html[data-ts="l"]) .db-bar .hs-per button{flex:1}}@media (max-width:750px){:where(html[data-ts="xl"]) .db-bar .hs-per{width:100%}:where(html[data-ts="xl"]) .db-bar .hs-per button{flex:1}}
+.pd-row[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -3320,7 +3386,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261007235634";
+const APP_BUILD="20261008004749";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -3897,6 +3963,7 @@ const SupaStore = {
   /* v1.21 · Uso de IA: detalle, límites por persona (pausa y tope mensual) y enlace borrador → taller */
   async aiUsage(from,to){ const a={}; if(from) a.p_from=from; if(to) a.p_to=to; const {data,error}=await this.client.rpc("ws_ai_usage",a); if(error) throw error; return data||[]; },
   async aiLimits(){ const {data,error}=await this.client.rpc("ws_ai_limits"); if(error) throw error; return data||[]; },
+  async homeStats(from,prev){ const {data,error}=await this.client.rpc("ws_home_stats",{p_from:from||null,p_prev:prev||null}); if(error) throw error; return data; },
   async setAiLimit(user,enabled,cap){ const {error}=await this.client.rpc("ws_set_ai_limit",{p_user:user,p_enabled:enabled,p_cap:cap==null?null:cap}); if(error) throw error; },
   async aiLink(draft,session){ if(!draft||!session) return; const {error}=await this.client.rpc("ws_ai_link",{p_draft:draft,p_session:session}); if(error) throw error; },
   /* v1.6 · Centro de notificaciones */
@@ -4078,6 +4145,34 @@ const DemoStore = {
   async setAiLimit(user,enabled,cap){ const db=this.db(); if(user==="demo") db.aiMe={ai_enabled:enabled!==false,ai_monthly_cap:cap??null};
     else { const x=(db.staff||[]).find(s=>s.user_id===user); if(!x) throw new Error("Esa cuenta no es del equipo"); x.ai_enabled=enabled!==false; x.ai_monthly_cap=cap??null; } this.save(db); },
   async aiLink(draft,session){ const db=this.db(); (db.aiLog||[]).forEach(l=>{ if(l.draft_id===draft && !l.session_id) l.session_id=session; }); this.save(db); },
+  /* v1.22 · Mismos números que ws_home_stats, calculados con los datos de prueba */
+  async homeStats(from,prev){ const db=this.db(), PH=["lobby","checkin","pains","votes","quickwins","ideas","results","closed"], pi=s=>PH.indexOf(s.phase)+1;
+    const f=from?new Date(from):null, pv=prev?new Date(prev):null, at=s=>new Date(s.created_at);
+    const ss=db.sessions||[], cur=ss.filter(s=>!f||at(s)>=f), prv=pv&&f?ss.filter(s=>at(s)>=pv&&at(s)<f):null;
+    const P=db.participants||[], C=db.cards||[], V=db.votes||[], Q=db.qw||[], I=db.ideas||[];
+    const pOf=a=>{ const ids=new Set(a.map(s=>s.id)); return P.filter(p=>ids.has(p.session_id)); }, cOf=a=>{ const ids=new Set(a.map(s=>s.id)); return C.filter(c=>ids.has(c.session_id)); };
+    const done=p=>(p.done_phases||[]).includes("ideas"), fin=a=>a.filter(s=>pi(s)>=7);
+    const tot=a=>({sessions:a.length, people:pOf(a).length, cards:cOf(a).length, done:pOf(fin(a)).filter(done).length, elig:pOf(fin(a)).length,
+      retos:fin(a).reduce((n,s)=>n+Math.min(s.idea_top||3, new Set(V.filter(v=>v.session_id===s.id&&v.points>0).map(v=>v.card_id)).size),0)});
+    const now=new Date(), months=[]; for(let k=11;k>=0;k--){ const m=new Date(now.getFullYear(),now.getMonth()-k,1), m2=new Date(now.getFullYear(),now.getMonth()-k+1,1);
+      const a=ss.filter(s=>at(s)>=m&&at(s)<m2), t=tot(a); months.push({m:`${m.getFullYear()}-${String(m.getMonth()+1).padStart(2,"0")}`, sessions:t.sessions, people:t.people, cards:t.cards, done:t.done, elig:t.elig}); }
+    const funnel=["checkin","pains","votes","quickwins","ideas"].map(ph=>{ const i=PH.indexOf(ph)+1, a=cur.filter(s=>pi(s)>i&&(ph!=="quickwins"||(s.quickwins||[]).length)), ps=pOf(a);
+      return {ph, ws:a.length, n:ps.length, d:ps.filter(p=>(p.done_phases||[]).includes(ph)).length}; });
+    const pc=pOf(cur), moods={}; pc.forEach(p=>{ if(p.mood) moods[p.mood]=(moods[p.mood]||0)+1; });
+    const ma={}; pc.filter(p=>p.mood&&p.area).forEach(p=>{ const o=ma[p.area]=ma[p.area]||{area:p.area,n:0,neg:0}; o.n++; if(p.mood==="saturado"||p.mood==="rebasado") o.neg++; });
+    const pById=Object.fromEntries(P.map(p=>[p.id,p])), ar={}, cs=new Set(cur.map(s=>s.id)), ps2=new Set((prv||[]).map(s=>s.id));
+    C.forEach(c=>{ const a=(pById[c.participant_id]||{}).area||"Sin área", o=ar[a]=ar[a]||{area:a,cur:0,prev:0}; if(cs.has(c.session_id)) o.cur++; if(ps2.has(c.session_id)) o.prev++; });
+    const qwTop=[]; cur.forEach(s=>(s.quickwins||[]).filter(q=>(q.kind||"qw")==="qw").forEach(q=>{ const r=Q.filter(x=>x.session_id===s.id&&x.qw_id===q.id&&x.score>0);
+      if(r.length>=2) qwTop.push({text:q.text, ws:s.name, code:s.code, n:r.length, idx:Math.round(r.reduce((a,x)=>a+(x.score-1)*50,0)/r.length), top:r.filter(x=>x.score===3).length}); }));
+    qwTop.sort((a,b)=>b.idx-a.idx||b.n-a.n);
+    const results=ss.filter(s=>pi(s)>=7).map(s=>{ const vs=V.filter(v=>v.session_id===s.id&&v.points>0), by={};
+      vs.forEach(v=>{ const o=by[v.card_id]=by[v.card_id]||{pts:0,who:new Set()}; o.pts+=v.points; o.who.add(v.participant_id); });
+      const top=Object.entries(by).sort((a,b)=>b[1].pts-a[1].pts)[0], card=top&&C.find(c=>c.id===top[0]);
+      return {code:s.code, name:s.name, owner_id:s.owner_id||"demo", phase:s.phase, at:s.closed_at||s.created_at, participants:P.filter(p=>p.session_id===s.id).length, cards:C.filter(c=>c.session_id===s.id).length,
+        ideas:I.filter(i=>i.session_id===s.id&&i.kind==="idea").length, pts:vs.reduce((a,v)=>a+v.points,0), voters:new Set(vs.map(v=>v.participant_id)).size,
+        top_text:card?card.texto:null, top_pts:top?top[1].pts:0, top_voters:top?top[1].who.size:0}; }).sort((a,b)=>String(b.at).localeCompare(String(a.at))).slice(0,4);
+    return {months, cur:tot(cur), prev:prv?tot(prv):null, funnel, moods, moodAreas:Object.values(ma).filter(o=>o.n>=3).sort((a,b)=>b.neg/b.n-a.neg/a.n||b.n-a.n),
+      areas:Object.values(ar).filter(o=>o.cur||o.prev).sort((a,b)=>b.cur-a.cur||b.prev-a.prev).slice(0,8), qwTop:qwTop.slice(0,4), results}; },
   async suggestWorkshop(payload){ const db0=this.db(), me=this._aiStaff(db0)[0], used=(db0.aiLog||[]).filter(l=>l.user_id==="demo" && new Date(l.at)>=new Date(new Date().getFullYear(),new Date().getMonth(),1)).reduce((a,l)=>a+l.input_tokens+l.output_tokens,0);
     if(!me.ai_enabled) throw new Error("Tu admin pausó la IA para tu cuenta. Puedes armar el taller a mano.");
     if(me.ai_monthly_cap!=null && used>=me.ai_monthly_cap) throw new Error(`Llegaste a tu tope de IA de este mes (${me.ai_monthly_cap.toLocaleString("es-MX")} tokens). Pídele a tu admin que lo amplíe o arma el taller a mano.`);
@@ -5639,7 +5734,8 @@ function skTable(title, n){ const chips=`<div class="sk-chips">${[4.5,5.75,6.25,
 function skRail(n){ return `<section class="panel rail-card" aria-hidden="true"><div class="rail-h">${skb("7rem","1.0625rem")}</div>${skN(n,i=>`<div class="sk-li">${skb("4.5rem","1.25rem","pill")}${skb(i%2?"70%":"88%",".875rem")}${skb("55%",".625rem")}</div>`)}</section>`; }
 function skHome(){ return skPage("Cargando tus talleres…", `<section class="hello" aria-hidden="true"><div class="sk-col">${skb("15rem","1.75rem")}${skb("min(17rem,70vw)",".875rem")}</div>
     <div class="hello-acts">${isAdminRole()?skb("10.5rem","2.5rem","ctl"):""}${skb("8.5rem","2.5rem","ctl")}</div></section>
-  ${skStats(4)}<div class="home-layout"><div class="home-main">${skTable(true,6)}</div><div class="rail-a">${skRail(3)}</div><div class="rail-b">${skRail(2)}</div></div>`); }
+  <div class="db-top" aria-hidden="true"><section class="panel">${skb("9rem","1.125rem")}<div class="dn-grid" style="margin-top:1rem">${skN(2,()=>`<div class="dn-c">${skb("5rem","1.25rem","pill")}${skb("80%","1rem")}${skb("100%",".375rem")}</div>`)}</div></section>${skRail(2)}</div>
+  ${skStats(4)}<div class="db-grid" aria-hidden="true">${skN(2,()=>`<section class="panel">${skb("12rem","1.125rem")}${skb("100%","13rem","ctl")}</section>`)}</div>`); }
 function skMine(){ return skPage("Cargando tus talleres…", skHead(skb("8.5rem","2.5rem","ctl"))+skTable(false,8)); }
 function skAll(){ return skPage("Cargando talleres…", skHead()+skStats(3)+`<section class="panel all-panel" aria-hidden="true"><div class="sk-chips">${skb("16rem","2.75rem","ctl")}${skb("20rem","2.75rem","ctl")}</div>${skRows(8)}</section>`); }
 function skTeam(){ return skPage("Cargando equipo…", skHead()+`<div class="sk-2col" aria-hidden="true">
@@ -5666,14 +5762,14 @@ async function openSession(code, btn, src){ if(btn) btn.disabled=true; const s=a
 /* v1.18 · Abrir un taller: el contenido entra desde la derecha y su nombre (fila de la tabla, «Ahora mismo» o «Todos»)
    se transforma en el título del panel (elemento compartido estilo Smart Animate). Al volver, al revés. */
 function navOpen(s, src){
-  A._from = src ? (src.closest(".rail-it")?"rail":src.closest(".adm-row")?"all":"table") : null;
+  A._from = src ? (src.closest(".rail-it,.dn-c")?"rail":src.closest(".adm-row")?"all":"table") : null;
   return Motion.go(()=>startAdmin(s), {kind:"push", dir:1, shared:src?{from:src, to:()=>$(".at-n")}:null, wait:200, until:()=>A._ready});
 }
 /* Fila de la vista actual que corresponde al taller (para que el título vuelva a su lugar) */
 function rowTitle(code){
   if(!code) return null;
-  const rail=$(`.rail-go[data-open="${code}"]`), row=$(`.wt-row[data-code="${code}"]`), all=$(`.adm-row[data-k="${code}"]`);
-  const r=rail&&rail.closest(".rail-it")&&rail.closest(".rail-it").querySelector(".now-n"), t=row&&row.querySelector(".wt-nm b"), a=all&&all.querySelector(".adm-name b");
+  const rail=$(`.dn-c .rail-go[data-open="${code}"]`)||$(`.rail-it .rail-go[data-open="${code}"]`), row=$(`.wt-row[data-code="${code}"]`), all=$(`.adm-row[data-k="${code}"]`);
+  const rc=rail&&rail.closest(".rail-it,.dn-c"), r=rc&&rc.querySelector(".now-n"), t=row&&row.querySelector(".wt-nm b"), a=all&&all.querySelector(".adm-name b");
   return (A._from==="rail"?r||t:A._from==="all"?a:t||r)||a||null;
 }
 
@@ -5802,7 +5898,10 @@ async function homeView(){
   $("#app").innerHTML=shellHTML(skHome(),"home"); wireTop();
   let d={sessions:[],invites:[]}, drafts=[];
   await migrateLocalDraft();
-  try{ const r=await Promise.all([Store.dashboard(), isAdminRole()?loadStaff():null, NT.loaded?null:loadNotifs(), Store.listDrafts().catch(e=>{ console.error(e); return []; })]); d=r[0]||d; drafts=r[3]||[]; }
+  const HR=hsRange(HS.period); HS.err=null;
+  try{ const r=await Promise.all([Store.dashboard(), isAdminRole()?loadStaff():null, NT.loaded?null:loadNotifs(), Store.listDrafts().catch(e=>{ console.error(e); return []; }),
+      Store.homeStats?Store.homeStats(HR.from&&HR.from.toISOString(), HR.prev&&HR.prev.toISOString()).catch(hsFail):null,
+      Store.aiUsage?Store.aiUsage(hsAiFrom(HR).toISOString()).catch(()=>null):null]); d=r[0]||d; drafts=r[3]||[]; HS.data=r[4]||null; HS.ai=r[5]||null; }
   catch(e){ console.error(e); if(AH.view==="home") loadError(e); return; }
   if(AH.view!=="home") return;
   AH.dash=d;
@@ -5846,6 +5945,7 @@ async function homeView(){
       <div class="now-m"><span title="${per(s.participants,"participante","participantes")}">${icon("users")}${s.participants}<span class="sr"> ${s.participants===1?"participante":"participantes"}</span></span>${act&&s.participants?`<span>${icon("check")}${s.listos} de ${s.participants} listos</span>`:""}${s.phase==="results"?`<span>${icon("chart")}${s.cards} dolores · ${s.ideas} ideas</span>`:""}
         <button type="button" class="rail-go" data-open="${esc(s.code)}" aria-label="${mineS?"Ir al taller":"Ver"} ${esc(s.name)}">${mineS?"Ir al taller":"Ver"}${icon("arrowright")}</button></div></li>`; };
   const goList=team?"all":"mine";
+  if(d.sessions.length) return dashHome({d, live, going, lobby, pend, ctx, un, team, isMine, per, touring, fresh, goList});
   Motion.morph($(".ah-wide"),`
     <section class="hello vi" style="--i:0">
       <div><h1 class="hello-t">${greeting()}${ME.name?", "+esc(firstName(ME.name)):""}</h1>
@@ -5892,6 +5992,211 @@ async function homeView(){
   $$("[data-view-go]").forEach(b=>b.onclick=()=>navView(b.dataset.viewGo));
   $$("[data-pend]").forEach(b=>b.onclick=()=>{ const p=pend[+b.dataset.pend]; if(p.go.bell) return goNotifs(); if(p.go.resend) return resendInvite(p.go.resend, b); if(p.go.code) return openSession(p.go.code,b); navView(p.go.view); });
 }
+
+/* ============================================================
+   v1.22 · Inicio como tablero: lo que pasa ahora, pendientes, indicadores con tendencia y gráficas con tooltip.
+   Quien aún no ve ningún taller tiene el Inicio de siempre (tabla vacía + recorrido de primera vez).
+   ============================================================ */
+const HS={ period:"month", data:null, ai:null, err:null, charts:[] };
+const MOOD_ORDER=["pila","bien","neutral","saturado","rebasado"];
+function monthLabel(d, short){ try{ const t=d.toLocaleDateString("es-MX",{month:short?"short":"long"}).replace(".",""); return t.charAt(0).toUpperCase()+t.slice(1); }catch(e){ return ""; } }
+function hsRange(p){ const n=new Date();
+  if(p==="month"){ const pm=new Date(n.getFullYear(),n.getMonth()-1,1); return {from:new Date(n.getFullYear(),n.getMonth(),1), prev:pm, vs:"vs. "+monthLabel(pm).toLowerCase(), name:monthLabel(n).toLowerCase()}; }
+  if(p==="90") return {from:new Date(Date.now()-90*864e5), prev:new Date(Date.now()-180*864e5), vs:"vs. los 90 días anteriores", name:"los últimos 90 días"};
+  return {from:null, prev:null, vs:"", name:"todo el historial"}; }
+function hsAiFrom(R){ return R.from||new Date(Date.now()-365*864e5); }
+function hsFail(e){ console.error("[Colmena] tablero:", e);
+  HS.err=/ws_home_stats|PGRST202|Could not find|does not exist/i.test(String(e&&(e.message||e.code)))?"Falta correr migracion-v122-inicio.sql en Supabase para ver las gráficas de Inicio.":friendlyAuthError(e); return null; }
+function hexA(c, a){ c=String(c||"").trim(); if(/^#[0-9a-f]{6}$/i.test(c)) return c+Math.round(a*255).toString(16).padStart(2,"0");
+  if(/^#[0-9a-f]{3}$/i.test(c)) return "#"+c.slice(1).split("").map(x=>x+x).join("")+Math.round(a*255).toString(16).padStart(2,"0"); return c; }
+const fmtN=n=>(Number(n)||0).toLocaleString("es-MX");
+const per=(n,one,many)=>`${fmtN(n)} ${Number(n)===1?one:many}`;
+
+function dashHome(o){
+  const {d, live, going, lobby, pend, ctx, un, team, isMine, per, touring, goList}=o;
+  const NOW_MAX=6;
+  const nowCard=s=>{ const mineS=isMine(s), act=ACTIVE_PH.includes(s.phase), n=s.participants||0, l=s.listos||0, pct=n?Math.round(l/n*100):0;
+    return `<li class="dn-c" data-k="now-${esc(s.code)}">
+      <div class="now-top"><span class="ph-pill ph-${esc(s.phase)}">${act?'<i class="dot"></i>':""}${esc(phaseName(s.phase))}</span></div>
+      <b class="now-n">${esc(s.name)}</b><small class="dn-own">${mineS?"Tu taller":esc(staffName(s.owner_id))+" · solo lectura"}</small>
+      ${act?`<div class="dn-prog" role="img" aria-label="${l} de ${n} listos"><i style="width:${pct}%"></i></div>`:""}
+      <div class="dn-row"><span class="num">${act?`${l} de ${n} listos`:s.phase==="lobby"?(n?per(n,"persona ya entró","personas ya entraron"):"Nadie ha entrado aún"):per(n,"participante","participantes")}</span>
+        <button type="button" class="rail-go" data-open="${esc(s.code)}" aria-label="${mineS?"Ir al taller":"Ver"} ${esc(s.name)}">${mineS?(s.phase==="lobby"?"Abrir sala":"Ir al taller"):"Ver"}${icon("arrowright")}</button></div></li>`; };
+  Motion.morph($(".ah-wide"),`
+    <section class="hello vi" style="--i:0">
+      <div><h1 class="hello-t">${greeting()}${ME.name?", "+esc(firstName(ME.name)):""}</h1>
+        <p class="hello-s">${esc(todayLong())} · ${ctx}${un?` · <b>${un} ${un===1?"aviso":"avisos"}</b>`:""}</p>
+        ${ME.name?"":`<p class="hello-nn">${icon("users")}Tu cuenta no tiene nombre. <button type="button" class="linkbtn" id="hlName">Ponle tu nombre</button> para que tu equipo te reconozca.</p>`}</div>
+      <div class="hello-acts">${team?`<button class="abtn" id="hInvite">${icon("mail")}Invitar a alguien</button>`:""}<button class="abtn primary" id="hCreate">${icon("plus")}Crear taller</button></div>
+    </section>
+    <div class="db-top">
+      <section class="panel db-now vi" style="--i:1" aria-labelledby="wgNow">
+        <div class="ai-h db-h"><div><h2 id="wgNow">Ahora mismo</h2><p class="hint">Lo que pasa en ${team?"las salas de tu equipo":"tus salas"} en este momento</p></div>${live.length?`<span class="rail-n">${live.length}</span>`:""}</div>
+        ${live.length?`<ul class="dn-grid">${live.slice(0,NOW_MAX).map(nowCard).join("")}</ul>${live.length>NOW_MAX?`<p class="rail-more">Y ${live.length-NOW_MAX} más en <button type="button" class="linkbtn" data-view-go="${goList}">${team?"Todos los talleres":"Mis talleres"}</button></p>`:""}`
+          :`<div class="ai-empty sm">${icon("hexagon")}<b>Ningún taller abierto ahora</b><span>Cuando abras una sala, aquí verás cuántos van listos en cada fase.</span></div>`}
+      </section>
+      <div class="db-side">
+        <div class="rail-notes" id="railTop"></div>
+        ${pend.length?`<section class="panel rail-card vi" style="--i:2" aria-labelledby="wgPend">
+          <div class="rail-h"><h2 id="wgPend">Pendientes</h2><span class="rail-n">${pend.length}</span></div>
+          <ul class="rail-list">${pend.map((p,i)=>`<li class="rail-it pd-row"${i>=3?" hidden":""}><span class="pd-ic ${p.tone}" aria-hidden="true">${icon(p.ic)}</span><span class="pd-tx"><b>${esc(p.t)}</b><p>${esc(p.s)}</p></span><button type="button" class="rail-go" data-pend="${i}">${esc(p.label)}${icon("arrowright")}</button></li>`).join("")}</ul>
+          ${pend.length>3?`<p class="rail-more" id="pdMoreP"><button type="button" class="linkbtn" id="pdMore">Ver ${pend.length-3} más</button></p>`:""}
+        </section>`:`<p class="rail-ok vi" style="--i:2">${icon("check")}<span><b>Todo al día.</b> Sin invitaciones por vencer, avisos pendientes ni talleres por depurar.</span></p>`}
+        <div class="rail-notes" id="railNotes">${touring?"":installCardHTML()}</div>
+      </div>
+    </div>
+    <div id="dashBody" class="db-body"></div>`);
+  drawDash();
+  wireInstall(); if(!touring) faceNudge();
+  TOUR.maybe("home", o.fresh);
+  $("#hCreate").onclick=startNewWorkshop;
+  const hi=$("#hInvite"); if(hi) hi.onclick=()=>navView("team");
+  const nn=$("#hlName"); if(nn) nn.onclick=()=>openSettings(()=>{ const e=$("#meEdit"); if(e) e.click(); });
+  $$(".db-top [data-open]").forEach(b=>b.onclick=()=>openSession(b.dataset.open,b,b.closest(".dn-c")&&b.closest(".dn-c").querySelector(".now-n")));
+  $$("[data-view-go]").forEach(b=>b.onclick=()=>navView(b.dataset.viewGo));
+  $$("[data-pend]").forEach(b=>b.onclick=()=>{ const p=pend[+b.dataset.pend]; if(p.go.bell) return goNotifs(); if(p.go.resend) return resendInvite(p.go.resend, b); if(p.go.code) return openSession(p.go.code,b); navView(p.go.view); });
+  const pm=$("#pdMore"); if(pm) pm.onclick=()=>{ const hid=$$(".db-side .pd-row[hidden]"); hid.forEach(li=>li.hidden=false); $("#pdMoreP").remove(); const f=hid[0]&&hid[0].querySelector(".rail-go"); if(f) f.focus(); };
+}
+async function hsSetPeriod(k){ if(HS.period===k) return; HS.period=k;
+  $$("[data-hper]").forEach(x=>{ const on=x.dataset.hper===k; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on); });
+  const box=$("#dashBody"); if(box){ box.classList.add("busy"); box.setAttribute("aria-busy","true"); }
+  const R=hsRange(HS.period); HS.err=null;
+  const [st, ai]=await Promise.all([Store.homeStats(R.from&&R.from.toISOString(), R.prev&&R.prev.toISOString()).catch(hsFail), Store.aiUsage?Store.aiUsage(hsAiFrom(R).toISOString()).catch(()=>null):null]);
+  if(AH.view!=="home" || HS.period!==k) return; HS.data=st; HS.ai=ai; drawDash(); const f=$(`[data-hper="${k}"]`); if(f) f.focus({preventScroll:true}); }
+
+function drawDash(){
+  const box=$("#dashBody"); if(!box || AH.view!=="home") return;
+  box.classList.remove("busy"); box.removeAttribute("aria-busy"); hsCharts(null);
+  if(HS.err){ box.innerHTML=`<section class="panel vi" style="--i:3"><div class="ai-note">${icon("alert")}<span>${esc(HS.err)}</span></div></section>`; $$("[data-hper]").forEach(b=>b.onclick=()=>hsSetPeriod(b.dataset.hper)); return; }
+  const D=HS.data; if(!D){ box.innerHTML=""; return; }
+  const R=hsRange(HS.period), all=HS.period==="all", c=D.cur||{}, p=all?null:D.prev, M=(D.months||[]).slice(-6);
+  const team=isAdminRole();
+  const pct=x=>x&&x.elig?Math.round(x.done/x.elig*100):null, pc=pct(c), pp=pct(p);
+  const fin=((D.funnel||[]).find(f=>f.ph==="ideas")||{}).ws||0;
+  const dlt=(a,b,unit)=>{ if(b==null||a==null) return ""; const v=a-b;
+    if(!v) return `<span class="dk-d eq">= igual</span>`;
+    return `<span class="dk-d ${v>0?"up":"down"}"><span aria-hidden="true">${v>0?"▲":"▼"}</span><span class="sr">${v>0?"Subió":"Bajó"}</span> ${fmtN(Math.abs(v))}${unit?" "+unit:""}</span>`; };
+  const join=(...a)=>a.filter(Boolean).join(" · ");
+  const K=[
+    {k:"ws",  ic:"hexagon", t:"Talleres realizados", v:fmtN(c.sessions), sp:M.map(m=>m.sessions), sl:"talleres",
+      cx:dlt(c.sessions,p&&p.sessions)+esc(R.vs||"En todo el historial")},
+    {k:"ppl", ic:"users", t:"Personas escuchadas", v:fmtN(c.people), sp:M.map(m=>m.people), sl:"personas",
+      cx:dlt(c.people,p&&p.people)+esc(join(R.vs, c.sessions?`${Math.round(c.people/c.sessions)} por taller`:""))},
+    {k:"fin", ic:"check", t:"Terminaron todo el recorrido", v:pc==null?"—":`${pc}<small>%</small>`, sp:M.map(m=>m.elig?Math.round(m.done/m.elig*100):null), sl:"terminaron", unit:"%",
+      cx:pc==null?"Se mide cuando un taller llega a Ideas":dlt(pc,pp,"pts")+esc(R.vs||`${fmtN(c.done)} de ${fmtN(c.elig)} personas`)},
+    {k:"ret", ic:"flame", t:"Dolores → retos", v:`${fmtN(c.cards)}<small>→ ${fmtN(c.retos)}</small>`, sp:M.map(m=>m.cards), sl:"dolores",
+      cx:esc(fin?`${(Math.round(c.retos/fin*10)/10).toLocaleString("es-MX")} retos por taller en promedio`:"Los retos salen de lo más votado")}];
+  const seg=`<div class="ai-per hs-per" role="group" aria-label="Periodo">${[["month","Este mes"],["90","90 días"],["all","Todo"]].map(([k,t])=>`<button type="button" aria-pressed="${HS.period===k}" class="${HS.period===k?"on":""}" data-hper="${k}">${t}</button>`).join("")}</div>`;
+  const bar=`<div class="db-bar vi" style="--i:3"><div><h2 class="db-sec">Cómo van ${team?"los talleres del equipo":"tus talleres"}</h2><p class="hint">Talleres creados en ${esc(R.name)}${team?" · todo el equipo":""}</p></div>${seg}</div>`;
+  const kpis=bar+`<div class="kpi-w vi" style="--i:3"><dl class="stats db-kpis" aria-label="Indicadores de ${esc(R.name)}">${K.map(x=>`<div class="stat dk" data-k="st-${x.k}">
+      <dt class="stat-hd"><span class="stat-ic" aria-hidden="true">${icon(x.ic)}</span><span class="stat-l">${x.t}</span></dt>
+      <dd class="stat-bd"><div class="dk-row"><b class="stat-v">${x.v}</b><div class="cv sp" aria-hidden="true"><canvas id="sp-${x.k}"></canvas></div></div><span class="stat-c">${x.cx}</span></dd></div>`).join("")}</dl></div>`;
+  const empty=(ic,t,s)=>`<div class="ai-empty">${icon(ic)}<b>${t}</b><span>${s}</span></div>`;
+  /* Fase donde más se pierde la sala */
+  const F=(D.funnel||[]).map(f=>({...f, v:f.n?Math.round(f.d/f.n*100):null}));
+  let worst=null; F.forEach((f,i)=>{ const prev=i?F[i-1].v:100; if(f.v!=null && prev!=null){ const drop=prev-f.v; if(drop>=5 && (!worst||drop>worst.drop)) worst={...f, drop, i}; } });
+  const fWs=Math.max(0,...F.map(f=>f.ws));
+  /* Ánimo */
+  const moods=D.moods||{}, mTot=MOOD_ORDER.reduce((a,k)=>a+(moods[k]||0),0), mGood=(moods.pila||0)+(moods.bien||0);
+  const heavy=(D.moodAreas||[]).find(a=>a.n>=3 && a.neg/a.n>=0.4);
+  /* IA */
+  const aiRows=HS.ai||[], aiTot=aiRows.reduce((a,r)=>a+(r.input_tokens||0)+(r.output_tokens||0),0), aiCostV=aiCost(aiRows.reduce((a,r)=>a+(r.input_tokens||0),0), aiRows.reduce((a,r)=>a+(r.output_tokens||0),0));
+  const callout=(t)=>`<div class="db-call">${icon("bulb")}<span>${t}</span></div>`;
+  const qw=D.qwTop||[], res=D.results||[], areas=D.areas||[];
+  const hasPrev=!all && areas.some(a=>a.prev>0);
+  box.innerHTML=kpis+`
+    <div class="db-grid">
+      <section class="panel aiu-card vi" style="--i:4"><div class="ai-h"><h2>Personas escuchadas por mes</h2><p class="hint">Últimos 6 meses · pasa el cursor para ver cuántos talleres</p></div>
+        ${M.some(m=>m.people)?`<div class="cv lg"><canvas id="hsLine" aria-label="Personas escuchadas por mes"></canvas></div>`:empty("users","Aún sin participantes","Cuando la sala entre a tus talleres, aquí verás cuántas personas escuchas cada mes.")}</section>
+      <section class="panel aiu-card vi" style="--i:5"><div class="ai-h"><h2>¿En qué fase se pierde la sala?</h2><p class="hint">% que tocó «Terminé» en cada fase${fWs?` · ${per(fWs,"taller","talleres")}`:""}</p></div>
+        ${F.some(f=>f.n)?`<div class="cv lg"><canvas id="hsFunnel" aria-label="Participación por fase"></canvas></div>
+          ${callout(worst?`<b>${esc(phaseName(worst.ph))} es donde más se pierde (−${worst.drop} pts).</b> ${worst.ph==="quickwins"?"Prueba con menos mejoras por calificar o dale más minutos.":worst.ph==="ideas"?"Deja más tiempo para Ideas o pide menos retos.":worst.ph==="pains"?"Da un ejemplo de dolor concreto antes de abrir la fase.":"Avisa cuánto falta y espera a que más personas toquen «Terminé»."}`:"<b>La sala sigue el ritmo:</b> ninguna fase pierde más de 5 puntos.")}`
+          :empty("chart","Todavía sin fases terminadas","Se llena cuando un taller pasa de una fase a la siguiente.")}</section>
+      <section class="panel aiu-card vi" style="--i:6"><div class="ai-h"><h2>Ánimo al llegar</h2><p class="hint">${mTot?`${per(mTot,"check-in","check-ins")} de ${esc(R.name)}`:"Respuestas del check-in"}</p></div>
+        ${mTot?`<div class="dw"><div class="cv donut"><canvas id="hsMood" aria-label="Ánimo al llegar"></canvas><div class="cv-center"><b class="num">${Math.round(mGood/mTot*100)}%</b><small>llegó bien o con<br>toda la pila</small></div></div><ul class="lgd" id="hsMoodLg"></ul></div>
+          ${heavy?callout(`<b>${esc(heavy.area)} llega más cargado:</b> ${Math.round(heavy.neg/heavy.n*100)}% saturado o rebasado. Abre con 2 minutos de contexto antes de Dolores.`):""}`
+          :empty("smile","Sin check-ins en este periodo","Cada persona elige cómo llega al entrar al taller.")}</section>
+      <section class="panel aiu-card vi" style="--i:7"><div class="ai-h"><h2>Dónde duele más</h2><p class="hint">Dolores por área de quien los escribió${hasPrev?` · ${esc(R.vs)}`:""}</p></div>
+        ${areas.some(a=>a.cur)?`<div class="cv lg"><canvas id="hsAreas" aria-label="Dolores por área"></canvas></div>${hasPrev?`<ul class="lgd row"><li><i style="background:var(--dv1)"></i>${esc(R.name.charAt(0).toUpperCase()+R.name.slice(1))}</li><li><i class="dash" style="border-color:var(--dv2)"></i>Periodo anterior</li></ul>`:""}`
+          :empty("flame","Sin dolores en este periodo","Aquí verás qué áreas reportan más problemas.")}</section>
+      <section class="panel aiu-card vi" style="--i:8"><div class="ai-h"><h2>Mejoras rápidas con más respaldo</h2><p class="hint">Índice 0–100: 100 = toda la sala dijo que ayuda «Mucho»</p></div>
+        ${qw.length?`<div class="rings">${qw.map((q,i)=>`<div class="ring"><div class="cv"><canvas id="hsRing${i}" aria-label="${esc(q.text)}: índice ${q.idx}"></canvas><div class="cv-center"><b class="num">${q.idx}</b></div></div><p>${esc(q.text)}<small>${esc(q.ws)} · ${per(q.n,"respuesta","respuestas")}</small></p></div>`).join("")}</div>`
+          :empty("target","Sin mejoras calificadas","Cuando la sala califique mejoras rápidas en Validación, aquí verás las de más respaldo.")}</section>
+      <section class="panel aiu-card vi" style="--i:9"><div class="ai-h db-h"><div><h2>Uso de IA</h2><p class="hint">Tokens por tipo de uso · ${esc(R.name)}</p></div><button type="button" class="rail-go" data-view-go="ai">Ver detalle${icon("arrowright")}</button></div>
+        ${aiTot?`<div class="dw"><div class="cv donut"><canvas id="hsAi" aria-label="Tokens por tipo de uso"></canvas><div class="cv-center"><b class="num">${fmtTok(aiTot)}</b><small>tokens · ${fmtUSD(aiCostV)}</small></div></div><ul class="lgd" id="hsAiLg"></ul></div>`
+          :empty("sparkle","Sin uso de IA en este periodo","Se registra cada propuesta que pides a la IA al armar un taller.")}</section>
+    </div>
+    <section class="panel vi" style="--i:10"><div class="ai-h db-h"><div><h2>Últimos resultados</h2><p class="hint">Lo más votado de cada taller que llegó a Resultados</p></div><button type="button" class="rail-go" data-view-go="${team?"all":"mine"}">Ver todos${icon("arrowright")}</button></div>
+      ${res.length?`<ul class="dr-list">${res.map(r=>{ const share=r.pts?Math.round(r.top_pts/r.pts*100):0, cons=r.voters?r.top_voters/r.voters:0, mineR=r.owner_id===ME.uid;
+          const head=r.top_text?`«${esc(String(r.top_text).length>90?String(r.top_text).slice(0,88)+"…":r.top_text)}» se llevó el ${share}% de los votos`:`${per(r.cards,"dolor","dolores")} y ${per(r.ideas,"idea","ideas")}`;
+          return `<li><span class="dr-ic" aria-hidden="true">${icon("bulb")}</span><div class="dr-t"><b>${head}</b><small>${esc(join(r.name, mineR?"":staffName(r.owner_id), timeAgo(r.at), per(r.participants,"persona","personas"), r.voters?`consenso ${cons>=0.6?"alto":cons>=0.35?"medio":"bajo"}`:""))}</small></div>
+            <button type="button" class="rail-go" data-open="${esc(r.code)}" aria-label="Ver resultados de ${esc(r.name)}">Resultados${icon("arrowright")}</button></li>`; }).join("")}</ul>`
+        :empty("flag","Aún sin resultados","Cuando un taller llegue a Resultados, aquí verás lo más votado.")}
+    </section>`;
+  $$("#dashBody [data-open]").forEach(b=>b.onclick=()=>openSession(b.dataset.open,b));
+  $$("[data-hper]").forEach(b=>b.onclick=()=>hsSetPeriod(b.dataset.hper));
+  $$("#dashBody [data-view-go]").forEach(b=>b.onclick=()=>navView(b.dataset.viewGo));
+  requestAnimationFrame(()=>hsCharts(D));
+}
+/* Gráficas del tablero. Se vuelven a pintar al cambiar el tema o el periodo */
+function hsCharts(D){
+  HS.charts.splice(0).forEach(c=>{ try{ c.destroy(); }catch(e){} });
+  if(!D || typeof Chart==="undefined" || AH.view!=="home") return;
+  const T=chartTheme(), cs=getComputedStyle(document.documentElement), ac=cs.getPropertyValue("--accent").trim()||T.c[0], ok=cs.getPropertyValue("--ok").trim(), danger=cs.getPropertyValue("--danger").trim(), ink2=cs.getPropertyValue("--ink-2").trim();
+  const mv=[1,2,3,4,5].map(i=>cs.getPropertyValue("--mv"+i).trim());
+  const mk=(id,cfg)=>{ const el=document.getElementById(id); if(!el) return null; const ch=new Chart(el,cfg); HS.charts.push(ch); return ch; };
+  const M=(D.months||[]).slice(-6), ml=M.map(m=>{ const [y,mo]=m.m.split("-").map(Number); return new Date(y,mo-1,1); });
+  const sc=(o={})=>({x:{grid:{display:false},border:{color:T.line},ticks:{color:T.ink3,...(o.xt||{})}},y:{beginAtZero:true,grid:{color:T.grid},border:{display:false},ticks:{color:T.ink3,maxTicksLimit:5,precision:0,...(o.yt||{})},...(o.y||{})}});
+  const tip=(cb,o={})=>({...T.tip,displayColors:o.colors!==false,callbacks:cb});
+  /* Minigráficas de los indicadores */
+  [["ws","sessions"],["ppl","people"],["fin",null],["ret","cards"]].forEach(([k,f])=>{
+    const data=f?M.map(m=>m[f]):M.map(m=>m.elig?Math.round(m.done/m.elig*100):null), L={ws:["taller","talleres"],ppl:["persona","personas"],ret:["dolor","dolores"]}[k];
+    mk("sp-"+k,{type:"line",data:{labels:ml.map(d=>monthLabel(d)),datasets:[{data,borderColor:ac,backgroundColor:ac,borderWidth:2,pointRadius:c=>c.dataIndex===data.length-1?3:0,pointHoverRadius:4,tension:.35,spanGaps:true}]},
+      options:{...T.base,layout:{padding:4},scales:{x:{display:false},y:{display:false,beginAtZero:true}},interaction:{mode:"index",intersect:false},
+        plugins:{...T.plugins,tooltip:tip({title:i=>i[0].label,label:i=>i.raw==null?"Sin talleres que llegaran a Ideas":L?per(i.raw,L[0],L[1]):`${i.raw}% terminó todo`},{colors:false})}}});
+  });
+  /* Personas por mes */
+  mk("hsLine",{type:"line",data:{labels:ml.map(d=>monthLabel(d,true)),datasets:[{label:"Personas",data:M.map(m=>m.people),borderColor:ac,borderWidth:2,pointRadius:4,pointHoverRadius:6,pointBackgroundColor:ac,pointBorderColor:T.card,pointBorderWidth:2,tension:.35,fill:true,
+      backgroundColor:ctx=>{ const a=ctx.chart.chartArea; if(!a) return "transparent"; const g=ctx.chart.ctx.createLinearGradient(0,a.top,0,a.bottom); g.addColorStop(0,hexA(ac,.25)); g.addColorStop(1,hexA(ac,0)); return g; }}]},
+    options:{...T.base,interaction:{mode:"index",intersect:false},scales:sc(),
+      plugins:{...T.plugins,tooltip:tip({title:i=>`${monthLabel(ml[i[0].dataIndex])} ${ml[i[0].dataIndex].getFullYear()}`,label:i=>`${fmtN(i.raw)} personas`,
+        afterLabel:i=>{ const w=M[i.dataIndex].sessions; return w?`${w} ${w===1?"taller":"talleres"} · ${Math.round(i.raw/w)} por taller`:"Sin talleres"; }},{colors:false})}},
+    plugins:[{id:"cross",afterDraw(c){ const a=c.tooltip&&c.tooltip.getActiveElements(); if(!a||!a.length) return; const x=a[0].element.x, g=c.ctx; g.save(); g.strokeStyle=T.line; g.lineWidth=1; g.setLineDash([3,3]); g.beginPath(); g.moveTo(x,c.chartArea.top); g.lineTo(x,c.chartArea.bottom); g.stroke(); g.restore(); }}]});
+  /* Fases */
+  const F=(D.funnel||[]).map(f=>({...f, v:f.n?Math.round(f.d/f.n*100):null}));
+  let wi=-1, wd=4; F.forEach((f,i)=>{ const pv=i?F[i-1].v:100; if(f.v!=null&&pv!=null&&pv-f.v>wd){ wd=pv-f.v; wi=i; } });
+  mk("hsFunnel",{type:"bar",data:{labels:F.map(f=>phaseName(f.ph)),datasets:[{data:F.map(f=>f.v),backgroundColor:F.map((f,i)=>i===wi?danger:hexA(ac,.75)),hoverBackgroundColor:F.map((f,i)=>i===wi?danger:ac),borderRadius:{topLeft:4,topRight:4},borderSkipped:"bottom",maxBarThickness:44,categoryPercentage:.7}]},
+    options:{...T.base,layout:{padding:{top:20}},scales:sc({y:{max:100},yt:{callback:v=>v+"%"}}),
+      plugins:{...T.plugins,tooltip:tip({label:i=>{ const f=F[i.dataIndex]; return f.v==null?"Sin datos":`${f.v}% · ${fmtN(f.d)} de ${fmtN(f.n)} tocaron «Terminé»`; },
+        afterLabel:i=>{ const f=F[i.dataIndex], pv=i.dataIndex?F[i.dataIndex-1]:null; return [pv&&pv.v!=null&&f.v!=null?`${f.v-pv.v>0?"+":""}${f.v-pv.v} pts vs. ${phaseName(pv.ph)}`:"", `${f.ws} ${f.ws===1?"taller":"talleres"}`].filter(Boolean); }},{colors:false})}},
+    plugins:[{id:"vals",afterDatasetsDraw(c){ const g=c.ctx, m=c.getDatasetMeta(0); g.save(); g.font="700 11px Montserrat, system-ui, sans-serif"; g.textAlign="center";
+      m.data.forEach((bar,i)=>{ const f=F[i]; if(f.v==null) return; g.fillStyle=i===wi?danger:ink2; g.fillText(i===wi?`${f.v}% ▼${wd}`:`${f.v}%`,bar.x,bar.y-6); }); g.restore(); }}]});
+  /* Ánimo: paleta divergente (de con toda la pila a rebasado) */
+  const moods=D.moods||{}, mt=MOOD_ORDER.reduce((a,k)=>a+(moods[k]||0),0)||1;
+  if(mk("hsMood",{type:"doughnut",data:{labels:MOOD_ORDER.map(k=>(MOODS.find(m=>m.v===k)||{t:k}).t),datasets:[{data:MOOD_ORDER.map(k=>moods[k]||0),backgroundColor:mv,borderColor:T.card,borderWidth:2,hoverOffset:6}]},
+      options:{...T.base,cutout:"68%",plugins:{...T.plugins,tooltip:tip({title:i=>i[0].label,label:i=>`${per(i.raw,"persona","personas")} · ${Math.round(i.raw/mt*100)}%`})}}})){
+    const lg=$("#hsMoodLg"); if(lg) lg.innerHTML=MOOD_ORDER.map((k,i)=>`<li><i style="background:${mv[i]}"></i><span>${esc((MOODS.find(m=>m.v===k)||{t:k}).t)}</span><b class="num">${Math.round((moods[k]||0)/mt*100)}%</b></li>`).join(""); }
+  /* Dolores por área: radar con 3 o más áreas; con menos, barras */
+  const A=(D.areas||[]).filter(a=>a.cur||a.prev).slice(0,8), cut=t=>t.length>18?t.slice(0,17)+"…":t, R=hsRange(HS.period), prevOn=HS.period!=="all"&&A.some(a=>a.prev>0);
+  const dsA=[{label:R.name.charAt(0).toUpperCase()+R.name.slice(1),data:A.map(a=>a.cur),borderColor:T.c[0],backgroundColor:hexA(T.c[0],.2),pointBackgroundColor:T.c[0],pointBorderColor:T.card,borderWidth:2,pointRadius:3}]
+    .concat(prevOn?[{label:"Periodo anterior",data:A.map(a=>a.prev),borderColor:T.c[1],backgroundColor:hexA(T.c[1],.08),pointBackgroundColor:T.c[1],pointBorderColor:T.card,borderWidth:2,borderDash:[5,4],pointRadius:3}]:[]);
+  if(A.length>=3) mk("hsAreas",{type:"radar",data:{labels:A.map(a=>cut(a.area)),datasets:dsA},
+      options:{...T.base,interaction:{mode:"index",intersect:false},scales:{r:{beginAtZero:true,angleLines:{color:T.grid},grid:{color:T.grid},pointLabels:{color:ink2,font:{size:11,weight:"600"}},ticks:{display:false,precision:0}}},
+        plugins:{...T.plugins,tooltip:tip({title:i=>A[i[0].dataIndex].area,label:i=>`${i.dataset.label}: ${per(i.raw,"dolor","dolores")}`})}}});
+  else mk("hsAreas",{type:"bar",data:{labels:A.map(a=>cut(a.area)),datasets:dsA.map(x=>({...x,backgroundColor:x.borderColor,borderDash:undefined,maxBarThickness:28,borderRadius:{topRight:4,bottomRight:4}}))},
+      options:{...T.base,indexAxis:"y",interaction:{mode:"index",intersect:false},scales:{x:{beginAtZero:true,grid:{color:T.grid},border:{display:false},ticks:{color:T.ink3,precision:0}},y:{grid:{display:false},border:{color:T.line},ticks:{color:ink2,font:{weight:"600"}}}},
+        plugins:{...T.plugins,tooltip:tip({title:i=>A[i[0].dataIndex].area,label:i=>`${i.dataset.label}: ${per(i.raw,"dolor","dolores")}`})}}});
+  /* Anillos de mejoras rápidas */
+  (D.qwTop||[]).forEach((q,i)=>mk("hsRing"+i,{type:"doughnut",data:{labels:["Índice","Resto"],datasets:[{data:[q.idx,100-q.idx],backgroundColor:[q.idx>=70?ok:ac,T.grid],borderWidth:0,borderRadius:q.idx>0&&q.idx<100?[6,0]:0,hoverOffset:0}]},
+    options:{...T.base,cutout:"76%",plugins:{...T.plugins,tooltip:tip({title:()=>q.text,label:()=>`Índice ${q.idx} de 100`,afterLabel:()=>`${q.top} de ${q.n} dijeron «Mucho» · ${q.ws}`},{colors:false})}}}));
+  /* IA por tipo */
+  const g={}; (HS.ai||[]).forEach(r=>{ const k=AI_KIND_T[r.kind]||r.kind||"Propuesta nueva"; g[k]=(g[k]||0)+(r.input_tokens||0)+(r.output_tokens||0); });
+  const gl=Object.entries(g).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]), gt=gl.reduce((a,[,v])=>a+v,0)||1;
+  if(mk("hsAi",{type:"doughnut",data:{labels:gl.map(x=>x[0]),datasets:[{data:gl.map(x=>x[1]),backgroundColor:T.c.slice(0,gl.length),borderColor:T.card,borderWidth:2,hoverOffset:6}]},
+      options:{...T.base,cutout:"68%",plugins:{...T.plugins,tooltip:tip({title:i=>i[0].label,label:i=>`${fmtTok(i.raw)} tokens · ${Math.round(i.raw/gt*100)}%`})}}})){
+    const lg=$("#hsAiLg"); if(lg) lg.innerHTML=gl.map((x,i)=>`<li><i style="background:${T.c[i]}"></i><span>${esc(x[0])}</span><b class="num">${fmtTok(x[1])}</b></li>`).join(""); }
+}
+new MutationObserver(()=>{ if(AH.view==="home" && $("#dashBody") && HS.data && !HS.err) hsCharts(HS.data); }).observe(document.documentElement,{attributes:true,attributeFilter:["class"]});
 
 /* ---------- Mis talleres ---------- */
 async function mineView(){
@@ -7852,7 +8157,7 @@ const TOUR_STEPS={
   home:[
     {n:1, sel:"#hCreate", t:"Tu taller en 3 pasos", d:"Cuentas el contexto, la IA propone el taller y tú lo revisas. Al crearlo obtienes un QR para que la sala entre.", ok:"Siguiente"},
     {n:2, sel:"#wtBox .nt-empty", t:"Aquí vivirán tus talleres", d:"Aún no tienes ninguno. Lo que escribas se guarda como borrador; nada se publica hasta que lo crees.", ok:"Crear mi primer taller", go:"create"},
-    {n:2, sel:"#wtBox", skipIf:"#wtBox .nt-empty", t:"Aquí viven tus talleres", d:"Borradores, por iniciar, en curso y finalizados. Con ⋯ abres, duplicas o eliminas cada uno.", ok:"Entendido"}],
+    {n:2, sel:"#wtBox", alt:'.ah-tab[data-view="mine"]', skipIf:"#wtBox .nt-empty", t:"Aquí viven tus talleres", d:"En «Mis talleres» están tus borradores, por iniciar, en curso y finalizados. Con ⋯ abres, duplicas o eliminas cada uno.", ok:"Entendido"}],
   brief:[
     {n:3, sel:"#bf-dol", t:"Problemas concretos, mejor propuesta",
      d:()=>AH.ai===false ? "Escribe para quién es y qué proceso revisarán. Hoy armarás el taller a mano: te guiamos sección por sección."
