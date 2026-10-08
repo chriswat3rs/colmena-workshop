@@ -3443,6 +3443,172 @@ html.hc .wt-f{border-color:transparent}
 html.dark .ah-team .role-tag.admin{background:var(--band-2)}
 .ah-team .tm-who b{font-size:.9375rem}
 @media (max-width:1023px){ .ah-team>.pkpis{margin-top:-3.25rem} }@media (max-width:1151px){:where(html[data-ts="l"]) .ah-team>.pkpis{margin-top:-3.25rem}}@media (max-width:1279px){:where(html[data-ts="xl"]) .ah-team>.pkpis{margin-top:-3.25rem}}
+
+/* ============================================================
+   v1.25 · Participante «Panal»: portada azul marino por actividad con su dibujo y la sala en vivo (panal anónimo),
+   tarjeta de espera al tocar «Terminé», portada animada cuando quien facilita abre la siguiente actividad
+   y aviso suave a quien va atrás. Botón principal en miel; selección en azul marino.
+   ============================================================ */
+.p-band,.p-wait,.psw-card{position:relative;overflow:hidden;isolation:isolate;color:#fff;background:radial-gradient(120% 140% at 90% 0%,var(--band-2) 0%,var(--band) 60%)}
+.p-band::before,.p-wait::before,.psw-card::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97' viewBox='0 0 56 97'%3E%3Cpath d='M28 0 56 16v32L28 64 0 48V16zM28 64v33M0 16-28 0M56 16 84 0' fill='none' stroke='white' stroke-opacity='.06' stroke-width='1.2'/%3E%3C/svg%3E");background-size:42px 73px;-webkit-mask-image:linear-gradient(200deg,#000 0%,transparent 70%);mask-image:linear-gradient(200deg,#000 0%,transparent 70%)}
+.p-band{border-radius:20px;padding:1rem 1.125rem 1rem;margin:0 0 1.125rem}
+.p-band .pb-art{position:absolute;top:.5rem;right:.25rem;width:6rem;max-width:none;height:auto;z-index:0}
+.pbd-k{position:relative;display:flex;align-items:center;gap:.5rem;min-height:1.75rem;padding-right:5.75rem;font-size:.75rem;font-weight:700;color:var(--on-band-2)}
+.p-band .pb-n{width:1.75rem;height:1.625rem;font-size:.8125rem}
+.pbd-t{position:relative;margin:.625rem 0 0;padding-right:5.25rem;font-family:var(--pn-display);font-size:1.4375rem;font-weight:800;line-height:1.12;letter-spacing:-.015em;color:#fff;text-wrap:balance}
+.pbd-d{position:relative;margin:.625rem 0 0;font-size:.875rem;line-height:1.5;color:var(--on-band-2)}
+.p-band.tall{padding:1.25rem 1.25rem 1.375rem}
+.p-band.tall .pb-art{position:relative;top:auto;right:auto;display:block;width:9.5rem;margin:-.25rem 0 .375rem -.375rem}
+.p-band.tall .pbd-k,.p-band.tall .pbd-t{padding-right:0}
+.p-band.tall .pbd-t{font-size:1.75rem}
+.p-band.me-in .pb-art{width:6.5rem}
+/* La sala en vivo */
+.p-room{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;margin-top:.875rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.14)}
+.p-room .p-comb{width:100%;height:auto}
+.p-room-t{margin:0;display:flex;align-items:baseline;gap:.5rem;font-size:.8125rem;font-weight:700;color:var(--on-band)}
+.p-room.big{align-items:center;text-align:center;margin-top:1rem;padding:1rem .25rem .25rem}
+.p-room.big .p-room-t{flex-direction:column;align-items:center;gap:.25rem;font-size:.875rem;color:var(--on-band-2)}
+.p-room-n{display:block;font-family:var(--pn-display);font-size:2.25rem;font-weight:800;line-height:1;color:#fff}
+.p-room-n small{font-family:var(--sans);font-size:.9375rem;font-weight:700;color:var(--on-band-2)}
+/* Terminé = tarjeta de espera */
+.p-wait{border-radius:20px;padding:1.125rem;margin:0 0 1.125rem}
+.pw-h{position:relative;display:flex;align-items:center;gap:.75rem}
+.pw-ok{display:grid;place-items:center;flex:none;width:2.75rem;height:2.5rem;background:var(--miel);color:var(--on-miel)}
+.pw-ok svg{width:1.25rem;height:1.25rem;stroke-width:3}
+.pw-k{margin:0;font-size:.75rem;font-weight:700;color:var(--miel)}
+.pw-h h2{margin:.125rem 0 0;font-family:var(--pn-display);font-size:1.3125rem;font-weight:800;line-height:1.15;color:#fff}
+.pw-bee{margin-left:auto;flex:none;width:2.5rem;height:2.1875rem;overflow:visible;animation:pnbob 1.4s ease-in-out infinite}
+.pw-sub{position:relative;margin:.75rem 0 0;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;font-size:.875rem;color:var(--on-band-2)}
+.pw-sub b{color:#fff}
+.pw-next{position:relative;margin:.875rem 0 0;font-size:.8125rem;line-height:1.5;color:var(--on-band-2)}
+.pw-next b{color:var(--miel)}
+.p-wait .done-act{position:relative}
+.p-wait .btn-line{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.26);color:#fff}
+.p-wait :focus-visible,.p-band :focus-visible,.psw-card :focus-visible{outline:3px solid var(--miel)!important;outline-offset:3px}
+/* Barra superior: cuántas personas ya terminaron y avance del taller en miel */
+.pb-line{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.pb-line .pb-t{min-width:0}
+.pb-roomc{flex:none;display:inline-flex;align-items:center;gap:.3125rem;margin-top:.5rem;padding:.125rem .5625rem;border-radius:99px;background:var(--miel-soft);color:var(--miel-ink);font-size:.75rem;font-weight:700;white-space:nowrap}
+.pb-roomc i{display:block;width:.6875rem;height:.625rem;background:var(--miel)}
+.pb-roomc b{font-family:var(--pn-display);font-weight:800;font-size:.875rem}
+.pb-roomc.all{background:var(--ok-soft);color:var(--ok-ink)}
+.pb-roomc.all i{background:var(--ok)}
+.pb-roomc[hidden]{display:none}
+.pb-seg i{height:.375rem;border-radius:99px}
+.pb-seg.done i{background:var(--miel)}
+.pb-seg.cur i{background:var(--band);background-image:none;animation:none}
+html.dark .pb-seg.cur i{background:var(--primary)}
+.pb-seg.cur em{color:var(--ink)}
+/* Botón principal en miel; selección en azul marino */
+.p-shell .btn-primary,.p-switch .btn-primary,.p-nudge .btn-primary{background:var(--miel);color:var(--on-miel);box-shadow:0 6px 18px rgba(245,179,48,.3)}
+.p-shell .btn-primary:hover,.p-switch .btn-primary:hover,.p-nudge .btn-primary:hover{background:var(--miel-hi)}
+.p-shell .btn-primary:disabled{opacity:1;background:var(--fill-3);color:var(--ink-3);box-shadow:none}
+.p-shell .chip.on,.p-shell .sevpick button.on{background:var(--band);border-color:var(--band);color:#fff}
+.p-shell .sevpick button.on b{color:#fff}
+html.dark .p-shell .chip.on,html.dark .p-shell .sevpick button.on{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+html.dark .p-shell .sevpick button.on b{color:var(--on-primary)}
+.p-shell .chip.chip-all{color:var(--ink-2)}
+.p-shell .mood-opt.on{border-color:var(--band);background:var(--miel-soft);box-shadow:0 0 0 2px var(--band) inset}
+html.dark .p-shell .mood-opt.on{border-color:var(--primary);box-shadow:0 0 0 2px var(--primary) inset}
+.p-shell .honeycell.full,.p-shell .vhex{background:var(--miel)}
+.p-shell .votecard.voted{border-color:var(--miel);box-shadow:0 0 0 1px var(--miel)}
+.p-shell .support.on{background:var(--miel-soft);border-color:var(--miel-deep);color:var(--miel-ink)}
+.p-shell .p-title,.p-shell .sec-title,.sheet-card h3{font-family:var(--pn-display);font-weight:800;letter-spacing:-.01em}
+.p-shell .mycard,.p-shell .votecard,.p-shell .qwcard,.p-shell .ideacard,.p-shell .mood-opt{border-radius:16px}
+.p-shell .reto{border-radius:16px;border:0;background:var(--band);color:#fff}
+.p-shell .reto .rk{color:var(--miel)}
+.p-shell .reto .tag{background:rgba(255,255,255,.14);color:#fff}
+html.dark .p-shell .reto{background:var(--band-2)}
+/* Bienvenida, sala de espera y proceso */
+.p-steps{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.p-steps li{display:flex;align-items:center;gap:.75rem;padding:.625rem .75rem;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.p-steps .hexs{display:grid;place-items:center;flex:none;width:1.875rem;height:1.75rem;background:var(--miel-soft);color:var(--miel-ink);font-family:var(--pn-display);font-weight:800;font-size:.875rem}
+.p-steps b{font-size:.9375rem;font-weight:700}
+.p-me{display:flex;align-items:center;gap:.75rem;padding:.75rem .875rem;border-radius:16px;background:var(--card);border:1px solid var(--line);margin:0 0 1.25rem}
+.p-me b{display:block;font-size:.9375rem;font-weight:700}
+.p-me span{display:block;font-size:.8125rem;color:var(--ink-3)}
+.pm-list li.mine{border-color:var(--miel);background:var(--miel-soft)}
+.pm-list li.mine .pm-n{background:var(--miel);color:var(--on-miel);border-radius:0;clip-path:var(--pn-hex)}
+.pm-you{background:var(--card);color:var(--miel-ink)}
+/* Portada de la actividad nueva */
+.p-switch{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;padding:.75rem;background:rgb(var(--scrim) / .55)}
+.psw-card{width:100%;max-width:30rem;border-radius:24px;padding:1.25rem 1.375rem calc(1.375rem + env(safe-area-inset-bottom));text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.psw-card .pb-art{display:block;width:12.5rem;max-width:72%;height:auto;margin:0 auto .375rem}
+.psw-k{margin:0;font-size:.8125rem;font-weight:800;color:var(--miel)}
+.psw-card h2{margin:.375rem 0 0;font-family:var(--pn-display);font-size:2.125rem;font-weight:800;line-height:1.05;letter-spacing:-.02em;color:#fff}
+.psw-d{margin:.625rem auto 0;max-width:22rem;font-size:.9375rem;line-height:1.5;color:var(--on-band-2)}
+.psw-who{margin:.75rem 0 1.125rem;font-size:.8125rem;color:var(--on-band-3)}
+.psw-bar{position:absolute;left:0;bottom:0;width:100%;height:3px;background:var(--miel);transform-origin:left;animation:pswbar 6.5s linear forwards}
+@keyframes pswbar{to{transform:scaleX(0)}}
+html.rm .psw-bar{display:none}
+/* Aviso suave a quien va atrás */
+.p-nudge .ng-h{display:flex;justify-content:center;margin:0 0 .75rem}
+.p-nudge .p-comb{width:100%}
+.p-nudge .pc-hx{fill:var(--fill);stroke:var(--line-2)}
+.p-nudge .pc-cell.on .pc-hx{stroke:var(--miel-deep)}
+@media (prefers-reduced-motion:reduce){ .pw-bee,.psw-bar{animation:none} }
+
+/* ============================================================
+   v1.24 · Inicio «colmena en vivo»: cada sala abierta es una celda que se llena de miel con quienes ya terminaron
+   ============================================================ */
+.pb-home.has-hive{grid-template-columns:minmax(0,1fr) auto;align-items:center}
+.hv-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:.625rem;min-width:0}
+.hv-wrap.empty{align-items:center;max-width:16rem;text-align:center}
+.hv-wrap.empty .pb-art{max-width:12rem;justify-self:center}
+.hv{--hw:10.5rem;display:flex;align-items:flex-start}
+.hv-cell{--f:0%;position:relative;flex:none;display:block;width:var(--hw);height:calc(var(--hw)*.866);padding:0;border:0;cursor:pointer;clip-path:var(--pn-hex);background:rgba(255,255,255,.3);color:#fff;font:inherit;transition:transform .25s var(--pn-spring),background-color .2s}
+.hv-cell+.hv-cell{margin-left:calc(var(--hw)*-.25 + .375rem)}
+.hv-cell:nth-child(even){margin-top:calc(var(--hw)*.433 + .1875rem)}
+.hv-cell.mine{background:var(--miel)}
+.hv-cell:hover{transform:translateY(-3px) scale(1.03)}
+.hv-cell:focus-visible{outline:none!important;background:#fff}
+.hv-body{position:absolute;inset:2px;display:block;overflow:hidden;clip-path:var(--pn-hex);background:#13295A}
+html.dark .hv-body{background:#1B3268}
+.hv-fill{position:absolute;left:0;right:0;bottom:0;height:var(--f);background:linear-gradient(180deg,rgba(245,179,48,.42),rgba(245,179,48,.22));transition:height 1.1s var(--pn-out)}
+.hv-in{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;height:100%;padding:0 1.375rem;text-align:center}
+.hv-ph{display:inline-flex;align-items:center;gap:.3125rem;font-size:.6875rem;font-weight:800;letter-spacing:.02em;color:var(--miel)}
+.hv-ph i{display:block;width:.375rem;height:.375rem;border-radius:50%;background:#4CC38D;animation:pnblink 1.6s ease-in-out infinite}
+.hv-n{max-width:100%;font-family:var(--pn-display);font-size:.875rem;font-weight:800;line-height:1.2;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hv-c{font-size:.71875rem;font-weight:600;color:var(--on-band-2)}
+.hv-c b{font-family:var(--pn-display);font-weight:800;font-size:.9375rem;color:#fff}
+.hv-o{font-size:.625rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--on-band-3)}
+.hv-cell.mine .hv-o{color:var(--miel)}
+.hv-cell.more{background:rgba(255,255,255,.2)}
+.hv-cell.more .hv-body{background:rgba(10,26,63,.7)}
+.hv-more{font-family:var(--pn-display);font-size:1.75rem;font-weight:800;line-height:1;color:#fff}
+.hv-cap{display:flex;align-items:center;gap:.5rem;margin:0;font-size:.75rem;font-weight:600;color:var(--on-band-2)}
+.hv-cap i{display:block;flex:none;width:.6875rem;height:.625rem;background:var(--miel)}
+/* Pendientes dentro de la banda (solo si existen) */
+.hm-pend{list-style:none;margin:1.125rem 0 0;padding:0;display:flex;flex-direction:column;gap:.5rem;max-width:40rem}
+.hm-p{display:flex;align-items:center;gap:.75rem;padding:.5rem .5rem .5rem .625rem;border-radius:14px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.hm-p-ic{display:grid;place-items:center;flex:none;width:2rem;height:1.875rem;background:rgba(245,179,48,.2);color:var(--miel)}
+.hm-p-ic svg{width:1rem;height:1rem}
+.hm-p-t{display:flex;flex-direction:column;flex:1;min-width:0}
+.hm-p-t b{font-size:.8125rem;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hm-p-t small{font-size:.75rem;color:var(--on-band-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hm-p-go{flex:none;display:inline-flex;align-items:center;gap:.25rem;padding:.4375rem .75rem;border:0;border-radius:10px;background:rgba(255,255,255,.12);color:#fff;font:inherit;font-size:.78125rem;font-weight:700;cursor:pointer}
+.hm-p-go:hover{background:rgba(255,255,255,.2)}
+.hm-p-go svg{width:.875rem;height:.875rem}
+.pband .hm-more{margin-top:.5rem;font-size:.8125rem}
+/* Avisos de la cuenta (instalar, Face ID): fila propia y solo si hay alguno */
+.hm-notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:var(--gap-page)}
+.hm-notes>.rail-notes:empty{display:none}
+.hm-notes:not(:has(>.rail-notes:not(:empty))){display:none}
+@media (max-width:1180px){ .pb-home.has-hive{grid-template-columns:minmax(0,1fr)} .hv-wrap{align-items:flex-start} }@media (max-width:1328px){:where(html[data-ts="l"]) .pb-home.has-hive{grid-template-columns:minmax(0,1fr)}:where(html[data-ts="l"]) .hv-wrap{align-items:flex-start}}@media (max-width:1475px){:where(html[data-ts="xl"]) .pb-home.has-hive{grid-template-columns:minmax(0,1fr)}:where(html[data-ts="xl"]) .hv-wrap{align-items:flex-start}}
+@media (max-width:640px){
+  .hv-wrap{width:100%;align-items:stretch}
+  .hv{flex-direction:column;align-items:stretch;gap:.5rem;padding:0}
+  .hv-cell{width:100%;height:auto;margin:0!important;clip-path:none;border-radius:14px;background:rgba(255,255,255,.2)}
+  .hv-cell:hover{transform:none}
+  .hv-body{position:relative;inset:auto;margin:1.5px;clip-path:none;border-radius:12.5px}
+  .hv-fill{left:0;right:auto;width:var(--f);height:3px;box-shadow:none;background:var(--miel)}
+  .hv-in{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:baseline;gap:.125rem .625rem;padding:.75rem .875rem .875rem;text-align:left}
+  .hv-n{flex:1 1 100%;-webkit-line-clamp:1;font-size:.9375rem}
+  .hv-ph{order:-1;flex:1 1 100%}
+  .hv-o{margin-left:auto}
+  .hv-cap{font-size:.71875rem}
+  .hm-p-t small{white-space:normal}
+}@media (max-width:720px){:where(html[data-ts="l"]) .hv-wrap{width:100%;align-items:stretch}:where(html[data-ts="l"]) .hv{flex-direction:column;align-items:stretch;gap:.5rem;padding:0}:where(html[data-ts="l"]) .hv-cell{width:100%;height:auto;margin:0!important;clip-path:none;border-radius:14px;background:rgba(255,255,255,.2)}:where(html[data-ts="l"]) .hv-cell:hover{transform:none}:where(html[data-ts="l"]) .hv-body{position:relative;inset:auto;margin:1.5px;clip-path:none;border-radius:12.5px}:where(html[data-ts="l"]) .hv-fill{left:0;right:auto;width:var(--f);height:3px;box-shadow:none;background:var(--miel)}:where(html[data-ts="l"]) .hv-in{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:baseline;gap:.125rem .625rem;padding:.75rem .875rem .875rem;text-align:left}:where(html[data-ts="l"]) .hv-n{flex:1 1 100%;-webkit-line-clamp:1;font-size:.9375rem}:where(html[data-ts="l"]) .hv-ph{order:-1;flex:1 1 100%}:where(html[data-ts="l"]) .hv-o{margin-left:auto}:where(html[data-ts="l"]) .hv-cap{font-size:.71875rem}:where(html[data-ts="l"]) .hm-p-t small{white-space:normal}}@media (max-width:800px){:where(html[data-ts="xl"]) .hv-wrap{width:100%;align-items:stretch}:where(html[data-ts="xl"]) .hv{flex-direction:column;align-items:stretch;gap:.5rem;padding:0}:where(html[data-ts="xl"]) .hv-cell{width:100%;height:auto;margin:0!important;clip-path:none;border-radius:14px;background:rgba(255,255,255,.2)}:where(html[data-ts="xl"]) .hv-cell:hover{transform:none}:where(html[data-ts="xl"]) .hv-body{position:relative;inset:auto;margin:1.5px;clip-path:none;border-radius:12.5px}:where(html[data-ts="xl"]) .hv-fill{left:0;right:auto;width:var(--f);height:3px;box-shadow:none;background:var(--miel)}:where(html[data-ts="xl"]) .hv-in{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:baseline;gap:.125rem .625rem;padding:.75rem .875rem .875rem;text-align:left}:where(html[data-ts="xl"]) .hv-n{flex:1 1 100%;-webkit-line-clamp:1;font-size:.9375rem}:where(html[data-ts="xl"]) .hv-ph{order:-1;flex:1 1 100%}:where(html[data-ts="xl"]) .hv-o{margin-left:auto}:where(html[data-ts="xl"]) .hv-cap{font-size:.71875rem}:where(html[data-ts="xl"]) .hm-p-t small{white-space:normal}}
 @media (prefers-reduced-motion:reduce){
   .pband *,.pkpi,.pn-wall .wcard,.pn-fc,.ts-bar,.pn-dw .donut circle,.stepper .st-w::before,.pn-sum-busy .pn-bee{animation:none!important}
   .pc-honey,.pc-hx{transition:none}
@@ -3801,7 +3967,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261008051908";
+const APP_BUILD="20261008065109";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -4718,7 +4884,7 @@ const P = { session:null, me:null, step:0,
   form:{nombre:"",apellido:"",area:"",rol:"",etapas:[],emoji:""},
   cards:[], votes:[], myCards:[], unsub:null, poll:null, sending:false,
   qw:{ratings:{}, step:0}, ideas:{targets:[], reto:0, list:[], mine:new Set()},
-  progress:null, banner:null };
+  progress:null, banner:null, nudged:new Set(), sw:null };
 
 /* Las 5 actividades del taller tal como las vive el participante (lobby, resultados y cierre no cuentan) */
 const ACTS = [
@@ -4730,6 +4896,7 @@ const ACTS = [
 ];
 const actIndex = ph => ACTS.findIndex(a=>a.id===ph);
 const facName = () => esc((P.session&&P.session.facilitator)||"quien facilita");
+const facNameCap = () => { const n=(P.session&&P.session.facilitator)||""; return n? esc(n) : "Quien facilita"; };
 function nextActOf(ph){ const i=actIndex(ph); return i>=0 && i<ACTS.length-1 ? ACTS[i+1].t : "Resultados"; }
 
 /* Barra superior: en las actividades dice «Actividad N de 5 · Nombre», con 5 segmentos y el estado */
@@ -4745,9 +4912,8 @@ function pTop(withDots, totalDots, onDot, status){
   const st=status||"curso";
   return `<div class="p-top pbar">
     <div class="pb-row">${brandLockup("xs")}<span class="pb-pill ${st}" id="pbPill">${st==="listo"?"Listo ✓":st==="espera"?"Esperando":"En curso"}</span>${themeBtnHTML("p-th")}${a11yBtnHTML()}</div>
-    <p class="pb-t">Actividad ${i+1} de ${ACTS.length} · <b>${ACTS[i].t}</b></p>
+    <div class="pb-line"><p class="pb-t">Actividad ${i+1} de ${ACTS.length} · <b>${ACTS[i].t}</b></p>${pRoomChip()}</div>
     <div class="pb-segs" aria-hidden="true">${ACTS.map((a,k)=>`<span class="pb-seg ${k<i?"done":k===i?"cur":""}"><i></i><em>${a.t}</em></span>`).join("")}</div>
-    ${P.banner===ph?`<div class="pb-new" id="pbNew"><b>${i===ACTS.length-1?"Última actividad":"Nueva actividad"}: ${ACTS[i].t}.</b> ${typeof ACTS[i].intro==="function"?ACTS[i].intro(s):ACTS[i].intro}</div>`:""}
   </div>`;
 }
 /* v1.18 · Navegación del participante con transición (adelante = desliza a la izquierda). Solo acciones de la persona:
@@ -4757,22 +4923,107 @@ function pEnter(){ if(Motion.busy() || !Motion.ok()) return; const b=$(".p-shell
   if(b) Motion.enter([b],{y:14, spring:"gentle", fade:220});
   if(c) Motion.a(c,[{translate:"0 100%"},{translate:"0 0"}],{spring:"gentle"}); }
 /* «Listo ✓» y la palomita de «Terminé»: pop con Bouncy (elementos chicos) */
-function pDonePop(){ Motion.pop($("#doneBlock .glass"),{from:.5}); Motion.pop($("#pbPill"),{from:.7, fade:false}); }
+function pDonePop(){ Motion.pop($("#doneBlock .pw-ok"),{from:.5}); Motion.pop($("#pbPill"),{from:.7, fade:false}); pnStartArt($("#doneBlock")); }
 /* Pantallas que se redibujan en el mismo lugar (votos, resultados): con llaves, sin perder foco ni scroll */
 function pMorph(html, live){ const app=$("#app"); if(live && app.firstElementChild) Motion.morph(app, html, {animate:true}); else app.innerHTML=html; if(window.fitChrome) fitChrome(); }
 function armBanner(){ const el=$("#pbNew"); if(el){ P.banner=null; setTimeout(()=>{ el.classList.add("out"); setTimeout(()=>el.remove(),400); },4500); } }
 function setPill(st){ const el=$("#pbPill"); if(!el) return; el.className="pb-pill "+st; el.textContent = st==="listo"?"Listo ✓":st==="espera"?"Esperando":"En curso"; }
 
 /* «X de N ya terminaron»: números de la base (nunca nombres), se refrescan con el sondeo */
+function roomNow(){ const pr=P.progress, ph=P.session&&P.session.phase; return pr && pr.phase===ph ? {total:+pr.total||0, listos:+pr.listos||0} : null; }
 function peersText(){
-  const pr=P.progress; if(!pr || pr.phase!==(P.session&&P.session.phase)) return "Contando a tus compañeros…";
-  const me=(P.me.done_phases||[]).includes(pr.phase);
-  if(pr.total<=1) return "Eres la única persona registrada por ahora.";
-  if(pr.listos>=pr.total) return "Todos listos. En un momento cambia la pantalla.";
-  if(me && pr.listos===1) return `Eres la primera persona en terminar; van ${pr.listos} de ${pr.total}.`;
-  return `${pr.listos} de ${pr.total} ya terminaron.`;
+  const r=roomNow(); if(!r) return "Contando a tus compañeros…";
+  const ph=P.session.phase, me=isDone(ph);
+  if(ph==="lobby") return r.total<=1? "Eres la primera persona en la sala." : `${r.total} personas en la sala`;
+  if(r.total<=1) return "Eres la única persona registrada por ahora.";
+  if(r.listos>=r.total) return "Toda la sala terminó. En un momento cambia la pantalla.";
+  const faltan=r.total-r.listos;
+  if(me) return r.listos===1? `Eres la primera persona en terminar · faltan ${faltan}` : `Esperando a ${faltan} persona${faltan===1?"":"s"}`;
+  return faltan===1? "Solo faltas tú" : `${r.listos} de ${r.total} ya terminaron`;
 }
-async function loadProgress(){ try{ const pr=await Store.phaseProgress(P.session.id); P.progress=pr?{...pr, at:Date.now()}:null; }catch(e){ return; } const el=$("#peers"); if(el) el.textContent=peersText(); }
+/* v1.25 · La sala en vivo en el celular: panal anónimo que se llena de miel cuando alguien toca «Terminé».
+   Solo usa los conteos del pulso (sin nombres ni consultas extra). Con más de 21 personas, 20 celdas de 5% cada una. */
+function pCombN(total, listos, big){
+  const n=Math.max(0,total|0); if(!n) return "";
+  const many=n>21, cells=many?20:n, onN=many? Math.round(listos/n*20) : Math.min(listos,n);
+  const cols=Math.min(big?7:10, cells), r=big?15:9.5, w=Math.sqrt(3)*r, rows=Math.ceil(cells/cols);
+  const pos=i=>{ const row=Math.floor(i/cols), col=i%cols; return {x:w/2+2+col*w+(row%2?w/2:0), y:r+2+row*r*1.5}; };
+  const W=(cols+.5)*w+4, H=r*2+(rows-1)*r*1.5+4;
+  return `<svg class="pb-comb p-comb${big?" big":""}" viewBox="0 0 ${W.toFixed(0)} ${H.toFixed(0)}" style="max-width:${(W/w*(big?2.3:1.25)).toFixed(1)}rem" aria-hidden="true">
+    <defs>${Array.from({length:cells},(_,i)=>{ const {x,y}=pos(i); return `<clipPath id="prc${i}"><polygon points="${pnHex(x,y,r-1.5)}"/></clipPath>`; }).join("")}</defs>
+    ${Array.from({length:cells},(_,i)=>{ const {x,y}=pos(i); return `<g class="pc-cell${i<onN?" on":""}" data-k="pc${i}"><polygon class="pc-hx" points="${pnHex(x,y,r-1)}"/><g clip-path="url(#prc${i})"><rect class="pc-honey" x="${(x-r).toFixed(1)}" y="${(y-r).toFixed(1)}" width="${2*r}" height="${2*r}"/></g></g>`; }).join("")}</svg>`;
+}
+function pRoomInner(big){
+  const r=roomNow(), ph=P.session&&P.session.phase;
+  if(!r||!r.total) return `<p class="p-room-t" id="peers">${peersText()}</p>`;
+  const on=ph==="lobby"? r.total : r.listos;
+  return `${pCombN(r.total, on, big)}<p class="p-room-t" id="peers">${big&&ph!=="lobby"?`<b class="p-room-n">${r.listos}<small> de ${r.total}</small></b>`:""}<span>${peersText()}</span></p>`;
+}
+const pRoom = big => `<div class="p-room${big?" big":""}" id="pRoom" aria-live="polite">${pRoomInner(big)}</div>`;
+function pRoomChip(){ const r=roomNow(); if(!r||!r.total) return `<span class="pb-roomc" id="pRoomC" hidden></span>`;
+  return `<span class="pb-roomc${r.listos>=r.total?" all":""}" id="pRoomC" aria-label="${r.listos} de ${r.total} ya terminaron"><i class="hexs" aria-hidden="true"></i><span><b>${r.listos}</b>/${r.total}</span></span>`; }
+/* Cada pulso: el panal y el contador se ponen al día sin redibujar la pantalla (lo que escribes no se toca) */
+function pRoomRefresh(){
+  const el=$("#pRoom"); if(el) Motion.morph(el, pRoomInner(el.classList.contains("big")), {animate:true});
+  const c=$("#pRoomC"); if(c){ const t=document.createElement("div"); t.innerHTML=pRoomChip(); const n=t.firstElementChild; c.className=n.className; c.hidden=n.hidden; c.innerHTML=n.innerHTML; if(n.getAttribute("aria-label")) c.setAttribute("aria-label",n.getAttribute("aria-label")); }
+  const k=$("#pwK"); if(k){ const r=roomNow(); k.textContent = r&&r.total>1&&r.listos>=r.total? "¡Toda la sala terminó!" : `Listo, ${P.me?P.me.nombre:""}`; }
+  pNudge();
+}
+/* Aviso suave a quien va atrás: una vez por actividad, cuando 7 de cada 10 ya terminaron (o solo falta esa persona) */
+const DONE_HOW={checkin:"toca «Enviar check-in»", pains:"toca «No tengo más por ahora»", votes:"usa tus votos y quedas lista", quickwins:"toca «Terminar validación»", ideas:"toca «Terminé con Ideas»"};
+function pNudge(){
+  const ph=P.session&&P.session.phase, r=roomNow();
+  if(!P.me || actIndex(ph)<0 || !r || r.total<3 || isDone(ph) || P.nudged.has(ph) || document.hidden || $(".p-switch") || $(".sheet")) return;
+  if(P.renderedPh!==ph || Date.now()-(P.phaseAt||0)<20000) return;   /* recién llegaste a la actividad: primero la portada, sin prisa */
+  const faltan=r.total-r.listos; if(r.listos/r.total<.7 && faltan>1) return;
+  P.nudged.add(ph);
+  const sheet=document.createElement("div"); sheet.className="sheet p-nudge"; sheet.innerHTML=`<div class="sheet-card" role="dialog" aria-modal="true" aria-labelledby="ngT">
+    <div class="ng-h">${pCombN(r.total, r.listos, false)}</div>
+    <h3 id="ngT">${faltan===1?"Solo faltas tú":"La sala va avanzando"}</h3>
+    <p>${faltan===1?`Ya terminaron ${r.listos} de ${r.total}.`:`${r.listos} de ${r.total} ya terminaron.`} Sin prisa: termina lo tuyo y ${DONE_HOW[ph]||"toca «Terminé»"}. ${facNameCap()} abre la siguiente actividad cuando el grupo esté listo.</p>
+    <div class="done-act"><button class="btn btn-primary btn-sm" id="ngOk">Entendido</button></div></div>`;
+  document.body.appendChild(sheet); const card=sheet.querySelector(".sheet-card");
+  Motion.show(card,{from:"bottom", back:sheet});
+  const close=()=>Motion.dismiss(card,{to:"bottom", back:sheet});
+  sheet.querySelector("#ngOk").onclick=close; sheet.addEventListener("click",e=>{ if(e.target===sheet) close(); });
+  setTimeout(()=>{ if(sheet.isConnected) sheet.querySelector("#ngOk").focus(); },60);
+}
+/* Cambio de actividad: quien facilita abre la siguiente y en cada celular aparece una portada animada (se cierra sola) */
+function pSwitch(ph, old, after){
+  const i=actIndex(ph), isRes=ph==="results"; if(i<0 && !isRes){ if(after) after(); return; }
+  const A=ACTS[i], wasOpen=old && actIndex(old)>=0 && !isDone(old);
+  const intro=isRes? "Ya no hay nada que contestar: mira lo que dijo la sala." : (typeof A.intro==="function"?A.intro(P.session):A.intro);
+  const el=document.createElement("div"); el.className="p-switch"; el.setAttribute("role","dialog"); el.setAttribute("aria-modal","true"); el.setAttribute("aria-labelledby","psT");
+  el.innerHTML=`<div class="psw-card">
+      ${pnArt(isRes?"results":ph)}
+      <p class="psw-k">${isRes?"Resultados":i===ACTS.length-1?`Última actividad · ${i+1} de ${ACTS.length}`:`Actividad ${i+1} de ${ACTS.length}`}</p>
+      <h2 id="psT">${isRes?"Lo que decidimos juntos":A.t}</h2>
+      <p class="psw-d">${intro}</p>
+      <p class="psw-who">${old? `${facNameCap()} abrió ${isRes?"los resultados":"esta actividad"}.` : "Ya estás en la sala."}${wasOpen?" Lo que alcanzaste a enviar quedó guardado.":""}</p>
+      <button type="button" class="btn btn-primary psw-go" id="pswGo">${isRes?"Ver resultados":"Empezar"}</button>
+      <i class="psw-bar" aria-hidden="true"></i>
+    </div>`;
+  document.body.appendChild(el); P.sw=el;
+  const card=el.querySelector(".psw-card"); Motion.show(card,{from:"bottom", back:el}); pnStartArt(el);
+  let shut=false; const close=()=>{ if(shut) return; shut=true; clearTimeout(tm); document.removeEventListener("keydown",key,true); Motion.dismiss(card,{to:"bottom", back:el, done:()=>{ P.sw=null; if(after) after(); }}); };
+  const key=e=>{ if(e.key==="Escape"){ e.preventDefault(); close(); } };
+  document.addEventListener("keydown",key,true);
+  el.querySelector("#pswGo").onclick=close; el.addEventListener("click",e=>{ if(e.target===el) close(); });
+  const rm=document.documentElement.classList.contains("rm");
+  const tm=setTimeout(close, rm?9000:6500);
+  setTimeout(()=>{ const b=el.querySelector("#pswGo"); if(b && el.isConnected) b.focus({preventScroll:true}); },80);
+}
+/* Portada de cada actividad: banda azul marino con su dibujo y la sala en vivo (mismo lenguaje que el panel del facilitador) */
+function pBand(o){
+  return `<section class="p-band${o.cls?" "+o.cls:""}" data-k="pband-${o.k}">
+    ${pnArt(o.art)}
+    <div class="pbd-k">${o.n!=null?`<span class="pb-n hexs">${o.n}</span>`:""}<span>${o.kicker}</span></div>
+    <h1 class="pbd-t">${o.title}</h1>${o.sub?`<p class="pbd-d">${o.sub}</p>`:""}
+    ${o.room===false?"":pRoom(false)}
+  </section>`;
+}
+const actBand = (ph, title, sub) => { const i=actIndex(ph); return pBand({k:ph, n:i+1, kicker:`Actividad ${i+1} de ${ACTS.length} · ${ACTS[i].t}`, title, sub, art:ph}); };
+async function loadProgress(){ try{ const pr=await Store.phaseProgress(P.session.id); P.progress=pr?{...pr, at:Date.now()}:null; }catch(e){ return; } pRoomRefresh(); }
 function isDone(ph){ return (P.me&&P.me.done_phases||[]).includes(ph); }
 async function setDone(ph,on){
   const cur=new Set(P.me.done_phases||[]); if(on===cur.has(ph)) return;
@@ -4781,12 +5032,14 @@ async function setDone(ph,on){
   try{ await Store.updateParticipant(P.me.id,{done_phases:arr}); }catch(e){ console.error(e); }
   loadProgress();
 }
-/* Bloque «terminé»: va al tope del contenido; lo de abajo sigue editable */
+/* v1.25 · «Terminé» = tarjeta de espera: la sala como panal en vivo, cuántas personas faltan y qué sigue. Lo de abajo sigue editable. */
 function doneBlock(o){
-  return `<section class="dn" id="doneBlock">
-    <div class="done-h">${glass("check",{size:"md",tone:"green",tint:true})}<div><h2>${o.title}</h2><p class="done-peers" id="peers">${peersText()}</p></div></div>
-    ${o.sub?`<p class="done-sub">${o.sub}</p>`:""}
-    ${o.next!==false?`<p class="done-next">Lo que sigue: <b>${o.next||nextActOf(P.session.phase)}</b>. ${facName()} abre la siguiente actividad cuando el grupo esté listo; tu pantalla cambia sola.</p>`:""}
+  const r=roomNow(), all=r&&r.total>1&&r.listos>=r.total;
+  return `<section class="p-wait" id="doneBlock" data-k="pwait">
+    <div class="pw-h"><span class="pw-ok hexs" aria-hidden="true">${icon("check")}</span><div><p class="pw-k" id="pwK">${all?"¡Toda la sala terminó!":`Listo, ${esc(P.me.nombre)}`}</p><h2>${o.title}</h2></div><svg class="pn-bee pw-bee" viewBox="-20 -18 40 32" aria-hidden="true">${pnBee(1)}</svg></div>
+    ${o.sub?`<p class="pw-sub">${o.sub}</p>`:""}
+    ${pRoom(true)}
+    ${o.next!==false?`<p class="pw-next">Lo que sigue: <b>${o.next||nextActOf(P.session.phase)}</b>. ${facNameCap()} abre la siguiente actividad cuando el grupo esté listo; tu pantalla cambia sola.</p>`:""}
     ${o.actions&&o.actions.length?`<div class="done-act">${o.actions.map(a=>`<button class="btn ${a.primary?"btn-primary":"btn-line"} btn-sm" id="${a.id}">${a.label}</button>`).join("")}</div>`:""}
   </section>`;
 }
@@ -4799,7 +5052,7 @@ function bindDraft(el, ph){ if(!el) return; const d=loadDraft(ph); if(d && !el.v
 function lostDraftSheet(oldPh){
   const names={pains:"Dolores",quickwins:"Validación",ideas:"Ideas"}; const d=loadDraft(oldPh); if(!names[oldPh] || d.trim().length<8) return;
   clearDraft(oldPh);
-  const sheet=document.createElement("div"); sheet.className="sheet"; sheet.innerHTML=`<div class="sheet-card"><h3>${facName()} cerró ${names[oldPh]}</h3>
+  const sheet=document.createElement("div"); sheet.className="sheet"; sheet.innerHTML=`<div class="sheet-card"><h3>${facNameCap()} cerró ${names[oldPh]}</h3>
     <p>Tu texto no se publicó:</p><blockquote>${esc(d)}</blockquote>
     <div class="done-act"><button class="btn btn-line btn-sm" id="shCopy">Copiar texto</button><button class="btn btn-primary btn-sm" id="shOk">Entendido</button></div></div>`;
   document.body.appendChild(sheet); Motion.show(sheet.querySelector(".sheet-card"),{from:"bottom", back:sheet});
@@ -4827,10 +5080,10 @@ function screenJoin(msg){
 function screenWelcome(){
   const s=P.session;
   $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-    <div class="p-body wait-hero">
-      ${glass("hexagon",{size:"xl",tint:true})}
-      <h1 class="p-title" style="margin:0">${esc(s.name)}</h1>
-      <p class="p-sub" style="margin:0">${actIndex(s.phase)>0||["results","closed"].includes(s.phase)?`El taller ya va en ${s.phase==="results"?"los resultados":`la actividad ${actIndex(s.phase)+1} de ${ACTS.length}`}. Regístrate en un minuto y te unes donde va.`:`Facilita ${esc(s.facilitator||"el equipo")}. Tus respuestas se guardan al instante y se ven en la pantalla de la sala.`}</p>
+    <div class="p-body">
+      ${pBand({k:"welcome", kicker:s.facilitator?`Facilita ${esc(s.facilitator)}`:"Te invitaron a un taller", title:esc(s.name), art:"lobby", room:false, cls:"tall",
+        sub: actIndex(s.phase)>0||["results","closed"].includes(s.phase)?`El taller ya va en ${s.phase==="results"?"los resultados":`la actividad ${actIndex(s.phase)+1} de ${ACTS.length}`}. Regístrate en un minuto y te unes donde va.`:`Son ${ACTS.length} actividades cortas desde tu celular. Tus respuestas se guardan al instante y se ven en la pantalla de la sala.`})}
+      <ol class="p-steps">${ACTS.map((a,k)=>`<li><span class="hexs">${k+1}</span><b>${a.t}</b></li>`).join("")}</ol>
     </div>
     <div class="p-cta"><button class="btn btn-primary" id="wgo">Comenzar</button></div>
   </div>`;
@@ -4963,6 +5216,9 @@ async function renderPhaseSafe(o){
   const ph=P.session&&P.session.phase, prev=P.renderedPh;
   try{ await renderPhase(); P.renderedPh=ph; if(o && o.enter && prev && prev!==ph) pEnter(); }
   catch(e){ console.error(e); P.renderedPh=null; toast("No se pudo cargar la actividad. Reintentando…"); }
+  pnStartArt($("#app"));
+  /* v1.25 · Portada de la actividad nueva (y después, si aplica, el aviso de texto que no se alcanzó a publicar) */
+  const w=P.pendingSwitch; if(w && w.ph===P.session.phase){ P.pendingSwitch=null; if(P.sw) P.sw.remove(); pSwitch(w.ph, w.old, w.old?()=>lostDraftSheet(w.old):null); }
 }
 async function renderPhase(){
   const s=P.session, ph=s.phase||"lobby";
@@ -4970,15 +5226,19 @@ async function renderPhase(){
   const changed = P.lastPh!==undefined && P.lastPh!==ph;
   if(changed){
     const old=P.lastPh; window.scrollTo(0,0);
-    if(actIndex(ph)>=0) P.banner=ph;
     P.qw.step=0; P.qw.review=false;
-    setTimeout(()=>lostDraftSheet(old),300);
-  }
+    if(actIndex(ph)>=0 || ph==="results") P.pendingSwitch={ph, old}; else setTimeout(()=>lostDraftSheet(old),300);
+  } else if(P.banner && P.banner===ph && P.lastPh===undefined && actIndex(ph)>=0){ P.pendingSwitch={ph, old:null}; }
+  P.banner=null;
+  if(P.lastPh!==ph) P.phaseAt=Date.now();
   P.lastPh=ph;
-  if(actIndex(ph)>=0 && !(P.progress && P.progress.phase===ph && Date.now()-(P.progress.at||0)<10000)) loadProgress();
+  if((actIndex(ph)>=0||ph==="lobby") && !(P.progress && P.progress.phase===ph && Date.now()-(P.progress.at||0)<10000)) loadProgress();
   if(ph==="lobby"){
     $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-      ${waitBlock(avatar(P.me.emoji,"xl"), "Ya estás dentro, "+esc(P.me.nombre), "Son "+ACTS.length+" actividades cortas. Cuando "+facName()+" abra la primera, tu pantalla cambia sola.")}
+      <div class="p-body">
+        ${pBand({k:"lobby", kicker:"Sala de espera", title:"Ya estás dentro, "+esc(P.me.nombre), sub:`Son ${ACTS.length} actividades cortas. Cuando ${facName()} abra la primera, tu pantalla cambia sola.`, art:"lobby", cls:"me-in"})}
+        <div class="p-me">${avatar(P.me.emoji,"lg")}<div><b>${esc(P.me.nombre)} ${esc(P.me.apellido||"")}</b><span>${esc([P.me.rol,P.me.area].filter(Boolean).join(" · "))}</span></div></div>
+      </div>
       ${processMap(s)}
     </div>`;
     return;
@@ -4991,7 +5251,7 @@ async function renderPhase(){
   if(ph==="results") return renderResults();
   /* closed */
   $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-    ${waitBlock(glass("sparkle",{size:"xl",tint:true}),"Gracias, "+esc(P.me.nombre),"La sesión terminó. Lo que aportaste ya quedó guardado y trabajaremos sobre ello. Puedes cerrar esta pestaña.")}
+    <div class="p-body">${pBand({k:"closed", kicker:"Taller cerrado", title:"Gracias, "+esc(P.me.nombre), sub:"La sesión terminó. Lo que aportaste ya quedó guardado y trabajaremos sobre ello. Puedes cerrar esta pestaña.", art:"closed", room:false, cls:"tall"})}</div>
   </div>`;
 }
 
@@ -5011,8 +5271,7 @@ function renderCheckin(){
   let mood=P.me.mood||"", expect=P.me.expectativa||"";
   $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,mood&&!P.editCheckin?"listo":"curso")}
     <div class="p-body">
-      <p class="p-kicker">Check-in</p>
-      <h1 class="p-title">${esc(s.q_checkin||"¿Cómo llegas a este taller?")}</h1>
+      ${actBand("checkin", esc(s.q_checkin||"¿Cómo llegas a este taller?"), "Un toque y, si quieres, una frase.")}
       <div class="mood-row" id="moods">${MOODS.map(m=>`<button class="mood-opt ${mood===m.v?"on":""}" data-v="${m.v}">${glass(m.ic,{tone:m.tone,tint:true})} ${m.t}</button>`).join("")}</div>
       <div class="field" style="margin-top:1.25rem"><label for="f-exp">${esc(s.q_expect||"En una frase: ¿qué esperas de este taller?")} <span class="opt">(opcional)</span></label>
         <input id="f-exp" class="input" maxlength="140" placeholder="Escríbelo en corto…" value="${esc(expect)}"></div>
@@ -5039,11 +5298,9 @@ async function renderPains(){
   const chip=t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`;
   $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,done?"listo":"curso")}
     <div class="p-body">
-      ${done?doneBlock({title:"Terminaste Dolores", sub:`Publicaste ${P.myCards.length} tarjeta${P.myCards.length===1?"":"s"}. Si recuerdas otra, agrégala abajo.`}):""}
+      ${done?doneBlock({title:"Terminaste Dolores", sub:`Publicaste ${P.myCards.length} tarjeta${P.myCards.length===1?"":"s"}. Si recuerdas otra, agrégala abajo.`}):actBand("pains", esc(s.q_pain||"¿Qué te duele de este proceso?"), "Una idea por tarjeta. Publica todas las que quieras; cuando ya no tengas más, toca «No tengo más por ahora».")}
       <div id="mine">${renderMyCards()}</div>
-      <p class="p-kicker" ${done||P.myCards.length?'style="margin-top:1.125rem"':""}>${P.myCards.length?"Otra tarjeta":"Dolores"}</p>
-      <h1 class="p-title" style="font-size:1.5rem">${esc(s.q_pain)}</h1>
-      <p class="p-sub">Una idea por tarjeta. Publica todas las que quieras; cuando ya no tengas más, toca «No tengo más por ahora».</p>
+      ${done||P.myCards.length?`<h2 class="sec-title">Otra tarjeta</h2>`:""}
       <div class="field"><label for="f-pain">Tu dolor</label>
         <textarea id="f-pain" class="input" maxlength="240" placeholder="Ej. Capturo la misma información en tres archivos distintos…"></textarea></div>
       <div class="field"><label>¿En qué parte del proceso pasa?</label>
@@ -5130,7 +5387,7 @@ async function renderVotes(){
       <span style="color:var(--ink-2);font-weight:600">${done?`${total} votos`:`${left} de ${total} votos`}</span></div>
     <div class="p-body">
       ${done?doneBlock({title:"Terminaste la votación", sub:"Puedes mover tus votos mientras la actividad siga abierta."})
-            :`<p class="p-sub" style="margin-bottom:.875rem">Reparte tus <b>${total} votos</b> entre los dolores que más te pesan a ti también. Puedes poner más de uno a la misma tarjeta; al usar el último, quedas listo.</p>`}
+            :actBand("votes", `Reparte tus ${total} votos`, "Entre los dolores que más te pesan a ti también. Puedes poner más de uno a la misma tarjeta; al usar el último, quedas listo.")}
       ${cards.length? cards.map(c=>{
         const m=my[c.id]||0;
         return `<div class="votecard ${m>0?"voted":""}" data-k="v-${esc(c.id)}">
@@ -5218,7 +5475,7 @@ async function renderQuickwins(){
     $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,isDone("quickwins")?"listo":"curso")}
       <div class="p-body">
         ${isDone("quickwins")?doneBlock({title:"Terminaste la validación", sub:qws.length?`Contestaste ${answered(allMine)} de ${allMine.length}.${answered(allMine)<allMine.length?" Puedes volver y completar las que faltan.":""}`:"", actions:qws.length?[{id:"qwReview",label:"Revisar mis respuestas"}]:[]})
-          :`<p class="p-kicker">Validación</p><h1 class="p-title" style="font-size:1.625rem">¿Qué mejora rápida propones?</h1>`}
+          :actBand("quickwins", "¿Qué mejora rápida propones?", "Propón la que más te ayudaría en tu día a día.")}
         ${proposal}
         ${!qws.length&&!isDone("quickwins")?`<div class="p-cta" style="position:static;padding:1rem 0 0"><button class="btn btn-primary" id="qwFinish">Terminar validación</button></div>`:""}
       </div></div>`;
@@ -5230,7 +5487,7 @@ async function renderQuickwins(){
   $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,isDone("quickwins")?"listo":"curso")}
     <div class="sticky-votes qw-band"><span>Paso ${P.qw.step+1} de ${steps.length} · <b>${KIND_SHORT[k]}</b></span><span class="qw-n"><b id="qwDone">${answered(list)}</b> de ${list.length}</span></div>
     <div class="p-body">
-      ${P.qw.step===0?`<p class="p-sub" style="margin:0 0 .25rem">${steps.length} paso${steps.length===1?"":"s"}: ${steps.map(x=>KIND_SHORT[x].toLowerCase()).join(", ").replace(/, ([^,]*)$/," y $1")}. Contesta desde tu experiencia; son unos minutos.</p>`:""}
+      ${actBand("quickwins", KIND_SHORT[k], P.qw.step===0?`${steps.length} paso${steps.length===1?"":"s"}: ${steps.map(x=>KIND_SHORT[x].toLowerCase()).join(", ").replace(/, ([^,]*)$/," y $1")}. Contesta desde tu experiencia; son unos minutos.`:`Paso ${P.qw.step+1} de ${steps.length}.`)}
       ${ratingSection(k, qws.filter(q=>kindOf(q)===k), et)}
     </div>
     <div class="p-cta">
@@ -5288,9 +5545,7 @@ async function renderIdeas(){
     <div class="sticky-votes" id="supBar"></div>
     <div class="p-body">
       <div id="ideasDone">${done?doneBlock({title:"Terminaste Ideas", sub:"Puedes seguir proponiendo o mover tus apoyos mientras la actividad siga abierta.", next:"Resultados"}):""}</div>
-      <p class="p-kicker">Ideas</p>
-      <h1 class="p-title" style="font-size:1.625rem">${esc(s.q_idea||"¿Cómo podríamos resolverlo?")}</h1>
-      <p class="p-sub" style="margin-bottom:.875rem">Estos son los ${T.length} dolores más votados. Elige un reto, propón ideas y apoya las que más te convenzan. Cuando termines, toca «Terminé con Ideas».</p>
+      ${done?"":actBand("ideas", esc(s.q_idea||"¿Cómo podríamos resolverlo?"), `Estos son los ${T.length} dolores más votados. Elige un reto, propón ideas y apoya las que más te convenzan. Cuando termines, toca «Terminé con Ideas».`)}
       <div class="chips chips-tall" id="retos">${T.map((c,i)=>`<button class="chip ${i===P.ideas.reto?"on":""}" data-i="${i}">Reto ${i+1}</button>`).join("")}</div>
       <div class="reto" id="retoCard"></div>
       <div class="field"><label for="f-idea">Tu idea para este reto</label>
@@ -5373,9 +5628,7 @@ async function renderResults(){
   const same=!!(P.lastResultsDraw && P.renderedPh==="results" && $(".p-shell .p-body"));
   const draw=()=>{ pMorph(`<div class="p-shell">${pTop(false)}
     <div class="p-body">
-      <p class="p-kicker">Resultados</p>
-      <h1 class="p-title">Lo que decidimos juntos</h1>
-      <p class="p-sub">Esto marca la agenda de lo que sigue. Ya no hay nada que contestar: mira la pantalla de la sala.</p>
+      ${pBand({k:"results", kicker:"Resultados", title:"Lo que decidimos juntos", sub:"Esto marca la agenda de lo que sigue. Ya no hay nada que contestar: mira la pantalla de la sala.", art:"results", room:false})}
       <h2 class="sec-title" style="margin-top:.25rem">Lo que más nos duele</h2>
       ${top.length? top.map((c,i)=>card(i+1,c.texto,`<span class="tag">${esc(c.etapa)}</span><span class="tag sev">${c.pts} voto${c.pts===1?"":"s"}</span>`)).join("") : '<p class="empty">Sin votos registrados.</p>'}
       ${topIdeas.length?`<h2 class="sec-title">Ideas con más apoyo</h2>
@@ -5427,7 +5680,7 @@ async function startParticipant(code){
     /* v1.12 · si la última vez no se pudo pintar la fase (internet inestable), se reintenta en cada pulso */
     if(P.renderedPh!==ph){ S.ideasAt=S.resultsAt=t; return renderPhaseSafe({enter:true}); }
     /* Misma actividad: solo se refresca el avance de compañeros y, en Ideas, la lista. Lo que escribes no se toca. */
-    const el=$("#peers"); if(el) el.textContent=peersText();
+    pRoomRefresh();
     if(ph==="results" && t-S.resultsAt>60000){ S.resultsAt=t; return renderPhase(); }
     if(ph==="ideas" && t-S.ideasAt>11000){ S.ideasAt=t; return refreshIdeas(); }
   };
@@ -6206,8 +6459,8 @@ function navOpen(s, src){
 /* Fila de la vista actual que corresponde al taller (para que el título vuelva a su lugar) */
 function rowTitle(code){
   if(!code) return null;
-  const rail=$(`.dn-c .rail-go[data-open="${code}"]`)||$(`.rail-it .rail-go[data-open="${code}"]`), row=$(`.wt-row[data-code="${code}"]`), all=$(`.adm-row[data-k="${code}"]`);
-  const rc=rail&&rail.closest(".rail-it,.dn-c"), r=rc&&rc.querySelector(".now-n"), t=row&&row.querySelector(".wt-nm b"), a=all&&all.querySelector(".adm-name b");
+  const hv=$(`.hv-cell[data-open="${code}"]`), rail=$(`.dn-c .rail-go[data-open="${code}"]`)||$(`.rail-it .rail-go[data-open="${code}"]`), row=$(`.wt-row[data-code="${code}"]`), all=$(`.adm-row[data-k="${code}"]`);
+  const rc=rail&&rail.closest(".rail-it,.dn-c"), r=(hv&&hv.querySelector(".hv-n"))||(rc&&rc.querySelector(".now-n")), t=row&&row.querySelector(".wt-nm b"), a=all&&all.querySelector(".adm-name b");
   return (A._from==="rail"?r||t:A._from==="all"?a:t||r)||a||null;
 }
 
@@ -6458,34 +6711,43 @@ function pnHello(ctx, un, team, goingN){
     ${pnArt("home")}
   </section>`;
 }
+/* v1.24 · La colmena en vivo: hasta 4 salas abiertas como celdas (la miel sube con los que van listos) */
+function homeHive(o){
+  const {live, isMine, per, goList}=o, MAX=4, shown=live.slice(0,MAX), more=live.length-shown.length;
+  if(!live.length) return `<div class="hv-wrap empty">${pnArt("home")}<p class="hv-cap">Ninguna sala abierta ahora. Cuando abras una, aquí la verás llenarse.</p></div>`;
+  const cell=s=>{ const mineS=isMine(s), act=ACTIVE_PH.includes(s.phase), n=s.participants||0, l=s.listos||0, f=act&&n?Math.round(l/n*100):s.phase==="lobby"&&n?8:0;
+    const c= act? `<span class="hv-c"><b>${l}</b> de ${n} listos</span>` : s.phase==="lobby"? `<span class="hv-c"><b>${n}</b> en la sala</span>` : `<span class="hv-c">${per(n,"persona","personas")}</span>`;
+    return `<button type="button" class="hv-cell${mineS?" mine":""}${act?" live":""}" role="listitem" data-open="${esc(s.code)}" data-k="hv-${esc(s.code)}" style="--f:${f}%"
+      aria-label="${esc(phaseName(s.phase))}: ${esc(s.name)}. ${act?`${l} de ${n} listos`:per(n,"persona","personas")}. ${mineS?"Ir al taller":"Ver en solo lectura"}">
+      <span class="hv-body"><span class="hv-fill" aria-hidden="true"></span><span class="hv-in">
+        <span class="hv-ph">${act?"<i></i>":""}${esc(phaseName(s.phase))}</span><b class="hv-n">${esc(s.name)}</b>${c}
+        <span class="hv-o">${mineS?"Tu taller":esc(firstName(staffName(s.owner_id)))+" · ver"}</span></span></span></button>`; };
+  const goingN=live.filter(s=>ACTIVE_PH.includes(s.phase)).length, lobbyN=live.length-goingN;
+  return `<div class="hv-wrap"><div class="hv" role="list" aria-label="Salas abiertas">${shown.map(cell).join("")}${more>0?`<button type="button" class="hv-cell more" role="listitem" data-view-go="${goList}" aria-label="Ver las ${live.length} salas abiertas"><span class="hv-body"><span class="hv-in"><b class="hv-more">+${more}</b><span class="hv-c">salas más</span></span></span></button>`:""}</div>
+    <p class="hv-cap"><i class="hexs" aria-hidden="true"></i>${[goingN?per(goingN,"sala en curso","salas en curso"):"",lobbyN?per(lobbyN,"por iniciar","por iniciar"):""].filter(Boolean).join(" · ")} · la miel sube con quienes ya terminaron</p></div>`;
+}
+function homeBand(o){
+  const {ctx, un, team, going, pend}=o, P2=pend.slice(0,6);
+  return `<section class="pband noroom pb-flat pb-home${o.live.length?" has-hive":""} vi" style="--i:0" data-k="pband-home" aria-label="Inicio">
+    <div class="pb-main">
+      <div class="pb-k"><span class="pb-n hexs" aria-hidden="true">${new Date().getDate()}</span><span>${esc(todayLong())}</span>${going.length?`<span class="pb-live"><i></i>${going.length} EN VIVO</span>`:""}</div>
+      <h1 class="pb-t hello-t">${greeting()}${ME.name?", "+esc(firstName(ME.name)):""}</h1>
+      <p class="pb-d hello-s">${ctx}${un?` · <b>${un} ${un===1?"aviso":"avisos"}</b>`:""}</p>
+      ${ME.name?"":`<p class="pb-d hello-nn">${icon("users")}<span>Tu cuenta no tiene nombre. <button type="button" class="linkbtn" id="hlName">Ponle tu nombre</button> para que tu equipo te reconozca.</span></p>`}
+      <div class="pb-acts"><button class="pb-go" id="hCreate">${icon("plus")}Crear taller</button>${team?`<button class="pb-ghost" id="hInvite">${icon("mail")}Invitar a alguien</button>`:""}</div>
+      ${P2.length?`<ul class="hm-pend" aria-label="Pendientes">${P2.map((p,i)=>`<li class="hm-p pd-row"${i>=2?" hidden":""}><span class="hm-p-ic hexs ${p.tone}" aria-hidden="true">${icon(p.ic)}</span><span class="hm-p-t"><b>${esc(p.t)}</b><small>${esc(p.s)}</small></span><button type="button" class="hm-p-go" data-pend="${i}">${esc(p.label)}${icon("arrowright")}</button></li>`).join("")}</ul>
+        ${P2.length>2?`<button type="button" class="linkbtn hm-more" id="pdMore">Ver ${P2.length-2} pendiente${P2.length-2===1?"":"s"} más</button>`:""}`:""}
+    </div>
+    ${homeHive(o)}
+  </section>`;
+}
 function dashHome(o){
   const {d, live, going, lobby, pend, ctx, un, team, isMine, per, touring, goList}=o;
-  const NOW_MAX=6;
-  const nowCard=s=>{ const mineS=isMine(s), act=ACTIVE_PH.includes(s.phase), n=s.participants||0, l=s.listos||0, pct=n?Math.round(l/n*100):0;
-    return `<li class="dn-c" data-k="now-${esc(s.code)}">
-      <div class="now-top"><span class="ph-pill ph-${esc(s.phase)}">${act?'<i class="dot"></i>':""}${esc(phaseName(s.phase))}</span></div>
-      <b class="now-n">${esc(s.name)}</b><small class="dn-own">${mineS?"Tu taller":esc(staffName(s.owner_id))+" · solo lectura"}</small>
-      ${act?`<div class="dn-prog" role="img" aria-label="${l} de ${n} listos"><i style="width:${pct}%"></i></div>`:""}
-      <div class="dn-row"><span class="num">${act?`${l} de ${n} listos`:s.phase==="lobby"?(n?per(n,"persona ya entró","personas ya entraron"):"Nadie ha entrado aún"):per(n,"participante","participantes")}</span>
-        <button type="button" class="rail-go" data-open="${esc(s.code)}" aria-label="${mineS?"Ir al taller":"Ver"} ${esc(s.name)}">${mineS?(s.phase==="lobby"?"Abrir sala":"Ir al taller"):"Ver"}${icon("arrowright")}</button></div></li>`; };
+  /* v1.24 · Inicio «colmena en vivo»: la banda muestra cada sala abierta como una celda que se llena de miel conforme
+     la gente toca «Terminé» (tócala para entrar). Los pendientes viven en la misma banda y solo aparecen si existen. */
   Motion.morph($(".ah-wide"),`
-    ${pnHello(ctx, un, team, going.length)}
-    <div class="db-top">
-      <section class="panel db-now vi" style="--i:1" aria-labelledby="wgNow">
-        <div class="ai-h db-h"><div><h2 id="wgNow">Ahora mismo</h2><p class="hint">Lo que pasa en ${team?"las salas de tu equipo":"tus salas"} en este momento</p></div>${live.length?`<span class="rail-n">${live.length}</span>`:""}</div>
-        ${live.length?`<ul class="dn-grid">${live.slice(0,NOW_MAX).map(nowCard).join("")}</ul>${live.length>NOW_MAX?`<p class="rail-more">Y ${live.length-NOW_MAX} más en <button type="button" class="linkbtn" data-view-go="${goList}">${team?"Todos los talleres":"Mis talleres"}</button></p>`:""}`
-          :`<div class="ai-empty sm">${icon("hexagon")}<b>Ningún taller abierto ahora</b><span>Cuando abras una sala, aquí verás cuántos van listos en cada fase.</span></div>`}
-      </section>
-      <div class="db-side">
-        <div class="rail-notes" id="railTop"></div>
-        ${pend.length?`<section class="panel rail-card vi" style="--i:2" aria-labelledby="wgPend">
-          <div class="rail-h"><h2 id="wgPend">Pendientes</h2><span class="rail-n">${pend.length}</span></div>
-          <ul class="rail-list">${pend.map((p,i)=>`<li class="rail-it pd-row"${i>=3?" hidden":""}><span class="pd-ic ${p.tone}" aria-hidden="true">${icon(p.ic)}</span><span class="pd-tx"><b>${esc(p.t)}</b><p>${esc(p.s)}</p></span><button type="button" class="rail-go" data-pend="${i}">${esc(p.label)}${icon("arrowright")}</button></li>`).join("")}</ul>
-          ${pend.length>3?`<p class="rail-more" id="pdMoreP"><button type="button" class="linkbtn" id="pdMore">Ver ${pend.length-3} más</button></p>`:""}
-        </section>`:`<p class="rail-ok vi" style="--i:2">${icon("check")}<span><b>Todo al día.</b> Sin invitaciones por vencer, avisos pendientes ni talleres por depurar.</span></p>`}
-        <div class="rail-notes" id="railNotes">${touring?"":installCardHTML()}</div>
-      </div>
-    </div>
+    ${homeBand({ctx, un, team, going, live, pend, isMine, per, goList})}
+    <div class="hm-notes"><div class="rail-notes" id="railTop"></div><div class="rail-notes" id="railNotes">${touring?"":installCardHTML()}</div></div>
     <div id="dashBody" class="db-body"></div>`);
   drawDash();
   wireInstall(); if(!touring) faceNudge();
@@ -6493,10 +6755,10 @@ function dashHome(o){
   $("#hCreate").onclick=startNewWorkshop; pnStartArt($(".ah-wide"));
   const hi=$("#hInvite"); if(hi) hi.onclick=()=>navView("team");
   const nn=$("#hlName"); if(nn) nn.onclick=()=>openSettings(()=>{ const e=$("#meEdit"); if(e) e.click(); });
-  $$(".db-top [data-open]").forEach(b=>b.onclick=()=>openSession(b.dataset.open,b,b.closest(".dn-c")&&b.closest(".dn-c").querySelector(".now-n")));
+  $$(".hv [data-open]").forEach(b=>b.onclick=()=>{ A._from="rail"; openSession(b.dataset.open,b,b.querySelector(".hv-n")); });
   $$("[data-view-go]").forEach(b=>b.onclick=()=>navView(b.dataset.viewGo));
   $$("[data-pend]").forEach(b=>b.onclick=()=>{ const p=pend[+b.dataset.pend]; if(p.go.bell) return goNotifs(); if(p.go.resend) return resendInvite(p.go.resend, b); if(p.go.code) return openSession(p.go.code,b); navView(p.go.view); });
-  const pm=$("#pdMore"); if(pm) pm.onclick=()=>{ const hid=$$(".db-side .pd-row[hidden]"); hid.forEach(li=>li.hidden=false); $("#pdMoreP").remove(); const f=hid[0]&&hid[0].querySelector(".rail-go"); if(f) f.focus(); };
+  const pm=$("#pdMore"); if(pm) pm.onclick=()=>{ const hid=$$(".hm-pend .pd-row[hidden]"); hid.forEach(li=>li.hidden=false); pm.remove(); const f=hid[0]&&hid[0].querySelector("[data-pend]"); if(f) f.focus(); };
 }
 async function hsSetPeriod(k){ if(HS.period===k) return; HS.period=k;
   $$("[data-hper]").forEach(x=>{ const on=x.dataset.hper===k; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on); });
