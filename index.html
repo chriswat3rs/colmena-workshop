@@ -1885,6 +1885,25 @@ a.abtn{text-decoration:none}
 .lbl-row label{margin:0}
 .linkbtn.sm{font-size:.8125rem;text-decoration:none}
 .inv-k{align-self:flex-start}
+/* v1.26 · Contraseñas: ícono en hexágono (Panal), reglas que se palomean en vivo, aviso de vigencia y casilla */
+.panel.auth .auth-ic{width:4rem;height:3.5rem;border-radius:0;clip-path:var(--pn-hex);background:var(--miel);color:var(--on-miel)}
+.panel.auth:not(.center) .auth-ic{align-self:flex-start}
+.panel.auth .auth-ic.ok{background:var(--ok);color:#fff}
+.panel.auth .auth-ic.muted{background:var(--navy-soft);color:var(--ink)}
+.pw-rules{list-style:none;margin:-.125rem 0 0;padding:0;display:flex;flex-direction:column;gap:.5rem;font-size:.875rem;font-weight:500;color:var(--ink-2)}
+.pw-rules li{display:flex;align-items:center;gap:.625rem}
+.pw-dot{width:1.25rem;height:1.25rem;flex:none;box-sizing:border-box;border-radius:50%;border:2px solid var(--line-ctl);display:grid;place-items:center;color:transparent;transition:background-color .18s,border-color .18s,color .18s}
+.pw-dot svg{width:.75rem;height:.75rem;stroke-width:3.2}
+.pw-rules li.ok{color:var(--ink);font-weight:600}
+.pw-rules li.ok .pw-dot{background:var(--ok);border-color:var(--ok);color:var(--card)}
+.panel.auth .pw-tip,.pw-tip{margin:0;font-size:.8125rem;line-height:1.45}
+.pw-note{display:flex;gap:.625rem;align-items:flex-start;margin:.25rem 0;padding:.75rem .875rem;border-radius:12px;background:var(--surface);font-size:.875rem;font-weight:600;line-height:1.45;color:var(--ink-2)}
+.pw-note svg{flex:none;width:1.125rem;height:1.125rem;margin-top:.0625rem;color:var(--ink)}
+.pw-note b{color:var(--ink)}
+.chk{display:flex;align-items:flex-start;gap:.625rem;min-height:2.75rem;padding-top:.25rem;font-size:.875rem;line-height:1.45;color:var(--ink-2);cursor:pointer}
+.chk input{width:1.25rem;height:1.25rem;margin:.0625rem 0 0;flex:none;accent-color:var(--primary)}
+html.dark .chk input{accent-color:var(--accent)}
+@media (prefers-reduced-motion:reduce){ .pw-dot{transition:none} }
 .inv-k.warn{background:var(--warn-soft-2);color:var(--warn-ink-2)}
 .inv-mail{display:flex;flex-direction:column;gap:2px;padding:.75rem .875rem;border-radius:12px;background:var(--surface);border:1px solid var(--line);margin:.25rem 0}
 .inv-mail span{font-size:.75rem;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em}
@@ -3967,7 +3986,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261008065109";
+const APP_BUILD="20261010001607";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -4297,7 +4316,7 @@ function friendlyAuthError(e){
   if(/rate limit|too many/i.test(m)) return "Demasiados intentos seguidos. Espera un minuto y vuelve a intentar.";
   if(/Invalid TOTP code|invalid.*code/i.test(m)) return "El código no es correcto o ya expiró. Usa el código actual de tu app.";
   if(/already registered|already been registered/i.test(m)) return "Ese correo ya tiene cuenta. Usa «Ya tengo cuenta» para entrar.";
-  if(/Password should be at least/i.test(m)) return "La contraseña es muy corta. Usa al menos 8 caracteres.";
+  if(/Password should (be at least|contain)/i.test(m)) return "La contraseña no cumple las reglas: al menos 8 caracteres, una mayúscula, una minúscula y un número.";
   if(/Signups not allowed|signup.*disabled/i.test(m)) return "El registro de cuentas está apagado en Supabase. Pide al admin activar «Allow new users to sign up».";
   if(/Email not confirmed/i.test(m)) return "Tu correo aún no está confirmado. Pide al admin apagar «Confirm email» en Supabase.";
   if(/JWT expired|invalid JWT|PGRST301|refresh.?token/i.test(m)) return "Tu sesión expiró. Entra de nuevo.";
@@ -4323,14 +4342,21 @@ const LINK_KEY="colmena_lt";
 (function captureLink(){ try{ const u=new URL(location.href), t=(u.searchParams.get("lt")||"").trim();
   if(t){ try{ sessionStorage.setItem(LINK_KEY,t); }catch(e){ window.__lt=t; } u.searchParams.delete("lt"); if(!u.hash) u.hash="#admin"; history.replaceState(null,"",u.pathname+u.search+u.hash); } }catch(e){} })();
 function takeLinkToken(){ let t=""; try{ t=sessionStorage.getItem(LINK_KEY)||""; sessionStorage.removeItem(LINK_KEY); }catch(e){ t=window.__lt||""; window.__lt=""; } return t; }
+/* v1.26 · Enlace para crear o restablecer la contraseña (?pr=…): se guarda en la pestaña hasta usarlo o ver que venció
+   (así, si recargas la pantalla de «Nueva contraseña», no se pierde) */
+const PR_KEY="colmena_pr";
+(function capturePw(){ try{ const u=new URL(location.href), t=(u.searchParams.get("pr")||"").trim();
+  if(t){ try{ sessionStorage.setItem(PR_KEY,t); }catch(e){ window.__pr=t; } u.searchParams.delete("pr"); if(!u.hash) u.hash="#admin"; history.replaceState(null,"",u.pathname+u.search+u.hash); } }catch(e){} })();
+function pwToken(){ try{ return sessionStorage.getItem(PR_KEY)||""; }catch(e){ return window.__pr||""; } }
+function clearPwToken(){ try{ sessionStorage.removeItem(PR_KEY); }catch(e){} window.__pr=""; }
 /* v1.12.2 · Error de una función de Supabase → mensaje claro. Antes cualquier falla de red o tiempo agotado se
    leía como «Esta función aún no está activada»; ahora solo un 404 sin mensaje propio significa eso.
    El Error lleva .status (código HTTP, 0 = sin respuesta) y .kind ("http" | "missing" | "timeout" | "network"). */
 async function fnError(error, fallback, fn){
   const ctx=error&&error.context, name=String(error&&error.name||"");
-  let m="", status=0, kind="http";
+  let m="", status=0, kind="http", body=null;
   if(name==="FunctionsHttpError" && ctx && typeof ctx.status==="number"){
-    status=ctx.status; try{ const b=await ctx.json(); m=(b&&b.error)||""; }catch(e){}
+    status=ctx.status; try{ body=await ctx.json(); m=(body&&body.error)||""; }catch(e){}
     if(status===404 && !m){ kind="missing"; m="Esta función aún no está activada en Supabase."; }
   } else if(name==="FunctionsFetchError" || name==="FunctionsRelayError"){
     kind=/Abort|Timeout/i.test(String(ctx&&(ctx.name||ctx.message)||"")) ? "timeout" : "network";
@@ -4338,7 +4364,7 @@ async function fnError(error, fallback, fn){
       : (navigator.onLine===false ? "Sin conexión a internet. Revisa tu red e intenta de nuevo." : "No pudimos conectar con el servidor. Revisa tu internet e intenta de nuevo.");
   }
   console.error("[Colmena] función "+(fn||"")+" falló:", {status, kind, message:m||(error&&error.message)||"", detail:ctx||error});
-  const out=new Error(m||fallback); out.status=status; out.kind=kind; return out; }
+  const out=new Error(m||fallback); out.status=status; out.kind=kind; out.body=body; return out; }
 
 /* v1.11.1 · Passkeys en dos tiempos: las opciones se piden ANTES del toque y Face ID se abre directo en el toque
    (iPhone/Safari exige que Face ID arranque en el mismo toque; si antes hay que esperar a internet, lo bloquea). */
@@ -4408,13 +4434,13 @@ const SupaStore = {
       if(!m.active) return {state:"forbidden", email:u.email, reason:"Tu acceso al panel fue desactivado. Si es un error, habla con tu admin."};
       return {state:"ready", email:u.email, uid:u.id, role:m.role, name:m.name||"", title:m.title||"", avatar:m.avatar||"", inviteError};
     }
-    /* v1.11 · entró con Face ID / huella: cuenta como acceso completo solo si la llave está aprobada */
+    /* v1.11 · entró con Face ID / huella: cuenta como acceso completo solo si la llave está aprobada.
+       v1.26 · Un facilitador activo entra con su contraseña: la base responde ws_me sin pedir el código.
+       (Si la base aún no tiene la v1.26, ws_me no responde y se pide el código como antes.) */
     const viaPasskey = (aal.currentAuthenticationMethods||[]).some(m=>m && m.method==="passkey");
-    if(viaPasskey){
-      const {data:me} = await this.client.rpc("ws_me");
+    { const {data:me} = await this.client.rpc("ws_me");
       const m = me && me[0];
-      if(m && m.active) return {state:"ready", email:u.email, uid:u.id, role:m.role, name:m.name||"", title:m.title||"", avatar:m.avatar||"", passkey:true};
-    }
+      if(m && m.active) return {state:"ready", email:u.email, uid:u.id, role:m.role, name:m.name||"", title:m.title||"", avatar:m.avatar||"", passkey:viaPasskey}; }
     /* v1.12 · aún sin confirmar: ¿qué le falta a esta cuenta? */
     let acct=null; try{ const {data} = await this.client.rpc("ws_account_state"); acct=data||null; }catch(e){}
     const staff = !!(acct && acct.staff);
@@ -4481,7 +4507,7 @@ const SupaStore = {
     const d=await this._account({action:"invite-start", code}); await this._useLinkToken(d.token_hash); return d.email; },
   async useAccessLink(){ const t=takeLinkToken(); if(!t) return false;
     const u=await this.currentUser(); if(u) await this.client.auth.signOut({scope:"local"});
-    try{ await this._useLinkToken(t); return true; }catch(e){ throw new Error("Ese enlace ya se usó o venció. Pide otro desde «Entrar sin contraseña»."); } },
+    try{ await this._useLinkToken(t); return true; }catch(e){ throw new Error("Ese enlace ya se usó o venció. Para entrar, usa tu contraseña o toca «¿La olvidaste?»."); } },
   async requestAccessLink(email){ return this._account({action:"access-link", email}); },
   async adminResetAccess(userId){ return this._account({action:"admin-reset", user_id:userId}); },
   /* v1.17 · Eliminar a alguien del equipo: sus talleres y borradores pasan a ti y luego se borra su cuenta */
@@ -4490,6 +4516,12 @@ const SupaStore = {
   async reenrollPasskey(credId){ const {data,error}=await this.client.rpc("ws_reenroll_passkey",{p_cred:credId||null}); if(error) throw error; return data; },
   async allowTotp(){ const {error}=await this.client.rpc("ws_allow_totp"); if(error) throw error; },
   async setPassword(pw){ const {error}=await this.client.auth.updateUser({password:pw}); if(error) throw error; },
+  /* v1.26 · Contraseñas: «¿Olvidaste tu contraseña?», revisar el enlace, guardar con el enlace y aceptar invitación de facilitador */
+  async pwForgot(email){ return this._account({action:"pw-forgot", email}); },
+  async pwCheck(token){ return this._account({action:"pw-check", token}); },
+  async pwSet(token, password){ return this._account({action:"pw-set", token, password}); },
+  async signOutOthers(){ try{ await this.client.auth.signOut({scope:"others"}); }catch(e){ console.error(e); } },
+  async redeemInvite(code){ const {data,error}=await this.client.rpc("ws_redeem_invite",{p_code:code}); if(error) throw error; return data; },
   async resendInvite(id){ const {data,error}=await this.client.rpc("ws_resend_invite",{p_id:id}); if(error) throw error; return data&&data[0]; },
   async requestInviteRenewal(code){ const {data,error}=await this.client.rpc("ws_request_invite_renewal",{p_code:code}); if(error) throw error; return data; },
   async passkeyStatus(){ const {data,error} = await this.client.rpc("ws_passkey_status"); if(error) throw error; return data||{trusted:0,untrusted:0}; },
@@ -4708,6 +4740,12 @@ const DemoStore = {
     return {ok:true, removed:true, account_deleted:true, email:m.email||"", talleres, borradores, participaciones:0}; },
   async redeemInvitePasskey(){ return "facilitator"; }, async reenrollPasskey(){ return 1; }, async allowTotp(){},
   async setPassword(pw){ await new Promise(r=>setTimeout(r,400)); },
+  /* v1.26 · En la vista de prueba: un enlace con «VENC» se comporta como vencido */
+  async pwForgot(){ await new Promise(r=>setTimeout(r,600)); return {ok:true}; },
+  async pwCheck(t){ await new Promise(r=>setTimeout(r,350)); if(/VENC/i.test(t||"")){ const e=new Error("Este enlace ya venció o ya se usó."); e.status=410; e.body={expired:true, email:"mariana.torres@ejemplo.com"}; throw e; }
+    return {ok:true, email:"mariana.torres@ejemplo.com", kind:/ACT/i.test(t||"")?"activate":"reset", role:"facilitator", first:"Mariana"}; },
+  async pwSet(t){ await new Promise(r=>setTimeout(r,600)); return {ok:true, email:"mariana.torres@ejemplo.com", kind:/ACT/i.test(t||"")?"activate":"reset", role:"facilitator"}; },
+  async signOutOthers(){}, async redeemInvite(){ return "facilitator"; },
   async resendInvite(id){ const db=this.db(); const o=(db.invites||[]).find(i=>i.id===id); if(!o) throw new Error("Esa invitación ya no existe o ya se usó"); o.revoked_at=now(); this.save(db); return this.createInvite(o.email,o.name,o.role); },
   async requestInviteRenewal(){ return true; },
   async listStaff(){ const db=this.db(); return [{user_id:"demo",email:"modo demo",name:db.meName||"Tú (demo)",title:db.meTitle||"",role:"admin",active:true,created_at:now(),avatar:db.meAvatar||""}, ...(db.staff||[])]; },
@@ -4734,8 +4772,10 @@ const DemoStore = {
   async aiLink(draft,session){ const db=this.db(); (db.aiLog||[]).forEach(l=>{ if(l.draft_id===draft && !l.session_id) l.session_id=session; }); this.save(db); },
   /* v1.23 · Resumen de prueba armado con los mismos números que recibe la IA */
   async summarizeWorkshop(sessionId, st){ const db0=this.db(), me=this._aiStaff(db0)[0], used=(db0.aiLog||[]).filter(l=>l.user_id==="demo" && new Date(l.at)>=new Date(new Date().getFullYear(),new Date().getMonth(),1)).reduce((a,l)=>a+l.input_tokens+l.output_tokens,0);
-    if(!me.ai_enabled) throw new Error("Tu admin pausó la IA para tu cuenta.");
-    if(me.ai_monthly_cap!=null && used>=me.ai_monthly_cap) throw new Error(`Llegaste a tu tope de IA de este mes (${me.ai_monthly_cap.toLocaleString("es-MX")} tokens).`);
+    /* v1.26 · Igual que el servidor: una sola vez por taller terminado; no lo frenan la pausa ni el tope */
+    const ses0=db0.sessions.find(x=>x.id===sessionId);
+    if(!ses0 || !["results","closed"].includes(ses0.phase)){ const e=new Error("El resumen con IA se genera cuando el taller termina (Resultados o Cierre)."); e.status=409; e.body={ai:"phase"}; throw e; }
+    if((db0.aiLog||[]).some(l=>l.session_id===sessionId && l.kind==="insights" && l.ok)){ const e=new Error("Este taller ya tiene su resumen con IA. Puedes editarlo, pero no volver a generarlo."); e.status=409; e.body={ai:"once"}; throw e; }
     await new Promise(r=>setTimeout(r,1600));
     const d=st.dolores||{}, v=st.votos||{}, e=(d.porEtapa||[]).slice(0,2), q=(st.quickWins||[])[0], rf=(st.reglasFriccion||[])[0], t=(st.tiemposLentos||[])[0];
     const parts=[];
@@ -4746,8 +4786,9 @@ const DemoStore = {
     if(t) parts.push(`La etapa más lenta es ${t[0]}: ${t[2]} de ${t[3]} dicen que tarda más de 1 semana.`);
     const summary=parts.join(" ")||"Aún hay pocos datos para resumir este taller.";
     const tin=1400+Math.round(Math.random()*500), tout=260+Math.round(Math.random()*120), db=this.db(); db.aiLog=db.aiLog||[];
-    db.aiLog.push({id:Date.now(),user_id:"demo",kind:"insights",draft_id:null,session_id:sessionId,label:st.taller||"",model:"demo",input_tokens:tin,output_tokens:tout,ok:true,at:now()}); this.save(db);
-    return {summary, usage:{input_tokens:tin,output_tokens:tout}}; },
+    db.aiLog.push({id:Date.now(),user_id:"demo",kind:"insights",draft_id:null,session_id:sessionId,label:st.taller||"",model:"demo",input_tokens:tin,output_tokens:tout,ok:true,at:now()});
+    const at=now(), ses=db.sessions.find(x=>x.id===sessionId); if(ses){ ses.summary=summary; ses.summary_at=at; } this.save(db);
+    return {summary, summary_at:at, usage:{input_tokens:tin,output_tokens:tout}}; },
   /* v1.22 · Mismos números que ws_home_stats, calculados con los datos de prueba */
   async homeStats(from,prev){ const db=this.db(), PH=["lobby","checkin","pains","votes","quickwins","ideas","results","closed"], pi=s=>PH.indexOf(s.phase)+1;
     const f=from?new Date(from):null, pv=prev?new Date(prev):null, at=s=>new Date(s.created_at);
@@ -5756,13 +5797,14 @@ function aShell(inner){
 }
 
 async function adminBoot(openCode){
+  if(pwToken()) return adminPwLink();              /* v1.26 · enlace del correo para crear o restablecer la contraseña */
   let st;
   try{ await Store.useAccessLink(); }
   catch(e){ return adminLogin(e.message); }
   try{ st = await Store.adminState(); }
   catch(e){ console.error(e); return adminLogin(friendlyAuthError(e)); }
   if(st.state==="login")     return pendingInvite() ? adminInvite() : adminLogin();
-  if(st.state==="invite")    return adminChoose("invite", st.email);
+  if(st.state==="invite")    return adminInviteNext(st.email);
   if(st.state==="reenroll")  return adminChoose("reenroll", st.email);
   if(st.state==="enroll")    return adminEnroll(st.email);
   if(st.state==="verify")    return adminVerify(st);
@@ -5828,71 +5870,182 @@ function canBio(){ return !!(Store.passkeySupported && Store.passkeySupported())
 function eyeToggle(btnSel, inputs){ const b=$(btnSel); if(!b) return; b.onclick=()=>{ const show=$(inputs[0]).type==="password"; inputs.forEach(k=>$(k).type=show?"text":"password"); b.textContent=show?"Ocultar":"Mostrar"; b.setAttribute("aria-pressed",show); }; }
 async function useOtherAccount(){ window.__signingOut=true; setTimeout(()=>{ window.__signingOut=false; },3000); clearInvite(); await Store.signOut(); adminLogin(); }
 
-/* v1.12 · Iniciar sesión: Face ID primero, correo + contraseña, y «entrar sin contraseña» (recupera el acceso) */
+/* v1.26 · Iniciar sesión: correo y contraseña primero; Face ID como atajo; «¿La olvidaste?» manda un enlace.
+   Facilitador: con su contraseña basta. Admin: después pide su código de 6 dígitos (o Face ID), como siempre. */
 function adminLogin(msg, email){
   const bio=canBio();
   aShell(`<div class="panel auth">
       <h2>Inicia sesión</h2>
-      ${bio?`<button class="abtn primary bio-go" id="lg-bio" type="button">${BIO_IC}Entrar con ${bioName()}</button>
-      ${APP.mobile()?"":`<p class="hint bio-hint">¿Tu llave está en tu celular? Toca el botón y elige <b>«Usar un teléfono o tableta»</b>: escaneas un QR y confirmas con Face ID o tu huella.</p>`}
-      <div class="or-sep"><span>o con tu correo</span></div>`:""}
       <form id="lgForm" autocomplete="on">
         <div class="field"><label for="lg-mail">Correo</label><input id="lg-mail" class="input" type="email" autocomplete="username" value="${esc(email||"")}" required></div>
         <div class="field"><div class="lbl-row"><label for="lg-pass">Contraseña</label><button type="button" class="linkbtn sm" id="lg-forgot">¿La olvidaste?</button></div>
           <div class="pw-wrap"><input id="lg-pass" class="input" type="password" autocomplete="current-password" required>
           <button type="button" class="pw-eye" id="lg-eye" aria-pressed="false">Mostrar</button></div></div>
         ${msg?`<p class="err" role="alert">${esc(msg)}</p>`:""}
-        <button class="abtn ${bio?"":"primary"} wide" id="lg-go" type="submit">Continuar</button>
+        <button class="abtn primary wide" id="lg-go" type="submit">Entrar</button>
       </form>
-      <button class="abtn ghost wide" id="lg-link" type="button">${MAIL_IC}Entrar sin contraseña</button>
+      ${bio?`<div class="or-sep"><span>o</span></div>
+      <button class="abtn wide bio-go" id="lg-bio" type="button">${BIO_IC}Entrar con ${bioName()}</button>
+      ${APP.mobile()?"":`<p class="hint bio-hint">¿Tu llave está en tu celular? Toca el botón y elige <b>«Usar un teléfono o tableta»</b>.</p>`}`:""}
       <p class="hint auth-foot">${pendingInvite()?`Tienes una invitación pendiente. <button type="button" class="linkbtn" id="lg-inv">Abrir mi invitación</button>`:"¿Aún no tienes cuenta? Pide una invitación a tu admin."}</p>
     </div>`);
   const iv=$("#lg-inv"); if(iv) iv.onclick=()=>adminInvite();
-  const goLink=()=>adminLinkForm(null, $("#lg-mail").value.trim());
-  $("#lg-forgot").onclick=goLink; $("#lg-link").onclick=goLink;
+  $("#lg-forgot").onclick=()=>adminForgot(null, $("#lg-mail").value.trim());
   wirePasskeyBtn($("#lg-bio"), "auth", ()=>adminBoot(currentCode()), err=>adminLogin(passkeyError(err), $("#lg-mail")&&$("#lg-mail").value.trim()));
   if(email) $("#lg-pass").focus();
   eyeToggle("#lg-eye", ["#lg-pass"]);
   $("#lgForm").onsubmit = async e=>{
-    e.preventDefault(); $("#lg-go").disabled=true;
+    e.preventDefault(); const b=$("#lg-go"); b.disabled=true; b.innerHTML=`<span class="spin" aria-hidden="true"></span>Entrando…`;
     const mail=$("#lg-mail").value.trim();
     try{ await Store.signIn(mail, $("#lg-pass").value); adminBoot(currentCode()); }
-    catch(err){ adminLogin(friendlyAuthError(err)+(/incorrect/i.test(friendlyAuthError(err))?" Si no recuerdas tu contraseña, usa «Entrar sin contraseña».":""), mail); }
+    catch(err){ const t=friendlyAuthError(err); adminLogin(/incorrect/i.test(t)?"Correo o contraseña incorrectos. Si no la recuerdas, toca «¿La olvidaste?».":t, mail); }
   };
 }
 
-/* v1.12 · «Entrar sin contraseña» / olvidé mi contraseña: te llega un enlace de un solo uso */
-function adminLinkForm(msg, email, sent){
+/* v1.26 · «¿Olvidaste tu contraseña?»: llega un enlace para crear una nueva (1 uso, vence en 1 hora).
+   La respuesta es la misma exista o no el correo (no revela quién tiene cuenta). */
+function adminForgot(msg, email, sent){
   if(sent){
-    aShell(`<div class="panel auth center">
+    aShell(`<div class="panel auth">
       <span class="auth-ic">${MAIL_IC}</span>
       <h2>Revisa tu correo</h2>
-      <p class="hint">Si <b>${esc(email)}</b> tiene acceso a Colmena, te llegó un enlace para entrar. Ábrelo <b>en este dispositivo</b>; vence en 1 hora.</p>
-      <p class="hint">¿No aparece? Busca en spam o «Otros». Después de entrar confirmas con ${canBio()?bioName()+" o ":""}tu código, como siempre.</p>
-      <button class="abtn primary wide" id="lk-back" type="button">Volver a iniciar sesión</button>
-      <button class="abtn ghost wide" id="lk-again" type="button" disabled>Reenviar enlace</button>
+      <p class="hint">Si <b>${esc(email)}</b> tiene cuenta en Colmena, te llegó un enlace para crear una nueva contraseña.</p>
+      <p class="pw-note">${icon("clock")}<span>Vence en <b>1 hora</b> y sirve una sola vez. Ábrelo en este dispositivo.</span></p>
+      <p class="hint">¿No aparece? Busca en spam o «Promociones».</p>
+      <button class="abtn primary wide" id="fg-back" type="button">Volver a iniciar sesión</button>
+      <button class="abtn ghost wide" id="fg-again" type="button" disabled>Reenviar enlace</button>
     </div>`);
-    $("#lk-back").onclick=()=>adminLogin(null, email);
-    const ag=$("#lk-again"); let t=60; const lbl=()=>ag.textContent=t>0?`Reenviar enlace (${t}s)`:"Reenviar enlace";
-    lbl(); const iv=setInterval(()=>{ if(!document.body.contains(ag)) return clearInterval(iv); t--; lbl(); if(t<=0){ clearInterval(iv); ag.disabled=false; } },1000);
-    ag.onclick=()=>adminLinkForm(null, email);
+    $("#fg-back").onclick=()=>adminLogin(null, email);
+    const ag=$("#fg-again"); let t=60, iv=null;
+    const lbl=()=>ag.textContent=t>0?`Reenviar enlace (${t} s)`:"Reenviar enlace";
+    const tick=()=>{ t=60; ag.disabled=true; lbl(); clearInterval(iv); iv=setInterval(()=>{ if(!document.body.contains(ag)) return clearInterval(iv); t--; lbl(); if(t<=0){ clearInterval(iv); ag.disabled=false; } },1000); };
+    tick();
+    ag.onclick=async()=>{ ag.disabled=true; ag.innerHTML=`<span class="spin" aria-hidden="true"></span>Enviando…`;
+      try{ await Store.pwForgot(email); toast("Te mandamos otro enlace. Usa el más reciente."); }catch(e){ toast(friendlyAuthError(e)); }
+      tick(); };
     return;
   }
   aShell(`<div class="panel auth">
-      <h2>Entrar sin contraseña</h2>
-      <p class="hint" style="margin-bottom:.875rem">Te mandamos un enlace a tu correo para entrar. Sirve también si olvidaste tu contraseña: ya dentro, puedes crear una nueva en Ajustes → Acceso.</p>
-      <form id="lkForm">
-        <div class="field"><label for="lk-mail">Tu correo</label><input id="lk-mail" class="input" type="email" autocomplete="username" value="${esc(email||"")}" required></div>
+      <span class="auth-ic">${icon("key")}</span>
+      <h2>¿Olvidaste tu contraseña?</h2>
+      <p class="hint" style="margin-bottom:.875rem">Escribe tu correo y te mandamos un enlace para crear una nueva.</p>
+      <form id="fgForm">
+        <div class="field"><label for="fg-mail">Tu correo</label><input id="fg-mail" class="input" type="email" autocomplete="username" value="${esc(email||"")}" required></div>
         ${msg?`<p class="err" role="alert">${esc(msg)}</p>`:""}
-        <button class="abtn primary wide" id="lk-go" type="submit">${MAIL_IC}Enviarme el enlace</button>
+        <button class="abtn primary wide bio-go" id="fg-go" type="submit">${MAIL_IC}Enviarme el enlace</button>
       </form>
-      <button class="abtn ghost wide" id="lk-cancel" type="button">Volver</button>
+      <button class="abtn ghost wide" id="fg-cancel" type="button">Volver a iniciar sesión</button>
     </div>`);
-  $("#lk-mail").focus();
-  $("#lk-cancel").onclick=()=>adminLogin(null, $("#lk-mail").value.trim());
-  $("#lkForm").onsubmit=async e=>{ e.preventDefault(); const m=$("#lk-mail").value.trim().toLowerCase(); const b=$("#lk-go"); b.disabled=true; b.innerHTML=`<span class="spin" aria-hidden="true"></span>Enviando…`;
-    try{ await Store.requestAccessLink(m); adminLinkForm(null, m, true); }
-    catch(err){ adminLinkForm(friendlyAuthError(err), m); } };
+  $("#fg-mail").focus();
+  $("#fg-cancel").onclick=()=>adminLogin(null, $("#fg-mail").value.trim());
+  $("#fgForm").onsubmit=async e=>{ e.preventDefault(); const m=$("#fg-mail").value.trim().toLowerCase(); const b=$("#fg-go"); b.disabled=true; b.innerHTML=`<span class="spin" aria-hidden="true"></span>Enviando…`;
+    try{ await Store.pwForgot(m); adminForgot(null, m, true); }
+    catch(err){ adminForgot(friendlyAuthError(err), m); } };
+}
+
+/* v1.26 · Reglas de la contraseña: las mismas que revisa el servidor (8 a 72, mayúscula, minúscula y número;
+   nada obvio ni el nombre de tu correo). En pantalla se palomean en vivo las tres que la gente necesita ver. */
+const PW_RULES=[["len","Al menos 8 caracteres"],["up","Una mayúscula"],["num","Un número"]];
+function pwEval(pw, email){
+  pw=String(pw||""); const low=pw.toLowerCase(), user=String(email||"").split("@")[0].toLowerCase();
+  const r={len:pw.length>=8, up:/[A-Z]/.test(pw), num:/[0-9]/.test(pw), low:/[a-z]/.test(pw), long:pw.length>72};
+  r.obvious=/colmena|password|contrase(n|ñ)a|qwerty|123456|abc123|111111/.test(low) || (user.length>=4 && low.includes(user));
+  r.msg = r.long?"Usa máximo 72 caracteres." : !r.len?"Usa al menos 8 caracteres." : !r.up?"Agrega al menos una mayúscula." : !r.num?"Agrega al menos un número."
+        : !r.low?"Agrega al menos una minúscula." : r.obvious?"Esa contraseña es fácil de adivinar. Prueba con otra." : "";
+  r.ok=!r.msg; return r; }
+function pwRulesHTML(id){
+  return `<ul class="pw-rules" id="${id}">${PW_RULES.map(([k,t])=>`<li data-r="${k}"><span class="pw-dot" aria-hidden="true">${icon("check")}</span><span>${t}</span><span class="sr">, pendiente</span></li>`).join("")}</ul>
+    <p class="hint pw-tip">No uses 123456, «colmena» ni tu correo. Los símbolos son opcionales.</p>`; }
+function wirePwRules(inp, list, email){
+  const upd=()=>{ const r=pwEval(inp.value, email);
+    list.querySelectorAll("li").forEach(li=>{ const ok=!!r[li.dataset.r]; li.classList.toggle("ok", ok); li.querySelector(".sr").textContent=ok?", cumplido":", pendiente"; });
+    return r; };
+  inp.addEventListener("input", upd); upd(); return upd; }
+
+/* v1.26 · Abriste el enlace del correo: se revisa que siga vigente antes de pedir la contraseña nueva */
+async function adminPwLink(){
+  const token=pwToken();
+  aShell(`<div class="panel auth center"><span class="auth-ic">${icon("key")}</span><h2>Revisando tu enlace…</h2><p class="hint"><span class="spin" aria-hidden="true"></span></p></div>`);
+  let r;
+  try{ r=await Store.pwCheck(token); }
+  catch(e){
+    if(e && e.status===410){ clearPwToken(); return adminPwExpired(e.body && e.body.email); }
+    if(e && e.status===403){ clearPwToken(); return adminForbidden("", e.message); }
+    return adminPwExpired(null, friendlyAuthError(e));
+  }
+  adminPwForm({kind:r.kind, email:r.email, first:r.first, token});
+}
+
+/* v1.26 · Crear o cambiar la contraseña. kind: "reset" (la olvidó), "activate" (su admin reinició su acceso)
+   o "invite" (facilitador que acaba de aceptar su invitación) */
+function adminPwForm(o, msg){
+  const reset=o.kind==="reset", first=o.first?esc(o.first):"";
+  aShell(`<div class="panel auth">
+      ${reset?"":`<span class="inv-k">${icon("key")}Paso final</span>`}
+      <h2>${reset?"Nueva contraseña":"Crea tu contraseña"}</h2>
+      <p class="hint" style="margin-bottom:.875rem">${reset?`Para <b>${esc(o.email)}</b>.`:`${first?first+", e":"E"}ntrarás con <b>${esc(o.email)}</b>.`}</p>
+      <form id="pwNew" autocomplete="on" novalidate>
+        <input type="email" autocomplete="username" value="${esc(o.email)}" hidden readonly>
+        <div class="field"><label for="np1">${reset?"Contraseña nueva":"Contraseña"}</label>
+          <div class="pw-wrap"><input id="np1" class="input" type="password" autocomplete="new-password" maxlength="72" aria-describedby="npRules" required>
+          <button type="button" class="pw-eye" id="npEye" aria-pressed="false">Mostrar</button></div></div>
+        ${pwRulesHTML("npRules")}
+        <div class="field"><label for="np2">Confírmala</label><input id="np2" class="input" type="password" autocomplete="new-password" maxlength="72" required></div>
+        ${reset?`<label class="chk"><input type="checkbox" id="npOut" checked><span>Cerrar sesión en mis otros dispositivos</span></label>`:""}
+        <p class="err" id="npErr" role="alert"${msg?"":" hidden"}>${esc(msg||"")}</p>
+        <button class="abtn primary wide" id="npGo" type="submit">${reset?"Guardar y entrar":"Crear contraseña y entrar"}</button>
+      </form>
+      <p class="hint auth-foot">Puedes pegarla desde tu gestor de contraseñas.${reset?"":" Después, si quieres, activas "+esc(bioName())+" para no escribirla."}</p>
+      ${o.kind==="invite"?`<button class="abtn ghost wide" id="auOut" type="button">Usar otra cuenta</button>`:""}
+    </div>`);
+  const out=$("#auOut"); if(out) out.onclick=useOtherAccount;
+  wirePwRules($("#np1"), $("#npRules"), o.email);
+  eyeToggle("#npEye", ["#np1","#np2"]);
+  $("#np1").focus();
+  const bad=t=>{ const m=$("#npErr"); m.hidden=false; m.textContent=t; };
+  ["#np1","#np2"].forEach(k=>$(k).addEventListener("input",()=>{ $("#npErr").hidden=true; }));   /* el aviso se va al corregir */
+  $("#pwNew").onsubmit=async e=>{ e.preventDefault();
+    const a=$("#np1").value, b=$("#np2").value, r=pwEval(a, o.email), others=!!($("#npOut")&&$("#npOut").checked);
+    if(!r.ok){ bad(r.msg); $("#np1").focus(); return; }
+    if(!b){ bad("Escríbela otra vez en «Confírmala»."); $("#np2").focus(); return; }
+    if(a!==b){ bad("Las contraseñas no coinciden."); $("#np2").focus(); return; }
+    const go=$("#npGo"), label=go.textContent; go.disabled=true; go.innerHTML=`<span class="spin" aria-hidden="true"></span>Guardando…`;
+    try{
+      if(o.kind==="invite"){ await Store.setPassword(a); await Store.redeemInvite(pendingInvite()); clearInvite(); }
+      else{ await Store.pwSet(o.token, a); clearPwToken(); await Store.signIn(o.email, a); if(reset && others) await Store.signOutOthers(); }
+      toast(reset?"Contraseña guardada":"Listo, ya tienes contraseña");
+      adminBoot();
+    }catch(err){
+      if(err && err.status===410){ clearPwToken(); return adminPwExpired(o.email); }
+      go.disabled=false; go.textContent=label; bad(friendlyAuthError(err));
+    }
+  };
+}
+
+/* v1.26 · El enlace venció o ya se usó: pedir otro en un toque */
+function adminPwExpired(email, msg){
+  aShell(`<div class="panel auth">
+      <span class="auth-ic muted">${icon("clock")}</span>
+      <h2>${msg?"No pudimos revisar tu enlace":"Este enlace ya venció"}</h2>
+      <p class="hint" style="margin-bottom:.875rem">${msg?esc(msg):"Por seguridad, cada enlace sirve una sola vez y por tiempo limitado. Te mandamos uno nuevo en un toque."}</p>
+      ${msg?`<button class="abtn primary wide" id="exRetry" type="button">Intentar de nuevo</button>`:`<form id="exForm">
+        <div class="field"><label for="ex-mail">Tu correo</label><input id="ex-mail" class="input" type="email" autocomplete="username" value="${esc(email||"")}" required></div>
+        <button class="abtn primary wide bio-go" id="exGo" type="submit">${MAIL_IC}Enviarme un enlace nuevo</button>
+      </form>`}
+      <button class="abtn ghost wide" id="exBack" type="button">Volver a iniciar sesión</button>
+    </div>`);
+  $("#exBack").onclick=()=>{ clearPwToken(); adminLogin(null, email||""); };
+  const rt=$("#exRetry"); if(rt) rt.onclick=()=>adminPwLink();
+  const f=$("#exForm"); if(f) f.onsubmit=async e=>{ e.preventDefault(); const m=$("#ex-mail").value.trim().toLowerCase(), b=$("#exGo"); b.disabled=true; b.innerHTML=`<span class="spin" aria-hidden="true"></span>Enviando…`;
+    try{ await Store.pwForgot(m); adminForgot(null, m, true); }catch(err){ adminForgot(friendlyAuthError(err), m); } };
+}
+
+/* v1.26 · Tras abrir la invitación: un facilitador crea su contraseña; un admin elige Face ID o su app, como antes */
+async function adminInviteNext(email){
+  let inv=null; const code=pendingInvite();
+  try{ inv = code ? await Store.invitePeek(code) : null; }catch(e){ console.error(e); }
+  if(inv && inv.role!=="admin") return adminPwForm({kind:"invite", email, first:firstName(inv.name)});
+  return adminChoose("invite", email);
 }
 
 /* v1.12 · Invitación: bienvenida clara según su estado (vigente, vencida, usada) */
@@ -5934,7 +6087,9 @@ async function adminInvite(msg){
       <h2>Hola${first?", "+esc(first):""}</h2>
       <p class="hint">${esc(who)} te invitó a Colmena para ${inv.role==="admin"?"administrar la plataforma y crear tus propios talleres":"crear y facilitar tus propios talleres"}.</p>
       <div class="inv-mail"><span>Tu cuenta</span><b>${esc(inv.email)}</b></div>
-      <ol class="inv-steps"><li><span><b>Aceptas</b> la invitación</span></li><li><span><b>Activas ${canBio()?bioName():"tu app autenticadora"}</b>${canBio()?" (o tu app autenticadora)":""}</span></li><li><span><b>Listo:</b> sin contraseñas que recordar</span></li></ol>
+      ${inv.role==="admin"
+        ? `<ol class="inv-steps"><li><span><b>Aceptas</b> la invitación</span></li><li><span><b>Activas ${canBio()?bioName():"tu app autenticadora"}</b>${canBio()?" (o tu app autenticadora)":""}</span></li><li><span><b>Listo:</b> entras con tu segundo paso</span></li></ol>`
+        : `<ol class="inv-steps"><li><span><b>Aceptas</b> la invitación</span></li><li><span><b>Creas tu contraseña</b></span></li><li><span><b>Listo:</b> armas tu primer taller</span></li></ol>`}
       ${msg?`<p class="err" role="alert">${esc(msg)}</p>`:""}
       <button class="abtn primary wide" id="ivGo">Aceptar invitación</button>
       <p class="hint auth-foot">Vence el ${esc(fmtDate(inv.expires_at,{day:"numeric",month:"long"}))}. ¿Ya tienes cuenta? <button type="button" class="linkbtn" id="ivHave">Inicia sesión</button></p>
@@ -6529,21 +6684,23 @@ async function backupAppDialog(){
   wireTotp(f);
   wireOtp(f.factorId, !APP.mobile(), async ()=>{ try{ await Store.allowTotp(); close(); toast("Listo: tu app quedó como respaldo"); }catch(e){ const m=$("#otpErr"); m.hidden=false; m.textContent=friendlyAuthError(e); } });
 }
-/* v1.12 · Contraseña opcional: crearla o cambiarla estando dentro (útil tras «Entrar sin contraseña») */
+/* v1.12 · Contraseña: crearla o cambiarla estando dentro.
+   v1.26 · Mismas reglas que al crearla (se palomean en vivo). Para un facilitador es su forma de entrar. */
 function drawPw(){
   const box=$("#mePw"); if(!box) return;
-  box.innerHTML=`<b>Contraseña</b><p class="hint">Opcional: con ${bioName()} o con el enlace de tu correo no la necesitas.</p>
-    <div class="me-acts"><button class="abtn" id="pwOpen">${icon("key")}Crear o cambiar contraseña</button></div>`;
+  box.innerHTML=`<b>Contraseña</b><p class="hint">${isAdminRole()?`Entras con ella y tu código de 6 dígitos, o con ${bioName()}.`:`Con ella entras a Colmena. ${bioName()} es opcional.`}</p>
+    <div class="me-acts"><button class="abtn" id="pwOpen">${icon("key")}Cambiar contraseña</button></div>`;
   $("#pwOpen").onclick=()=>{
-    box.innerHTML=`<b>Nueva contraseña</b><form id="pwForm" autocomplete="on">
+    box.innerHTML=`<b>Nueva contraseña</b><form id="pwForm" autocomplete="on" novalidate>
       <input type="email" autocomplete="username" value="${esc(ME.email)}" hidden readonly>
-      <div class="field"><label for="pw1">Contraseña <span class="opt">mínimo 8 caracteres</span></label><div class="pw-wrap"><input id="pw1" class="input" type="password" autocomplete="new-password" minlength="8" required><button type="button" class="pw-eye" id="pwEye" aria-pressed="false">Mostrar</button></div></div>
-      <div class="field"><label for="pw2">Confírmala</label><input id="pw2" class="input" type="password" autocomplete="new-password" required></div>
+      <div class="field"><label for="pw1">Contraseña nueva</label><div class="pw-wrap"><input id="pw1" class="input" type="password" autocomplete="new-password" maxlength="72" aria-describedby="pwRules" required><button type="button" class="pw-eye" id="pwEye" aria-pressed="false">Mostrar</button></div></div>
+      ${pwRulesHTML("pwRules")}
+      <div class="field"><label for="pw2">Confírmala</label><input id="pw2" class="input" type="password" autocomplete="new-password" maxlength="72" required></div>
       <p class="err" id="pwErr" hidden></p>
       <div class="me-acts"><button class="abtn primary" type="submit" id="pwGo">Guardar</button><button class="abtn" type="button" id="pwNo">Cancelar</button></div></form>`;
-    eyeToggle("#pwEye", ["#pw1","#pw2"]); $("#pw1").focus(); $("#pwNo").onclick=drawPw;
-    $("#pwForm").onsubmit=async e=>{ e.preventDefault(); const a=$("#pw1").value, b=$("#pw2").value, er=$("#pwErr"), bad=t=>{ er.hidden=false; er.textContent=t; };
-      if(a.length<8) return bad("Usa al menos 8 caracteres."); if(a!==b) return bad("Las contraseñas no coinciden.");
+    eyeToggle("#pwEye", ["#pw1","#pw2"]); wirePwRules($("#pw1"), $("#pwRules"), ME.email); $("#pw1").focus(); $("#pwNo").onclick=drawPw;
+    $("#pwForm").onsubmit=async e=>{ e.preventDefault(); const a=$("#pw1").value, b=$("#pw2").value, er=$("#pwErr"), bad=t=>{ er.hidden=false; er.textContent=t; }, r=pwEval(a, ME.email);
+      if(!r.ok) return bad(r.msg); if(!b) return bad("Escríbela otra vez en «Confírmala»."); if(a!==b) return bad("Las contraseñas no coinciden.");
       $("#pwGo").disabled=true;
       try{ await Store.setPassword(a); toast("Contraseña guardada"); drawPw(); }catch(x){ bad(friendlyAuthError(x)); $("#pwGo").disabled=false; } };
   };
@@ -7623,13 +7780,15 @@ function inviteEmail(inv){
     </td></tr>
     <tr><td align="center" style="${F}padding:8px 40px 0 40px;font-size:12.5px;line-height:19px;color:#616D87;">Vence el ${e(until)} · Solo funciona una vez y con <b style="color:#46536E;">${e(inv.email)}</b></td></tr>
     <tr><td style="padding:30px 40px 0 40px;"><div style="height:1px;line-height:1px;font-size:0;background:#DCE3EE;">&nbsp;</div></td></tr>
-    <tr><td style="${F}padding:24px 40px 10px 40px;font-size:13px;font-weight:800;letter-spacing:1.5px;color:#01133B;text-transform:uppercase;">En 3 pasos, 1 minuto · sin contraseñas</td></tr>
+    <tr><td style="${F}padding:24px 40px 10px 40px;font-size:13px;font-weight:800;letter-spacing:1.5px;color:#01133B;text-transform:uppercase;">En 3 pasos, 1 minuto${isAdm?" · sin contraseñas":""}</td></tr>
     <tr><td style="padding:6px 40px 0 40px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
       ${step(1,"Abre tu invitación","Da clic en «Aceptar invitación» (mejor desde tu celular).")}
-      ${step(2,"Activa Face ID o tu huella","Un toque y listo: así entrarás siempre, sin contraseña. ¿Prefieres un código? Elige «App autenticadora».")}
-      ${step(3,"Entra a Colmena","Crea tu primer taller. Desde tu computadora entras con tu teléfono cerca o activando ahí también Face ID / Touch ID.")}
+      ${isAdm ? step(2,"Activa Face ID o tu huella","Un toque y listo: así entrarás siempre, sin contraseña. ¿Prefieres un código? Elige «App autenticadora».")
+              : step(2,"Crea tu contraseña","Al menos 8 caracteres, con una mayúscula y un número. Con ella entras desde cualquier dispositivo.")}
+      ${isAdm ? step(3,"Entra a Colmena","Crea tu primer taller. Desde tu computadora entras con tu teléfono cerca o activando ahí también Face ID / Touch ID.")
+              : step(3,"Entra a Colmena","Crea tu primer taller. Si quieres, activa Face ID o tu huella para no escribirla.")}
     </table></td></tr>
-    <tr><td style="${F}padding:0 40px 16px 40px;font-size:12.5px;line-height:19px;color:#616D87;"><b style="color:#46536E;">¿Usas Microsoft Authenticator?</b> Al agregar la cuenta elige «Otra cuenta (Google, Facebook, etc.)», no «Cuenta profesional o educativa».</td></tr>
+${isAdm?`    <tr><td style="${F}padding:0 40px 16px 40px;font-size:12.5px;line-height:19px;color:#616D87;"><b style="color:#46536E;">¿Usas Microsoft Authenticator?</b> Al agregar la cuenta elige «Otra cuenta (Google, Facebook, etc.)», no «Cuenta profesional o educativa».</td></tr>`:""}
     <tr><td style="${F}padding:4px 40px 30px 40px;font-size:12.5px;line-height:19px;color:#616D87;">¿El botón no abre? Copia este enlace en tu navegador:<br><a href="${e(link)}" style="color:#1B6FAE;word-break:break-all;">${e(link)}</a></td></tr>
   </table>
   <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;">
@@ -7640,7 +7799,7 @@ function inviteEmail(inv){
 </td></tr></table>`;
   const doc = `<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tu invitación a Colmena</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet"></head><body style="margin:0;padding:0;background:#EEF3F9;">${body}</body></html>`;
-  const text = `${first?"Hola "+first:"Hola"}:\n\n${sender?sender+" te invitó a":"Te invitaron a"} Colmena, la plataforma de ${BRAND_ORG} para facilitar workshops de design thinking en vivo.\n\nTu rol: ${roleT}. ${roleD}\n\n1. Abre tu invitación (mejor desde tu celular): ${link}\n2. Activa Face ID o tu huella: así entrarás siempre, sin contraseña. Si prefieres un código, elige «App autenticadora» (en Microsoft Authenticator: «Otra cuenta», no «Cuenta profesional»).\n3. Entra a Colmena con ${inv.email}.\n\nLa invitación vence el ${until} y solo funciona una vez.\n${sender?"\n"+sender:""}`;
+  const text = `${first?"Hola "+first:"Hola"}:\n\n${sender?sender+" te invitó a":"Te invitaron a"} Colmena, la plataforma de ${BRAND_ORG} para facilitar workshops de design thinking en vivo.\n\nTu rol: ${roleT}. ${roleD}\n\n1. Abre tu invitación (mejor desde tu celular): ${link}\n${isAdm?"2. Activa Face ID o tu huella: así entrarás siempre, sin contraseña. Si prefieres un código, elige «App autenticadora» (en Microsoft Authenticator: «Otra cuenta», no «Cuenta profesional»).":"2. Crea tu contraseña: al menos 8 caracteres, con una mayúscula y un número."}\n3. Entra a Colmena con ${inv.email}.\n\nLa invitación vence el ${until} y solo funciona una vez.\n${sender?"\n"+sender:""}`;
   return { subject:"Tu invitación a Colmena · "+BRAND_ORG, html:body, doc, text, link };
 }
 /* Copia texto con formato (HTML) + texto plano. Pegado en Outlook o Gmail conserva el diseño. */
@@ -7698,7 +7857,7 @@ async function adminTeamView(lastInvite){
       <aside class="ah-side">
         <section class="panel" aria-labelledby="invT">
           <h2 id="invT">Invitar a alguien</h2>
-          <p class="hint" style="margin:-.25rem 0 .875rem">Le llega un correo para entrar en 1 minuto con Face ID o su huella, sin contraseñas. Sirve una vez, con ese correo, durante 7 días.</p>
+          <p class="hint" style="margin:-.25rem 0 .875rem">Le llega un correo para entrar en 1 minuto: si es facilitador, crea su contraseña; si es admin, activa Face ID o su app. Sirve una vez, con ese correo, durante 7 días.</p>
           <form id="invForm" novalidate>
             <div class="field"><label for="inv-name">Nombre <span class="opt">opcional</span></label><input id="inv-name" class="input" autocomplete="off" maxlength="120" value="${esc(F.name)}" placeholder="Ej. Ana López"></div>
             <div class="field"><label for="inv-mail">Correo</label><input id="inv-mail" class="input" type="email" autocomplete="off" required value="${esc(F.email)}" placeholder="nombre@empresa.com"></div>
@@ -7805,9 +7964,12 @@ async function adminTeamView(lastInvite){
     busy("m-"+id, true, "Guardando…");
     try{ await Store.setStaff(id,{role:to}); toast(to==="admin"?"Ahora es admin":"Ahora es facilitador"); adminTeamView(); }catch(e){ toast(friendlyAuthError(e)); busy("m-"+id, false); } };
   const reset=async id=>{
-    if(!(await askDialog({kind:"bee", title:`¿Reiniciar el acceso de ${who(id)}?`, text:"Úsalo si perdió o cambió su teléfono. Se borran su Face ID y su app autenticadora, y le llega un correo para activarlos de nuevo en 1 minuto. Sus talleres no se tocan.", ok:"Reiniciar acceso"}))) return;
+    const fac=(AH.staff.find(x=>x.user_id===id)||{}).role!=="admin";
+    if(!(await askDialog({kind:"bee", title:`¿Reiniciar el acceso de ${who(id)}?`, text: fac
+        ? "Úsalo si olvidó su contraseña o perdió su teléfono. Su contraseña y su Face ID dejan de servir, y le llega un correo para crear una nueva (vence en 72 horas). Sus talleres no se tocan."
+        : "Úsalo si perdió o cambió su teléfono. Se borran su Face ID y su app autenticadora, y le llega un correo para activarlos de nuevo en 1 minuto. Sus talleres no se tocan.", ok:"Reiniciar acceso"}))) return;
     busy("m-"+id, true, "Reiniciando…");
-    try{ const r=await Store.adminResetAccess(id); toast(r&&r.sent===false?"Acceso reiniciado. No se pudo enviar el correo: dile que use «Entrar sin contraseña».":`Listo: le enviamos un enlace a ${r&&r.email||who(id)}`); }catch(e){ toast(friendlyAuthError(e)); }
+    try{ const r=await Store.adminResetAccess(id); toast(r&&r.sent===false?"Acceso reiniciado. No se pudo enviar el correo: dile que toque «¿La olvidaste?» al entrar.":`Listo: le enviamos un enlace a ${r&&r.email||who(id)}${fac?" para crear una nueva contraseña":""}`); }catch(e){ toast(friendlyAuthError(e)); }
     busy("m-"+id, false); };
   /* v1.19 · Las acciones de cada persona viven en su menú ⋯ (en celular, hoja inferior) */
   $$(".ah-team [data-menu]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); const m=AH.staff.find(x=>x.user_id===b.dataset.menu); if(!m) return; const id=m.user_id, adm=m.role==="admin";
@@ -8309,10 +8471,11 @@ function renderAdmin(mode){
   const panelSummary = `
       <div class="panel pn-sum" id="sec-sum" data-k="sum">
         <div class="ph pn-wh"><div><h2>Resumen <span class="pn-ai">${icon("sparkle")}IA</span></h2><p class="pdesc">${sumTxt? `Propuesto por la IA${s.summary_at?" · "+esc(fmtDate(s.summary_at,{day:"numeric",month:"long"})):""} · lo puedes editar` : "La IA lo redacta con los resultados de este taller; tú lo revisas y lo editas"}</p></div>
-          ${sumTxt&&!A.readonly&&!A.sumBusy? `<div class="pn-sum-a"><button class="abtn" id="sumEdit">${icon("clipboard")}Editar</button>${canAI?`<button class="abtn" id="sumRegen">${icon("refresh")}Volver a generar</button>`:""}</div>`:""}</div>
+          ${sumTxt&&!A.readonly&&!A.sumBusy? `<div class="pn-sum-a"><button class="abtn" id="sumEdit">${icon("clipboard")}Editar</button></div>`:""}</div>
         ${A.sumBusy? `<div class="pn-sum-busy" role="status">${pnBeeIcon()}<span>Escribiendo el resumen…</span></div>`
           : sumTxt? `<div class="pn-sum-t">${sumHTML(sumTxt)}</div>`
-          : canAI&&(A.cards.length||votesUsed)? `<div class="pn-sum-e">${pnBeeIcon()}<div><b>Genera el resumen con IA</b><span>Con los dolores, votos, mejoras, reglas y tiempos de este taller. Usa unos 2 mil tokens de tu mes.</span></div><button class="abtn primary" id="sumGo">${icon("sparkle")}Generar resumen</button></div>`
+          : (A.sumDone||{})[s.id]? `<p class="join-help">Este taller ya usó su resumen con IA.</p>`
+          : canAI&&(A.cards.length||votesUsed)? `<div class="pn-sum-e">${pnBeeIcon()}<div><b>Genera el resumen con IA</b><span>Con los dolores, votos, mejoras, reglas y tiempos de este taller. Se genera una sola vez por taller; después lo puedes editar.</span></div><button class="abtn primary" id="sumGo">${icon("sparkle")}Generar resumen</button></div>`
           : `<p class="join-help">${A.readonly? "Quien facilita aún no genera el resumen." : (A.cards.length? "La IA no está disponible por ahora." : "Se genera cuando el taller tenga dolores y votos.")}</p>`}
       </div>`;
   const F=[];
@@ -8452,8 +8615,8 @@ function renderAdmin(mode){
   if($("#bandQR")) $("#bandQR").onclick=showQR;
   if($("#bandPresent")) $("#bandPresent").onclick=()=>startPresentation();
   if($("#bandShare")) $("#bandShare").onclick=e=>{ e.stopPropagation(); openPop("share", $("#bandShare")); };
-  if($("#sumGo")) $("#sumGo").onclick=()=>generateSummary();
-  if($("#sumRegen")) $("#sumRegen").onclick=async()=>{ if(await askDialog({kind:"bee", title:"¿Volver a generar el resumen?", text:"La IA escribirá uno nuevo y reemplazará el actual, incluidas tus ediciones.", ok:"Volver a generar"})) generateSummary(); };
+  /* v1.26 · Una sola vez por taller terminado: se confirma antes (no hay «Volver a generar») */
+  if($("#sumGo")) $("#sumGo").onclick=async()=>{ if(await askDialog({kind:"bee", title:"¿Generar el resumen con IA?", text:"Se genera una sola vez por taller, con lo que hay ahora en los resultados. Después lo puedes editar, pero no volver a generar.", ok:"Generar resumen"})) generateSummary(); };
   if($("#sumEdit")) $("#sumEdit").onclick=()=>editSummary();
   $$("[data-wst]").forEach(b=>b.onclick=()=>{ if(A.wallSt===b.dataset.wst) return; A.wallSt=b.dataset.wst; renderAdmin(); });
   $$("[data-whi]").forEach(b=>b.onclick=()=>{ const v=b.dataset.whi==="1"; if(!!A.wallHi===v) return; A.wallHi=v; renderAdmin(); });
@@ -8476,11 +8639,12 @@ async function generateSummary(){
   try{
     const r=await Store.summarizeWorkshop(s.id, A._sumStats());
     const text=String(r&&r.summary||"").trim(); if(!text) throw new Error("La IA no devolvió el resumen. Intenta de nuevo.");
-    const at=new Date().toISOString();
-    await Store.updateSession(s.id,{summary:text, summary_at:at});
+    const at=(r&&r.summary_at)||new Date().toISOString();
+    if(!(r&&r.summary_at)) await Store.updateSession(s.id,{summary:text, summary_at:at});   /* v1.26 · el servidor ya lo guarda */
     sumSet(s, text, at);
     const u=r.usage; toast(u? `Resumen listo · usó ${fmtTok((u.input_tokens||0)+(u.output_tokens||0))} tokens` : "Resumen listo");
   }catch(e){ console.error("[Colmena] resumen:", e);
+    if(e && e.status===409 && e.body && e.body.ai==="once"){ (A.sumDone=A.sumDone||{})[s.id]=true; await refetchAll().catch(()=>{}); }   /* ya existía: se muestra el guardado y ya no se ofrece generar */
     toast(/summary|column|PGRST204|schema cache/i.test(String(e&&e.message))? "Falta correr migracion-v123-resumen.sql en Supabase." : friendlyAuthError(e)); }
   A.sumBusy=false; if(A.session && A.session.id===s.id) renderAdmin();
 }
