@@ -2654,7 +2654,7 @@ html:is([data-vt="axis"],[data-vt="fade"]) .a-top{view-transition-name:a-top}
 html:is([data-vt="axis"],[data-vt="fade"]) .stepper{view-transition-name:a-steps}
 html[data-vt="axis"] .p-top{view-transition-name:p-top}
 html[data-vt="axis"] .p-shell>.p-cta{view-transition-name:p-cta}
-html[data-vt="axis"] .ah-shell>.ah-wide,html[data-vt="axis"] .ah-shell>.ah-main,html[data-vt="axis"] .a-shell>.a-main,html[data-vt="axis"] .p-shell>.p-body,html[data-vt="wz"] #wBody{view-transition-name:page}
+html[data-vt="axis"] .ah-shell>.ah-wide,html[data-vt="axis"] .ah-shell>.ah-main,html[data-vt="axis"] .a-shell>.a-main,html[data-vt="axis"] .p-shell>.p-body,html[data-vt="axis"] .p-main>.p-body,html[data-vt="wz"] #wBody{view-transition-name:page}
 html[data-vt] .v-in .vi,html[data-vt] .ah-team.v-in>*{animation:none}
 @keyframes vt-in{from{translate:var(--vt-dx,0) 0}}
 @keyframes vt-out{to{translate:calc(var(--vt-dx,0) * -.5) 0}}
@@ -3527,6 +3527,8 @@ html.dark .pb-seg.cur i{background:var(--primary)}
 html.dark .p-shell .chip.on,html.dark .p-shell .sevpick button.on{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
 html.dark .p-shell .sevpick button.on b{color:var(--on-primary)}
 .p-shell .chip.chip-all{color:var(--ink-2)}
+.p-shell .chip.chip-all.on{color:#fff}
+html.dark .p-shell .chip.chip-all.on{color:var(--on-primary)}
 .p-shell .mood-opt.on{border-color:var(--band);background:var(--miel-soft);box-shadow:0 0 0 2px var(--band) inset}
 html.dark .p-shell .mood-opt.on{border-color:var(--primary);box-shadow:0 0 0 2px var(--primary) inset}
 .p-shell .honeycell.full,.p-shell .vhex{background:var(--miel)}
@@ -3632,6 +3634,263 @@ html.dark .hv-body{background:#1B3268}
   .pband *,.pkpi,.pn-wall .wcard,.pn-fc,.ts-bar,.pn-dw .donut circle,.stepper .st-w::before,.pn-sum-busy .pn-bee{animation:none!important}
   .pc-honey,.pc-hx{transition:none}
 }
+
+/* ============================================================
+   v1.27 · Participante en tablet y computadora. El celular no cambia.
+   .p-shell.lg = 720 px o más (tablet vertical): contenido acomodado y barra de acción de 64 px.
+   .p-shell.pw = 900 px o más: barra superior a todo lo ancho, actividad al centro y carril de la sala a la derecha.
+   .p-shell.p3 = 1100 px o más. Las clases las pone app2.js (pShell) según el ancho y el tamaño de texto.
+   ============================================================ */
+.p-shell.lg{--pw:46rem;padding-left:1.5rem;padding-right:1.5rem}
+.p-shell.lg:not(.pw)>.p-top.pbar{margin:-1.25rem -1.5rem 0;padding:.875rem 1.5rem .75rem}
+.p-shell.lg:not(.pw)>.sticky-votes{margin:0 -1.5rem;padding:.625rem 1.5rem}
+/* Tablet vertical: la acción en una barra baja (64 px) con la sala a la izquierda */
+.p-shell.lg:not(.pw) .p-cta{max-width:none;margin:0;display:flex;align-items:center;gap:.75rem;min-height:4rem;
+  padding:.625rem max(1.5rem,calc((100% - 46rem)/2 + 1.5rem)) calc(.625rem + env(safe-area-inset-bottom));pointer-events:auto;
+  background:color-mix(in srgb,var(--card) 94%,transparent);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-top:1px solid var(--line)}
+.p-shell.lg:not(.pw) .p-cta .btn{width:auto;flex:none;padding:.75rem 1.375rem;font-size:1rem;margin:0}
+.p-shell.lg:not(.pw) .p-cta .btn-primary{order:4}
+.p-shell.lg:not(.pw) .p-cta .btn-ghost,.p-shell.lg:not(.pw) .p-cta .btn-line{order:3}
+.p-shell.lg:not(.pw) .p-cta .cta-hint{order:2;flex:1 1 auto;min-width:0;text-align:left;margin:0;font-size:.8125rem}
+.p-shell.lg:not(.pw) .p-cta .cta-hint~.cta-hint{display:none}
+.p-shell.lg:not(.pw) .p-cta .pc-room{order:1;flex:1 1 auto;min-width:0}
+.p-shell.lg:not(.pw) .p-cta:has(.cta-hint:not(:empty)) .pc-room{display:none}
+.p-room.mini{flex-direction:row;align-items:center;gap:.625rem;margin:0;padding:0;border:0}
+.p-room.mini .p-comb{width:auto;max-width:6.5rem!important;height:1.5rem}
+.p-room.mini .pc-hx{fill:var(--fill);stroke:var(--line-2)}
+.p-room.mini .pc-cell.on .pc-hx{stroke:var(--miel-deep)}
+.p-room.mini .p-room-t{font-size:.8125rem;font-weight:600;color:var(--ink-2);white-space:nowrap}
+.p-room.mini .p-room-t b{color:var(--ink);font-weight:800}
+
+/* Piezas comunes (tablet y computadora) */
+.p-panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.25rem 1.375rem}
+.p-h2{margin:0;font-family:var(--pn-display);font-size:1.25rem;font-weight:800;line-height:1.2;letter-spacing:-.01em;color:var(--ink);text-wrap:balance}
+.p-h2row{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.375rem 1rem;margin:0 0 .875rem}
+.p-help{margin:0;font-size:.875rem;line-height:1.5;color:var(--ink-3)}
+.p-help b{color:var(--ink)}
+.p-empty{margin:.5rem 0 0;padding:1rem;border:1.5px dashed var(--line);border-radius:14px;font-size:.875rem;line-height:1.5;color:var(--ink-3)}
+.p-shell.lg .p-body>.p-panel,.p-shell.lg .p-body>.pmap,.p-shell.lg .p-body>.p-h2{margin-bottom:1.25rem}
+.p-shell.lg .p-band{padding:1.25rem 1.5rem 1.25rem}
+.p-shell.lg .p-band:not(.tall) .pb-art{width:7rem;top:.75rem;right:.75rem}
+.p-shell.lg .p-band:not(.tall) .pbd-t{font-size:1.75rem;padding-right:7rem}
+.p-shell.lg .pbd-d{font-size:.9375rem;max-width:44rem}
+.p-shell.lg .p-band:not(.tall) .pbd-d{padding-right:6rem}
+.p-shell.lg .pbd-k{font-size:.8125rem}
+.p-agenda{list-style:none;margin:.75rem 0 0;padding:0;display:grid}
+.p-agenda li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.875rem;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--line)}
+.p-agenda li:last-child{border-bottom:0;padding-bottom:0}
+.p-agenda .hexs{display:grid;place-items:center;width:2rem;height:2.25rem;background:var(--miel-soft);color:var(--miel-ink);font-family:var(--pn-display);font-weight:800;font-size:.875rem}
+.p-agenda li.done .hexs{background:var(--miel);color:var(--on-miel)}
+.p-agenda li.cur .hexs{background:var(--band);color:#fff}
+html.dark .p-agenda li.cur .hexs{background:var(--primary);color:var(--on-primary)}
+.p-agenda b{display:block;font-size:.9375rem;font-weight:700;color:var(--ink)}
+.p-agenda span{display:block;font-size:.84375rem;color:var(--ink-3);margin-top:.125rem}
+/* Bienvenida, registro y cierre: dos columnas en computadora, una en tablet */
+.p-body.p-split{display:grid;grid-template-columns:minmax(0,1fr);gap:1.25rem;align-content:start}
+.p-split>*{margin:0!important}
+.p-band.hero{display:flex;flex-direction:column;justify-content:flex-end;min-height:16rem}
+.p-band.hero .pbd-t{font-size:2.25rem;padding-right:0}
+.p-band.hero .pbd-d{padding-right:0;font-size:1rem}
+.pbd-go{position:relative;margin-top:1.5rem}
+.pbd-go .btn{width:auto;padding:.875rem 2rem}
+/* Registro en 2 pasos con vista previa */
+.ob-card{display:grid;gap:1.25rem;align-content:start}
+.ob-card .p-kicker{display:flex;align-items:center;margin:0}
+.ob-card .p-title{margin:-.5rem 0 0}
+.ob-q .field{margin-bottom:0}
+.ob-qt{margin:0;font-size:1rem;font-weight:800;color:var(--ink)}
+.ob-qs{margin:.125rem 0 .75rem;font-size:.84375rem;color:var(--ink-3)}
+.ob-name>div,.ob-name{display:block}
+.ob-name .field+.field{margin-top:.75rem}
+.ob-q .avatar-grid{grid-template-columns:repeat(8,minmax(0,1fr));gap:.5rem}
+.ob-q .avatar-pick .glass.ava .ava-emoji{font-size:1.875rem}
+.ob-acts{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;padding-top:.25rem}
+.ob-acts .btn{width:auto;padding:.875rem 1.75rem}
+.ob-acts .btn-primary{order:3;margin-left:auto}
+.ob-acts .cta-hint{order:2;margin:0}
+.ob-acts .btn-ghost{order:1}
+.ob-pv{display:grid;gap:.75rem;align-content:start;padding:1.25rem;border-radius:18px;background:var(--navy-soft)}
+.ob-pv .pr-k{color:var(--ink-2)}
+.ob-pv-card{display:grid;gap:.625rem;padding:1rem;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.ob-pv-who{display:flex;align-items:center;gap:.625rem;min-width:0}
+.ob-pv-who b{display:block;font-size:.9375rem;font-weight:800;color:var(--ink);overflow-wrap:anywhere}
+.ob-pv-who span{display:block;font-size:.8125rem;color:var(--ink-3)}
+.ob-pv-t{margin:0;font-size:.84375rem;line-height:1.5;color:var(--ink-2)}
+.pr-k{margin:0 0 .625rem;font-size:.6875rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+/* Sala de espera: el proceso en tarjetas */
+.lgmap{padding:0;max-width:none;margin:0 0 1.25rem}
+.pm-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr));gap:.625rem}
+.pm-grid li{display:grid;gap:.5rem;align-content:start;padding:.875rem;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.pm-grid li.mine{background:var(--miel-soft);border-color:var(--miel)}
+.pm-grid .pm-n{display:grid;place-items:center;width:1.75rem;height:1.875rem;clip-path:var(--pn-hex);background:var(--band);color:#fff;font-family:var(--pn-display);font-weight:800;font-size:.8125rem;border-radius:0}
+html.dark .pm-grid .pm-n{background:var(--primary);color:var(--on-primary)}
+.pm-grid .pm-t{font-size:.875rem;font-weight:700;line-height:1.3;color:var(--ink)}
+.pm-grid .pm-you{justify-self:start;font-size:.6875rem;font-weight:800;padding:.125rem .5rem;border-radius:99px}
+.lgmap .pm-other{margin:.75rem 0 0;font-size:.84375rem;color:var(--ink-3)}
+/* Check-in: las 5 opciones en una fila */
+.p-shell.lg .mood-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.625rem}
+.p-shell.lg .mood-opt{position:relative;flex-direction:column;justify-content:flex-start;gap:.625rem;padding:1.125rem .5rem 1rem;text-align:center;font-size:.875rem;line-height:1.3;min-height:8.5rem}
+.p-shell.lg .mood-opt .glass{width:3.25rem;height:3.25rem}
+.p-shell.lg .ck-exp{margin-top:1.25rem!important}
+/* Dolores: escribir a la izquierda, tus tarjetas a la derecha */
+.p-dol{display:grid;grid-template-columns:minmax(0,1fr);gap:1.25rem;align-items:start}
+.p-compose .field:last-of-type{margin-bottom:.75rem}
+.pc-foot{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem .875rem;padding-top:.875rem;border-top:1px solid var(--line)}
+.pc-foot .cta-hint{flex:1 1 12rem;margin:0;text-align:left}
+.pc-foot .cta-hint.nudge{color:var(--danger);animation:pnudge .4s}
+@keyframes pnudge{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.kbd-hint{font-size:.75rem;color:var(--ink-3);white-space:nowrap}
+.pc-foot .cta-hint:not(:empty)+.kbd-hint{display:none}
+kbd{display:inline-block;font-family:var(--sans);font-size:.6875rem;font-weight:700;line-height:1.4;padding:0 .3125rem;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;background:var(--card);color:var(--ink-2)}
+.btn.btn-pub{width:auto;margin-left:auto;padding:.75rem 1.25rem;font-size:.9375rem;background:var(--band);border-color:var(--band);color:#fff}
+.btn.btn-pub:disabled{background:var(--fill-3);border-color:var(--fill-3);color:var(--ink-3);opacity:1}
+html.dark .btn.btn-pub:not(:disabled){background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
+.p-mylist .mycard{margin-bottom:.625rem}
+.p-mylist .mycard .txt{font-weight:600}
+/* Votación en cuadrícula */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16rem),1fr));gap:.75rem;align-items:stretch}
+.vgrid .votecard{margin:0;display:flex;flex-direction:column}
+.vgrid .votecard .txt{flex:1;font-weight:600;font-size:.96875rem;line-height:1.4}
+.vgrid .vote-ctrl{justify-content:space-between}
+.vgrid .vbtn{width:2.5rem;height:2.5rem}
+.v-filter{display:flex;flex-wrap:wrap;gap:.375rem;margin-left:auto}
+.v-filter .chip{padding:.375rem .75rem;min-height:2.25rem;font-size:.8125rem;min-width:2.25rem}
+/* Validación como tabla */
+.qw-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.625rem;margin:0 0 1.25rem}
+.qw-st{display:grid;gap:.125rem;text-align:left;padding:.75rem 1rem;border-radius:14px;border:1.5px solid var(--line);background:var(--card);font-size:.75rem;font-weight:600;color:var(--ink-3);cursor:pointer}
+.qw-st b{font-size:.9375rem;font-weight:800;color:var(--ink)}
+.qw-st.on{border-color:var(--band);box-shadow:inset 0 0 0 1px var(--band)}
+html.dark .qw-st.on{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.qx{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.qx-h,.qx-r{display:grid;grid-template-columns:minmax(0,1fr) minmax(17rem,24rem);gap:1rem;align-items:center;padding:.75rem 1rem}
+.qx-h{padding-top:.625rem;padding-bottom:.625rem;font-size:.75rem;font-weight:700;color:var(--ink-3);border-bottom:1px solid var(--line)}
+.qx-o{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.375rem;text-align:center}
+.qx-st{margin:0;padding:.5rem 1rem;background:var(--surface);font-size:.6875rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line)}
+.qx .qwcard.qx-r{margin:0;border:0;border-radius:0;border-bottom:1px solid var(--line);background:none;box-shadow:none}
+.qx .qwcard.qx-r:last-child{border-bottom:0}
+.qx .qwcard.qx-r .txt{margin:0;font-size:.96875rem;font-weight:600;line-height:1.4}
+.qx-ok{display:flex;align-items:center;gap:.25rem;margin-top:.25rem;font-size:.75rem;font-weight:700;color:var(--ok-ink)}
+.qx-ok svg{width:.875rem;height:.875rem;stroke-width:3}
+.qx-r .seg button{min-height:2.5rem;padding:.5rem .25rem;font-size:.8125rem}
+.qx-r .qhelp{margin-top:.25rem}
+.qx .qwcard.qx-r.done{background:color-mix(in srgb,var(--miel-soft) 45%,transparent)}
+/* Ideas */
+.ideas3{display:grid;gap:1.25rem;align-items:start}
+.reto-col{display:grid;gap:.875rem;align-content:start;min-width:0}
+.reto-col .reto{margin:0}
+.ri-body{display:grid;gap:.875rem;align-items:start}
+.ri-form{display:grid;gap:.625rem;padding:1rem}
+.ri-form label{font-weight:700;font-size:.875rem;color:var(--ink)}
+.ri-form textarea.input{min-height:5.5rem}
+.ri-foot{display:flex;justify-content:flex-end}
+.ri-n{margin:0 0 .5rem}
+.ideaList .ideacard{margin-bottom:.5rem}
+.ideaList .ideacard .txt{font-weight:600}
+.ideas3.three{grid-template-columns:repeat(var(--n,3),minmax(0,1fr))}
+.ideas3.three .reto{min-height:9.5rem}
+.p-shell.lg #retos{margin:0 0 1rem}
+/* Resultados: podio y dos columnas */
+.p-podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin:.875rem 0 .75rem}
+.p-pod{display:flex;flex-direction:column;gap:.75rem;padding:1.125rem;border-radius:16px;background:var(--card);border:1px solid var(--line)}
+.p-pod.first{background:var(--miel-soft);border-color:var(--miel)}
+.p-pod p{flex:1;margin:0;font-weight:700;font-size:.96875rem;line-height:1.4;color:var(--ink)}
+.pod-n{font-family:var(--pn-display);font-weight:800;font-size:2.25rem;line-height:1;color:var(--ink)}
+.pod-bar{display:block;height:.5rem;border-radius:9px;background:var(--fill);overflow:hidden}
+.pod-bar i{display:block;height:100%;border-radius:9px;background:var(--miel)}
+.p-rest{display:grid;gap:.5rem;margin:0 0 1.5rem}
+.p-rrow{display:grid;grid-template-columns:1.75rem minmax(0,1fr) auto;gap:.75rem;align-items:center;padding:.75rem 1rem;border-radius:14px;background:var(--card);border:1px solid var(--line)}
+.p-rrow b{font-family:var(--pn-display);font-size:1.125rem;color:var(--ink-3)}
+.p-rrow p{margin:0;font-weight:600;font-size:.9375rem}
+.p-rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr));gap:1.25rem 1.5rem;align-items:start}
+.p-rsec .p-h2{font-size:1.0625rem;margin-bottom:.625rem}
+.p-rlist .mycard{margin-bottom:.5rem;box-shadow:none}
+.p-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin-top:.875rem}
+.p-stat{display:grid;gap:.125rem;padding:1rem;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.p-stat b{font-family:var(--pn-display);font-weight:800;font-size:2rem;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--ink)}
+.p-stat span{font-size:.8125rem;font-weight:600;color:var(--ink-2)}
+.p-mine{align-self:center}
+
+/* ---------- 900 px o más: barra superior, actividad al centro y carril ---------- */
+.p-shell.pw{--pw:none;max-width:none;margin:0;padding:0;display:block;min-height:100dvh}
+.pw>.p-top.ptw{position:sticky;top:0;z-index:6;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:1.25rem;margin:0;
+  padding:.75rem clamp(1.5rem,3vw,2.5rem);background:color-mix(in srgb,var(--surface) 90%,transparent);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid var(--line)}
+.ptw-l{display:flex;align-items:center;gap:.625rem;min-width:0}
+.ptw-l .sname{flex:1;min-width:0;font-weight:700;font-size:.875rem;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ptw-r{display:flex;align-items:center;justify-content:flex-end;gap:.5rem}
+.ptw-r .pb-pill{margin-left:0}
+.ptw-steps{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:.25rem}
+.ptw-steps li{display:flex;align-items:center;gap:.4375rem;padding:.25rem .625rem .25rem .25rem;border-radius:99px;font-size:.8125rem;font-weight:600;color:var(--ink-3);white-space:nowrap}
+.ptw-steps li+li::before{content:"";width:.875rem;height:2px;border-radius:2px;background:var(--line);margin:0 .25rem 0 -.375rem}
+.ptw-steps li.done+li::before{background:var(--miel)}
+.ptw-steps i{display:grid;place-items:center;width:1.5rem;height:1.625rem;font-style:normal;font-size:.6875rem;font-weight:800;background:var(--fill);color:var(--ink-3)}
+.ptw-steps i svg{width:.75rem;height:.75rem;stroke-width:3.2}
+.ptw-steps em{font-style:normal}
+.ptw-steps li.done i{background:var(--miel);color:var(--on-miel)}
+.ptw-steps li.cur{color:var(--ink);background:var(--card);box-shadow:0 0 0 1px var(--line)}
+.ptw-steps li.cur i{background:var(--band);color:#fff}
+html.dark .ptw-steps li.cur i{background:var(--primary);color:var(--on-primary)}
+.p-shell.pw:not(.p3) .ptw-steps li:not(.cur) em{display:none}
+.p-shell.pw:not(.p3) .ptw-steps li:not(.cur){padding-right:.25rem}
+.p-cols{display:grid;grid-template-columns:minmax(0,1fr) 17rem;gap:1.5rem;align-items:start;max-width:88rem;margin:0 auto;padding:1.5rem clamp(1.5rem,3vw,2.5rem) 3rem}
+.p-shell.p3 .p-cols{grid-template-columns:minmax(0,1fr) 20rem;gap:2rem;padding-top:1.75rem}
+.p-shell.pw.full .p-cols{grid-template-columns:minmax(0,1fr);max-width:76rem;padding-top:2.5rem}
+.p-main{min-width:0;display:flex;flex-direction:column}
+.pw .p-main>.p-body{flex:none;padding:0}
+.pw .p-main>.sticky-votes{position:sticky;top:var(--pbar-h,0px);margin:-1.5rem 0 1.25rem;padding:.75rem 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.p-shell.p3 .p-main>.sticky-votes{margin-top:-1.75rem}
+.pw .p-band{margin-bottom:1.5rem}
+.pw .p-band .pb-art{width:8rem}
+.pw .p-band:not(.tall) .pbd-t{font-size:2rem;padding-right:8rem}
+.pw .p-split{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:1.75rem;align-items:stretch}
+.pw .p-split.ob{grid-template-columns:minmax(0,1.35fr) minmax(0,.85fr);align-items:start}
+.pw .p-band.hero{min-height:22rem;padding:2rem 2rem 1.875rem}
+.pw .p-band.hero .pb-art{position:relative;top:auto;right:auto;width:9rem;margin:0 0 auto}
+.pw .p-band.hero .pbd-t{font-size:2.5rem}
+.p-shell.p3 .p-dol{grid-template-columns:minmax(0,1.25fr) minmax(0,.85fr);gap:1.5rem}
+.p-shell.p3 .p-mylist{position:sticky;top:calc(var(--pbar-h,0px) + 1.5rem)}
+.pw .ri-body{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.pw .ideas3.three .ri-body{grid-template-columns:minmax(0,1fr)}
+.p-shell.pw:not(.p3) .p-podium{grid-template-columns:minmax(0,1fr)}
+.p-shell.pw:not(.p3) .p-pod{flex-direction:row;align-items:center;flex-wrap:wrap}
+.p-shell.pw:not(.p3) .p-pod p{flex:1 1 14rem}
+.p-shell.pw:not(.p3) .pod-bar{flex:1 1 100%}
+/* Tarjeta de espera en pantalla grande: el panal a la izquierda */
+.pw .p-wait{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"room head" "room sub" "room next" "room act";column-gap:1.75rem;align-items:start;padding:1.5rem 1.75rem;margin-bottom:1.5rem}
+.pw .p-wait>.pw-h{grid-area:head}
+.pw .p-wait>.pw-sub{grid-area:sub}
+.pw .p-wait>.p-room{grid-area:room;align-self:center;margin:0;padding:0;width:12rem}
+.pw .p-wait>.pw-next{grid-area:next}
+.pw .p-wait>.done-act{grid-area:act;justify-content:flex-start}
+.pw .p-wait>.done-act .btn{flex:none}
+.pw .p-wait .pw-h h2{font-size:1.625rem}
+/* El carril */
+.p-rail{position:sticky;top:calc(var(--pbar-h,0px) + 1.5rem);display:grid;gap:.875rem;align-content:start;min-width:0}
+.p-room.rail{margin:0;padding:1.125rem;gap:.625rem;border:0;border-radius:18px;color:#fff;background:radial-gradient(130% 120% at 100% 0%,var(--band-2) 0%,var(--band) 62%)}
+.p-room.rail .pr-k{margin:0;color:var(--on-band-2)}
+.p-room.rail .p-comb{max-width:100%!important}
+.p-room.rail .p-room-t{flex-direction:column;align-items:flex-start;gap:.375rem;font-size:.8125rem;font-weight:500;line-height:1.45;color:var(--on-band-2)}
+.p-room.rail .p-room-n{font-size:1.875rem}
+.p-room.rail .p-room-n small{font-size:.875rem}
+.pr-card{padding:1rem 1.125rem;border-radius:18px;background:var(--card);border:1px solid var(--line);min-width:0}
+.pr-row{display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;padding:.375rem 0;font-size:.875rem;color:var(--ink-2)}
+.pr-row+.pr-row{border-top:1px solid var(--line)}
+.pr-row b{flex:none;font-family:var(--pn-display);font-weight:800;font-size:1.0625rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.pr-vote span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pr-me{display:flex;align-items:center;gap:.75rem}
+.pr-me .glass.lg{width:2.75rem;height:2.75rem}
+.pr-me .glass.ava.lg .ava-emoji{font-size:1.5rem}
+.pr-me b{display:block;font-size:.9375rem;font-weight:700;color:var(--ink)}
+.pr-me span{display:block;font-size:.8125rem;color:var(--ink-3)}
+.p-rail .p-cta.pr-act{position:static;max-width:none;margin:0;padding:1rem;pointer-events:auto;background:var(--card);border:1px solid var(--line);border-radius:18px;display:grid;gap:.5rem}
+.p-rail .p-cta .btn{margin:0}
+.p-rail .p-cta .cta-hint{margin:0;text-align:center}
+.p-rail .dn.end{margin:0;box-shadow:none}
+.p-rail .pr-status .p-help{text-align:left}
+/* Pantallas sin el armazón nuevo (portada «Soy participante», entrar con código): botón bajo el contenido */
+@media (min-width:900px){:where(html:not([data-ts])) .p-shell:not(.pw):not(.lg)>.p-cta{position:static;max-width:26rem;width:100%;margin:1.5rem auto 0;padding:0;background:none}:where(html:not([data-ts])) .p-shell:not(.pw):not(.lg){padding-bottom:3rem}}@media (min-width:1012px){:where(html[data-ts="l"]) .p-shell:not(.pw):not(.lg)>.p-cta{position:static;max-width:26rem;width:100%;margin:1.5rem auto 0;padding:0;background:none}:where(html[data-ts="l"]) .p-shell:not(.pw):not(.lg){padding-bottom:3rem}}@media (min-width:1125px){:where(html[data-ts="xl"]) .p-shell:not(.pw):not(.lg)>.p-cta{position:static;max-width:26rem;width:100%;margin:1.5rem auto 0;padding:0;background:none}:where(html[data-ts="xl"]) .p-shell:not(.pw):not(.lg){padding-bottom:3rem}}
+/* Portada de la actividad nueva: ventana centrada en tablet y computadora */
+@media (min-width:720px){:where(html:not([data-ts])) .p-switch{align-items:center;padding:1.5rem}:where(html:not([data-ts])) .psw-card{max-width:32rem;padding-bottom:1.625rem}}@media (min-width:810px){:where(html[data-ts="l"]) .p-switch{align-items:center;padding:1.5rem}:where(html[data-ts="l"]) .psw-card{max-width:32rem;padding-bottom:1.625rem}}@media (min-width:900px){:where(html[data-ts="xl"]) .p-switch{align-items:center;padding:1.5rem}:where(html[data-ts="xl"]) .psw-card{max-width:32rem;padding-bottom:1.625rem}}
+@media (prefers-reduced-motion:reduce){ .pc-foot .cta-hint.nudge{animation:none} }
 </style>
 </head>
 <body>
@@ -3986,7 +4245,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261010001607";
+const APP_BUILD="20261012202634";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -4939,10 +5198,67 @@ const actIndex = ph => ACTS.findIndex(a=>a.id===ph);
 const facName = () => esc((P.session&&P.session.facilitator)||"quien facilita");
 const facNameCap = () => { const n=(P.session&&P.session.facilitator)||""; return n? esc(n) : "Quien facilita"; };
 function nextActOf(ph){ const i=actIndex(ph); return i>=0 && i<ACTS.length-1 ? ACTS[i+1].t : "Resultados"; }
+/* v1.27 · Lo que vas a hacer en cada actividad (bienvenida y sala de espera en pantalla grande) */
+function actDesc(a, s){ s=s||{}; return ({checkin:"Cuentas cómo llegas, en un toque.", pains:"Escribes lo que hoy estorba en el proceso.",
+  votes:`Repartes ${s.votes_per_user||5} votos entre los dolores de todos.`, quickwins:"Calificas mejoras rápidas que el equipo ya identificó.",
+  ideas:`Propones soluciones a los ${s.idea_top||3} dolores más votados.`})[a.id]||""; }
+
+/* ============================================================
+   v1.27 · Participante en tablet y computadora. El celular (menos de 720 px) se queda exactamente igual.
+   - Tablet vertical (720–899 px): contenido acomodado (tablas, cuadrículas) y la acción en una barra baja de 64 px.
+   - Pantalla grande (900 px o más): barra superior a todo lo ancho, la actividad al centro y un carril a la derecha
+     con la sala, tu avance y la acción que termina cada actividad, siempre en el mismo lugar.
+   Los cortes siguen al tamaño de texto (Accesibilidad), igual que las media queries (tools/escala.py).
+   ============================================================ */
+const P_BP = {lg:720, wide:900, three:1100};
+function pBP(px){ const ts=document.documentElement.getAttribute("data-ts"), f=ts==="xl"?1.25:ts==="l"?1.125:1;
+  try{ return matchMedia(`(min-width:${Math.round(px*f)}px)`).matches; }catch(e){ return false; } }
+const pLarge = () => pBP(P_BP.lg), pWide = () => pBP(P_BP.wide), pThree = () => pBP(P_BP.three);
+const pMode = () => pThree()?"three":pWide()?"wide":pLarge()?"lg":"phone";
+/* Armazón de cada pantalla. o: {top, sticky, body, bodyCls, map, cta, rail:[html], room:false, full} */
+function pShell(o){
+  const lg=pLarge(), wide=pWide();
+  if(!wide){
+    const mini = lg && o.cta!=null && o.room!==false && P.me && actIndex(P.session&&P.session.phase)>=0 ? `<div class="pc-room">${pRoom("mini")}</div>` : "";
+    return `<div class="p-shell${lg?" lg":""}">${o.top}${o.sticky||""}<div class="p-body${o.bodyCls?" "+o.bodyCls:""}">${o.body}</div>${o.map||""}${o.cta!=null?`<div class="p-cta">${mini}${o.cta}</div>`:""}</div>`;
+  }
+  const full = !!o.full;
+  const rail = full ? "" : `<aside class="p-rail" aria-label="La sala y tu avance">${o.room===false||!P.me?"":pRoom("rail")}${(o.rail||[]).join("")}${o.cta!=null?`<div class="p-cta pr-act">${o.cta}</div>`:""}</aside>`;
+  return `<div class="p-shell lg pw${pThree()?" p3":""}${full?" full":""}">${o.top}<div class="p-cols"><div class="p-main">${o.sticky||""}<div class="p-body${o.bodyCls?" "+o.bodyCls:""}">${o.body}</div>${o.map||""}</div>${rail}</div></div>`;
+}
+/* Tarjetas del carril */
+const prCard = (k, rows, id) => `<section class="pr-card"${id?` id="${id}"`:""}><p class="pr-k">${k}</p>${rows}</section>`;
+const prRow = (t, v) => `<div class="pr-row"><span>${t}</span><b>${v}</b></div>`;
+const prMe = () => P.me ? `<section class="pr-card pr-me">${avatar(P.me.emoji,"lg")}<div><b>${esc(P.me.nombre)} ${esc(P.me.apellido||"")}</b><span>${esc([P.me.rol,P.me.area].filter(Boolean).join(" · "))}</span></div></section>` : "";
+/* Lo que pasa al cambiar de tamaño (girar la tablet, ventana más angosta o tamaño de texto): se vuelve a pintar la pantalla */
+function pRelayout(){
+  if(!$(".p-shell") || !P.session || $(".p-switch")) return;
+  if(P.view==="ob"){ const steps=obSteps(), g=obGroups(steps);
+    if(pLarge()){ const k=g.findIndex(x=>x.includes(P.step)); P.obg=Math.max(0,k); } else P.step=(g[P.obg||0]||[0])[0];
+    renderOnboarding(); return; }
+  if(P.view==="welcome"){ screenWelcome(); return; }
+  if(P.me && P.view==="phase") renderPhaseSafe();
+}
+(function(){ let last=null, t=null;
+  const check=()=>{ const m=pMode(); if(last===null||!$(".p-shell")){ last=m; return; } if(m===last) return; last=m; pRelayout(); };
+  addEventListener("resize",()=>{ clearTimeout(t); t=setTimeout(check,160); });
+  if(window.MutationObserver) new MutationObserver(()=>setTimeout(check,30)).observe(document.documentElement,{attributes:true,attributeFilter:["data-ts"]});
+  setTimeout(check,0);
+})();
 
 /* Barra superior: en las actividades dice «Actividad N de 5 · Nombre», con 5 segmentos y el estado */
 function pTop(withDots, totalDots, onDot, status){
   const s=P.session, ph=s&&s.phase, i=actIndex(ph);
+  /* v1.27 · Pantalla grande: una sola barra a todo lo ancho con el nombre del taller, las 5 actividades y el estado */
+  if(pWide()){
+    const showSteps = !withDots && P.me && (i>=0 || ph==="results");
+    const cur = ph==="results" ? ACTS.length : i, st=status||"curso";
+    return `<div class="p-top pbar ptw">
+      <div class="ptw-l">${brandLockup("xs")}<span class="sname">${esc(s? s.name : CONFIG.BRAND)}</span></div>
+      ${showSteps?`<ol class="ptw-steps" aria-label="Actividades">${ACTS.map((a,k)=>`<li class="${k<cur?"done":k===cur?"cur":""}"${k===cur?' aria-current="step"':""}><i class="hexs" aria-hidden="true">${k<cur?icon("check"):k+1}</i><em>${a.t}</em></li>`).join("")}</ol>`:`<span></span>`}
+      <div class="ptw-r">${showSteps&&i>=0?`<span class="pb-pill ${st}" id="pbPill">${st==="listo"?"Listo ✓":st==="espera"?"Esperando":"En curso"}</span>`:""}${themeBtnHTML("p-th")}${a11yBtnHTML()}</div>
+    </div>`;
+  }
   if(withDots || i<0 || !P.me){
     return `<div class="p-top">
       ${brandLockup("xs")}
@@ -4960,7 +5276,7 @@ function pTop(withDots, totalDots, onDot, status){
 /* v1.18 · Navegación del participante con transición (adelante = desliza a la izquierda). Solo acciones de la persona:
    el sondeo nunca dispara transiciones; si la fase cambia por el sondeo, la pantalla nueva solo aparece suave (pEnter). */
 function pGo(fn, dir){ return Motion.go(fn, {kind:"axis", dir:dir==null?1:dir, wait:250}); }
-function pEnter(){ if(Motion.busy() || !Motion.ok()) return; const b=$(".p-shell>.p-body"), c=$(".p-shell>.p-cta");
+function pEnter(){ if(Motion.busy() || !Motion.ok()) return; const b=$(".p-shell .p-body"), c=$(".p-shell:not(.pw)>.p-cta");
   if(b) Motion.enter([b],{y:14, spring:"gentle", fade:220});
   if(c) Motion.a(c,[{translate:"0 100%"},{translate:"0 0"}],{spring:"gentle"}); }
 /* «Listo ✓» y la palomita de «Terminé»: pop con Bouncy (elementos chicos) */
@@ -4994,24 +5310,43 @@ function pCombN(total, listos, big){
     <defs>${Array.from({length:cells},(_,i)=>{ const {x,y}=pos(i); return `<clipPath id="prc${i}"><polygon points="${pnHex(x,y,r-1.5)}"/></clipPath>`; }).join("")}</defs>
     ${Array.from({length:cells},(_,i)=>{ const {x,y}=pos(i); return `<g class="pc-cell${i<onN?" on":""}" data-k="pc${i}"><polygon class="pc-hx" points="${pnHex(x,y,r-1)}"/><g clip-path="url(#prc${i})"><rect class="pc-honey" x="${(x-r).toFixed(1)}" y="${(y-r).toFixed(1)}" width="${2*r}" height="${2*r}"/></g></g>`; }).join("")}</svg>`;
 }
-function pRoomInner(big){
-  const r=roomNow(), ph=P.session&&P.session.phase;
-  if(!r||!r.total) return `<p class="p-room-t" id="peers">${peersText()}</p>`;
-  const on=ph==="lobby"? r.total : r.listos;
-  return `${pCombN(r.total, on, big)}<p class="p-room-t" id="peers">${big&&ph!=="lobby"?`<b class="p-room-n">${r.listos}<small> de ${r.total}</small></b>`:""}<span>${peersText()}</span></p>`;
+/* kind: "band" (en la portada), "big" (tarjeta de espera), "rail" (carril en pantalla grande), "mini" (barra de tablet) */
+function pRoomInner(kind){
+  if(kind===true) kind="big"; if(!kind||kind===false) kind="band";
+  const r=roomNow(), ph=P.session&&P.session.phase, lobby=ph==="lobby";
+  if(kind==="mini"){
+    if(!r||!r.total) return `<p class="p-room-t"><span>${peersText()}</span></p>`;
+    return `${pCombN(r.total, lobby?r.total:r.listos, false)}<p class="p-room-t"><span>${lobby?`<b>${r.total}</b> en la sala`:r.listos>=r.total&&r.total>1?"<b>Toda la sala</b> terminó":`<b>${r.listos} de ${r.total}</b> terminaron`}</span></p>`;
+  }
+  if(kind==="rail"){
+    const k=`<p class="pr-k">La sala</p>`;
+    if(!r||!r.total) return `${k}<p class="p-room-t"><span>${peersText()}</span></p>`;
+    const me=isDone(ph), faltan=r.total-r.listos;
+    const sub = lobby ? `Cuando ${facName()} abra la primera actividad, tu pantalla cambia sola.`
+      : r.listos>=r.total && r.total>1 ? "Toda la sala terminó. En un momento cambia la pantalla."
+      : me ? peersText()
+      : faltan===1 ? "Solo faltas tú."
+      : `${facNameCap()} abre ${ph==="ideas"?"los resultados":nextActOf(ph)} cuando el grupo esté listo.`;
+    return `${k}${pCombN(r.total, lobby?r.total:r.listos, true)}<p class="p-room-t"><b class="p-room-n">${lobby?r.total:r.listos}<small> ${lobby?(r.total===1?"persona en la sala":"personas en la sala"):`de ${r.total} ya terminaron`}</small></b><span>${sub}</span></p>`;
+  }
+  const big=kind==="big";
+  if(!r||!r.total) return `<p class="p-room-t">${peersText()}</p>`;
+  const on=lobby? r.total : r.listos;
+  return `${pCombN(r.total, on, big)}<p class="p-room-t">${big&&!lobby?`<b class="p-room-n">${r.listos}<small> de ${r.total}</small></b>`:""}<span>${peersText()}</span></p>`;
 }
-const pRoom = big => `<div class="p-room${big?" big":""}" id="pRoom" aria-live="polite">${pRoomInner(big)}</div>`;
+const pRoom = kind => { if(kind===true) kind="big"; if(!kind) kind="band";
+  return `<div class="p-room ${kind}" data-room="${kind}"${kind==="mini"?' aria-hidden="true"':' aria-live="polite"'}>${pRoomInner(kind)}</div>`; };
 function pRoomChip(){ const r=roomNow(); if(!r||!r.total) return `<span class="pb-roomc" id="pRoomC" hidden></span>`;
   return `<span class="pb-roomc${r.listos>=r.total?" all":""}" id="pRoomC" aria-label="${r.listos} de ${r.total} ya terminaron"><i class="hexs" aria-hidden="true"></i><span><b>${r.listos}</b>/${r.total}</span></span>`; }
 /* Cada pulso: el panal y el contador se ponen al día sin redibujar la pantalla (lo que escribes no se toca) */
 function pRoomRefresh(){
-  const el=$("#pRoom"); if(el) Motion.morph(el, pRoomInner(el.classList.contains("big")), {animate:true});
+  $$(".p-room[data-room]").forEach(el=>Motion.morph(el, pRoomInner(el.dataset.room), {animate:true}));
   const c=$("#pRoomC"); if(c){ const t=document.createElement("div"); t.innerHTML=pRoomChip(); const n=t.firstElementChild; c.className=n.className; c.hidden=n.hidden; c.innerHTML=n.innerHTML; if(n.getAttribute("aria-label")) c.setAttribute("aria-label",n.getAttribute("aria-label")); }
   const k=$("#pwK"); if(k){ const r=roomNow(); k.textContent = r&&r.total>1&&r.listos>=r.total? "¡Toda la sala terminó!" : `Listo, ${P.me?P.me.nombre:""}`; }
   pNudge();
 }
 /* Aviso suave a quien va atrás: una vez por actividad, cuando 7 de cada 10 ya terminaron (o solo falta esa persona) */
-const DONE_HOW={checkin:"toca «Enviar check-in»", pains:"toca «No tengo más por ahora»", votes:"usa tus votos y quedas lista", quickwins:"toca «Terminar validación»", ideas:"toca «Terminé con Ideas»"};
+const DONE_HOW={checkin:"toca «Enviar check-in»", pains:"toca «No tengo más por ahora»", votes:"usa todos tus votos", quickwins:"toca «Terminar validación»", ideas:"toca «Terminé con Ideas»"};
 function pNudge(){
   const ph=P.session&&P.session.phase, r=roomNow();
   if(!P.me || actIndex(ph)<0 || !r || r.total<3 || isDone(ph) || P.nudged.has(ph) || document.hidden || $(".p-switch") || $(".sheet")) return;
@@ -5060,7 +5395,8 @@ function pBand(o){
     ${pnArt(o.art)}
     <div class="pbd-k">${o.n!=null?`<span class="pb-n hexs">${o.n}</span>`:""}<span>${o.kicker}</span></div>
     <h1 class="pbd-t">${o.title}</h1>${o.sub?`<p class="pbd-d">${o.sub}</p>`:""}
-    ${o.room===false?"":pRoom(false)}
+    ${o.extra||""}
+    ${o.room===false||pWide()?"":pRoom("band")}
   </section>`;
 }
 const actBand = (ph, title, sub) => { const i=actIndex(ph); return pBand({k:ph, n:i+1, kicker:`Actividad ${i+1} de ${ACTS.length} · ${ACTS[i].t}`, title, sub, art:ph}); };
@@ -5102,6 +5438,7 @@ function lostDraftSheet(oldPh){
 }
 
 function screenJoin(msg){
+  P.view="join";
   $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
     <div class="p-body">
       <p class="p-kicker">Bienvenido</p>
@@ -5118,17 +5455,29 @@ function screenJoin(msg){
   $("#jgo").onclick = ()=>{ const c=$("#jcode").value.trim(); if(c.length<4) return toast("Escribe el código completo"); location.search="?s="+c; };
 }
 
+/* v1.27 · Agenda de las 5 actividades con lo que harás en cada una (bienvenida y sala de espera en pantalla grande) */
+function pAgenda(s){ const cur=actIndex(s.phase);
+  return `<ol class="p-agenda">${ACTS.map((a,k)=>`<li class="${k<cur?"done":k===cur?"cur":""}"><span class="hexs">${k+1}</span><div><b>${a.t}</b><span>${actDesc(a,s)}</span></div></li>`).join("")}</ol>`; }
 function screenWelcome(){
-  const s=P.session;
+  const s=P.session; P.view="welcome";
+  const late = actIndex(s.phase)>0||["results","closed"].includes(s.phase);
+  const sub = late?`El taller ya va en ${s.phase==="results"?"los resultados":`la actividad ${actIndex(s.phase)+1} de ${ACTS.length}`}. Regístrate en un minuto y te unes donde va.`:`Son ${ACTS.length} actividades cortas. Tus respuestas se guardan al instante y se ven en la pantalla de la sala.`;
+  const go = `<button class="btn btn-primary" id="wgo">Comenzar</button>`;
+  if(pLarge()){
+    const wide=pWide();
+    $("#app").innerHTML = pShell({top:pTop(false), full:true, bodyCls:"p-split", cta:wide?null:go,
+      body:`${pBand({k:"welcome", kicker:s.facilitator?`Facilita ${esc(s.facilitator)}`:"Te invitaron a un taller", title:esc(s.name), art:"lobby", room:false, cls:"tall hero", sub, extra:wide?`<div class="pbd-go">${go}</div>`:""})}
+        <section class="p-panel"><h2 class="p-h2">Lo que vas a hacer</h2>${pAgenda(s)}</section>`});
+  } else {
   $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
     <div class="p-body">
-      ${pBand({k:"welcome", kicker:s.facilitator?`Facilita ${esc(s.facilitator)}`:"Te invitaron a un taller", title:esc(s.name), art:"lobby", room:false, cls:"tall",
-        sub: actIndex(s.phase)>0||["results","closed"].includes(s.phase)?`El taller ya va en ${s.phase==="results"?"los resultados":`la actividad ${actIndex(s.phase)+1} de ${ACTS.length}`}. Regístrate en un minuto y te unes donde va.`:`Son ${ACTS.length} actividades cortas desde tu celular. Tus respuestas se guardan al instante y se ven en la pantalla de la sala.`})}
+      ${pBand({k:"welcome", kicker:s.facilitator?`Facilita ${esc(s.facilitator)}`:"Te invitaron a un taller", title:esc(s.name), art:"lobby", room:false, cls:"tall", sub})}
       <ol class="p-steps">${ACTS.map((a,k)=>`<li><span class="hexs">${k+1}</span><b>${a.t}</b></li>`).join("")}</ol>
     </div>
-    <div class="p-cta"><button class="btn btn-primary" id="wgo">Comenzar</button></div>
+    <div class="p-cta">${go}</div>
   </div>`;
-  $("#wgo").onclick=()=>pGo(()=>{ P.step=0; renderOnboarding(); });
+  }
+  $("#wgo").onclick=()=>pGo(()=>{ P.step=0; P.obg=0; renderOnboarding(); });
 }
 
 /* ---------- Onboarding: los pasos dependen de cómo se configuró el taller ---------- */
@@ -5194,9 +5543,60 @@ function obSteps(){
 }
 
 const OB_HINTS={"¿Cómo te llamas?":"Escribe tu nombre para continuar","¿En qué área trabajas?":"Elige un área para continuar","¿Cuál es tu rol?":"Elige tu rol para continuar","¿Cuál es tu puesto?":"Escribe tu puesto para continuar","¿En qué etapas participas?":"Elige al menos una etapa","Elige tu avatar":"Toca un avatar para continuar"};
-function refreshCTA(){ const st=obSteps()[P.step]; const b=$("#obNext"); if(b && st){ b.disabled = !st.valid(); const h=$("#obHint"); if(h) h.textContent = b.disabled ? (OB_HINTS[st.title]||"") : ""; } }
+function refreshCTA(){
+  if(P.view==="ob" && pLarge()) return refreshObLarge();
+  const st=obSteps()[P.step]; const b=$("#obNext"); if(b && st){ b.disabled = !st.valid(); const h=$("#obHint"); if(h) h.textContent = b.disabled ? (OB_HINTS[st.title]||"") : ""; } }
+
+/* v1.27 · En tablet y computadora el registro son 2 pasos: «Cuéntanos quién eres» (nombre, área, puesto)
+   y «Tu parte del proceso» (etapas y avatar), con una vista previa de cómo aparecerás en el muro. En celular siguen los 5. */
+function obGroups(steps){ const k=steps.findIndex(s=>s.title==="¿En qué etapas participas?"||s.title==="Elige tu avatar");
+  return k>0 ? [steps.map((_,i)=>i).slice(0,k), steps.map((_,i)=>i).slice(k)] : [steps.map((_,i)=>i)]; }
+const OB_GROUP_T = ["Cuéntanos quién eres", "Tu parte del proceso"];
+function obPreview(){ const f=P.form, who=[f.rol,f.area].filter(Boolean).join(" · ");
+  return `<div class="ob-pv-card"><div class="ob-pv-who">${avatar(f.emoji||"🐝","sm")}<div><b>${esc([f.nombre,f.apellido].filter(Boolean).join(" ")||"Tu nombre")}</b><span>${esc(who||"Tu puesto · tu área")}</span></div></div>
+    <p class="ob-pv-t">Así se verán tus tarjetas en la pantalla de la sala, con tu nombre y tu avatar.</p>${f.etapas.length?`<div class="meta-row">${f.etapas.slice(0,3).map(t=>`<span class="tag">${esc(t)}</span>`).join("")}${f.etapas.length>3?`<span class="tag sev">+${f.etapas.length-3}</span>`:""}</div>`:""}</div>`; }
+function refreshObLarge(){
+  const steps=obSteps(), g=obGroups(steps)[P.obg||0]||[], bad=g.map(i=>steps[i]).find(s=>!s.valid());
+  const b=$("#obNext"); if(b) b.disabled=!!bad; const h=$("#obHint"); if(h) h.textContent = bad ? (OB_HINTS[bad.title]||"") : "";
+  const pv=$("#obPv"); if(pv) pv.innerHTML=obPreview();
+}
+function renderObLarge(){
+  const steps=obSteps(), groups=obGroups(steps); P.obg=Math.min(P.obg||0, groups.length-1);
+  const g=groups[P.obg], last=P.obg===groups.length-1, wide=pWide();
+  const acts = `<button class="btn btn-primary" id="obNext">${last?"Entrar a la colmena":"Continuar"}</button><p class="cta-hint" id="obHint"></p>${P.obg>0?'<button class="btn btn-ghost" id="obBack">Regresar</button>':""}`;
+  $("#app").innerHTML = pShell({top:pTop(true), full:true, bodyCls:"p-split ob", cta:wide?null:acts,
+    body:`<section class="p-panel ob-card">
+      <p class="p-kicker">Paso ${P.obg+1} de ${groups.length}<span class="dots" aria-hidden="true">${groups.map((_,i)=>`<span class="dot ${i<=P.obg?"on":""}"></span>`).join("")}</span></p>
+      <h1 class="p-title">${OB_GROUP_T[groups.length===1?0:P.obg]}</h1>
+      ${g.map(i=>{ const st=steps[i]; return `<section class="ob-q${st.title==="¿Cómo te llamas?"?" ob-name":""}"><h2 class="ob-qt">${st.title}</h2><p class="ob-qs">${st.sub}</p>${st.body()}</section>`; }).join("")}
+      ${wide?`<div class="ob-acts">${acts}</div>`:""}
+    </section>
+    <aside class="ob-pv"><p class="pr-k">Así aparecerás en el muro</p><div id="obPv" aria-live="polite">${obPreview()}</div></aside>`});
+  g.forEach(i=>{ if(steps[i].wire) steps[i].wire(); });
+  $$(".p-body .input").forEach(el=>el.addEventListener("input",()=>{ g.forEach(i=>steps[i].read()); refreshCTA(); }));
+  refreshCTA();
+  const back=$("#obBack"); if(back) back.onclick=()=>{ g.forEach(i=>steps[i].read()); P.obg--; pGo(renderOnboarding,-1); };
+  $("#obNext").onclick = async ()=>{
+    g.forEach(i=>steps[i].read()); const bad=g.map(i=>steps[i]).find(s=>!s.valid()); if(bad) return;
+    if(!last){ P.obg++; pGo(renderOnboarding,1); return; }
+    await obJoin();
+  };
+  const first=$(".p-body .input"); if(first && !first.value) setTimeout(()=>{ try{ first.focus({preventScroll:true}); }catch(e){} },60);
+}
+async function obJoin(){
+  if(P.sending) return; P.sending=true; const b=$("#obNext"); if(b) b.disabled=true;
+  try{
+    const me = await Store.joinParticipant({ session_id:P.session.id, nombre:P.form.nombre, apellido:P.form.apellido,
+      area:P.form.area, rol:P.form.rol, etapas:P.form.etapas, emoji:P.form.emoji });
+    P.me=me; P.banner=P.session.phase;
+    pGo(()=>renderPhaseSafe());
+  }catch(e){ console.error(e); toast(friendlyAuthError(e).startsWith("No hay conexión")?friendlyAuthError(e):"No se pudo entrar. Intenta de nuevo."); if(b) b.disabled=false; }
+  finally{ P.sending=false; }
+}
 
 function renderOnboarding(){
+  P.view="ob";
+  if(pLarge()) return renderObLarge();
   const steps=obSteps(), st=steps[P.step];
   $("#app").innerHTML = `<div class="p-shell">${pTop(true, steps.length, P.step)}
     <div class="p-body">
@@ -5218,14 +5618,7 @@ function renderOnboarding(){
   $("#obNext").onclick = async ()=>{
     st.read(); if(!st.valid()) return;
     if(P.step<steps.length-1){ P.step++; pGo(renderOnboarding,1); return; }
-    if(P.sending) return; P.sending=true; $("#obNext").disabled=true;
-    try{
-      const me = await Store.joinParticipant({ session_id:P.session.id, nombre:P.form.nombre, apellido:P.form.apellido,
-        area:P.form.area, rol:P.form.rol, etapas:P.form.etapas, emoji:P.form.emoji });
-      P.me=me; P.banner=P.session.phase;
-      pGo(()=>renderPhaseSafe());
-    }catch(e){ console.error(e); toast(friendlyAuthError(e).startsWith("No hay conexión")?friendlyAuthError(e):"No se pudo entrar. Intenta de nuevo."); }
-    finally{ P.sending=false; }
+    await obJoin();
   };
 }
 
@@ -5235,6 +5628,10 @@ function processMap(s){
   const mine=new Set(P.me.etapas||[]);
   const num=stages.filter(t=>/^\d+\s/.test(t)), other=stages.filter(t=>!/^\d+\s/.test(t));
   const item=t=>{ const m=t.match(/^(\d+)\s+(.+)$/); return `<li class="${mine.has(t)?"mine":""}"><span class="pm-n">${m?esc(m[1]):"·"}</span><span class="pm-t">${esc(m?m[2]:t)}</span>${mine.has(t)?'<span class="pm-you">participas</span>':""}</li>`; };
+  if(pLarge()) return `<section class="pmap lgmap"><div class="p-h2row"><h2 class="p-h2">Así vemos el proceso</h2><p class="p-help">En cada etapa vamos a preguntar qué duele, qué mejora ayudaría y cuánto tarda. Las marcadas son en las que participas.</p></div>
+    <ol class="pm-grid">${num.map(item).join("")}</ol>
+    ${other.length?`<p class="pm-other">También: ${other.map(t=>`<span class="${mine.has(t)?"mine":""}">${esc(t.replace(/\s*\(.*\)$/,""))}</span>`).join(" · ")}</p>`:""}
+  </section>`;
   return `<section class="pmap">
     <p class="p-kicker">Así vemos el proceso</p>
     <p class="p-sub" style="margin:0 0 .75rem">En cada paso te vamos a preguntar qué duele, qué mejora ayudaría y cuánto tarda. Los marcados son en los que dijiste que participas.</p>
@@ -5264,6 +5661,7 @@ async function renderPhaseSafe(o){
 async function renderPhase(){
   const s=P.session, ph=s.phase||"lobby";
   if(!P.me){ screenWelcome(); return; }
+  P.view="phase";
   const changed = P.lastPh!==undefined && P.lastPh!==ph;
   if(changed){
     const old=P.lastPh; window.scrollTo(0,0);
@@ -5275,10 +5673,17 @@ async function renderPhase(){
   P.lastPh=ph;
   if((actIndex(ph)>=0||ph==="lobby") && !(P.progress && P.progress.phase===ph && Date.now()-(P.progress.at||0)<10000)) loadProgress();
   if(ph==="lobby"){
+    const band=pBand({k:"lobby", kicker:"Sala de espera", title:"Ya estás dentro, "+esc(P.me.nombre), sub:`Son ${ACTS.length} actividades cortas. Cuando ${facName()} abra la primera, tu pantalla cambia sola.`, art:"lobby", cls:"me-in"});
+    const meRow=`<div class="p-me">${avatar(P.me.emoji,"lg")}<div><b>${esc(P.me.nombre)} ${esc(P.me.apellido||"")}</b><span>${esc([P.me.rol,P.me.area].filter(Boolean).join(" · "))}</span></div></div>`;
+    if(pLarge()){
+      $("#app").innerHTML = pShell({top:pTop(false), rail:[prMe()],
+        body:`${band}${pWide()?"":meRow}${processMap(s)}<section class="p-panel"><h2 class="p-h2">Lo que sigue</h2>${pAgenda(s)}</section>`});
+      return;
+    }
     $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
       <div class="p-body">
-        ${pBand({k:"lobby", kicker:"Sala de espera", title:"Ya estás dentro, "+esc(P.me.nombre), sub:`Son ${ACTS.length} actividades cortas. Cuando ${facName()} abra la primera, tu pantalla cambia sola.`, art:"lobby", cls:"me-in"})}
-        <div class="p-me">${avatar(P.me.emoji,"lg")}<div><b>${esc(P.me.nombre)} ${esc(P.me.apellido||"")}</b><span>${esc([P.me.rol,P.me.area].filter(Boolean).join(" · "))}</span></div></div>
+        ${band}
+        ${meRow}
       </div>
       ${processMap(s)}
     </div>`;
@@ -5291,39 +5696,63 @@ async function renderPhase(){
   if(ph==="ideas") return renderIdeas();
   if(ph==="results") return renderResults();
   /* closed */
+  const thanks=pBand({k:"closed", kicker:"Taller cerrado", title:"Gracias, "+esc(P.me.nombre), sub:"La sesión terminó. Lo que aportaste ya quedó guardado y trabajaremos sobre ello. Puedes cerrar esta pestaña.", art:"closed", room:false, cls:"tall"+(pLarge()?" hero":"")});
+  if(pLarge()){
+    const st=await myStats();
+    $("#app").innerHTML = pShell({top:pTop(false), full:true, bodyCls:"p-split", body:`${thanks}${st?`<section class="p-panel p-mine"><h2 class="p-h2">Lo que aportaste hoy</h2>${statsGrid(st)}</section>`:""}`});
+    return;
+  }
   $("#app").innerHTML = `<div class="p-shell">${pTop(false)}
-    <div class="p-body">${pBand({k:"closed", kicker:"Taller cerrado", title:"Gracias, "+esc(P.me.nombre), sub:"La sesión terminó. Lo que aportaste ya quedó guardado y trabajaremos sobre ello. Puedes cerrar esta pestaña.", art:"closed", room:false, cls:"tall"})}</div>
+    <div class="p-body">${thanks}</div>
   </div>`;
 }
+/* v1.27 · Tus aportes del taller (resultados y cierre en pantalla grande). Se piden una sola vez por taller. */
+async function myStats(){
+  if(P.myStats && P.myStats.sid===P.session.id) return P.myStats;
+  const s=P.session, me=P.me.id, safe=p=>p.catch(()=>null);
+  const [cards,votes,ideas,qw]=await Promise.all([safe(Store.listMyCards(s.id,me)), safe(Store.listMyVotes(s.id,me)), safe(Store.listMyIdeas(s.id,me,"idea")), safe(Store.listMyQwRatings(s.id,me))]);
+  if(!cards && !votes && !ideas && !qw) return null;
+  P.myStats={sid:s.id, cards:(cards||[]).length, votes:(votes||[]).reduce((a,v)=>a+(v.points||0),0), ideas:(ideas||[]).length, qw:(qw||[]).length};
+  return P.myStats;
+}
+const statsGrid = st => `<div class="p-stats">${[[st.cards,"tarjeta de dolor","tarjetas de dolor"],[st.votes,"voto","votos"],[st.ideas,"idea","ideas"],[st.qw,"respuesta en Validación","respuestas en Validación"]]
+  .map(([n,a,b])=>`<div class="p-stat"><b>${n}</b><span>${n===1?a:b}</span></div>`).join("")}</div>`;
 
 /* ---------- Check-in: ánimo + expectativa ---------- */
 function renderCheckin(){
   const s=P.session;
   if(P.me.mood && !P.editCheckin){
     const m=MOODS.find(x=>x.v===P.me.mood);
-    $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,"listo")}
+    const blk=doneBlock({title:"Check-in enviado", sub:`${m?`${glass(m.ic,{size:"sm",tone:m.tone,tint:true})} <b>${esc(m.t)}</b>`:""}${P.me.expectativa?` · «${esc(P.me.expectativa)}»`:""}`, actions:[{id:"ckEdit",label:"Cambiar mi respuesta"}]});
+    $("#app").innerHTML = pLarge()? pShell({top:pTop(false,0,0,"listo"), body:blk, rail:[prMe()]}) : `<div class="p-shell">${pTop(false,0,0,"listo")}
       <div class="p-body">
-        ${doneBlock({title:"Check-in enviado", sub:`${m?`${glass(m.ic,{size:"sm",tone:m.tone,tint:true})} <b>${esc(m.t)}</b>`:""}${P.me.expectativa?` · «${esc(P.me.expectativa)}»`:""}`, actions:[{id:"ckEdit",label:"Cambiar mi respuesta"}]})}
+        ${blk}
       </div></div>`;
     armBanner();
     $("#ckEdit").onclick=()=>{ P.editCheckin=true; pGo(renderCheckin,-1); };
     return;
   }
-  let mood=P.me.mood||"", expect=P.me.expectativa||"";
-  $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,mood&&!P.editCheckin?"listo":"curso")}
+  /* v1.27 · Lo que eliges sobrevive si giras la tablet o cambias el tamaño de la ventana */
+  const ck=P.ckDraft&&P.ckDraft.sid===s.id?P.ckDraft:null;
+  let mood=(ck&&ck.mood)||P.me.mood||"", expect=ck?ck.expect:(P.me.expectativa||"");
+  const keep=()=>{ P.ckDraft={sid:s.id, mood, expect}; };
+  const top=pTop(false,0,0,mood&&!P.editCheckin?"listo":"curso");
+  const body=`${actBand("checkin", esc(s.q_checkin||"¿Cómo llegas a este taller?"), "Un toque y, si quieres, una frase.")}
+      <div class="mood-row" id="moods" role="radiogroup" aria-label="Cómo llegas">${MOODS.map(m=>`<button class="mood-opt ${mood===m.v?"on":""}" data-v="${m.v}" role="radio" aria-checked="${mood===m.v}">${glass(m.ic,{tone:m.tone,tint:true})} <span>${m.t}</span></button>`).join("")}</div>
+      <div class="field ck-exp" style="margin-top:1.25rem"><label for="f-exp">${esc(s.q_expect||"En una frase: ¿qué esperas de este taller?")} <span class="opt">(opcional)</span></label>
+        <input id="f-exp" class="input" maxlength="140" placeholder="Escríbelo en corto…" value="${esc(expect)}"></div>`;
+  const cta=`<button class="btn btn-primary" id="ckGo" ${mood?"":"disabled"}>Enviar check-in</button><p class="cta-hint" id="ckHint">${mood?"":"Elige cómo llegas para continuar"}</p>`;
+  $("#app").innerHTML = pLarge()? pShell({top, body, cta, rail:[]}) : `<div class="p-shell">${top}
     <div class="p-body">
-      ${actBand("checkin", esc(s.q_checkin||"¿Cómo llegas a este taller?"), "Un toque y, si quieres, una frase.")}
-      <div class="mood-row" id="moods">${MOODS.map(m=>`<button class="mood-opt ${mood===m.v?"on":""}" data-v="${m.v}">${glass(m.ic,{tone:m.tone,tint:true})} ${m.t}</button>`).join("")}</div>
-      <div class="field" style="margin-top:1.25rem"><label for="f-exp">${esc(s.q_expect||"En una frase: ¿qué esperas de este taller?")} <span class="opt">(opcional)</span></label>
-        <input id="f-exp" class="input" maxlength="140" placeholder="Escríbelo en corto…" value="${esc(expect)}"></div>
+      ${body}
     </div>
-    <div class="p-cta"><button class="btn btn-primary" id="ckGo" ${mood?"":"disabled"}>Enviar check-in</button><p class="cta-hint" id="ckHint">${mood?"":"Elige cómo llegas para continuar"}</p></div>
+    <div class="p-cta">${cta}</div>
   </div>`;
   armBanner();
-  $$("#moods .mood-opt").forEach(b=>b.onclick=()=>{ mood=b.dataset.v; $$("#moods .mood-opt").forEach(x=>x.classList.toggle("on",x===b)); $("#ckGo").disabled=false; $("#ckHint").textContent=""; });
-  $("#f-exp").addEventListener("input",e=>expect=e.target.value.trim());
+  $$("#moods .mood-opt").forEach(b=>b.onclick=()=>{ mood=b.dataset.v; keep(); $$("#moods .mood-opt").forEach(x=>{ x.classList.toggle("on",x===b); x.setAttribute("aria-checked",x===b); }); $("#ckGo").disabled=false; $("#ckHint").textContent=""; });
+  $("#f-exp").addEventListener("input",e=>{ expect=e.target.value.trim(); keep(); });
   $("#ckGo").onclick=async()=>{ if(P.sending)return; P.sending=true; $("#ckGo").disabled=true;
-    try{ await Store.updateParticipant(P.me.id,{mood,expectativa:expect}); P.me.mood=mood; P.me.expectativa=expect; P.editCheckin=false; await setDone("checkin",true); pGo(()=>{ window.scrollTo(0,0); renderCheckin(); pDonePop(); }); }
+    try{ await Store.updateParticipant(P.me.id,{mood,expectativa:expect}); P.me.mood=mood; P.me.expectativa=expect; P.editCheckin=false; P.ckDraft=null; await setDone("checkin",true); pGo(()=>{ window.scrollTo(0,0); renderCheckin(); pDonePop(); }); }
     catch(e){ toast("No se pudo enviar, intenta otra vez"); $("#ckGo").disabled=false; } finally{ P.sending=false; } };
 }
 
@@ -5337,12 +5766,8 @@ async function renderPains(){
   const mine=new Set(P.me.etapas||[]);
   const own=s.stages.filter(t=>mine.has(t)), rest=s.stages.filter(t=>!mine.has(t));
   const chip=t=>`<button class="chip" data-t="${esc(t)}">${esc(t)}</button>`;
-  $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,done?"listo":"curso")}
-    <div class="p-body">
-      ${done?doneBlock({title:"Terminaste Dolores", sub:`Publicaste ${P.myCards.length} tarjeta${P.myCards.length===1?"":"s"}. Si recuerdas otra, agrégala abajo.`}):actBand("pains", esc(s.q_pain||"¿Qué te duele de este proceso?"), "Una idea por tarjeta. Publica todas las que quieras; cuando ya no tengas más, toca «No tengo más por ahora».")}
-      <div id="mine">${renderMyCards()}</div>
-      ${done||P.myCards.length?`<h2 class="sec-title">Otra tarjeta</h2>`:""}
-      <div class="field"><label for="f-pain">Tu dolor</label>
+  const head = done?doneBlock({title:"Terminaste Dolores", sub:`Publicaste ${P.myCards.length} tarjeta${P.myCards.length===1?"":"s"}. Si recuerdas otra, ${pLarge()?"agrégala aquí":"agrégala abajo"}.`}):actBand("pains", esc(s.q_pain||"¿Qué te duele de este proceso?"), "Una idea por tarjeta. Publica todas las que quieras; cuando ya no tengas más, toca «No tengo más por ahora».");
+  const fields = `<div class="field"><label for="f-pain">Tu dolor</label>
         <textarea id="f-pain" class="input" maxlength="240" placeholder="Ej. Capturo la misma información en tres archivos distintos…"></textarea></div>
       <div class="field"><label>¿En qué parte del proceso pasa?</label>
         <div class="chips chips-tall" id="f-stage">${(own.length?own:s.stages).map(chip).join("")}</div>
@@ -5353,7 +5778,25 @@ async function renderPains(){
         <div class="chips" id="f-tool"></div></div>
       <div class="field"><label id="sevL">¿Qué tanto duele?</label>
         <div class="sevpick" id="f-sev" role="radiogroup" aria-labelledby="sevL">${[1,2,3,4,5].map(v=>`<button type="button" role="radio" data-v="${v}" aria-checked="${v===3}" class="${v===3?"on":""}"><b>${v}</b><span>${SEV_LABELS[v]}</span></button>`).join("")}</div>
-        <div class="sev-hint"><span>Menos</span><span>Más</span></div></div>
+        <div class="sev-hint"><span>Menos</span><span>Más</span></div></div>`;
+  /* v1.27 · Tablet y computadora: escribes a la izquierda (Enter publica) y ves tus tarjetas a la derecha;
+     «No tengo más por ahora» es la acción principal, en el carril o en la barra de abajo */
+  if(pLarge()){
+    const doneBtn = done?null:`<button class="btn btn-primary" id="painDone" ${P.myCards.length?"":"disabled"}>No tengo más por ahora</button><p class="cta-hint">${P.myCards.length?"Si luego recuerdas otra, todavía puedes agregarla.":"Publica al menos una tarjeta para terminar"}</p>`;
+    $("#app").innerHTML = pShell({top:pTop(false,0,0,done?"listo":"curso"), cta:doneBtn,
+      rail:[prCard("Tu avance", prRow("Tarjetas publicadas", P.myCards.length)), done?"":prMe()],
+      body:`${head}<div class="p-dol">
+        <section class="p-panel p-compose" aria-label="Nueva tarjeta">${fields}
+          <div class="pc-foot"><p class="cta-hint" id="painHint">Escribe tu dolor y elige la etapa</p><span class="kbd-hint" aria-hidden="true"><kbd>Enter</kbd> publica · <kbd>Shift</kbd> + <kbd>Enter</kbd> salto de línea</span>
+            <button class="btn btn-line btn-pub" id="painGo" disabled>Publicar tarjeta</button></div></section>
+        <section class="p-mylist" id="mine" aria-label="Tus tarjetas">${renderMyCards(true)}</section></div>`});
+  } else {
+  $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,done?"listo":"curso")}
+    <div class="p-body">
+      ${head}
+      <div id="mine">${renderMyCards()}</div>
+      ${done||P.myCards.length?`<h2 class="sec-title">Otra tarjeta</h2>`:""}
+      ${fields}
     </div>
     <div class="p-cta">
       <button class="btn btn-primary" id="painGo" disabled>Publicar tarjeta</button>
@@ -5361,9 +5804,12 @@ async function renderPains(){
       ${done?"":`<button class="btn btn-ghost" id="painDone" ${P.myCards.length?"":"disabled"}>No tengo más por ahora</button>${P.myCards.length?"":'<p class="cta-hint">Publica al menos una tarjeta para terminar</p>'}`}
     </div>
   </div>`;
+  }
   armBanner(); bindDraft($("#f-pain"),"pains");
-  const val=()=>{ const t=$("#f-pain").value.trim(); const ok=t.length>=8 && stage; $("#painGo").disabled=!ok;
-    $("#painHint").textContent = ok ? "" : t.length<8 ? (t.length?`Escribe un poco más (${8-t.length} caracteres)`:"Escribe tu dolor y elige la etapa") : "Elige en qué etapa pasa"; };
+  if(pLarge()) $("#f-pain").addEventListener("keydown",e=>{ if(e.key==="Enter" && !e.shiftKey && !e.isComposing){ e.preventDefault(); const g=$("#painGo"); if(g && !g.disabled) g.click(); else val(true); } });
+  const val=(loud)=>{ const t=$("#f-pain").value.trim(); const ok=t.length>=8 && stage; $("#painGo").disabled=!ok;
+    const h=$("#painHint"); h.textContent = ok ? "" : t.length<8 ? (t.length?`Escribe un poco más (${8-t.length} caracteres)`:"Escribe tu dolor y elige la etapa") : "Elige en qué etapa pasa";
+    if(loud===true && !ok){ h.classList.remove("nudge"); void h.offsetWidth; h.classList.add("nudge"); } };
   val();
   const drawTasks=()=>{
     const opts=tasksFor(s, stage);
@@ -5384,11 +5830,15 @@ async function renderPains(){
     try{
       await Store.addCard({session_id:s.id, participant_id:P.me.id, texto:$("#f-pain").value.trim(), etapa:stage, actividad:task||null, herramienta:tool||null, severidad:sev});
       const ta=$("#f-pain"), r0=ta?ta.getBoundingClientRect():null, y0=window.scrollY;
-      clearDraft("pains"); P.sending=false; P.flash="pub"; window.scrollTo(0,0); await renderPhase(); flyCard(r0, y0);
+      clearDraft("pains"); P.sending=false; P.flash="pub"; P.painStage=stage;
+      if(pLarge()){ await renderPhase(); flyCard(r0, window.scrollY); const t=$("#f-pain"); if(t) t.focus({preventScroll:true}); }
+      else { window.scrollTo(0,0); await renderPhase(); flyCard(r0, y0); }
     }catch(e){ toast("No se pudo publicar"); P.sending=false; val(); }
   };
   const dn=$("#painDone"); if(dn) dn.onclick=async()=>{ await setDone("pains",true); pGo(async()=>{ window.scrollTo(0,0); await renderPhase(); pDonePop(); }); };
   $$("#mine .del").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteCard(b.dataset.id); }catch(e){ toast("No se pudo eliminar"); } renderPhase(); });
+  /* En pantalla grande se queda elegida la última etapa: escribes, Enter, y sigues con la siguiente tarjeta */
+  if(pLarge() && P.painStage){ const ch=$$("#f-stage .chip, #stageMore .chip").find(x=>x.dataset.t===P.painStage); if(ch) ch.click(); }
 }
 
 /* v1.18 · La tarjeta recién publicada nace donde estaba el campo de texto y viaja a su lugar en «Tus tarjetas» (Gentle) */
@@ -5400,10 +5850,10 @@ function flyCard(r0, y0){ const c=$("#mine .mycard.just"); if(!c || !Motion.ok()
   Motion.a(c,[{translate:`${dx}px ${dy}px`, scale:`${sx} ${sy}`},{translate:"0 0", scale:"1 1"}],{spring:"gentle"});
   Motion.a(c,[{opacity:.4},{opacity:1}],{dur:240, easing:"ease-out"});
   Motion.pop($(".pubok",c),{from:.6, delay:180}); }
-function renderMyCards(){
-  if(!P.myCards.length) return "";
+function renderMyCards(large){
+  if(!P.myCards.length) return large ? `<h2 class="p-h2">Tus tarjetas</h2><p class="p-empty">Aquí aparecen las tarjetas que publiques. Puedes publicar las que quieras y borrarlas mientras Dolores siga abierta.</p>` : "";
   const flash=P.flash==="pub"; P.flash=null;
-  return `<p class="mine-h">Tus tarjetas (${P.myCards.length})</p>`+
+  return (large?`<div class="p-h2row"><h2 class="p-h2">Tus tarjetas</h2><span class="tag sev">${P.myCards.length} publicada${P.myCards.length===1?"":"s"}</span></div>`:`<p class="mine-h">Tus tarjetas (${P.myCards.length})</p>`)+
     P.myCards.map((c,i)=>`<div class="mycard ${flash&&i===0?"just":""}">${flash&&i===0?'<span class="pubok">Publicada ✓</span>':""}<div class="txt">${esc(c.texto)}</div>
       <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.actividad?`<span class="tag tool">${taskHTML(c.actividad)}</span>`:""}${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}<span class="tag sev">Dolor ${c.severidad}/5</span>
       <button class="del" data-id="${c.id}">Eliminar</button></div></div>`).join("");
@@ -5422,14 +5872,18 @@ async function renderVotes(){
   const done = left===0 && cards.length>0;
   if(done!==isDone("votes")) setDone("votes",done);
   const same=!!(P.lastVotesDraw && P.renderedPh==="votes" && $(".p-shell .votecard, .p-shell .sticky-votes .honeycells"));
-  const draw=()=>{ pMorph(`<div class="p-shell">${pTop(false,0,0,done?"listo":"curso")}
-    <div class="sticky-votes"><span>${done?"Repartiste tus":"Te quedan"}</span>
-      <span class="honeycells" aria-label="${left} de ${total} votos disponibles">${Array.from({length:total},(_,i)=>`<span class="honeycell ${i<left?"full":""}"></span>`).join("")}</span>
-      <span style="color:var(--ink-2);font-weight:600">${done?`${total} votos`:`${left} de ${total} votos`}</span></div>
-    <div class="p-body">
-      ${done?doneBlock({title:"Terminaste la votación", sub:"Puedes mover tus votos mientras la actividad siga abierta."})
-            :actBand("votes", `Reparte tus ${total} votos`, "Entre los dolores que más te pesan a ti también. Puedes poner más de uno a la misma tarjeta; al usar el último, quedas listo.")}
-      ${cards.length? cards.map(c=>{
+  const large=pLarge();
+  const meter=`<span>${done?"Repartiste tus":"Te quedan"}</span>
+      <span class="honeycells" role="img" aria-label="${left} de ${total} votos disponibles">${Array.from({length:total},(_,i)=>`<span class="honeycell ${i<left?"full":""}"></span>`).join("")}</span>
+      <span style="color:var(--ink-2);font-weight:600">${done?`${total} votos`:`${left} de ${total} votos`}</span>`;
+  /* v1.27 · Pantalla grande: filtro por etapa para encontrar los dolores de tu parte del proceso */
+  const stages=[...new Set(cards.map(c=>c.etapa).filter(Boolean))];
+  const ordered=(s.stages||[]).filter(t=>stages.includes(t)).concat(stages.filter(t=>!(s.stages||[]).includes(t)));
+  if(P.vFilter && !ordered.includes(P.vFilter)) P.vFilter="";
+  const fShort=t=>{ const m=String(t).match(/^(\d+)\s/); return m?m[1]:t; };
+  const filter = large && ordered.length>1 ? `<div class="v-filter" role="group" aria-label="Filtrar por etapa"><button class="chip ${!P.vFilter?"on":""}" data-vf="" aria-pressed="${!P.vFilter}">Todas</button>${ordered.map(t=>`<button class="chip ${P.vFilter===t?"on":""}" data-vf="${esc(t)}" title="${esc(t)}" aria-pressed="${P.vFilter===t}" aria-label="${esc(t)}">${esc(fShort(t))}</button>`).join("")}</div>` : "";
+  const shown = large && P.vFilter ? cards.filter(c=>c.etapa===P.vFilter) : cards;
+  const vcard = c=>{
         const m=my[c.id]||0;
         return `<div class="votecard ${m>0?"voted":""}" data-k="v-${esc(c.id)}">
           <div class="txt">${esc(c.texto)}</div>
@@ -5438,12 +5892,24 @@ async function renderVotes(){
             <button class="vbtn" data-id="${c.id}" data-d="-1" ${m<=0?"disabled":""} aria-label="quitar voto">−</button>
             <span class="vcount">${m>0?`<span class="vhex"></span> <span><span data-n="${m}">${m}</span> voto${m===1?"":"s"}</span>`:`<span style="color:var(--ink-3);font-weight:600">Sin votos</span>`}</span>
             <button class="vbtn" data-id="${c.id}" data-d="1" ${left<=0?"disabled":""} aria-label="dar voto">+</button>
-          </div></div>`;
-      }).join("") : emptyWait("Aún no hay tarjetas para votar.")}
+          </div></div>`; };
+  const head = done?doneBlock({title:"Terminaste la votación", sub:"Puedes mover tus votos mientras la actividad siga abierta."})
+            :actBand("votes", `Reparte tus ${total} votos`, "Entre los dolores que más te pesan a ti también. Puedes poner más de uno a la misma tarjeta; al usar el último, terminas.");
+  const mineV = cards.filter(c=>my[c.id]).map(c=>`<div class="pr-row pr-vote"><span>${esc(c.texto)}</span><b>${my[c.id]}</b></div>`).join("");
+  const draw=()=>{ pMorph(large ? pShell({top:pTop(false,0,0,done?"listo":"curso"), sticky:`<div class="sticky-votes">${meter}${filter}</div>`,
+      body:`${head}${cards.length? `<div class="vgrid">${shown.map(vcard).join("")}</div>${!shown.length?emptyWait("No hay dolores en esta etapa."):""}` : emptyWait("Aún no hay tarjetas para votar.")}`,
+      rail:[prCard("Tus votos", (mineV||`<p class="p-help">Aún no votas. Toca + en los dolores que más te pesan.</p>`), "prVotes"),
+        `<section class="pr-card pr-status"><p class="p-help">${done?`<b>Usaste tus ${total} votos.</b> Puedes moverlos mientras la actividad siga abierta.`:`Al usar tu último voto, terminas. Te ${left===1?"queda":"quedan"} <b>${left}</b>.`}</p></section>`]})
+    : `<div class="p-shell">${pTop(false,0,0,done?"listo":"curso")}
+    <div class="sticky-votes">${meter}</div>
+    <div class="p-body">
+      ${head}
+      ${cards.length? cards.map(vcard).join("") : emptyWait("Aún no hay tarjetas para votar.")}
     </div>
   </div>`, same); };
   if(P.lastVotesDraw && !P.banner && !P.votesTop) keepScroll(draw); else { draw(); if(P.votesTop) window.scrollTo(0,0); }
   P.lastVotesDraw=true; P.votesTop=false; armBanner();
+  $$("[data-vf]").forEach(b=>b.onclick=()=>{ P.vFilter=b.dataset.vf; renderVotes(); });
   $$(".vbtn").forEach(b=>b.onclick=async()=>{
     if(P.sending) return; P.sending=true;
     const id=b.dataset.id, d=+b.dataset.d, cur=my[id]||0, next=cur+d;
@@ -5472,18 +5938,33 @@ function qwGroup(list){
   const oneKind=new Set(list.map(kindOf)).size===1 && kindOf(list[0])==="time";
   return byStage.map(g=>`${oneKind?"":`<p class="stage-h">${esc(g.stage)}</p>`}${g.items.map(qwCard).join("")}`).join("");
 }
+/* v1.27 · Tablet y computadora: una tabla con una fila por pregunta y una columna por respuesta (todo a la vista) */
+function qwTable(list, kind){
+  const K=RATING_KINDS[kind];
+  const byStage=[]; list.forEach(q=>{ let g=byStage.find(x=>x.stage===q.stage); if(!g){ g={stage:q.stage,items:[]}; byStage.push(g); } g.items.push(q); });
+  const oneKind=kind==="time";
+  return `<div class="qx">
+    <div class="qx-h" aria-hidden="true"><span>${esc(K.t)}</span><span class="qx-o">${K.scale.map(o=>`<span>${o.t}</span>`).join("")}</span></div>
+    ${byStage.map(g=>`${oneKind?"":`<p class="qx-st">${esc(g.stage)}</p>`}${g.items.map(q=>{ const cur=P.qw.ratings[q.id];
+      return `<div class="qwcard qx-r ${cur!==undefined?"done":""}" data-q="${esc(q.id)}" data-kind="${kind}">
+        <div class="txt">${esc(q.text)}${cur!==undefined?`<span class="qx-ok">${icon("check")}${esc(scaleLabel(kind,cur))}</span>`:""}${q.help?`<details class="qhelp"><summary>¿Qué significa?</summary><p>${esc(q.help)}</p></details>`:""}</div>
+        <div class="seg" role="group" aria-label="${esc(q.text)}">${K.scale.map(o=>`<button data-v="${o.v}" class="${cur===o.v?"on":""}" aria-pressed="${cur===o.v}">${o.t}</button>`).join("")}</div>
+      </div>`; }).join("")}`).join("")}
+  </div>`;
+}
 /* Una sección por tipo de lista: primero lo de tus etapas, lo demás plegado */
 function ratingSection(kind, items, et){
   if(!items.length) return "";
-  const K=RATING_KINDS[kind];
+  const K=RATING_KINDS[kind], large=pLarge();
   const hasMine = et.size && items.some(q=>et.has(q.stage));
   const mine = hasMine ? items.filter(q=>et.has(q.stage)) : items;
   const other = hasMine ? items.filter(q=>!et.has(q.stage)) : [];
+  const group = list => large ? qwTable(list, kind) : qwGroup(list);
   return `<section class="rsec" data-kind="${kind}">
     <h2 class="p-title" style="font-size:1.375rem">${esc(K.q)}</h2>
     <p class="p-sub">${esc(K.h.replace("__CASO__",(P.session&&P.session.caso)||"un caso"))}${hasMine&&kind!=="time"?" Primero lo de tus etapas.":""}</p>
-    ${qwGroup(mine)}
-    ${other.length?`<details class="more"><summary>Ver ${kind==="time"?"otras etapas":"lo de otras etapas"} (${other.length})</summary>${qwGroup(other)}</details>`:""}
+    ${group(mine)}
+    ${other.length?`<details class="more"><summary>Ver ${kind==="time"?"otras etapas":"lo de otras etapas"} (${other.length})</summary>${group(other)}</details>`:""}
   </section>`;
 }
 const KIND_SHORT={qw:"Mejoras rápidas",gate:"Reglas",time:"Tiempos"};
@@ -5513,46 +5994,64 @@ async function renderQuickwins(){
       <div id="myProps" style="margin-top:1rem"></div>
     </section>`;
   if(done || !steps.length){
-    $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,isDone("quickwins")?"listo":"curso")}
+    const head=isDone("quickwins")?doneBlock({title:"Terminaste la validación", sub:qws.length?`Contestaste ${answered(allMine)} de ${allMine.length}.${answered(allMine)<allMine.length?" Puedes volver y completar las que faltan.":""}`:"", actions:qws.length?[{id:"qwReview",label:"Revisar mis respuestas"}]:[]})
+          :actBand("quickwins", "¿Qué mejora rápida propones?", "Propón la que más te ayudaría en tu día a día.");
+    const fin=!qws.length&&!isDone("quickwins")?`<button class="btn btn-primary" id="qwFinish">Terminar validación</button>`:null;
+    $("#app").innerHTML = pLarge()? pShell({top:pTop(false,0,0,isDone("quickwins")?"listo":"curso"), body:`${head}<div class="p-panel">${proposal}</div>`, cta:fin, rail:[prMe()]})
+      : `<div class="p-shell">${pTop(false,0,0,isDone("quickwins")?"listo":"curso")}
       <div class="p-body">
-        ${isDone("quickwins")?doneBlock({title:"Terminaste la validación", sub:qws.length?`Contestaste ${answered(allMine)} de ${allMine.length}.${answered(allMine)<allMine.length?" Puedes volver y completar las que faltan.":""}`:"", actions:qws.length?[{id:"qwReview",label:"Revisar mis respuestas"}]:[]})
-          :actBand("quickwins", "¿Qué mejora rápida propones?", "Propón la que más te ayudaría en tu día a día.")}
+        ${head}
         ${proposal}
-        ${!qws.length&&!isDone("quickwins")?`<div class="p-cta" style="position:static;padding:1rem 0 0"><button class="btn btn-primary" id="qwFinish">Terminar validación</button></div>`:""}
+        ${fin?`<div class="p-cta" style="position:static;padding:1rem 0 0">${fin}</div>`:""}
       </div></div>`;
     armBanner(); bindProposal(); 
     const r=$("#qwReview"); if(r) r.onclick=()=>{ P.qw.review=true; P.qw.step=0; pGo(()=>{ window.scrollTo(0,0); return renderQuickwins(); },-1); };
     const f=$("#qwFinish"); if(f) f.onclick=async()=>{ await setDone("quickwins",true); pGo(async()=>{ window.scrollTo(0,0); await renderQuickwins(); pDonePop(); }); };
     return;
   }
+  const bandTxt=P.qw.step===0?`${steps.length} paso${steps.length===1?"":"s"}: ${steps.map(x=>KIND_SHORT[x].toLowerCase()).join(", ").replace(/, ([^,]*)$/," y $1")}. Contesta desde tu experiencia; son unos minutos.`:`Paso ${P.qw.step+1} de ${steps.length}.`;
+  const contBtn=`<button class="btn btn-primary" id="qwCont">${last?"Terminar validación":`Continuar a ${KIND_SHORT[steps[P.qw.step+1]]}`}</button><p class="cta-hint" id="qwHint"></p>`;
+  if(pLarge()){
+    /* v1.27 · Los pasos se ven como pestañas con su avance; la tabla deja todo a la vista (sin «Siguiente sin contestar») */
+    const tabs=`<div class="qw-steps" role="tablist" aria-label="Pasos de Validación">${steps.map((x,i)=>{ const l=toDo(x); return `<button type="button" role="tab" class="qw-st${i===P.qw.step?" on":""}" data-qs="${i}" aria-selected="${i===P.qw.step}"><span>Paso ${i+1} de ${steps.length}</span><b>${KIND_SHORT[x]} · <span${i===P.qw.step?' id="qwDone"':""}>${answered(l)}</span> de ${l.length}</b></button>`; }).join("")}</div>`;
+    $("#app").innerHTML = pShell({top:pTop(false,0,0,isDone("quickwins")?"listo":"curso"), cta:contBtn,
+      rail:[prCard("Tu avance", steps.map((x,i)=>prRow(KIND_SHORT[x], `<span${i===P.qw.step?' id="qwDoneR"':""}>${answered(toDo(x))}</span> de ${toDo(x).length}`)).join(""))],
+      body:`${actBand("quickwins", KIND_SHORT[k], bandTxt)}${steps.length>1?tabs:""}${ratingSection(k, qws.filter(q=>kindOf(q)===k), et)}`});
+  } else {
   $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,isDone("quickwins")?"listo":"curso")}
     <div class="sticky-votes qw-band"><span>Paso ${P.qw.step+1} de ${steps.length} · <b>${KIND_SHORT[k]}</b></span><span class="qw-n"><b id="qwDone">${answered(list)}</b> de ${list.length}</span></div>
     <div class="p-body">
-      ${actBand("quickwins", KIND_SHORT[k], P.qw.step===0?`${steps.length} paso${steps.length===1?"":"s"}: ${steps.map(x=>KIND_SHORT[x].toLowerCase()).join(", ").replace(/, ([^,]*)$/," y $1")}. Contesta desde tu experiencia; son unos minutos.`:`Paso ${P.qw.step+1} de ${steps.length}.`)}
+      ${actBand("quickwins", KIND_SHORT[k], bandTxt)}
       ${ratingSection(k, qws.filter(q=>kindOf(q)===k), et)}
     </div>
     <div class="p-cta">
       <button class="btn btn-line" id="qwNextQ" ${answered(list)<list.length?"":"disabled"}>Siguiente sin contestar</button>
-      <button class="btn btn-primary" id="qwCont">${last?"Terminar validación":`Continuar a ${KIND_SHORT[steps[P.qw.step+1]]}`}</button>
-      <p class="cta-hint" id="qwHint"></p>
+      ${contBtn}
     </div>
   </div>`;
+  }
   armBanner();
-  const hint=()=>{ const a=answered(list), n=list.length-a; $("#qwDone").textContent=a; $("#qwNextQ").disabled=n===0;
+  const hint=()=>{ const a=answered(list), n=list.length-a; const qd=$("#qwDone"); if(qd) qd.textContent=a; const r=$("#qwDoneR"); if(r) r.textContent=a; const nq=$("#qwNextQ"); if(nq) nq.disabled=n===0;
     $("#qwHint").textContent = n? `Te falta${n===1?"":"n"} ${n}. Puedes continuar y volver después.` : (last?"":"Todo contestado en este paso."); };
   hint();
+  $$("[data-qs]").forEach(b=>b.onclick=()=>{ const i=+b.dataset.qs; if(i===P.qw.step) return; const d=i>P.qw.step?1:-1; P.qw.step=i; pGo(()=>renderQuickwins(), d); });
+  const okLabel=card=>{ if(!card.classList.contains("qx-r")) return; const t=$(".txt",card), v=P.qw.ratings[card.dataset.q]; let el=$(".qx-ok",card);
+    if(v===undefined){ if(el) el.remove(); return; }
+    if(!el){ el=document.createElement("span"); el.className="qx-ok"; const h=$(".qhelp",t); t.insertBefore(el,h||null); }
+    el.innerHTML=icon("check")+esc(scaleLabel(card.dataset.kind,v)); };
   $$(".qwcard .seg button").forEach(b=>b.onclick=async()=>{
     const card=b.closest(".qwcard"), id=card.dataset.q, v=+b.dataset.v, prev=P.qw.ratings[id];
     P.qw.ratings[id]=v;
     card.classList.add("done"); $$("button",card).forEach(x=>{ const on=+x.dataset.v===v; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on); });
+    okLabel(card);
     hint();
     try{ await Store.setQwRating({session_id:s.id, participant_id:P.me.id, qw_id:id, score:v}); }
     catch(e){ console.error(e); toast("No se guardó tu respuesta. Intenta de nuevo.");
       if(prev===undefined){ delete P.qw.ratings[id]; card.classList.remove("done"); } else P.qw.ratings[id]=prev;
       $$("button",card).forEach(x=>{ const on=+x.dataset.v===P.qw.ratings[id]; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on); });
-      hint(); }
+      okLabel(card); hint(); }
   });
-  $("#qwNextQ").onclick=()=>{ const c=$$(".qwcard").find(x=>!x.classList.contains("done")); if(!c) return; const d=c.closest("details"); if(d) d.open=true; c.scrollIntoView({behavior:"smooth",block:"center"}); c.classList.add("focus"); setTimeout(()=>c.classList.remove("focus"),1200); };
+  const nq=$("#qwNextQ"); if(nq) nq.onclick=()=>{ const c=$$(".qwcard").find(x=>!x.classList.contains("done")); if(!c) return; const d=c.closest("details"); if(d) d.open=true; c.scrollIntoView({behavior:"smooth",block:"center"}); c.classList.add("focus"); setTimeout(()=>c.classList.remove("focus"),1200); };
   $("#qwCont").onclick=async()=>{ if(last){ await setDone("quickwins",true); P.qw.review=false; } else P.qw.step++; pGo(async()=>{ window.scrollTo(0,0); await renderQuickwins(); if(last) pDonePop(); }); };
 
   function bindProposal(){
@@ -5578,10 +6077,12 @@ async function renderIdeas(){
   if(P.ideas.reto >= P.ideas.targets.length) P.ideas.reto=0;
   const T=P.ideas.targets;
   if(!T.length){
-    $("#app").innerHTML = `<div class="p-shell">${pTop(false)}${waitBlock(glass("bulb",{size:"xl",tint:true}),"Ideas","Aún no hay dolores votados para trabajar. Espera la indicación de "+facName()+".")}</div>`;
+    $("#app").innerHTML = pLarge()? pShell({top:pTop(false), bodyCls:"wait-hero", rail:[prMe()], body:`${glass("bulb",{size:"xl",tint:true})}<h1 class="p-title" style="margin:0">Ideas</h1><p class="p-sub" style="margin:0">Aún no hay dolores votados para trabajar. Espera la indicación de ${facName()}.</p>`})
+      : `<div class="p-shell">${pTop(false)}${waitBlock(glass("bulb",{size:"xl",tint:true}),"Ideas","Aún no hay dolores votados para trabajar. Espera la indicación de "+facName()+".")}</div>`;
     armBanner(); return;
   }
   const done=isDone("ideas");
+  if(pLarge()) return renderIdeasLarge(T, done);
   $("#app").innerHTML = `<div class="p-shell">${pTop(false,0,0,done?"listo":"curso")}
     <div class="sticky-votes" id="supBar"></div>
     <div class="p-body">
@@ -5611,6 +6112,46 @@ async function renderIdeas(){
   const db=$("#ideasDoneBtn"); if(db) db.onclick=async()=>{ await setDone("ideas",true); pGo(async()=>{ window.scrollTo(0,0); await renderIdeas(); pDonePop(); }); };
   await refreshIdeas(true);
 }
+/* v1.27 · Ideas en tablet y computadora. Computadora ancha (1100 px o más): los 3 retos lado a lado, cada uno con su
+   campo para proponer y sus ideas. Tablet: pestañas por reto; en horizontal, la propuesta y las ideas en dos columnas. */
+async function renderIdeasLarge(T, done){
+  const s=P.session, three=pThree();
+  const cta = done?null:`<button class="btn btn-primary" id="ideasDoneBtn">Terminé con Ideas</button><p class="cta-hint">Tus ideas y apoyos ya están guardados.</p>`;
+  const head = done?doneBlock({title:"Terminaste Ideas", sub:"Puedes seguir proponiendo o mover tus apoyos mientras la actividad siga abierta.", next:"Resultados"})
+    : actBand("ideas", esc(s.q_idea||"¿Cómo podríamos resolverlo?"), `Estos son los ${T.length} dolores más votados. ${three?"Propón ideas en cualquier reto":"Elige un reto, propón ideas"} y apoya las que más te convenzan. Cuando termines, toca «Terminé con Ideas».`);
+  const tabs = three||T.length<2 ? "" : `<div class="chips chips-tall" id="retos" role="tablist" aria-label="Retos">${T.map((c,i)=>`<button class="chip ${i===P.ideas.reto?"on":""}" data-i="${i}" role="tab" aria-selected="${i===P.ideas.reto}">Reto ${i+1}</button>`).join("")}</div>`;
+  const col = i => { const c=T[i];
+    return `<section class="reto-col" data-r="${i}" aria-label="Reto ${i+1}">
+      <div class="reto"><p class="rk">Reto ${i+1} de ${T.length} · ${c.pts} voto${c.pts===1?"":"s"}</p><div class="txt">${esc(c.texto)}</div>
+        <div class="meta-row"><span class="tag">${esc(c.etapa)}</span>${c.herramienta?`<span class="tag tool">${esc(c.herramienta)}</span>`:""}</div></div>
+      <div class="ri-body"><div class="p-panel ri-form"><label for="f-idea-${i}">Tu idea para este reto</label>
+        <textarea id="f-idea-${i}" class="input" data-r="${i}" maxlength="240" placeholder="Ej. Que la carta de supuestos se arme sola con los datos ya cargados…"></textarea>
+        <div class="ri-foot"><button class="btn btn-line btn-pub" data-go="${i}" disabled>Publicar idea</button></div></div>
+        <div class="ideaList" id="ideaList-${i}" data-r="${i}"></div></div>
+    </section>`; };
+  const cols = () => (three ? T.map((_,i)=>i) : [P.ideas.reto]);
+  $("#app").innerHTML = pShell({top:pTop(false,0,0,done?"listo":"curso"), sticky:`<div class="sticky-votes" id="supBar"></div>`, cta,
+    rail:[prCard("Tu avance", `<div id="prIdeas"></div>`)],
+    body:`<div id="ideasDone">${head}</div>${tabs}<div class="ideas3${three?" three":""}" id="ideaCols"${three?` style="--n:${T.length}"`:""}>${cols().map(col).join("")}</div>`});
+  armBanner();
+  const bindCols = () => {
+    $$("#ideaCols textarea[data-r]").forEach(ta=>{ const i=+ta.dataset.r, go=$(`[data-go="${i}"]`);
+      bindDraft(ta, three?"ideas_r"+i:"ideas");
+      const chk=()=>{ go.disabled = ta.value.trim().length<8; }; ta.addEventListener("input",chk); chk();
+      go.onclick=async()=>{ if(P.sending) return; P.sending=true; go.disabled=true;
+        try{ await Store.addIdea({session_id:s.id, participant_id:P.me.id, kind:"idea", card_id:T[i].id, texto:ta.value.trim()});
+          ta.value=""; clearDraft(three?"ideas_r"+i:"ideas"); toast("Idea publicada ✓"); await refreshIdeas(); }
+        catch(e){ console.error(e); toast("No se pudo publicar la idea"); go.disabled=false; }
+        P.sending=false; };
+    });
+  };
+  bindCols();
+  $$("#retos .chip").forEach(ch=>ch.onclick=()=>{ P.ideas.reto=+ch.dataset.i;
+    $$("#retos .chip").forEach(x=>{ x.classList.toggle("on",x===ch); x.setAttribute("aria-selected",x===ch); });
+    $("#ideaCols").innerHTML=cols().map(col).join(""); bindCols(); drawIdeaList(); });
+  const db=$("#ideasDoneBtn"); if(db) db.onclick=async()=>{ await setDone("ideas",true); pGo(async()=>{ window.scrollTo(0,0); await renderIdeas(); pDonePop(); }); };
+  await refreshIdeas(true);
+}
 /* v1.15 · Con mucha gente: la lista completa se baja al entrar y cada ~90 s (para ver ideas borradas);
    entre medio solo se piden las ideas nuevas (con 10 s de traslape para no perder ninguna). */
 async function refreshIdeas(full){
@@ -5627,29 +6168,34 @@ async function refreshIdeas(full){
   drawIdeaList();
 }
 function drawIdeaList(){
-  const s=P.session, T=P.ideas.targets; if(!T.length || !$("#ideaList")) return;
+  const s=P.session, T=P.ideas.targets; if(!T.length) return;
+  const many=$$(".ideaList[data-r]"), one=$("#ideaList"); if(!many.length && !one) return;
   const total=s.idea_votes||3, left=Math.max(0,total-P.ideas.mine.size);
-  const live=!!$("#ideaList").firstElementChild && P.ideas._shown===P.ideas.reto; P.ideas._shown=P.ideas.reto;
-  Motion.morph($("#supBar"), `<span>${left?"Te quedan":"Usaste tus"}</span>
-    <span class="honeycells" aria-label="${left} de ${total} apoyos disponibles">${Array.from({length:total},(_,i)=>`<span class="honeycell ${i<left?"full":""}"></span>`).join("")}</span>
-    <span style="color:var(--ink-2);font-weight:600">${left?`${left} de ${total} apoyos`:`${total} apoyos`}</span>`, {animate:live});
-  const cid=T[P.ideas.reto].id;
-  const list=P.ideas.list.filter(i=>i.card_id===cid).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)));
-  Motion.morph($("#ideaList"), `<p class="mine-h">Ideas para este reto (${list.length})</p>`+
-    (list.length ? list.map(i=>{ const own=i.participant_id===P.me.id, on=P.ideas.mine.has(i.id);
-      return `<div class="ideacard" data-k="i-${esc(i.id)}"><div class="txt">${esc(i.texto)}</div><div class="meta-row">
-        ${own?`<span class="tag mine">Tu idea</span><button class="del" data-del="${i.id}">Eliminar</button>`
-             :`<button class="support ${on?"on":""}" data-sup="${i.id}" aria-pressed="${on}"><span class="vhex"></span>${on?"Apoyada":"Apoyar"}</button>`}
-      </div></div>`; }).join("") : '<p class="empty">Sé la primera persona en proponer una idea para este reto.</p>'), {animate:live});
-  $$("#ideaList [data-sup]").forEach(b=>b.onclick=async()=>{
-    if(P.sending) return; const id=b.dataset.sup, on=P.ideas.mine.has(id);
-    if(!on && left<=0) return toast(`Ya usaste tus ${total} apoyos. Quita uno para apoyar otra idea.`);
-    P.sending=true;
-    try{ await Store.setIdeaVote({session_id:s.id, participant_id:P.me.id, idea_id:id}, !on); if(on) P.ideas.mine.delete(id); else P.ideas.mine.add(id); drawIdeaList();
-      if(!on) Motion.pop($(`#ideaList [data-sup="${id}"] .vhex`),{from:.4, fade:false}); }
-    catch(e){ console.error(e); toast(/apoyos/.test(String(e&&e.message))?"Ya usaste todos tus apoyos":"No se pudo guardar tu apoyo"); }
-    P.sending=false; });
-  $$("#ideaList [data-del]").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteIdea(b.dataset.del); await refreshIdeas(true); }catch(e){ toast("No se pudo eliminar"); } });
+  const sb=$("#supBar"); if(sb) Motion.morph(sb, `<span>${left?"Te quedan":"Usaste tus"}</span>
+    <span class="honeycells" role="img" aria-label="${left} de ${total} apoyos disponibles">${Array.from({length:total},(_,i)=>`<span class="honeycell ${i<left?"full":""}"></span>`).join("")}</span>
+    <span style="color:var(--ink-2);font-weight:600">${left?`${left} de ${total} apoyos`:`${total} apoyos`}</span>`, {animate:!!sb.firstElementChild});
+  const pr=$("#prIdeas"); if(pr) pr.innerHTML = prRow("Ideas propuestas", P.ideas.list.filter(i=>i.kind!=="qw"&&i.participant_id===P.me.id).length) + prRow("Apoyos dados", `${P.ideas.mine.size} de ${total}`);
+  const targets = many.length ? many.map(el=>({el, r:+el.dataset.r})) : [{el:one, r:P.ideas.reto}];
+  targets.forEach(({el, r})=>{
+    const live=!!el.firstElementChild && el.dataset.shown===String(r); el.dataset.shown=String(r);
+    const cid=T[r].id;
+    const list=P.ideas.list.filter(i=>i.card_id===cid).sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)));
+    Motion.morph(el, (many.length?`<p class="pr-k ri-n">${list.length} idea${list.length===1?"":"s"}</p>`:`<p class="mine-h">Ideas para este reto (${list.length})</p>`)+
+      (list.length ? list.map(i=>{ const own=i.participant_id===P.me.id, on=P.ideas.mine.has(i.id);
+        return `<div class="ideacard" data-k="i-${esc(i.id)}"><div class="txt">${esc(i.texto)}</div><div class="meta-row">
+          ${own?`<span class="tag mine">Tu idea</span><button class="del" data-del="${i.id}">Eliminar</button>`
+               :`<button class="support ${on?"on":""}" data-sup="${i.id}" aria-pressed="${on}"><span class="vhex"></span>${on?"Apoyada":"Apoyar"}</button>`}
+        </div></div>`; }).join("") : '<p class="empty">Sé la primera persona en proponer una idea para este reto.</p>'), {animate:live});
+    $$("[data-sup]",el).forEach(b=>b.onclick=async()=>{
+      if(P.sending) return; const id=b.dataset.sup, on=P.ideas.mine.has(id);
+      if(!on && left<=0) return toast(`Ya usaste tus ${total} apoyos. Quita uno para apoyar otra idea.`);
+      P.sending=true;
+      try{ await Store.setIdeaVote({session_id:s.id, participant_id:P.me.id, idea_id:id}, !on); if(on) P.ideas.mine.delete(id); else P.ideas.mine.add(id); drawIdeaList();
+        if(!on) Motion.pop($(`[data-sup="${id}"] .vhex`),{from:.4, fade:false}); }
+      catch(e){ console.error(e); toast(/apoyos/.test(String(e&&e.message))?"Ya usaste todos tus apoyos":"No se pudo guardar tu apoyo"); }
+      P.sending=false; });
+    $$("[data-del]",el).forEach(b=>b.onclick=async()=>{ try{ await Store.deleteIdea(b.dataset.del); await refreshIdeas(true); }catch(e){ toast("No se pudo eliminar"); } });
+  });
 }
 
 /* ---------- Resultados: dolores, ideas, quick wins, reglas y tiempos ---------- */
@@ -5667,6 +6213,26 @@ async function renderResults(){
     .sort((a,b)=>b.v-a.v).slice(0,5);
   const card = (n,txt,tags) => `<div class="mycard"><div class="txt"><strong>${n}.</strong> ${esc(txt)}</div><div class="meta-row">${tags}</div></div>`;
   const same=!!(P.lastResultsDraw && P.renderedPh==="results" && $(".p-shell .p-body"));
+  /* v1.27 · Pantalla grande: los 3 dolores más votados como podio, lo demás en dos columnas y tus aportes en el carril */
+  if(pLarge()){
+    const st=pWide()? await myStats() : null, maxV=Math.max(1,...top.map(c=>c.pts||0));
+    const sec=(t,items)=>items?`<section class="p-rsec"><h2 class="p-h2">${t}</h2><div class="p-rlist">${items}</div></section>`:"";
+    const pod=top.slice(0,3).map((c,i)=>`<article class="p-pod${i===0?" first":""}"><span class="pod-n">${i+1}</span><p>${esc(c.texto)}</p><div class="meta-row"><span class="tag">${esc(c.etapa)}</span><span class="tag sev">${c.pts} voto${c.pts===1?"":"s"}</span></div><span class="pod-bar" aria-hidden="true"><i style="width:${Math.round((c.pts||0)/maxV*100)}%"></i></span></article>`).join("");
+    const rest=top.slice(3).map((c,i)=>`<div class="p-rrow"><b>${i+4}</b><p>${esc(c.texto)}</p><span class="tag sev">${c.pts} voto${c.pts===1?"":"s"}</span></div>`).join("");
+    const end=`<section class="dn end"><div class="done-h">${glass("sparkle",{size:"md",tint:true})}<div><h2>Esto es todo por hoy</h2><p class="done-peers">Gracias, ${esc(P.me.nombre)}. Todo lo que aportaste quedó guardado; ${facName()} cierra la sesión y puedes cerrar esta pestaña cuando quieras.</p></div></div></section>`;
+    const draw=()=>{ pMorph(pShell({top:pTop(false), room:false, rail: st?[prCard("Tus aportes", prRow("Tarjetas de dolor",st.cards)+prRow("Votos",st.votes)+prRow("Ideas",st.ideas)+prRow("Respuestas en Validación",st.qw)), end]:[end],
+      body:`${pBand({k:"results", kicker:"Resultados", title:"Lo que decidimos juntos", sub:"Esto marca la agenda de lo que sigue. Ya no hay nada que contestar: mira la pantalla de la sala.", art:"results", room:false})}
+        <h2 class="p-h2">Lo que más nos duele</h2>
+        ${top.length?`<div class="p-podium">${pod}</div>${rest?`<div class="p-rest">${rest}</div>`:""}`:'<p class="empty">Sin votos registrados.</p>'}
+        <div class="p-rgrid">
+        ${sec("Ideas con más apoyo", topIdeas.map((x,i)=>card(i+1,x.texto,`<span class="tag sev">${x.v} apoyo${x.v===1?"":"s"}</span>`)).join(""))}
+        ${sec("Quick wins que más ayudarían", qws.map((q,i)=>card(i+1,q.text,`<span class="tag">${esc(q.stage)}</span><span class="tag sev">${q.st.n<3?`${q.st.n} respuesta${q.st.n===1?"":"s"}`:`Apoyo ${q.st.idx}/100`}</span>`)).join(""))}
+        ${sec("Reglas del nuevo flujo con más acuerdo", gTop.map((q,i)=>card(i+1,q.text,`<span class="tag">${esc(q.stage)}</span><span class="tag sev">${q.st.n<3?`${q.st.n} respuesta${q.st.n===1?"":"s"}`:`Acuerdo ${q.st.idx}/100`}</span>`)).join("")+(gLow.length?`<p class="p-help">Con menos acuerdo: ${gLow.map(q=>esc(q.text)).join(" · ")}</p>`:""))}
+        ${sec("Las etapas que más tardan hoy", times.map((q,i)=>card(i+1,q.text,`<span class="tag sev">Lo más común: ${esc(scaleLabel("time",q.st.mode))}</span>`)).join(""))}
+        </div>${pWide()?"":end}`}), same); };
+    if(P.lastResultsDraw) keepScroll(draw); else draw();
+    P.lastResultsDraw=true; return;
+  }
   const draw=()=>{ pMorph(`<div class="p-shell">${pTop(false)}
     <div class="p-body">
       ${pBand({k:"results", kicker:"Resultados", title:"Lo que decidimos juntos", sub:"Esto marca la agenda de lo que sigue. Ya no hay nada que contestar: mira la pantalla de la sala.", art:"results", room:false})}
@@ -5741,10 +6307,10 @@ function setOffline(on){ let b=$("#offline"); if(on && !b){ b=document.createEle
   if(!window.ResizeObserver || !window.MutationObserver) return;
   const root=document.documentElement, ro=new ResizeObserver(()=>measure());
   let seen=[];
-  function measure(){ const c=document.querySelector(".p-cta"), b=document.querySelector(".p-top.pbar");
+  function measure(){ const c=document.querySelector(".p-shell:not(.pw) .p-cta, body>.p-cta, #app>.p-cta"), b=document.querySelector(".p-top.pbar");
     root.style.setProperty("--cta-h", (c?Math.ceil(c.getBoundingClientRect().height):0)+"px");
     root.style.setProperty("--pbar-h", (b?Math.ceil(b.getBoundingClientRect().height):0)+"px"); }
-  function watch(){ seen.forEach(el=>ro.unobserve(el)); seen=[...document.querySelectorAll(".p-cta,.p-top.pbar")]; seen.forEach(el=>ro.observe(el)); measure(); }
+  function watch(){ seen.forEach(el=>ro.unobserve(el)); seen=[...document.querySelectorAll(".p-shell:not(.pw) .p-cta,.p-top.pbar")]; seen.forEach(el=>ro.observe(el)); measure(); }
   window.fitChrome=watch;
   const start=()=>{ const app=document.getElementById("app"); if(!app) return; new MutationObserver(watch).observe(app,{childList:true,subtree:false}); watch(); };
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",start); else start();
