@@ -1,4 +1,29 @@
 -- ============================================================
+-- COLMENA · setup.sql · ESTADO ACTUAL v2.2
+-- Lo arma tools/arma_setup.py: no lo edites a mano (edita la migración y vuelve a armarlo).
+--
+-- Base nueva: pega TODO este archivo en Supabase → SQL Editor → New query → Run.
+-- Base que ya existe: también sirve y no borra datos (todo es «if not exists» / «create or replace»),
+-- aunque basta con correr la migración nueva que indique el README.
+-- Incluye, en orden: Base v1.26 · v2.0 · Tipos de taller, «Juntar parecidas» y tiempo por fase · v2.1 · Seguridad y datos · v2.2 · Edición segura en Sala de espera.
+-- Si la base ya está en una versión más nueva que la 2.2, se detiene con un aviso y no cambia nada.
+-- ============================================================
+do $$
+declare v text;
+begin
+  if to_regclass('public.ws_schema_version') is not null then
+    select version into v from public.ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
+    if v is not null and string_to_array(v, '.')::int[] > array[2,2] then
+      raise exception 'Tu base ya está en la versión % y este setup.sql es de la 2.2. No lo corras: regresaría funciones a una versión anterior. Usa el setup.sql más nuevo.', v;
+    end if;
+  end if;
+end $$;
+
+-- ============================================================
+-- PARTE · Base v1.26 (el setup.sql anterior: tablas, reglas de acceso, funciones y tiempo real)
+-- (de migraciones-anteriores/setup-base-v126.sql)
+-- ============================================================
+-- ============================================================
 -- COLMENA v1.7 · esquema seguro para Supabase
 --
 -- Pega TODO este archivo en Supabase → SQL Editor → Run.
@@ -416,9 +441,16 @@ begin
     raise exception 'Activa la verificación en dos pasos para usar la invitación';
   end if;
   select * into v from ws_invites i where i.code_hash = ws_invite_hash(p_code) for update;
-  if v.id is null or v.revoked_at is not null or v.expires_at <= now()
-     or (v.used_at is not null and v.used_by is distinct from auth.uid()) then
-    raise exception 'La invitación no es válida, ya se usó o venció. Pide una nueva al admin.';
+  if v.id is null or v.revoked_at is not null or v.expires_at <= now() then
+    raise exception 'La invitación no es válida o venció. Pide una nueva al admin.';
+  end if;
+  -- v1.16 · Una invitación ya canjeada nunca vuelve a tocar la cuenta (antes reactivaba cuentas desactivadas
+  -- y restauraba el rol). Si quien la canjeó la repite y sigue activo, se responde igual, sin cambios.
+  if v.used_at is not null then
+    if v.used_by = auth.uid() and exists (select 1 from ws_admins a where a.user_id = auth.uid() and a.active) then
+      return (select a.role from ws_admins a where a.user_id = auth.uid());
+    end if;
+    raise exception 'Esta invitación ya se usó. Pide una nueva al admin.';
   end if;
   if v.email <> v_mail then
     raise exception 'Esta invitación es para %. Entra con ese correo.', v.email;
@@ -457,6 +489,12 @@ begin
   if p_role is not null and p_role not in ('admin','facilitator') then raise exception 'Rol no válido'; end if;
   update ws_admins set active = coalesce(p_active, active), role = coalesce(p_role, role) where user_id = p_user;
   if not found then raise exception 'Esa cuenta no existe'; end if;
+  -- v1.16 · Al desactivar a alguien se cancelan sus invitaciones pendientes
+  if p_active is false then
+    update ws_invites set revoked_at = now()
+     where lower(email) = (select lower(email) from ws_admins where user_id = p_user)
+       and used_at is null and revoked_at is null;
+  end if;
 end $$;
 
 -- Tope de votos por persona, validado en el servidor
@@ -797,8 +835,8 @@ create or replace function ws_ev_staff_new() returns trigger
 language plpgsql security definer set search_path = public as $$
 begin
   perform ws_notify(new.user_id, 'welcome', 'Bienvenido a Colmena',
-    'Crea tu primer taller con una plantilla y proyecta el QR: la sala entra desde su celular.',
-    jsonb_build_object('label','Crear mi primer taller','view','mine'), '{}', false, 'welcome:' || new.user_id);
+    'Cuéntale a la IA tu proceso, revisa la propuesta y proyecta el QR: la sala entra desde su celular.',
+    jsonb_build_object('label','Crear mi primer taller','view','create'), '{}', false, 'welcome:' || new.user_id);
   return new;
 end $$;
 drop trigger if exists ws_ev_staff_new on ws_admins;
@@ -1162,9 +1200,16 @@ begin
     raise exception 'Activa la verificación en dos pasos para usar la invitación';
   end if;
   select * into v from ws_invites i where i.code_hash = ws_invite_hash(p_code) for update;
-  if v.id is null or v.revoked_at is not null or v.expires_at <= now()
-     or (v.used_at is not null and v.used_by is distinct from auth.uid()) then
-    raise exception 'La invitación no es válida, ya se usó o venció. Pide una nueva al admin.';
+  if v.id is null or v.revoked_at is not null or v.expires_at <= now() then
+    raise exception 'La invitación no es válida o venció. Pide una nueva al admin.';
+  end if;
+  -- v1.16 · Una invitación ya canjeada nunca vuelve a tocar la cuenta (antes reactivaba cuentas desactivadas
+  -- y restauraba el rol). Si quien la canjeó la repite y sigue activo, se responde igual, sin cambios.
+  if v.used_at is not null then
+    if v.used_by = auth.uid() and exists (select 1 from ws_admins a where a.user_id = auth.uid() and a.active) then
+      return (select a.role from ws_admins a where a.user_id = auth.uid());
+    end if;
+    raise exception 'Esta invitación ya se usó. Pide una nueva al admin.';
   end if;
   if v.email <> v_mail then
     raise exception 'Esta invitación es para %. Entra con ese correo.', v.email;
@@ -1289,9 +1334,15 @@ declare v ws_invites; v_mail text := lower(coalesce(auth.jwt() ->> 'email',''));
 begin
   if auth.uid() is null or coalesce((auth.jwt() ->> 'is_anonymous')::boolean, false) then raise exception 'Abre de nuevo tu invitación'; end if;
   select * into v from ws_invites i where i.code_hash = ws_invite_hash(p_code) for update;
-  if v.id is null or v.revoked_at is not null or v.expires_at <= now()
-     or (v.used_at is not null and v.used_by is distinct from auth.uid()) then
-    raise exception 'La invitación no es válida, ya se usó o venció. Pide una nueva.';
+  if v.id is null or v.revoked_at is not null or v.expires_at <= now() then
+    raise exception 'La invitación no es válida o venció. Pide una nueva.';
+  end if;
+  -- v1.16 · Una invitación ya canjeada nunca vuelve a tocar la cuenta
+  if v.used_at is not null then
+    if v.used_by = auth.uid() and exists (select 1 from ws_admins a where a.user_id = auth.uid() and a.active) then
+      return (select a.role from ws_admins a where a.user_id = auth.uid());
+    end if;
+    raise exception 'Esta invitación ya se usó. Pide una nueva al admin.';
   end if;
   if v.email <> v_mail then raise exception 'Esta invitación es para %.', v.email; end if;
   select array_agg(c.id) into v_ids from auth.webauthn_credentials c
@@ -1466,6 +1517,335 @@ create index if not exists ws_ideas_session_created on ws_ideas(session_id, crea
 create index if not exists ws_cards_session_part on ws_cards(session_id, participant_id);
 
 -- ------------------------------------------------------------
+-- 4h) v1.17 · Eliminar a alguien del equipo (solo cuentas desactivadas)
+--     Sus talleres, borradores y todo lo capturado pasan a nombre del admin que lo elimina y sale del
+--     equipo; DESPUÉS la función «account» (acción admin-remove) borra su cuenta. Se hace en ese orden
+--     porque ws_sessions y ws_drafts se borran en cascada con la cuenta.
+-- ------------------------------------------------------------
+create or replace function ws_admin_remove_member(p_user uuid) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare v ws_admins; v_me uuid := auth.uid(); n_ses int := 0; n_dra int := 0; n_par int := 0;
+begin
+  if not ws_is_superadmin() then raise exception 'Solo un admin puede eliminar cuentas'; end if;
+  if p_user is null then raise exception 'Falta indicar a quién eliminar'; end if;
+  if p_user = v_me then raise exception 'No puedes eliminar tu propia cuenta'; end if;
+  select * into v from ws_admins a where a.user_id = p_user for update;
+  if v.user_id is null then raise exception 'Esa cuenta no es del equipo'; end if;
+  if v.active then raise exception 'Primero desactiva esa cuenta. Después podrás eliminarla.'; end if;
+  -- Talleres y borradores: pasan a tu nombre (con ellos, todo lo capturado en sus talleres)
+  update ws_sessions set owner_id = v_me where owner_id = p_user;
+  get diagnostics n_ses = row_count;
+  update ws_drafts set owner_id = v_me where owner_id = p_user;
+  get diagnostics n_dra = row_count;
+  -- Lo que capturó como participante con su cuenta del panel también pasa a ti
+  -- (si tú también participaste en ese mismo taller, se conserva tu registro y el suyo se va con su cuenta)
+  update ws_participants p set user_id = v_me where p.user_id = p_user
+     and not exists (select 1 from ws_participants q where q.session_id = p.session_id and q.user_id = v_me);
+  get diagnostics n_par = row_count;
+  -- Invitaciones pendientes que mandó: ahora son tuyas (a ti te llegan sus avisos)
+  update ws_invites set created_by = v_me where created_by = p_user and used_at is null and revoked_at is null;
+  -- Invitaciones pendientes para su correo: se cancelan
+  update ws_invites set revoked_at = now()
+   where lower(email) = lower(v.email) and used_at is null and revoked_at is null;
+  delete from ws_admins where user_id = p_user;
+  return jsonb_build_object('talleres', n_ses, 'borradores', n_dra, 'participaciones', n_par, 'email', v.email);
+end $$;
+revoke execute on function ws_admin_remove_member(uuid) from public, anon;
+grant execute on function ws_admin_remove_member(uuid) to authenticated;
+
+-- ------------------------------------------------------------
+-- 4i) v1.21 · Uso de IA: tokens por propuesta, pausa y tope mensual por persona
+-- ------------------------------------------------------------
+alter table ws_ai_log add column if not exists kind text not null default 'propuesta';
+alter table ws_ai_log add column if not exists draft_id uuid;
+alter table ws_ai_log add column if not exists session_id uuid;
+alter table ws_ai_log add column if not exists label text;
+alter table ws_ai_log add column if not exists model text;
+alter table ws_ai_log add column if not exists input_tokens int not null default 0;
+alter table ws_ai_log add column if not exists output_tokens int not null default 0;
+alter table ws_ai_log add column if not exists ok boolean not null default false;
+create index if not exists ws_ai_log_at on ws_ai_log(at);
+create index if not exists ws_ai_log_draft on ws_ai_log(draft_id);
+
+alter table ws_admins add column if not exists ai_enabled boolean not null default true;
+alter table ws_admins add column if not exists ai_monthly_cap int;   -- tokens al mes; vacío = sin tope
+
+-- Antes de llamar a la IA: ¿puede? (equipo activo, IA no pausada, bajo su tope del mes y del día). Deja el renglón.
+create or replace function ws_ai_begin(p_kind text default 'propuesta', p_draft uuid default null, p_label text default null)
+returns jsonb language plpgsql security definer set search_path = public as $$
+declare a ws_admins; v_used bigint; v_n int; v_id bigint;
+begin
+  if not ws_is_admin() then return jsonb_build_object('ok', false, 'reason', 'denied'); end if;
+  select * into a from ws_admins where user_id = auth.uid();
+  if not coalesce(a.ai_enabled, true) then return jsonb_build_object('ok', false, 'reason', 'paused'); end if;
+  select coalesce(sum(input_tokens + output_tokens), 0) into v_used from ws_ai_log
+   where user_id = auth.uid() and at >= date_trunc('month', now());
+  if a.ai_monthly_cap is not null and v_used >= a.ai_monthly_cap then
+    return jsonb_build_object('ok', false, 'reason', 'cap', 'used', v_used, 'cap', a.ai_monthly_cap);
+  end if;
+  select count(*) into v_n from ws_ai_log where user_id = auth.uid() and at > now() - interval '1 day';
+  if v_n >= 30 then return jsonb_build_object('ok', false, 'reason', 'daily'); end if;
+  insert into ws_ai_log(user_id, kind, draft_id, label)
+  values (auth.uid(), case when p_kind in ('propuesta','otra','ajuste','insights') then p_kind else 'propuesta' end, p_draft, left(p_label, 160))
+  returning id into v_id;
+  delete from ws_ai_log where at < now() - interval '400 days';
+  return jsonb_build_object('ok', true, 'id', v_id, 'used', v_used, 'cap', a.ai_monthly_cap);
+end $$;
+revoke execute on function ws_ai_begin(text, uuid, text) from public, anon;
+grant execute on function ws_ai_begin(text, uuid, text) to authenticated;
+
+-- Compatibilidad con la función suggest-workshop anterior: respeta la pausa y el tope, y ya no borra el historial
+create or replace function ws_ai_take() returns boolean
+language plpgsql security definer set search_path = public as $$
+begin
+  return coalesce((ws_ai_begin('propuesta', null, null) ->> 'ok')::boolean, false);
+end $$;
+revoke execute on function ws_ai_take() from public, anon;
+grant execute on function ws_ai_take() to authenticated;
+
+-- Al crear el taller: los tokens de su borrador pasan a contar para el taller
+create or replace function ws_ai_link(p_draft uuid, p_session uuid) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not ws_is_admin() or p_draft is null or p_session is null then return; end if;
+  if not exists (select 1 from ws_sessions s where s.id = p_session and s.owner_id = auth.uid()) then return; end if;
+  update ws_ai_log set session_id = p_session where draft_id = p_draft and user_id = auth.uid() and session_id is null;
+end $$;
+revoke execute on function ws_ai_link(uuid, uuid) from public, anon;
+grant execute on function ws_ai_link(uuid, uuid) to authenticated;
+
+-- Detalle de uso. Admin: de todo el equipo; facilitador: solo lo suyo.
+drop function if exists ws_ai_usage(timestamptz, timestamptz);
+create function ws_ai_usage(p_from timestamptz default date_trunc('month', now()), p_to timestamptz default now() + interval '1 day')
+returns table (id bigint, user_id uuid, user_name text, kind text, draft_id uuid, session_id uuid, label text, session_name text,
+               session_code text, model text, input_tokens int, output_tokens int, ok boolean, at timestamptz)
+language sql stable security definer set search_path = public as $$
+  select l.id, l.user_id, coalesce(nullif(a.name, ''), a.email, 'Cuenta eliminada'), l.kind, l.draft_id, l.session_id, l.label,
+         s.name, s.code, l.model, l.input_tokens, l.output_tokens, l.ok, l.at
+  from ws_ai_log l
+  left join ws_admins a on a.user_id = l.user_id
+  left join ws_sessions s on s.id = l.session_id
+  where ws_is_admin() and l.at >= p_from and l.at < p_to and (l.user_id = auth.uid() or ws_is_superadmin())
+  order by l.at desc
+  limit 5000;
+$$;
+revoke execute on function ws_ai_usage(timestamptz, timestamptz) from public, anon;
+grant execute on function ws_ai_usage(timestamptz, timestamptz) to authenticated;
+
+-- Límites y consumo del mes. Admin: todo el equipo; facilitador: solo su renglón.
+drop function if exists ws_ai_limits();
+create function ws_ai_limits()
+returns table (user_id uuid, name text, email text, role text, active boolean, ai_enabled boolean, ai_monthly_cap int, used_month bigint, calls_month bigint)
+language sql stable security definer set search_path = public as $$
+  select a.user_id, a.name, a.email, a.role, a.active, a.ai_enabled, a.ai_monthly_cap,
+         coalesce((select sum(l.input_tokens + l.output_tokens) from ws_ai_log l where l.user_id = a.user_id and l.at >= date_trunc('month', now())), 0),
+         coalesce((select count(*) from ws_ai_log l where l.user_id = a.user_id and l.ok and l.at >= date_trunc('month', now())), 0)
+  from ws_admins a
+  where ws_is_admin() and (a.user_id = auth.uid() or ws_is_superadmin())
+  order by (a.user_id = auth.uid()) desc, a.name nulls last, a.email;
+$$;
+revoke execute on function ws_ai_limits() from public, anon;
+grant execute on function ws_ai_limits() to authenticated;
+
+-- El admin pausa o pone tope (en tokens al mes; vacío = sin tope)
+create or replace function ws_set_ai_limit(p_user uuid, p_enabled boolean, p_cap int default null) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if not ws_is_superadmin() then raise exception 'Solo un admin puede cambiar el uso de IA'; end if;
+  if p_cap is not null and (p_cap < 0 or p_cap > 100000000) then raise exception 'Tope no válido'; end if;
+  update ws_admins set ai_enabled = coalesce(p_enabled, ai_enabled), ai_monthly_cap = p_cap where user_id = p_user;
+  if not found then raise exception 'Esa cuenta no es del equipo'; end if;
+end $$;
+revoke execute on function ws_set_ai_limit(uuid, boolean, int) from public, anon;
+grant execute on function ws_set_ai_limit(uuid, boolean, int) to authenticated;
+
+-- ------------------------------------------------------------
+-- 4j) v1.22 · Inicio como tablero: números de solo lectura (admin: equipo; facilitador: lo suyo)
+-- ------------------------------------------------------------
+create or replace function ws_home_stats(p_from timestamptz default null, p_prev timestamptz default null)
+returns jsonb language sql stable security definer set search_path = public as $$
+  with ph(id, i) as (values ('lobby',1),('checkin',2),('pains',3),('votes',4),('quickwins',5),('ideas',6),('results',7),('closed',8)),
+  vis as (
+    select s.*, ph.i as pi, (s.created_at at time zone 'America/Mexico_City') as lt
+    from ws_sessions s join ph on ph.id = s.phase
+    where ws_is_admin() and (s.owner_id = auth.uid() or ws_is_superadmin())
+  ),
+  cur as (select * from vis where p_from is null or created_at >= p_from),
+  prv as (select * from vis where p_prev is not null and p_from is not null and created_at >= p_prev and created_at < p_from),
+  part as (select p.*, v.pi, v.created_at as s_at, v.quickwins as s_qw from ws_participants p join vis v on v.id = p.session_id),
+  mon as (select generate_series(date_trunc('month', now() at time zone 'America/Mexico_City') - interval '11 months',
+                                 date_trunc('month', now() at time zone 'America/Mexico_City'), interval '1 month') as m)
+  select case when not ws_is_admin() then null else jsonb_build_object(
+    'months', (select jsonb_agg(jsonb_build_object(
+        'm', to_char(mon.m, 'YYYY-MM'),
+        'sessions', (select count(*) from vis where date_trunc('month', vis.lt) = mon.m),
+        'people',   (select count(*) from part join vis on vis.id = part.session_id where date_trunc('month', vis.lt) = mon.m),
+        'cards',    (select count(*) from ws_cards c join vis on vis.id = c.session_id where date_trunc('month', vis.lt) = mon.m),
+        'done',     (select count(*) from part join vis on vis.id = part.session_id where date_trunc('month', vis.lt) = mon.m and vis.pi >= 7 and part.done_phases ? 'ideas'),
+        'elig',     (select count(*) from part join vis on vis.id = part.session_id where date_trunc('month', vis.lt) = mon.m and vis.pi >= 7)
+      ) order by mon.m) from mon),
+    'cur', (select jsonb_build_object(
+        'sessions', (select count(*) from cur),
+        'people',   (select count(*) from ws_participants p join cur on cur.id = p.session_id),
+        'cards',    (select count(*) from ws_cards c join cur on cur.id = c.session_id),
+        'retos',    (select coalesce(sum(least(coalesce(cur.idea_top, 3),
+                       (select count(distinct v.card_id) from ws_votes v where v.session_id = cur.id and v.points > 0))), 0) from cur where cur.pi >= 7),
+        'done',     (select count(*) from ws_participants p join cur on cur.id = p.session_id where cur.pi >= 7 and p.done_phases ? 'ideas'),
+        'elig',     (select count(*) from ws_participants p join cur on cur.id = p.session_id where cur.pi >= 7))),
+    'prev', (select case when p_prev is null or p_from is null then null else jsonb_build_object(
+        'sessions', (select count(*) from prv),
+        'people',   (select count(*) from ws_participants p join prv on prv.id = p.session_id),
+        'cards',    (select count(*) from ws_cards c join prv on prv.id = c.session_id),
+        'done',     (select count(*) from ws_participants p join prv on prv.id = p.session_id where prv.pi >= 7 and p.done_phases ? 'ideas'),
+        'elig',     (select count(*) from ws_participants p join prv on prv.id = p.session_id where prv.pi >= 7)) end),
+    -- Por fase: de quienes estaban en talleres que ya pasaron esa fase, cuántos tocaron «Terminé»
+    'funnel', (select jsonb_agg(jsonb_build_object('ph', f.id, 'ws', f.ws, 'n', f.n, 'd', f.d) order by f.i) from (
+        select ph.id, ph.i,
+          (select count(*) from cur where cur.pi > ph.i and (ph.id <> 'quickwins' or jsonb_array_length(cur.quickwins) > 0)) as ws,
+          (select count(*) from ws_participants p join cur on cur.id = p.session_id where cur.pi > ph.i and (ph.id <> 'quickwins' or jsonb_array_length(cur.quickwins) > 0)) as n,
+          (select count(*) from ws_participants p join cur on cur.id = p.session_id where cur.pi > ph.i and (ph.id <> 'quickwins' or jsonb_array_length(cur.quickwins) > 0) and p.done_phases ? ph.id) as d
+        from ph where ph.id in ('checkin','pains','votes','quickwins','ideas')) f),
+    'moods', (select coalesce(jsonb_object_agg(x.mood, x.n), '{}'::jsonb) from (
+        select p.mood, count(*) as n from ws_participants p join cur on cur.id = p.session_id where coalesce(p.mood, '') <> '' group by p.mood) x),
+    'moodAreas', (select coalesce(jsonb_agg(jsonb_build_object('area', x.area, 'n', x.n, 'neg', x.neg) order by x.neg::numeric / x.n desc, x.n desc), '[]'::jsonb) from (
+        select p.area, count(*) as n, count(*) filter (where p.mood in ('saturado','rebasado')) as neg
+        from ws_participants p join cur on cur.id = p.session_id
+        where coalesce(p.mood, '') <> '' and coalesce(p.area, '') <> '' group by p.area having count(*) >= 3) x),
+    'areas', (select coalesce(jsonb_agg(jsonb_build_object('area', x.area, 'cur', x.c, 'prev', x.p) order by x.c desc, x.p desc), '[]'::jsonb) from (
+        select coalesce(nullif(p.area, ''), 'Sin área') as area,
+               count(*) filter (where p_from is null or v.created_at >= p_from) as c,
+               count(*) filter (where p_prev is not null and p_from is not null and v.created_at >= p_prev and v.created_at < p_from) as p
+        from ws_cards c join ws_participants p on p.id = c.participant_id join vis v on v.id = c.session_id
+        group by 1 order by 2 desc, 3 desc limit 8) x where x.c > 0 or x.p > 0),
+    -- Índice 0–100 igual que en Resultados: 3 = 100, 2 = 50, 1 = 0; «No aplica» (0) no cuenta
+    'qwTop', (select coalesce(jsonb_agg(x order by x.idx desc, x.n desc), '[]'::jsonb) from (
+        select q.value ->> 'text' as text, s.name as ws, s.code, count(*) as n, round(avg((r.score - 1) * 50))::int as idx,
+               count(*) filter (where r.score = 3) as top
+        from cur s cross join lateral jsonb_array_elements(s.quickwins) q
+        join ws_qw_ratings r on r.session_id = s.id and r.qw_id = q.value ->> 'id' and r.score > 0
+        where coalesce(q.value ->> 'kind', 'qw') = 'qw'
+        group by s.id, s.name, s.code, q.value ->> 'id', q.value ->> 'text'
+        having count(*) >= 2
+        order by 5 desc, 4 desc limit 4) x),
+    'results', (select coalesce(jsonb_agg(x order by x.at desc), '[]'::jsonb) from (
+        select s.code, s.name, s.owner_id, s.phase, coalesce(s.closed_at, s.created_at) as at,
+          (select count(*) from ws_participants p where p.session_id = s.id) as participants,
+          (select count(*) from ws_cards c where c.session_id = s.id) as cards,
+          (select count(*) from ws_ideas i where i.session_id = s.id and i.kind = 'idea') as ideas,
+          (select coalesce(sum(v.points), 0) from ws_votes v where v.session_id = s.id) as pts,
+          (select count(distinct v.participant_id) from ws_votes v where v.session_id = s.id and v.points > 0) as voters,
+          t.texto as top_text, coalesce(t.pts, 0) as top_pts, coalesce(t.voters, 0) as top_voters
+        from vis s
+        left join lateral (
+          select c.texto, sum(v.points) as pts, count(distinct v.participant_id) filter (where v.points > 0) as voters
+          from ws_cards c join ws_votes v on v.card_id = c.id where c.session_id = s.id
+          group by c.id, c.texto, c.created_at order by sum(v.points) desc, c.created_at limit 1) t on true
+        where s.pi >= 7 order by coalesce(s.closed_at, s.created_at) desc limit 4) x)
+  ) end;
+$$;
+revoke execute on function ws_home_stats(timestamptz, timestamptz) from public, anon;
+grant execute on function ws_home_stats(timestamptz, timestamptz) to authenticated;
+
+-- ------------------------------------------------------------
+-- 4k) v1.23 · Resumen con IA de los resultados (lo escribe suggest-workshop, lo edita quien facilita)
+-- ------------------------------------------------------------
+alter table ws_sessions add column if not exists summary text check (char_length(summary) <= 4000);
+alter table ws_sessions add column if not exists summary_at timestamptz;
+
+-- ------------------------------------------------------------
+-- 4l) v1.26 · Facilitadores entran con contraseña (admin sigue con segundo paso) y enlaces para crear o
+--     restablecer la contraseña (1 uso; 1 h si lo pidió la persona, 72 h si su admin reinició su acceso)
+-- ------------------------------------------------------------
+
+-- 1) ¿Entraste con acceso suficiente? Igual que antes para admin; un facilitador activo basta con su sesión.
+create or replace function ws_strong() returns boolean
+language sql stable security definer set search_path = public, auth as $$
+  select ( coalesce(auth.jwt() ->> 'aal', '') = 'aal2'
+           and not exists (select 1 from ws_admins a where a.user_id = auth.uid() and a.passkey_only) )
+    or ( exists (select 1 from jsonb_array_elements(case when jsonb_typeof(auth.jwt() -> 'amr') = 'array' then auth.jwt() -> 'amr' else '[]'::jsonb end) e
+                 where e ->> 'method' = 'passkey')
+         and exists (select 1 from ws_admins a where a.user_id = auth.uid() and cardinality(a.passkeys_trusted) > 0
+                     and not exists (select 1 from auth.webauthn_credentials c where c.user_id = a.user_id and not (c.id = any(a.passkeys_trusted)))) )
+    -- v1.26 · Facilitador activo: su contraseña (o Face ID) basta. Solo ve y opera sus propios talleres.
+    or ( not coalesce((auth.jwt() ->> 'is_anonymous')::boolean, false)
+         and exists (select 1 from ws_admins a where a.user_id = auth.uid() and a.active and a.role = 'facilitator') );
+$$;
+
+-- 2) Aceptar invitación: la de facilitador ya no pide segundo paso (crea su contraseña); la de admin sí.
+create or replace function ws_redeem_invite(p_code text) returns text
+language plpgsql security definer set search_path = public as $$
+declare v ws_invites; v_mail text := lower(coalesce(auth.jwt() ->> 'email',''));
+begin
+  if auth.uid() is null or coalesce((auth.jwt() ->> 'is_anonymous')::boolean, false) then
+    raise exception 'Inicia sesión con tu correo para usar la invitación';
+  end if;
+  select * into v from ws_invites i where i.code_hash = ws_invite_hash(p_code) for update;
+  if v.id is null or v.revoked_at is not null or v.expires_at <= now() then
+    raise exception 'La invitación no es válida o venció. Pide una nueva al admin.';
+  end if;
+  if v.role <> 'facilitator' and coalesce(auth.jwt() ->> 'aal', '') <> 'aal2' then
+    raise exception 'Activa la verificación en dos pasos para usar la invitación';
+  end if;
+  -- v1.16 · Una invitación ya canjeada nunca vuelve a tocar la cuenta
+  if v.used_at is not null then
+    if v.used_by = auth.uid() and exists (select 1 from ws_admins a where a.user_id = auth.uid() and a.active) then
+      return (select a.role from ws_admins a where a.user_id = auth.uid());
+    end if;
+    raise exception 'Esta invitación ya se usó. Pide una nueva al admin.';
+  end if;
+  if v.email <> v_mail then
+    raise exception 'Esta invitación es para %. Entra con ese correo.', v.email;
+  end if;
+  insert into ws_admins (user_id, email, role, name, active)
+  values (auth.uid(), v_mail, v.role, v.name, true)
+  on conflict (user_id) do update
+    set role = excluded.role, active = true, email = excluded.email,
+        name = coalesce(ws_admins.name, excluded.name), passkey_only = false, reenroll_until = null;
+  update ws_invites set used_by = auth.uid(), used_at = coalesce(used_at, now()) where id = v.id;
+  return v.role;
+end $$;
+
+-- 3) Aprobar una llave nueva de Face ID: igual que antes, y además un facilitador activo dentro con su contraseña.
+create or replace function ws_trust_passkeys(p_cred uuid default null) returns int
+language plpgsql security definer set search_path = public, auth as $$
+declare n int; v_ok boolean;
+begin
+  select a.active and (
+           (a.role = 'facilitator' and not coalesce((auth.jwt() ->> 'is_anonymous')::boolean, false))
+        or (coalesce(auth.jwt() ->> 'aal', '') = 'aal2' and not a.passkey_only)
+        or (exists (select 1 from jsonb_array_elements(case when jsonb_typeof(auth.jwt() -> 'amr') = 'array' then auth.jwt() -> 'amr' else '[]'::jsonb end) e
+                    where e ->> 'method' = 'passkey')
+            and cardinality(a.passkeys_trusted) > 0
+            and not exists (select 1 from auth.webauthn_credentials c where c.user_id = a.user_id
+                            and not (c.id = any(a.passkeys_trusted)) and c.created_at <= now() - interval '10 minutes')))
+    into v_ok from ws_admins a where a.user_id = auth.uid();
+  if not coalesce(v_ok, false) then
+    raise exception 'Para activar Face ID entra con tu código de verificación';
+  end if;
+  update ws_admins a set passkeys_trusted = array(
+      select c.id from auth.webauthn_credentials c where c.user_id = a.user_id
+        and (c.id = any(a.passkeys_trusted) or (c.created_at > now() - interval '10 minutes' and (p_cred is null or c.id = p_cred))))
+    where a.user_id = auth.uid();
+  select cardinality(passkeys_trusted) into n from ws_admins where user_id = auth.uid();
+  return n;
+end $$;
+
+-- 4) Enlaces para crear o restablecer la contraseña (solo el servidor, con su llave, los lee y escribe)
+create table if not exists ws_pw_tokens (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  email text not null,
+  token_hash text not null unique,
+  kind text not null check (kind in ('reset','activate')),
+  created_at timestamptz not null default now(),
+  expires_at timestamptz not null,
+  used_at timestamptz
+);
+create index if not exists ws_pw_tokens_user on ws_pw_tokens(user_id, kind);
+alter table ws_pw_tokens enable row level security;            -- sin políticas: nadie desde la página
+revoke all on ws_pw_tokens from anon, authenticated;
+
+-- ------------------------------------------------------------
 -- 5) Tiempo real (solo agrega las tablas que falten)
 -- ------------------------------------------------------------
 do $$
@@ -1480,9 +1860,563 @@ begin
   end loop;
 end $$;
 
--- Verificación: deben salir 11 tablas con seguridad activa (rls = true)
+-- Verificación: deben salir 15 tablas con seguridad activa (rls = true)
 select c.relname as tabla, c.relrowsecurity as rls,
        (select count(*) from pg_policies p where p.tablename = c.relname) as reglas
 from pg_class c join pg_namespace n on n.oid = c.relnamespace
 where n.nspname = 'public' and c.relname like 'ws\_%' and c.relkind = 'r'
 order by 1;
+
+-- ============================================================
+-- PARTE · v2.0 · Tipos de taller, «Juntar parecidas» y tiempo por fase
+-- (de migraciones-anteriores/migracion-v200-tipos.sql)
+-- ============================================================
+-- Colmena v2.0 · Tipos de taller, «Juntar parecidas» y tiempo por fase
+-- Córrelo UNA vez en Supabase → SQL Editor → New query → pegar todo → Run. Se puede repetir sin problema.
+-- Qué agrega (los talleres de hoy siguen igual: son tipo «Mejora de procesos»):
+--   · Tipo de taller (kind): Mejora de procesos, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
+--     Todos usan las mismas fases de siempre; cambian las palabras y las preguntas.
+--   · Juntar parecidas: quien facilita junta tarjetas que dicen lo mismo. El grupo lleva un nombre y es lo que se vota.
+--   · Tiempo por fase: minutos sugeridos por fase, hora en que abrió la fase actual, +1 / +5 min y pausa.
+--   · Inicio y avisos: cada taller trae su tipo y sus actividades se nombran como ese tipo.
+-- ------------------------------------------------------------
+
+-- 1) Sesiones: tipo, minutos por fase y reloj de la fase actual
+alter table ws_sessions add column if not exists kind text not null default 'dt';
+alter table ws_sessions drop constraint if exists ws_sessions_kind_check;
+alter table ws_sessions add constraint ws_sessions_kind_check check (kind in ('dt','comp','diag','ideas','retro'));
+alter table ws_sessions add column if not exists mins jsonb;
+alter table ws_sessions drop constraint if exists ws_sessions_mins_check;
+alter table ws_sessions add constraint ws_sessions_mins_check check (mins is null or (jsonb_typeof(mins) = 'object' and octet_length(mins::text) <= 400));
+alter table ws_sessions add column if not exists phase_at timestamptz;
+alter table ws_sessions add column if not exists phase_add int not null default 0;
+alter table ws_sessions drop constraint if exists ws_sessions_phase_add_check;
+alter table ws_sessions add constraint ws_sessions_phase_add_check check (phase_add between -3600 and 14400);
+alter table ws_sessions add column if not exists paused_at timestamptz;
+
+-- Al cambiar de fase, el reloj vuelve a empezar (hora del servidor)
+create or replace function ws_session_phase_at() returns trigger
+language plpgsql set search_path = public as $$
+begin
+  if tg_op = 'INSERT' or new.phase is distinct from old.phase then
+    new.phase_at := now(); new.phase_add := 0; new.paused_at := null;
+  end if;
+  return new;
+end $$;
+drop trigger if exists ws_session_phase_at on ws_sessions;
+create trigger ws_session_phase_at before insert or update of phase on ws_sessions
+  for each row execute function ws_session_phase_at();
+update ws_sessions set phase_at = coalesce(phase_at, now()) where phase not in ('results','closed') and phase_at is null;
+
+-- 2) Tarjetas: grupo (parent_id) y nombre del grupo (label, va en la tarjeta que encabeza el grupo)
+alter table ws_cards add column if not exists parent_id uuid references ws_cards(id) on delete set null;
+alter table ws_cards add column if not exists label text;
+alter table ws_cards drop constraint if exists ws_cards_label_check;
+alter table ws_cards add constraint ws_cards_label_check check (label is null or char_length(label) between 1 and 120);
+alter table ws_cards drop constraint if exists ws_cards_parent_check;
+alter table ws_cards add constraint ws_cards_parent_check check (parent_id is null or parent_id <> id);
+create index if not exists ws_cards_parent on ws_cards(parent_id);
+
+-- Cada tarjeta nace suelta: solo quien facilita junta (con las funciones de abajo)
+create or replace function ws_cards_born_loose() returns trigger
+language plpgsql set search_path = public as $$
+begin
+  new.parent_id := null; new.label := null;
+  return new;
+end $$;
+drop trigger if exists ws_cards_born_loose on ws_cards;
+create trigger ws_cards_born_loose before insert on ws_cards
+  for each row execute function ws_cards_born_loose();
+
+-- Si alguien borra la tarjeta que encabeza un grupo, la siguiente toma el nombre y el grupo sigue.
+-- (Se llama «A_…» para correr antes que la llave foránea, que dejaría sueltas a las demás.)
+create or replace function ws_cards_keep_group() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare v_next uuid;
+begin
+  if old.label is not null and old.parent_id is null then
+    select id into v_next from ws_cards where parent_id = old.id order by created_at, id limit 1;
+    if v_next is not null then
+      update ws_cards set parent_id = null, label = old.label where id = v_next;
+      update ws_cards set parent_id = v_next where parent_id = old.id and id <> v_next;
+    end if;
+  end if;
+  return null;
+end $$;
+drop trigger if exists "A_ws_cards_keep_group" on ws_cards;
+create trigger "A_ws_cards_keep_group" after delete on ws_cards
+  for each row execute function ws_cards_keep_group();
+
+-- Votos: solo a tarjetas sueltas o a la que encabeza un grupo
+create or replace function ws_votes_guard() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare v_cap int; v_used int;
+begin
+  if not exists (select 1 from ws_cards c where c.id = new.card_id and c.session_id = new.session_id) then
+    raise exception 'La tarjeta no pertenece a esta sesión';
+  end if;
+  if exists (select 1 from ws_cards c where c.id = new.card_id and c.parent_id is not null) then
+    raise exception 'Esa tarjeta ya está dentro de un grupo: vota por el grupo';
+  end if;
+  select s.votes_per_user into v_cap from ws_sessions s where s.id = new.session_id;
+  select coalesce(sum(v.points), 0) into v_used
+  from ws_votes v
+  where v.session_id = new.session_id
+    and v.participant_id = new.participant_id
+    and v.card_id <> new.card_id;
+  if v_used + new.points > v_cap then
+    raise exception 'Ya usaste todos tus votos (% de %)', v_used, v_cap;
+  end if;
+  return new;
+end $$;
+
+-- 3) Juntar parecidas (solo quien facilita, en la fase de tarjetas y sin votos de por medio)
+create or replace function ws_card_group(p_session uuid, p_cards uuid[], p_label text, p_lead uuid default null)
+returns uuid
+language plpgsql security definer set search_path = public as $$
+declare v_lead uuid; v_label text := nullif(btrim(coalesce(p_label, '')), '');
+begin
+  if not ws_is_owner(p_session) then raise exception 'Solo quien facilita puede juntar tarjetas'; end if;
+  if ws_session_phase(p_session) <> 'pains' then raise exception 'Las tarjetas se juntan antes de votar'; end if;
+  if coalesce(array_length(p_cards, 1), 0) = 0 then raise exception 'Elige al menos una tarjeta'; end if;
+  if char_length(coalesce(v_label, '')) > 120 then raise exception 'El nombre del grupo admite hasta 120 caracteres'; end if;
+  if exists (select 1 from unnest(p_cards) x(id) where not exists (select 1 from ws_cards c where c.id = x.id and c.session_id = p_session)) then
+    raise exception 'Alguna tarjeta no pertenece a este taller';
+  end if;
+  if exists (select 1 from ws_votes v where v.session_id = p_session and v.card_id = any(p_cards)) then
+    raise exception 'Alguna tarjeta ya tiene votos';
+  end if;
+  if p_lead is not null then
+    if not exists (select 1 from ws_cards c where c.id = p_lead and c.session_id = p_session and c.parent_id is null) then
+      raise exception 'Ese grupo no existe';
+    end if;
+    v_lead := p_lead;
+    if v_label is not null then update ws_cards set label = v_label where id = v_lead; end if;
+  else
+    if v_label is null then raise exception 'Ponle nombre al grupo'; end if;
+    v_lead := p_cards[1];
+    -- si la primera ya encabezaba un grupo, sus tarjetas se quedan con ella
+    update ws_cards set parent_id = null, label = v_label where id = v_lead;
+  end if;
+  -- las elegidas (y lo que encabezaban) pasan al grupo
+  update ws_cards set parent_id = v_lead, label = null
+   where session_id = p_session and id <> v_lead
+     and (id = any(p_cards) or parent_id = any(p_cards));
+  return v_lead;
+end $$;
+
+create or replace function ws_card_ungroup(p_card uuid)
+returns void
+language plpgsql security definer set search_path = public as $$
+declare c ws_cards; v_next uuid;
+begin
+  select * into c from ws_cards where id = p_card;
+  if c.id is null then raise exception 'Esa tarjeta ya no existe'; end if;
+  if not ws_is_owner(c.session_id) then raise exception 'Solo quien facilita puede separar tarjetas'; end if;
+  if ws_session_phase(c.session_id) <> 'pains' then raise exception 'Las tarjetas se separan antes de votar'; end if;
+  if c.parent_id is not null then
+    update ws_cards set parent_id = null where id = c.id;
+  elsif c.label is not null then
+    -- encabezaba un grupo: la siguiente tarjeta toma el nombre y el resto se queda con ella
+    select id into v_next from ws_cards where parent_id = c.id order by created_at, id limit 1;
+    if v_next is not null then
+      update ws_cards set parent_id = null, label = c.label where id = v_next;
+      update ws_cards set parent_id = v_next where parent_id = c.id and id <> v_next;
+    end if;
+    update ws_cards set label = null where id = c.id;
+  end if;
+end $$;
+
+create or replace function ws_card_label(p_lead uuid, p_label text)
+returns void
+language plpgsql security definer set search_path = public as $$
+declare c ws_cards; v_label text := nullif(btrim(coalesce(p_label, '')), '');
+begin
+  select * into c from ws_cards where id = p_lead;
+  if c.id is null or c.parent_id is not null then raise exception 'Ese grupo no existe'; end if;
+  if not ws_is_owner(c.session_id) then raise exception 'Solo quien facilita puede renombrar grupos'; end if;
+  if ws_session_phase(c.session_id) <> 'pains' then raise exception 'El nombre se cambia antes de votar'; end if;
+  if v_label is null then raise exception 'Ponle nombre al grupo'; end if;
+  if char_length(v_label) > 120 then raise exception 'El nombre del grupo admite hasta 120 caracteres'; end if;
+  update ws_cards set label = v_label where id = p_lead;
+end $$;
+
+-- 4) Reloj de la fase: +1 / +5 min, pausa y reanudar (solo quien facilita)
+create or replace function ws_phase_clock(p_session uuid, p_action text, p_seconds int default 60)
+returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare s ws_sessions;
+begin
+  if not ws_is_owner(p_session) then raise exception 'Solo quien facilita controla el tiempo'; end if;
+  select * into s from ws_sessions where id = p_session for update;
+  if p_action = 'add' then
+    update ws_sessions set phase_add = least(14400, greatest(-3600, phase_add + coalesce(p_seconds, 60))) where id = p_session;
+  elsif p_action = 'pause' then
+    update ws_sessions set paused_at = coalesce(paused_at, now()) where id = p_session;
+  elsif p_action = 'resume' then
+    if s.paused_at is not null then
+      update ws_sessions set phase_add = least(14400, phase_add + ceil(extract(epoch from now() - s.paused_at))::int), paused_at = null where id = p_session;
+    end if;
+  else
+    raise exception 'Acción desconocida';
+  end if;
+  select * into s from ws_sessions where id = p_session;
+  return jsonb_build_object('phase_at', s.phase_at, 'phase_add', s.phase_add, 'paused_at', s.paused_at, 'now', now());
+end $$;
+
+create or replace function ws_now() returns timestamptz
+language sql stable as $$ select now() $$;
+
+-- 5) El celular recibe el tipo del taller (cambia el tipo de resultado: se vuelven a crear las dos funciones)
+drop function if exists ws_join_lookup(text);
+create function ws_join_lookup(p_code text)
+returns table (id uuid, code text, name text, facilitator text, phase text,
+               votes_per_user int, areas jsonb, stages jsonb,
+               q_checkin text, q_expect text, q_pain text, brand text,
+               roles jsonb, tools jsonb, quickwins jsonb, q_idea text,
+               idea_votes int, idea_top int, tasks jsonb, caso text, kind text)
+language sql stable security definer set search_path = public as $$
+  select s.id, s.code, s.name, s.facilitator, s.phase, s.votes_per_user, s.areas, s.stages,
+         s.q_checkin, s.q_expect, s.q_pain, s.brand,
+         s.roles, s.tools, s.quickwins, s.q_idea, s.idea_votes, s.idea_top, s.tasks, s.caso, s.kind
+  from ws_sessions s
+  where auth.uid() is not null and s.code = upper(trim(p_code));
+$$;
+
+drop function if exists ws_pulse(text);
+create function ws_pulse(p_code text)
+returns table (phase text, ver text, total int, listos int)
+language sql stable security definer set search_path = public as $$
+  select s.phase,
+         md5(concat_ws('|', s.phase, s.name, s.facilitator, s.votes_per_user, s.areas, s.stages,
+                       s.q_checkin, s.q_expect, s.q_pain, s.brand, s.roles, s.tools, s.quickwins,
+                       s.q_idea, s.idea_votes, s.idea_top, s.tasks, s.caso, s.kind)),
+         (select count(*)::int from ws_participants p where p.session_id = s.id),
+         (select count(*)::int from ws_participants p where p.session_id = s.id and p.done_phases ? s.phase)
+  from ws_sessions s
+  where auth.uid() is not null and s.code = upper(trim(p_code));
+$$;
+
+-- 6) Inicio: cada taller trae su tipo (para nombrar sus fases)
+create or replace function ws_dashboard() returns jsonb
+language sql stable security definer set search_path = public as $$
+  select jsonb_build_object(
+    'sessions', coalesce((
+      select jsonb_agg(jsonb_build_object(
+        'id', s.id, 'code', s.code, 'name', s.name, 'phase', s.phase, 'owner_id', s.owner_id,
+        'created_at', s.created_at, 'closed_at', s.closed_at, 'kind', s.kind,
+        'participants', (select count(*) from ws_participants p where p.session_id = s.id),
+        'listos', (select count(*) from ws_participants p where p.session_id = s.id and p.done_phases ? s.phase),
+        'cards', (select count(*) from ws_cards c where c.session_id = s.id),
+        'ideas', (select count(*) from ws_ideas i where i.session_id = s.id and i.kind = 'idea')
+      ) order by s.created_at desc)
+      from ws_sessions s
+      where ws_is_admin() and (s.owner_id = auth.uid() or ws_is_superadmin())), '[]'::jsonb),
+    'invites', coalesce((
+      select jsonb_agg(jsonb_build_object('id', i.id, 'email', i.email, 'name', i.name, 'role', i.role, 'expires_at', i.expires_at) order by i.expires_at)
+      from ws_invites i
+      where ws_is_superadmin() and i.used_at is null and i.revoked_at is null and i.expires_at > now() - interval '30 days'), '[]'::jsonb)
+  );
+$$;
+
+-- 7) Aviso «Todos terminaron…»: con el nombre de la actividad según el tipo de taller
+create or replace function ws_ev_phase_done() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare s ws_sessions; v_n int; v_t text;
+begin
+  select * into s from ws_sessions where id = new.session_id;
+  if s.id is null or s.phase not in ('checkin','pains','votes','quickwins','ideas') then return new; end if;
+  if not (new.done_phases ? s.phase) or coalesce(old.done_phases ? s.phase, false) then return new; end if;
+  select count(*) into v_n from ws_participants p where p.session_id = s.id;
+  if v_n = 0 or exists (select 1 from ws_participants p where p.session_id = s.id and not (p.done_phases ? s.phase)) then
+    return new;
+  end if;
+  v_t := case s.phase when 'checkin' then 'Check-in'
+           when 'pains' then case s.kind when 'comp' then 'Comportamientos' when 'diag' then 'Lo que vivimos'
+                                         when 'ideas' then 'Ideas' when 'retro' then 'Qué pasó' else 'Dolores' end
+           when 'votes' then 'Votación' when 'quickwins' then 'Validación'
+           else case s.kind when 'comp' then 'Cómo se ve' when 'diag' then 'Qué haríamos'
+                            when 'ideas' then 'Cómo la hacemos' when 'retro' then 'Acciones' else 'Ideas' end end;
+  perform ws_notify(s.owner_id, 'phase_done', 'Todos terminaron ' || v_t || ' en «' || s.name || '»',
+    v_n || case v_n when 1 then ' participante listo' else ' participantes listos' end || '. Puedes abrir la siguiente actividad.',
+    jsonb_build_object('label','Abrir taller','code',s.code), jsonb_build_object('session',s.id,'phase',s.phase), false,
+    'phase_done:' || s.id || ':' || s.phase);
+  return new;
+end $$;
+
+-- 8) Permisos: solo cuentas con sesión (nunca anónimos sin sesión)
+revoke execute on function ws_card_group(uuid, uuid[], text, uuid) from public, anon;
+revoke execute on function ws_card_ungroup(uuid) from public, anon;
+revoke execute on function ws_card_label(uuid, text) from public, anon;
+revoke execute on function ws_phase_clock(uuid, text, int) from public, anon;
+revoke execute on function ws_now() from public, anon;
+revoke execute on function ws_join_lookup(text) from public, anon;
+revoke execute on function ws_pulse(text) from public, anon;
+grant execute on function ws_card_group(uuid, uuid[], text, uuid) to authenticated;
+grant execute on function ws_card_ungroup(uuid) to authenticated;
+grant execute on function ws_card_label(uuid, text) to authenticated;
+grant execute on function ws_phase_clock(uuid, text, int) to authenticated;
+grant execute on function ws_now() to authenticated;
+grant execute on function ws_join_lookup(text) to authenticated;
+grant execute on function ws_pulse(text) to authenticated;
+revoke execute on function ws_dashboard() from public, anon;
+grant execute on function ws_dashboard() to authenticated;
+
+-- Verificación (una sola fila): tipo_y_reloj = 5, grupos = 2, funciones = 9
+select
+  (select count(*) from information_schema.columns where table_schema = 'public' and table_name = 'ws_sessions'
+     and column_name in ('kind','mins','phase_at','phase_add','paused_at')) as tipo_y_reloj,
+  (select count(*) from information_schema.columns where table_schema = 'public' and table_name = 'ws_cards'
+     and column_name in ('parent_id','label')) as grupos,
+  (select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace where n.nspname = 'public'
+     and p.proname in ('ws_card_group','ws_card_ungroup','ws_card_label','ws_phase_clock','ws_now','ws_join_lookup','ws_pulse',
+                       'ws_cards_born_loose','ws_cards_keep_group')) as funciones;
+
+-- ============================================================
+-- PARTE · v2.1 · Seguridad y datos
+-- (de migracion-v210-seguridad.sql)
+-- ============================================================
+-- Colmena v2.1 · Seguridad y datos
+-- Córrela UNA vez en Supabase → SQL Editor → New query → pegar todo → Run. Se puede repetir sin problema.
+-- Qué cambia (los talleres, las cuentas y lo capturado siguen igual):
+--   · Quien participa solo puede cambiar su perfil, su check-in y su avance. Ya no puede pasarse a otro
+--     taller ni marcar como terminada una actividad que todavía no empieza.
+--   · Nombre, apellido, área y puesto ya no aceptan los signos < y >.
+--   · Votos y apoyos con candado: dos toques al mismo tiempo ya no rebasan el tope de cada persona.
+--   · La base guarda su versión (ws_schema_version). setup.sql y las migraciones anteriores la revisan
+--     y se detienen con un aviso en lugar de regresar funciones a una versión vieja.
+-- Al final sale una sola fila: columnas = 9, candados = 2, version = 2.1
+-- ------------------------------------------------------------
+
+-- 1) Versión de la base
+create table if not exists ws_schema_version (
+  version text primary key check (version ~ '^[0-9]+(\.[0-9]+)*$'),
+  applied_at timestamptz not null default now(),
+  note text
+);
+alter table ws_schema_version enable row level security;   -- sin políticas: nadie la lee desde la página
+revoke all on ws_schema_version from anon, authenticated;
+
+-- 2) Participantes: solo su perfil, su check-in y su avance
+--    (antes podía cambiar cualquier columna de su registro, incluido el taller al que pertenece)
+revoke update on ws_participants from authenticated;
+grant update (nombre, apellido, area, rol, etapas, emoji, mood, expectativa, done_phases)
+  on ws_participants to authenticated;
+
+--    Nombre, apellido, área y puesto sin < ni > (no tienen uso legítimo y así no pueden llevar código).
+--    «not valid»: no revisa los registros que ya existen; solo lo nuevo.
+alter table ws_participants drop constraint if exists ws_participants_nombre_texto;
+alter table ws_participants add constraint ws_participants_nombre_texto check (nombre !~ '[<>]') not valid;
+alter table ws_participants drop constraint if exists ws_participants_apellido_texto;
+alter table ws_participants add constraint ws_participants_apellido_texto check (apellido !~ '[<>]') not valid;
+alter table ws_participants drop constraint if exists ws_participants_area_texto;
+alter table ws_participants add constraint ws_participants_area_texto check (area !~ '[<>]') not valid;
+alter table ws_participants drop constraint if exists ws_participants_rol_texto;
+alter table ws_participants add constraint ws_participants_rol_texto check (rol !~ '[<>]') not valid;
+
+--    Avance real y etapas del taller. Solo revisa lo que se agrega: lo que ya estaba se queda
+--    (por ejemplo, si quien facilita regresa a una actividad anterior).
+create or replace function ws_participants_guard() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+declare
+  v_order constant text[] := array['lobby','checkin','pains','votes','quickwins','ideas','results','closed'];
+  v_acts  constant text[] := array['checkin','pains','votes','quickwins','ideas'];
+  v_phase text; v_stages jsonb; v_cur int; v_old_dp jsonb := '[]'; v_old_et jsonb := '[]'; e jsonb;
+begin
+  if tg_op = 'UPDATE' then
+    if new.session_id is distinct from old.session_id then
+      raise exception 'Un participante no puede cambiarse de taller';
+    end if;
+    v_old_dp := coalesce(old.done_phases, '[]'); v_old_et := coalesce(old.etapas, '[]');
+  end if;
+  if new.done_phases is distinct from v_old_dp or new.etapas is distinct from v_old_et then
+    select s.phase, s.stages into v_phase, v_stages from ws_sessions s where s.id = new.session_id;
+  end if;
+  if new.done_phases is distinct from v_old_dp then
+    if jsonb_array_length(new.done_phases) > 10 then raise exception 'Avance no válido'; end if;
+    v_cur := array_position(v_order, v_phase);
+    for e in select x from jsonb_array_elements(new.done_phases) x loop
+      continue when v_old_dp @> jsonb_build_array(e);
+      if jsonb_typeof(e) <> 'string' or not ((e #>> '{}') = any (v_acts)) then
+        raise exception 'Avance no válido';
+      end if;
+      if v_cur is null or array_position(v_order, e #>> '{}') > v_cur then
+        raise exception 'Esa actividad todavía no empieza';
+      end if;
+    end loop;
+  end if;
+  if new.etapas is distinct from v_old_et then
+    for e in select x from jsonb_array_elements(new.etapas) x loop
+      continue when v_old_et @> jsonb_build_array(e);
+      if not coalesce(v_stages, '[]') @> jsonb_build_array(e) then
+        raise exception 'Esa etapa no es de este taller';
+      end if;
+    end loop;
+  end if;
+  return new;
+end $$;
+
+drop trigger if exists ws_participants_guard on ws_participants;
+create trigger ws_participants_guard before insert or update on ws_participants
+  for each row execute function ws_participants_guard();
+revoke execute on function ws_participants_guard() from public, anon, authenticated;
+
+-- 3) Votos con candado: un participante a la vez (dos toques simultáneos ya no rebasan el tope)
+--    Mismo cuerpo de la v2.0 (no se vota una tarjeta que ya está dentro de un grupo) + el candado.
+create or replace function ws_votes_guard() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+declare v_cap int; v_used int;
+begin
+  perform pg_advisory_xact_lock(2101, hashtext(new.participant_id::text));
+  if not exists (select 1 from ws_cards c where c.id = new.card_id and c.session_id = new.session_id) then
+    raise exception 'La tarjeta no pertenece a esta sesión';
+  end if;
+  if exists (select 1 from ws_cards c where c.id = new.card_id and c.parent_id is not null) then
+    raise exception 'Esa tarjeta ya está dentro de un grupo: vota por el grupo';
+  end if;
+  select s.votes_per_user into v_cap from ws_sessions s where s.id = new.session_id;
+  select coalesce(sum(v.points), 0) into v_used
+  from ws_votes v
+  where v.session_id = new.session_id
+    and v.participant_id = new.participant_id
+    and v.card_id <> new.card_id;
+  if v_used + new.points > v_cap then
+    raise exception 'Ya usaste todos tus votos (% de %)', v_used, v_cap;
+  end if;
+  return new;
+end $$;
+
+--    Apoyos con el mismo candado (mismo cuerpo de la v1.2 + el candado)
+create or replace function ws_idea_votes_guard() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+declare v_cap int; v_used int; v_author uuid; v_kind text;
+begin
+  perform pg_advisory_xact_lock(2102, hashtext(new.participant_id::text));
+  select i.participant_id, i.kind into v_author, v_kind
+  from ws_ideas i where i.id = new.idea_id and i.session_id = new.session_id;
+  if v_author is null or v_kind <> 'idea' then
+    raise exception 'La idea no pertenece a esta sesión';
+  end if;
+  if v_author = new.participant_id then
+    raise exception 'No puedes apoyar tu propia idea';
+  end if;
+  select s.idea_votes into v_cap from ws_sessions s where s.id = new.session_id;
+  select count(*) into v_used from ws_idea_votes v
+  where v.session_id = new.session_id and v.participant_id = new.participant_id and v.idea_id <> new.idea_id;
+  if v_used + 1 > v_cap then
+    raise exception 'Ya usaste todos tus apoyos (% de %)', v_used, v_cap;
+  end if;
+  return new;
+end $$;
+
+-- 4) Esta base ya está en la v2.1
+insert into ws_schema_version(version, note) values ('2.1', 'Seguridad y datos: participante, candado de votos, versión de la base')
+  on conflict (version) do nothing;
+
+-- Verificación (una sola fila): columnas = 9, candados = 2, version = 2.1
+select
+  (select count(*) from information_schema.column_privileges
+     where table_schema = 'public' and table_name = 'ws_participants'
+       and grantee = 'authenticated' and privilege_type = 'UPDATE') as columnas,
+  (select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+     where n.nspname = 'public' and p.proname in ('ws_votes_guard','ws_idea_votes_guard')
+       and p.prosrc like '%pg_advisory_xact_lock%') as candados,
+  (select version from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1) as version;
+
+-- ============================================================
+-- PARTE · v2.2 · Edición segura en Sala de espera
+-- (de migracion-v220-lobby-edit.sql)
+-- ============================================================
+-- Colmena v2.2 · Edición segura en Sala de espera
+-- Córrela en Supabase → SQL Editor después de la v2.1. Se puede repetir sin problema.
+-- Qué cambia:
+--   · La configuración se puede editar únicamente en Sala de espera y antes de que entre la primera persona.
+--   · La comprobación vive en PostgreSQL y es atómica: una entrada y una edición simultáneas no se cruzan.
+--   · Cambiar de fase, usar el reloj y editar el resumen siguen funcionando normalmente.
+-- Al final sale una fila: candados = 2, version = 2.2
+-- ------------------------------------------------------------
+
+do $$
+declare v text;
+begin
+  if to_regclass('public.ws_schema_version') is null
+     or not exists (select 1 from ws_schema_version where version = '2.1') then
+    raise exception 'Primero corre migracion-v210-seguridad.sql (v2.1) y después esta migración.';
+  end if;
+  select version into v from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
+  if v is not null and string_to_array(v, '.')::int[] > array[2,2] then
+    raise exception 'Tu base ya está en la versión %; no corras una migración anterior.', v;
+  end if;
+end $$;
+
+alter table ws_sessions add column if not exists config_locked boolean not null default false;
+update ws_sessions s set config_locked = true
+where not s.config_locked and exists (select 1 from ws_participants p where p.session_id = s.id);
+
+-- La entrada toma el mismo candado que una edición y marca la propia fila de la sesión.
+-- Ese cambio de fila hace que PostgreSQL reevalúe una edición concurrente con el valor ya bloqueado.
+create or replace function ws_lobby_join_lock() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+begin
+  perform pg_advisory_xact_lock(2201, hashtext(new.session_id::text));
+  update ws_sessions set config_locked = true where id = new.session_id and not config_locked;
+  return new;
+end $$;
+
+drop trigger if exists ws_00_lobby_join_lock on ws_participants;
+create trigger ws_00_lobby_join_lock before insert on ws_participants
+  for each row execute function ws_lobby_join_lock();
+revoke execute on function ws_lobby_join_lock() from public, anon, authenticated;
+
+-- Solo estas columnas forman la configuración del recorrido. Fase, reloj, cierre y resumen
+-- no entran en este candado porque se actualizan durante o después del taller.
+create or replace function ws_sessions_config_guard() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+begin
+  if old.config_locked and not new.config_locked then
+    raise exception 'La configuración bloqueada no puede volver a abrirse.';
+  end if;
+  if row(new.name, new.facilitator, new.votes_per_user, new.areas, new.stages,
+         new.roles, new.tools, new.tasks, new.quickwins, new.q_checkin, new.q_expect,
+         new.q_pain, new.q_idea, new.idea_votes, new.idea_top, new.brand, new.caso,
+         new.kind, new.mins)
+     is distinct from
+     row(old.name, old.facilitator, old.votes_per_user, old.areas, old.stages,
+         old.roles, old.tools, old.tasks, old.quickwins, old.q_checkin, old.q_expect,
+         old.q_pain, old.q_idea, old.idea_votes, old.idea_top, old.brand, old.caso,
+         old.kind, old.mins) then
+    perform pg_advisory_xact_lock(2201, hashtext(old.id::text));
+    if old.phase <> 'lobby' then
+      raise exception 'La sala ya comenzó. La configuración quedó bloqueada para no cambiar el recorrido del grupo.';
+    end if;
+    if old.config_locked or exists (select 1 from ws_participants p where p.session_id = old.id) then
+      raise exception 'Ya entraron personas a la sala. La configuración quedó bloqueada para no cambiarles el recorrido.';
+    end if;
+  end if;
+  return new;
+end $$;
+
+drop trigger if exists ws_sessions_config_guard on ws_sessions;
+create trigger ws_sessions_config_guard before update on ws_sessions
+  for each row execute function ws_sessions_config_guard();
+revoke execute on function ws_sessions_config_guard() from public, anon, authenticated;
+
+insert into ws_schema_version(version, note)
+values ('2.2', 'Creador sin fricción: edición atómica en Sala de espera hasta la primera entrada')
+on conflict (version) do nothing;
+
+select
+  (select count(*) from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+     where n.nspname = 'public' and p.proname in ('ws_lobby_join_lock','ws_sessions_config_guard')
+       and p.prosrc like '%pg_advisory_xact_lock%') as candados,
+  (select version from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1) as version;
+
+-- ============================================================
+-- Verificación final (una sola fila): version = 2.2 y todas las tablas con seguridad activa
+-- ============================================================
+select
+  (select version from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1) as version,
+  (select count(*) from pg_class c join pg_namespace n on n.oid = c.relnamespace
+     where n.nspname = 'public' and c.relname like 'ws\_%' and c.relkind = 'r') as tablas,
+  (select count(*) from pg_class c join pg_namespace n on n.oid = c.relnamespace
+     where n.nspname = 'public' and c.relname like 'ws\_%' and c.relkind = 'r' and c.relrowsecurity) as con_seguridad;
