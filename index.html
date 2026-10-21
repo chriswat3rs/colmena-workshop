@@ -5268,7 +5268,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261021173059";
+const APP_BUILD="20261021185209";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -9240,7 +9240,7 @@ function drawWizard(){
       <button type="button" class="abtn primary" id="wNext">Listo${icon("check")}</button>`;
     $("#wPrev").onclick=$("#wNext").onclick=()=>wzTo(last);
   }
-  if(W.step===0 && W.entry==="brief" && !W.aiBusy) TOUR.maybe("brief"); else if(W.step===last) TOUR.maybe("review");
+  if(W.step===0 && W.entry==="kind") TOUR.maybe("goal"); else if(W.step===0 && W.entry==="brief" && !W.aiBusy) TOUR.maybe("brief"); else if(W.step===last) TOUR.maybe("review");
 
   function bind(sel,key,fn){ const el=$(sel); el.oninput=()=>{ d[key]=fn?fn(el.value):el.value.trim(); saveWzDraft(); }; }
 }
@@ -11652,9 +11652,10 @@ new MutationObserver(()=>{ if(AH.view==="ai" && $(".ai-view") && AIU.rows) aiCha
    y repetir desde Ajustes → Ayuda. Se recuerda por cuenta en este dispositivo.
    Quien ya tiene talleres no lo ve solo: en Inicio aparece una vez «¿Nuevo en Colmena?».
    ============================================================ */
-const TOUR_SCREENS=["home","brief","review","panel"];
+const TOUR_SCREENS=["home","goal","brief","review","panel"];
 const TOUR_PLAN=[
   {id:"home-create",screen:"home"},{id:"home-library",screen:"home"},
+  {id:"creator-goal",screen:"goal"},
   {id:"creator-context",screen:"brief"},{id:"creator-review",screen:"review"},
   {id:"facilitation-qr",screen:"panel"},{id:"facilitation-rhythm",screen:"panel"}
 ];
@@ -11662,7 +11663,9 @@ const TOUR_STEPS={
   home:[
     {id:"home-create", sel:"#hCreate", t:"Tu taller en 3 pasos", d:"Eliges el resultado, describes el contexto en un solo campo y revisas el plan. Al abrirlo obtienes el QR para la sala.", ok:"Siguiente"},
     {id:"home-library", sel:"#wtBox .nt-empty", t:"Aquí vivirán tus talleres", d:"Aún no tienes ninguno. Lo que escribas se guarda como borrador; nadie puede entrar hasta que abras la sala.", ok:"Crear mi primer taller", go:"create"},
-    {id:"home-library", sel:"#wtBox", alt:'.ah-tab[data-view="mine"]', skipIf:"#wtBox .nt-empty", t:"Aquí viven tus talleres", d:"En «Mis talleres» están tus borradores, por iniciar, en curso y finalizados. Con ⋯ abres, duplicas o eliminas cada uno.", ok:"Entendido"}],
+    {id:"home-library", sel:"#wtBox", alt:'.ah-tab[data-view="mine"]', skipIf:"#wtBox .nt-empty", t:"Aquí viven tus talleres", d:"En «Mis talleres» están tus borradores, por iniciar, en curso y finalizados. Con ⋯ abres, duplicas o eliminas cada uno.", ok:"Continuar", go:"create"}],
+  goal:[
+    {id:"creator-goal", sel:".kind-start-grid", alt:"[data-kind-start]", t:"Empieza por el resultado", d:"Elige qué necesita lograr el grupo. Esto define las preguntas, las actividades y el resultado que se llevarán al terminar.", ok:"Elegir objetivo"}],
   brief:[
     {id:"creator-context", sel:".quick-context", t:"Una respuesta es suficiente",
       d:"Describe de qué tratará. Colmena propone el nombre, las preguntas, los tiempos y el recorrido; lo opcional queda en Personalizar.", ok:"Entendido"}],

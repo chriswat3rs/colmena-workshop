@@ -359,7 +359,7 @@ Sin esto, si muchas personas comparten la misma red (oficina, Wi-Fi del evento),
 
 **Experiencia del facilitador**
 
-- **Recorrido de primera vez dinámico** (hasta 6 pasos): construye y renumera el itinerario según las pantallas y controles que esa persona realmente verá, sin saltos como «Paso 3 de 6» cuando se omitió un paso anterior. El recorrido completo acompaña el primer taller (Inicio → Cuéntanos → Revisa y crea → Panel en vivo); si se entra por otra ruta, el total se ajusta. Se salta con «Saltar recorrido» o Esc y se repite en **Perfil → Ayuda → Ver recorrido otra vez**. A quien ya tiene talleres se le ofrece una vez «¿Nuevo en Colmena?». Se recuerda por cuenta en cada dispositivo (localStorage `colmena_tour_v1_<uid>`).
+- **Recorrido de primera vez dinámico** (hasta 7 pasos): construye y renumera el itinerario según las pantallas y controles que esa persona realmente verá, sin huecos cuando se omite un paso anterior. El recorrido completo acompaña el primer taller (Inicio → Objetivo → Cuéntanos → Revisa y crea → Panel en vivo); si se entra por otra ruta, el total se ajusta. Se salta con «Saltar recorrido» o Esc y se repite en **Perfil → Ayuda → Ver recorrido otra vez**. A quien ya tiene talleres se le ofrece una vez «¿Nuevo en Colmena?». Se recuerda por cuenta en cada dispositivo (localStorage `colmena_tour_v1_<uid>`).
 - **«Así será tu taller»** en Revisa y crea: los 6 momentos de la sala (Check-in, Dolores, Votación, Validación, Ideas, Resultados) con lo que usa cada uno, minutos sugeridos según la duración elegida y «Editar» que lleva a su pestaña.
 - **Textos sin jerga:** «¿De qué se trata tu taller?», «¿Qué problemas tiene hoy ese proceso?», objetivos en lenguaje llano, «Reglas obligatorias», «Votos para ideas», «Sala de espera» en lugar de «Lobby», «Tu siguiente paso» en la tarjeta de la sala, errores que dicen qué falta.
 - **Saltar o regresar de fase pide confirmación** («¿Mover a la sala a…?»). Abrir la siguiente fase no pregunta.
@@ -687,7 +687,7 @@ Desplegada en `https://colmena.work` y Supabase el 20 oct 2026.
 
 ### Ajuste del recorrido dinámico (21 oct 2026)
 
-El recorrido dejó de depender de `TOUR_TOTAL=6` y números escritos a mano. Ahora identifica cada explicación, registra cuáles se mostraron u omitieron y calcula `Paso X de Y` con el itinerario real. El recorrido completo sigue teniendo seis explicaciones; una ruta que omite Contexto muestra, por ejemplo, `Paso 3 de 5`, y una entrada directa al panel puede mostrar `Paso 1 de 2`.
+El recorrido dejó de depender de un total y números escritos a mano. Ahora identifica cada explicación, registra cuáles se mostraron u omitieron y calcula `Paso X de Y` con el itinerario real. El recorrido completo tiene siete explicaciones —incluida la elección del Objetivo—; si una ruta omite pantallas, el total se reduce, y una entrada directa al panel puede mostrar `Paso 1 de 2`. En el paso 2, tanto una cuenta nueva como una que ya tiene talleres continúa automáticamente al creador en lugar de cerrar la guía.
 
 Validado con recorridos completos y parciales, consola limpia y Lighthouse 100/100/100. Desplegado en `https://colmena.work` el 21 oct 2026.
 
