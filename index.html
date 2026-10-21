@@ -5268,7 +5268,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261021015600";
+const APP_BUILD="20261021173059";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -11652,26 +11652,42 @@ new MutationObserver(()=>{ if(AH.view==="ai" && $(".ai-view") && AIU.rows) aiCha
    y repetir desde Ajustes → Ayuda. Se recuerda por cuenta en este dispositivo.
    Quien ya tiene talleres no lo ve solo: en Inicio aparece una vez «¿Nuevo en Colmena?».
    ============================================================ */
-const TOUR_TOTAL=6;
+const TOUR_SCREENS=["home","brief","review","panel"];
+const TOUR_PLAN=[
+  {id:"home-create",screen:"home"},{id:"home-library",screen:"home"},
+  {id:"creator-context",screen:"brief"},{id:"creator-review",screen:"review"},
+  {id:"facilitation-qr",screen:"panel"},{id:"facilitation-rhythm",screen:"panel"}
+];
 const TOUR_STEPS={
   home:[
-    {n:1, sel:"#hCreate", t:"Tu taller en 3 pasos", d:"Eliges el resultado, describes el contexto en un solo campo y revisas el plan. Al abrirlo obtienes el QR para la sala.", ok:"Siguiente"},
-    {n:2, sel:"#wtBox .nt-empty", t:"Aquí vivirán tus talleres", d:"Aún no tienes ninguno. Lo que escribas se guarda como borrador; nadie puede entrar hasta que abras la sala.", ok:"Crear mi primer taller", go:"create"},
-    {n:2, sel:"#wtBox", alt:'.ah-tab[data-view="mine"]', skipIf:"#wtBox .nt-empty", t:"Aquí viven tus talleres", d:"En «Mis talleres» están tus borradores, por iniciar, en curso y finalizados. Con ⋯ abres, duplicas o eliminas cada uno.", ok:"Entendido"}],
+    {id:"home-create", sel:"#hCreate", t:"Tu taller en 3 pasos", d:"Eliges el resultado, describes el contexto en un solo campo y revisas el plan. Al abrirlo obtienes el QR para la sala.", ok:"Siguiente"},
+    {id:"home-library", sel:"#wtBox .nt-empty", t:"Aquí vivirán tus talleres", d:"Aún no tienes ninguno. Lo que escribas se guarda como borrador; nadie puede entrar hasta que abras la sala.", ok:"Crear mi primer taller", go:"create"},
+    {id:"home-library", sel:"#wtBox", alt:'.ah-tab[data-view="mine"]', skipIf:"#wtBox .nt-empty", t:"Aquí viven tus talleres", d:"En «Mis talleres» están tus borradores, por iniciar, en curso y finalizados. Con ⋯ abres, duplicas o eliminas cada uno.", ok:"Entendido"}],
   brief:[
-    {n:3, sel:".quick-context", t:"Una respuesta es suficiente",
+    {id:"creator-context", sel:".quick-context", t:"Una respuesta es suficiente",
       d:"Describe de qué tratará. Colmena propone el nombre, las preguntas, los tiempos y el recorrido; lo opcional queda en Personalizar.", ok:"Entendido"}],
   review:[
-    {n:4, sel:"#wCreate", t:"Abrir genera el QR", d:"Revisa la pregunta y el recorrido. Puedes guardar el borrador o abrir la sala; aún podrás editarla hasta que entre la primera persona.", ok:"Entendido"}],
+    {id:"creator-review", sel:"#wCreate", t:"Abrir genera el QR", d:"Revisa la pregunta y el recorrido. Puedes guardar el borrador o abrir la sala; aún podrás editarla hasta que entre la primera persona.", ok:"Entendido"}],
   panel:[
-    {n:5, sel:"#btnQR", t:"Proyecta el QR", d:"Ponlo en la pantalla de la sala. Cada persona entra desde su celular, sin cuenta ni descargas.", ok:"Siguiente"},
-    {n:6, sel:"#fxNext", alt:".stepper", t:"Tú marcas el ritmo", d:"La sala avanza solo cuando abres la siguiente actividad. Aquí ves cuántos terminaron. Al final, comparte en Excel o PDF.", ok:"Listo"}]
+    {id:"facilitation-qr", sel:"#btnQR", t:"Proyecta el QR", d:"Ponlo en la pantalla de la sala. Cada persona entra desde su celular, sin cuenta ni descargas.", ok:"Siguiente"},
+    {id:"facilitation-rhythm", sel:"#fxNext", alt:".stepper", t:"Tú marcas el ritmo", d:"La sala avanza solo cuando abres la siguiente actividad. Aquí ves cuántos terminaron. Al final, comparte en Excel o PDF.", ok:"Listo"}]
 };
 const TOUR={
   on:false,
   key(){ return "colmena_tour_v1_"+(ME.uid||"x"); },
   st(){ try{ return JSON.parse(storageGet(this.key())||"{}")||{}; }catch(e){ return {}; } },
   save(v){ storageSet(this.key(), JSON.stringify(v)); },
+  arrays(s){ s.shown=Array.isArray(s.shown)?s.shown:[]; s.skipped=Array.isArray(s.skipped)?s.skipped:[]; return s; },
+  candidates(screen){ const ids=new Set(); return (TOUR_STEPS[screen]||[]).filter(st=>{
+      if(st.skipIf && $(st.skipIf)) return false;
+      if(!(st.sel&&$(st.sel)) && !(st.alt&&$(st.alt))) return false;
+      if(ids.has(st.id)) return false; ids.add(st.id); return true; }); },
+  prepare(screen){ const s=this.arrays(this.st()), rank=TOUR_SCREENS.indexOf(screen), available=this.candidates(screen), have=new Set(available.map(x=>x.id)), shown=new Set(s.shown), skipped=new Set(s.skipped);
+    TOUR_PLAN.forEach(p=>{ const pr=TOUR_SCREENS.indexOf(p.screen); if(!shown.has(p.id) && ((pr>=0&&pr<rank) || (p.screen===screen&&!have.has(p.id)))) skipped.add(p.id); });
+    s.skipped=[...skipped]; this.save(s); return available.filter(x=>!shown.has(x.id)&&!skipped.has(x.id)); },
+  progress(id){ const s=this.arrays(this.st()), skipped=new Set(s.skipped), active=TOUR_PLAN.filter(x=>!skipped.has(x.id)), i=active.findIndex(x=>x.id===id); return {n:Math.max(1,i+1),total:Math.max(1,active.length)}; },
+  mark(id){ const s=this.arrays(this.st()); if(!s.shown.includes(id)) s.shown.push(id); s.skipped=s.skipped.filter(x=>x!==id); this.save(s); },
+  omit(id){ const s=this.arrays(this.st()); if(!s.shown.includes(id)&&!s.skipped.includes(id)) s.skipped.push(id); this.save(s); },
   /* ¿Va a mostrarse algo en esta pantalla? (Inicio lo usa para no pintar la tarjeta de instalar ni Face ID encima) */
   wants(screen, fresh){ const s=this.st(); if(s.done || (s.seen&&s.seen[screen])) return false; return s.started ? true : (screen==="home" && !!fresh); },
   /* Inicio: recorrido para quien llega por primera vez; aviso «¿Nuevo en Colmena?» para quien ya tiene talleres */
@@ -11684,9 +11700,8 @@ const TOUR={
       s.started=true; s.seen={}; this.save(s);
     }
     if(s.seen&&s.seen[screen]) return;
-    const steps=TOUR_STEPS[screen]||[];
     if(this.pending) return; this.pending=true;     /* el panel se redibuja seguido: un solo arranque */
-    setTimeout(()=>{ this.pending=false; const s2=this.st(); if(this.on || s2.done || (s2.seen&&s2.seen[screen])) return; this.run(screen, steps, 0); }, screen==="panel"?700:250);
+    setTimeout(()=>{ this.pending=false; const s2=this.st(); if(this.on || s2.done || (s2.seen&&s2.seen[screen])) return; this.run(screen, this.prepare(screen), 0); }, screen==="panel"?700:250);
   },
   offer(){
     if($("#tourOffer") || !$(".pb-home")) return;
@@ -11697,7 +11712,7 @@ const TOUR={
     $("#tourNo").onclick=()=>{ const s=this.st(); s.done=true; this.save(s); const c=$("#tourOffer"); if(c) c.remove(); toast("Puedes verlo cuando quieras desde Ajustes → Ayuda"); };
   },
   restart(){
-    this.close(); this.save({started:true, seen:{}});
+    this.close(); this.save({started:true, seen:{}, shown:[], skipped:[]});
     closeMe();
     if(A.session){ stopAdmin(); history.replaceState(null,"",location.pathname+"#admin"); A.session=null; }
     navView("home",{dir:0});
@@ -11708,17 +11723,14 @@ const TOUR={
     /* v1.18 · En la misma pantalla el recorte y la tarjeta viajan al siguiente objetivo (Gentle) en vez de reaparecer */
     const reuse=!!(this.root && this.root.isConnected && this._screen===screen);
     if(reuse) this._unbind(); else this.close();
-    while(i<steps.length){ const st=steps[i];
-      if(st.skipIf && $(st.skipIf)) { i++; continue; }
-      if(!(st.sel && $(st.sel)) && !(st.alt && $(st.alt))) { i++; continue; }
-      break; }
+    while(i<steps.length){ const st=steps[i]; if((st.sel&&$(st.sel))||(st.alt&&$(st.alt))) break; this.omit(st.id); i++; }
     if(i>=steps.length){ if(reuse) this.close(); this.finishScreen(screen); return; }
     const st=steps[i], el=$(st.sel)||$(st.alt);
     this.on=true; if(!reuse){ this.prevHold=A.hold; this.prevFocus=document.activeElement; } if(screen==="panel") A.hold=true;
     el.scrollIntoView({block:"center", behavior:document.documentElement.classList.contains("rm")?"auto":"smooth"});
-    const last=i===steps.length-1 || steps.slice(i+1).every(x=>x.n===st.n);
+    const last=i===steps.length-1, pg=this.progress(st.id);
     const d=typeof st.d==="function"?st.d():st.d;
-    const inner=`<span class="tour-k">Paso ${st.n} de ${TOUR_TOTAL}</span><h2 id="tourT">${esc(st.t)}</h2><p id="tourD">${esc(d)}</p>
+    const inner=`<span class="tour-k">Paso ${pg.n} de ${pg.total}</span><h2 id="tourT">${esc(st.t)}</h2><p id="tourD">${esc(d)}</p>
         <div class="tour-act"><button type="button" class="linkbtn tour-skip">Saltar recorrido</button><button type="button" class="abtn primary tour-ok">${esc(st.ok)}</button></div>`;
     let root=this.root;
     if(reuse){ const card=root.querySelector(".tour-card"); card.innerHTML=inner; Motion.enter(card.children,{y:4, step:20, fade:160}); }
@@ -11737,6 +11749,7 @@ const TOUR={
     this._key=key; document.addEventListener("keydown",key,true);
     root.querySelector(".tour-skip").onclick=()=>this.skip();
     root.querySelector(".tour-ok").onclick=()=>{
+      this.mark(st.id);
       if(st.go==="create"){ this.finishScreen(screen); this.close(); startNewWorkshop(); return; }
       if(last){ this.finishScreen(screen); this.close(); if(screen==="panel") toast("¡Listo! Ya sabes lo básico. Repite el recorrido desde Ajustes → Ayuda");
         if(screen==="brief") window.scrollTo({top:0, behavior:document.documentElement.classList.contains("rm")?"auto":"smooth"}); return; }
