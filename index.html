@@ -1312,6 +1312,10 @@ img.av-i{object-fit:cover;background:var(--navy-soft)}
 .tm-who{display:flex;flex-direction:column;min-width:0}
 .tm-who b{font-size:.90625rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tm-who span{font-size:.8125rem;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tm-who .tm-last{display:flex;align-items:center;gap:.3125rem;margin-top:.1875rem;color:var(--ink-2);font-size:.75rem;font-weight:650}
+.tm-who .tm-last svg{width:.8125rem;height:.8125rem;flex:none;color:var(--accent-strong)}
+.tm-who .tm-last.never{color:var(--ink-3);font-weight:550}
+.tm-who .tm-last.never svg{color:currentColor}
 .tm-me{display:inline-flex;margin-left:.375rem;padding:1px .5rem;border-radius:var(--r-chip);background:var(--accent-soft);color:var(--accent-strong)!important;font-size:.71875rem;font-weight:700;vertical-align:2px}
 .tm-meta{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;justify-content:flex-end}
 .tm-n{font-size:.78125rem;color:var(--ink-3);font-weight:600;white-space:nowrap}
@@ -5162,7 +5166,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261020234930";
+const APP_BUILD="20261021005333";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -5752,6 +5756,7 @@ const SupaStore = {
   },
   async invitePeek(code){ const {data,error}=await this.client.rpc("ws_invite_peek",{p_code:code}); if(error) throw error; return (data&&data[0])||null; },
   async listStaff(){ const {data,error}=await this.client.from("ws_admins").select("user_id,email,name,title,role,active,created_at,avatar").order("created_at"); if(error) throw error; return data||[]; },
+  async teamActivity(){ const {data,error}=await this.client.rpc("ws_team_activity"); if(error) throw error; return data||[]; },
   /* v1.7 · perfil e Inicio */
   async setMyProfile(name,title){ const {error}=await this.client.rpc("ws_set_my_profile",{p_name:name,p_title:title||null}); if(error) throw error; },
   async dashboard(){ const {data,error}=await this.client.rpc("ws_dashboard"); if(error) throw error; return data||{sessions:[],invites:[]}; },
@@ -5974,6 +5979,7 @@ const DemoStore = {
   async resendInvite(id){ const db=this.db(); const o=(db.invites||[]).find(i=>i.id===id); if(!o) throw new Error("Esa invitación ya no existe o ya se usó"); o.revoked_at=now(); this.save(db); return this.createInvite(o.email,o.name,o.role); },
   async requestInviteRenewal(){ return true; },
   async listStaff(){ const db=this.db(); return [{user_id:"demo",email:"modo demo",name:db.meName||"Tú (demo)",title:db.meTitle||"",role:"admin",active:true,created_at:now(),avatar:db.meAvatar||""}, ...(db.staff||[])]; },
+  async teamActivity(){ const db=this.db(), ago=(m)=>new Date(Date.now()-m*60000).toISOString(); return [{user_id:"demo",last_sign_in_at:ago(18),last_access_at:ago(2)},...(db.staff||[]).map((m,i)=>({user_id:m.user_id,last_sign_in_at:m.last_sign_in_at||m.created_at||null,last_access_at:m.last_access_at||(i===0?ago(75):m.created_at||null)}))]; },
   async listInvites(){ return this.db().invites||[]; },
   async createInvite(email,name,role){ const db=this.db(); db.invites=db.invites||[]; email=String(email||"").trim().toLowerCase();
     if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error("Escribe un correo válido");
@@ -8138,6 +8144,10 @@ function goNotifs(){ closeMe(); $$(".nt-toast:not(.m-out)").forEach(t=>Motion.di
 function timeAgo(iso){ const s=(Date.now()-new Date(iso).getTime())/1000;
   if(s<60) return "hace un momento"; if(s<3600) return `hace ${Math.round(s/60)} min`; if(s<86400) return `hace ${Math.round(s/3600)} h`;
   if(s<172800) return "ayer"; if(s<604800) return `hace ${Math.round(s/86400)} días`; return fmtDate(iso,{day:"numeric",month:"short"}); }
+function teamAccessHTML(m){ const at=m.last_access_at||m.last_sign_in_at;
+  if(!at) return `<span class="tm-last never">${icon("clock")}Nunca ha entrado</span>`;
+  const exact=new Date(at).toLocaleString("es-MX",{dateStyle:"medium",timeStyle:"short"});
+  return `<span class="tm-last" title="${esc(exact)}" aria-label="Último acceso: ${esc(exact)}">${icon("clock")}Último acceso ${esc(timeAgo(at))}</span>`; }
 async function loadNotifs(){ try{ NT.items=await Store.listNotifications(); NT.loaded=true; }catch(e){ console.error(e); } refreshBell(); drawNotifs(); }
 function startNotifications(){
   if(NT.uid===ME.uid && NT.unsub){ loadNotifs(); return; }
@@ -9718,8 +9728,8 @@ function previewEmail(mail){
 async function adminTeamView(lastInvite){
   document.body.classList.add("admin-theme");
   if(!$(".ah-team")) { $("#app").innerHTML=`<div class="ah-shell">${ahTop()}<main class="ah-wide">${skTeam()}</main></div>`; wireTop(); }
-  let invites=[], all=[];
-  try{ [invites, all] = await Promise.all([Store.listInvites(), Store.listAllSessions(), loadStaff()]); }
+  let invites=[], all=[], activity=[];
+  try{ [invites, all, , activity] = await Promise.all([Store.listInvites(), Store.listAllSessions(), loadStaff(), Store.teamActivity().catch(e=>{ console.warn("[Colmena] Último acceso no disponible:",e); return []; })]); }
   catch(e){ console.error(e); $(".ah-wide, .ah-team").innerHTML=`<div class="panel"><p class="err">${esc(friendlyAuthError(e))}</p></div>`; return; }
   if(AH.view!=="team") return;
   const nowT=Date.now();
@@ -9727,7 +9737,8 @@ async function adminTeamView(lastInvite){
     .sort((a,b)=>new Date(a.expires_at)-new Date(b.expires_at));
   const expired=i=>new Date(i.expires_at).getTime()<=nowT;
   const count=id=>all.filter(s=>s.owner_id===id).length;
-  const staff=[...AH.staff].sort((a,b)=>(a.user_id===ME.uid?-1:b.user_id===ME.uid?1:0) || (b.active-a.active) || String(a.name||a.email).localeCompare(String(b.name||b.email),"es"));
+  const seen=new Map(activity.map(x=>[x.user_id,x]));
+  const staff=AH.staff.map(m=>({...m,...(seen.get(m.user_id)||{})})).sort((a,b)=>(a.user_id===ME.uid?-1:b.user_id===ME.uid?1:0) || (b.active-a.active) || String(a.name||a.email).localeCompare(String(b.name||b.email),"es"));
   const actN=staff.filter(m=>m.active).length, offN=staff.length-actN, admN=staff.filter(m=>m.active&&m.role==="admin").length, facN=staff.filter(m=>m.active&&m.role!=="admin").length;
   const pendN=pending.filter(i=>!expired(i)).length, soonN=pending.filter(i=>!expired(i)&&new Date(i.expires_at).getTime()-nowT<864e5).length;
   const F=AH.inviteForm||(AH.inviteForm={name:"",email:"",role:"facilitator"});
@@ -9775,7 +9786,7 @@ async function adminTeamView(lastInvite){
           <h2 id="teamT">Equipo <span class="sub">${staff.filter(m=>m.active).length} con acceso</span></h2>
           <div class="team-list">${staff.map(m=>{ const me=m.user_id===ME.uid, n=count(m.user_id); return `<div class="tm-row${m.active?"":" off"}" data-k="m-${esc(m.user_id)}">
             <span class="av-w" data-av="${esc(m.user_id)}" data-cls="lg">${avatarHTML(m,"lg")}</span>
-            <div class="tm-who"><b>${esc(m.name||m.email)}${me?' <span class="tm-me">Tú</span>':""}</b><span>${esc(m.title?m.title+" · ":"")}${esc(m.email||"")}</span></div>
+            <div class="tm-who"><b>${esc(m.name||m.email)}${me?' <span class="tm-me">Tú</span>':""}</b><span>${esc(m.title?m.title+" · ":"")}${esc(m.email||"")}</span>${teamAccessHTML(m)}</div>
             <div class="tm-meta"><span class="role-tag ${esc(m.role)}">${ROLE_T[m.role]}</span><span class="tm-n">${n} ${n===1?"taller":"talleres"}</span>${m.active?"":'<span class="tm-off">Desactivado</span>'}</div>
             <div class="tm-acts">${me?"":`<button type="button" class="ib wt-more tm-more" data-menu="${esc(m.user_id)}" aria-haspopup="menu" aria-expanded="false" aria-label="Acciones de ${esc(m.name||m.email)}">${icon("more")}</button>`}</div>
           </div>`; }).join("")}</div>
