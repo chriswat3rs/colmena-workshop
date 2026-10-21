@@ -32,7 +32,7 @@ La primera cuenta que activó su segundo factor queda como **admin**. Las demás
 ### 1. Base de datos
 
 1. En [supabase.com](https://supabase.com) crea un proyecto (plan gratuito).
-2. **SQL Editor → New query** → pega TODO `setup.sql` → **Run**. Al final sale una fila: `version = 2.3.1` y el mismo número en `tablas` y `con_seguridad` (todas las tablas con seguridad activa).
+2. **SQL Editor → New query** → pega TODO `setup.sql` → **Run**. Al final sale una fila: `version = 2.3.2` y el mismo número en `tablas` y `con_seguridad` (todas las tablas con seguridad activa).
    - Se puede correr las veces que quieras. Si tenías la v1 (con PIN), la reemplaza sola.
    - Si tenías la v1.1, la actualiza **sin borrar** tu cuenta, tus talleres ni lo capturado.
 
@@ -238,7 +238,7 @@ Límites que conviene conocer:
 
 ### Actualizar desde una versión anterior
 
-`setup.sql` se puede volver a correr completo sin perder datos (todo es `if not exists` / `create or replace`). **Es el estado actual (v2.3.1):** lo arma `tools/arma_setup.py` con la base v1.26 y cada migración nueva, así que correrlo nunca regresa funciones a una versión vieja. La base guarda su versión (`ws_schema_version`): un `setup.sql` más viejo o una migración de `migraciones-anteriores/` se detienen con un aviso y no cambian nada. Para una base que ya existe basta con correr, en orden, las migraciones que aún le falten.
+`setup.sql` se puede volver a correr completo sin perder datos (todo es `if not exists` / `create or replace`). **Es el estado actual (v2.3.2):** lo arma `tools/arma_setup.py` con la base v1.26 y cada migración nueva, así que correrlo nunca regresa funciones a una versión vieja. La base guarda su versión (`ws_schema_version`): un `setup.sql` más viejo o una migración de `migraciones-anteriores/` se detienen con un aviso y no cambian nada. Para una base que ya existe basta con correr, en orden, las migraciones que aún le falten.
 
 **De v1.4 a v1.5 (roles):** corre `setup.sql` completo otra vez. Tu cuenta (la primera facilitadora) pasa sola a **admin** y tus talleres se conservan. Luego haz el ajuste de **Confirm email** del paso 2 y sube el nuevo `index.html`.
 
@@ -267,11 +267,12 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | Archivo | Qué es |
 |---|---|
 | `index.html` | Toda la app: participante (móvil) + panel del facilitador. Incluye la librería de Supabase y el generador de QR, sin depender de CDNs. |
-| `setup.sql` | Estado actual de la base (v2.3.1): esquema, reglas de seguridad, tiempo real y analítica privada. Re-ejecutable y sin borrar datos. Se arma con `python3 tools/arma_setup.py`; no se edita a mano. |
+| `setup.sql` | Estado actual de la base (v2.3.2): esquema, reglas de seguridad, tiempo real y analítica privada. Re-ejecutable y sin borrar datos. Se arma con `python3 tools/arma_setup.py`; no se edita a mano. |
 | `migracion-v210-seguridad.sql` | v2.1: lo que corres en una base que ya existe (permisos del participante, candado de votos, versión de la base). |
 | `migracion-v220-lobby-edit.sql` | v2.2: bloquea en PostgreSQL la configuración al entrar la primera persona o iniciar el taller. Incluye protección atómica ante entradas y ediciones simultáneas. |
 | `migracion-v230-analitica.sql` | v2.3: telemetría privada, RPC de ingesta y consulta admin, agregados diarios y retención de 90 días. |
 | `migracion-v231-ultimo-acceso.sql` | v2.3.1: último acceso de cada integrante, visible únicamente para admin en Equipo. |
+| `migracion-v232-mapa-interacciones.sql` | v2.3.2: mapa privado de interacciones por acción, audiencia, pantalla y dispositivo. |
 | `migraciones-anteriores/` | Las migraciones de antes y el `setup.sql` anterior (`setup-base-v126.sql`). Ya están dentro de `setup.sql`; cada una se detiene sola en una base versionada actual. |
 | `tools/arma_setup.py` | Arma `setup.sql` juntando la base y las migraciones en orden (`--guardias` pone la guardia a las archivadas). |
 | `pruebas/` | Pruebas de base de datos (`sql/probar_sql.py`), de pantallas (`navegador/`) y de seguridad (`seguridad/`). Ver `pruebas/LEEME.md`. |
@@ -664,6 +665,23 @@ En **Equipo**, cada cuenta muestra `Último acceso hace…` o `Nunca ha entrado`
 - Si la RPC aún no está instalada, Equipo sigue funcionando y muestra `Nunca ha entrado` en lugar de bloquear la vista.
 
 **Publicar:** corre `migracion-v231-ultimo-acceso.sql`; debe devolver `funciones = 1`, `version = 2.3.1`. Después publica `index.html` y `sw.js`.
+
+Desplegada en `https://colmena.work` y Supabase el 20 oct 2026.
+
+## v2.3.2 · Mapa privado de interacciones (20 oct 2026)
+
+**Analítica** incorpora un mapa de calor semántico que muestra qué acciones se intentan con mayor frecuencia, con **Participantes** como vista inicial y filtros separados para Facilitación, Creador y dispositivo.
+
+- Participantes: registro, selección de avatar/etapa, check-in, publicación de tarjetas, votos, calificaciones, propuestas y apoyos.
+- Facilitación: QR, avance de fases, reloj, edición, presentación, exportación y resumen.
+- Creador: objetivo, avance/retroceso, IA, preparación y apertura del taller.
+- El mapa usa nombres técnicos de un catálogo cerrado. No captura coordenadas, texto visible, respuestas ni identificadores de tarjetas/personas.
+- Solo `ws_interaction_map()` devuelve agregados y exige rol Admin; las tablas continúan sin permisos directos para el navegador.
+- Los filtros de taller y dispositivo usan el componente desplegable propio de Colmena —no el selector predeterminado del navegador— con teclado, foco y chevron centrado.
+
+**Pruebas:** PostgreSQL 16 desechable, **116/116** pruebas de comportamiento; sintaxis JavaScript correcta; vista responsiva a 390 px sin desbordamiento; Lighthouse 100/100/100.
+
+**Publicar:** corre `migracion-v232-mapa-interacciones.sql`; debe devolver `funciones = 2`, `version = 2.3.2`. Después publica `index.html` y `sw.js`.
 
 Desplegada en `https://colmena.work` y Supabase el 20 oct 2026.
 

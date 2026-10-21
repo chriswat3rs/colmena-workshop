@@ -224,6 +224,16 @@ a{color:var(--accent-strong)}
 .field{margin-bottom:1rem}
 .field label{display:block;font-weight:600;font-size:.875rem;color:var(--ink-2);margin-bottom:.5rem}
 .input,textarea.input{width:100%;padding:.9375rem 1rem;border:1.5px solid var(--line-ctl);border-radius:12px;background:var(--card);font-size:1.0625rem}
+.drop{position:relative;width:100%;min-width:0}
+.drop-btn{display:grid;grid-template-columns:minmax(0,1fr) 2.5rem;align-items:stretch;width:100%;min-height:2.625rem;padding:0 0 0 .875rem;border:1.5px solid var(--line-ctl);border-radius:12px;background:var(--card);color:var(--ink);font:650 .9375rem Montserrat,system-ui,sans-serif;text-align:left;cursor:pointer;transition:border-color .15s,box-shadow .15s,background .15s}
+.drop-btn:hover{border-color:var(--accent)}.drop-btn:focus-visible,.drop-btn[aria-expanded="true"]{outline:0;border-color:var(--accent-strong);box-shadow:0 0 0 3px var(--accent-soft)}
+.drop-btn:disabled{cursor:not-allowed;opacity:.55}.drop-value{align-self:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drop-chevron{display:grid;place-items:center;align-self:stretch;width:2.5rem;min-height:0;color:var(--ink-3)}
+.drop-chevron svg{display:block;width:1rem;height:1rem;margin:auto;transition:rotate .16s ease}.drop-btn[aria-expanded="true"] .drop-chevron svg{rotate:180deg}
+.drop-menu{position:fixed;z-index:10050;display:flex;flex-direction:column;gap:.1875rem;padding:.375rem;overflow:auto;border:1px solid var(--line-ctl);border-radius:12px;background:var(--card);box-shadow:0 14px 38px rgb(var(--sh) / .22)}
+.drop-option{width:100%;min-height:2.375rem;padding:.55rem .75rem;border:0;border-radius:8px;background:transparent;color:var(--ink);font:600 .8125rem Montserrat,system-ui,sans-serif;text-align:left;cursor:pointer}
+.drop-option:hover,.drop-option:focus-visible{outline:0;background:var(--surface);color:var(--accent-strong)}.drop-option[aria-selected="true"]{background:var(--accent-soft);color:var(--accent-strong);font-weight:750}.drop-option[aria-selected="true"]::after{content:"✓";float:right;margin-left:.75rem}.drop-option:disabled{opacity:.45;cursor:not-allowed}
+.val-row .drop-btn{min-height:2.375rem;font-size:.875rem}.kind-copy-actions .drop{flex:1}.kind-copy-actions .drop-btn{min-height:2.75rem}
 .input:focus{border-color:var(--accent);outline:none}
 textarea.input{resize:vertical;min-height:6.875rem}
 .chips{display:flex;flex-wrap:wrap;gap:.5rem}
@@ -2965,7 +2975,7 @@ html.dark{--dv1:#3987e5;--dv2:#d95926;--dv3:#199e70;--dv4:#c98500;--dv5:#d55181}
 /* v2.3 · Analítica privada */
 .an-filters{display:flex;align-items:center;gap:.625rem;flex-wrap:wrap}
 .an-select{display:block;min-width:min(18rem,100%)}
-.an-select .input{height:2.625rem;padding-block:.375rem}
+.an-select .input{height:2.625rem;padding-block:.375rem}.an-select .drop-btn{height:2.625rem}
 .an-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--kpi-gap,1rem)}
 .an-card{min-width:0;padding:1.25rem}
 .an-funnel,.an-friction{list-style:none;margin:0;padding:0}
@@ -2990,8 +3000,31 @@ html.dark{--dv1:#3987e5;--dv2:#d95926;--dv3:#199e70;--dv4:#c98500;--dv5:#d55181}
 .an-table .an-bad{color:var(--danger);font-weight:750}
 .an-privacy{display:flex;align-items:flex-start;gap:.5rem;margin:0;padding:.875rem 1rem;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:.78125rem;line-height:1.45;color:var(--ink-3)}
 .an-privacy svg{flex:none;width:1rem;height:1rem;margin-top:.1rem;color:var(--accent-strong)}
+.an-map-card{overflow:hidden}
+.an-map-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin:.875rem 0 1rem}
+.an-map-seg{display:inline-flex;padding:.25rem;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.an-map-seg button{min-height:2.25rem;padding:.4rem .75rem;border:0;border-radius:9px;background:transparent;color:var(--ink-2);font:700 .75rem Montserrat,system-ui,sans-serif;cursor:pointer}
+.an-map-seg button.on{background:var(--card);color:var(--accent-strong);box-shadow:var(--shadow-xs)}
+.an-map-device{display:flex;flex-direction:column;gap:.25rem;min-width:10.5rem}
+.an-map-device>span{font-size:.6875rem;font-weight:750;color:var(--ink-3)}
+.an-map-device .input{height:2.5rem;padding-block:.3rem}.an-map-device .drop-btn{height:2.5rem;min-height:2.5rem}
+.an-map-summary{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;margin-bottom:.75rem;font-size:.75rem;color:var(--ink-3)}
+.an-map-summary>b{color:var(--ink)}
+.an-map-scale{display:grid;grid-template-columns:repeat(3,1rem) auto auto;align-items:center;gap:.2rem;margin-left:auto;font-size:.625rem}
+.an-map-scale i{width:1rem;height:.75rem;border-radius:3px;background:var(--accent-strong);opacity:.18}
+.an-map-scale i:nth-child(2){opacity:.48}.an-map-scale i:nth-child(3){opacity:.86}.an-map-scale em{font-style:normal}.an-map-scale em:first-of-type{grid-column:1/3}.an-map-scale em:last-child{text-align:right}
+.an-map-wrap{border:1px solid var(--line);border-radius:12px}
+.an-map{width:100%;min-width:48rem;border-collapse:collapse;font-size:.75rem}
+.an-map th,.an-map td{padding:.55rem .625rem;border-bottom:1px solid var(--line);text-align:left}
+.an-map th{position:sticky;top:0;z-index:1;background:var(--surface);color:var(--ink-3);font-size:.65625rem;text-transform:uppercase;letter-spacing:.04em}
+.an-map th.r,.an-map td.r{text-align:right}.an-map tbody tr:last-child td{border-bottom:0}
+.an-map td:first-child b{color:var(--ink);font-size:.78125rem}.an-map td:nth-child(2) span{color:var(--ink-3);white-space:nowrap}
+.an-heat{position:relative;isolation:isolate;display:inline-grid;place-items:center;min-width:3.25rem;min-height:2rem;padding:.25rem .4rem;overflow:hidden;border-radius:7px;color:var(--ink-3)}
+.an-heat i{position:absolute;inset:0;z-index:-1;background:var(--accent-strong);opacity:0}
+.an-heat.has{color:var(--ink)}.an-heat.has i{opacity:calc(.12 + var(--heat)*.72)}
+.an-heat b{font-size:.71875rem}.an-map-empty{min-height:8rem;border:1px dashed var(--line);border-radius:12px}
 @media (max-width:900px){.an-grid{grid-template-columns:minmax(0,1fr)}}@media (max-width:1012px){:where(html[data-ts="l"]) .an-grid{grid-template-columns:minmax(0,1fr)}}@media (max-width:1125px){:where(html[data-ts="xl"]) .an-grid{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:600px){.an-filters,.an-select{width:100%}.an-filters .ai-per{width:100%}.an-funnel li>div{grid-template-columns:1.625rem minmax(0,1fr)}.an-funnel em{grid-column:2;white-space:normal}.an-funnel li>i{margin-left:2.25rem}}@media (max-width:675px){:where(html[data-ts="l"]) .an-filters,:where(html[data-ts="l"]) .an-select{width:100%}:where(html[data-ts="l"]) .an-filters .ai-per{width:100%}:where(html[data-ts="l"]) .an-funnel li>div{grid-template-columns:1.625rem minmax(0,1fr)}:where(html[data-ts="l"]) .an-funnel em{grid-column:2;white-space:normal}:where(html[data-ts="l"]) .an-funnel li>i{margin-left:2.25rem}}@media (max-width:750px){:where(html[data-ts="xl"]) .an-filters,:where(html[data-ts="xl"]) .an-select{width:100%}:where(html[data-ts="xl"]) .an-filters .ai-per{width:100%}:where(html[data-ts="xl"]) .an-funnel li>div{grid-template-columns:1.625rem minmax(0,1fr)}:where(html[data-ts="xl"]) .an-funnel em{grid-column:2;white-space:normal}:where(html[data-ts="xl"]) .an-funnel li>i{margin-left:2.25rem}}
+@media (max-width:600px){.an-filters,.an-select{width:100%}.an-filters .ai-per{width:100%}.an-funnel li>div{grid-template-columns:1.625rem minmax(0,1fr)}.an-funnel em{grid-column:2;white-space:normal}.an-funnel li>i{margin-left:2.25rem}.an-map-head{align-items:stretch;flex-direction:column}.an-map-seg{display:grid;grid-template-columns:repeat(3,1fr)}.an-map-seg button{padding-inline:.35rem}.an-map-device{width:100%}.an-map-scale{width:100%;margin-left:0;justify-content:start}.an-map-summary>span:nth-child(2){display:none}}@media (max-width:675px){:where(html[data-ts="l"]) .an-filters,:where(html[data-ts="l"]) .an-select{width:100%}:where(html[data-ts="l"]) .an-filters .ai-per{width:100%}:where(html[data-ts="l"]) .an-funnel li>div{grid-template-columns:1.625rem minmax(0,1fr)}:where(html[data-ts="l"]) .an-funnel em{grid-column:2;white-space:normal}:where(html[data-ts="l"]) .an-funnel li>i{margin-left:2.25rem}:where(html[data-ts="l"]) .an-map-head{align-items:stretch;flex-direction:column}:where(html[data-ts="l"]) .an-map-seg{display:grid;grid-template-columns:repeat(3,1fr)}:where(html[data-ts="l"]) .an-map-seg button{padding-inline:.35rem}:where(html[data-ts="l"]) .an-map-device{width:100%}:where(html[data-ts="l"]) .an-map-scale{width:100%;margin-left:0;justify-content:start}:where(html[data-ts="l"]) .an-map-summary>span:nth-child(2){display:none}}@media (max-width:750px){:where(html[data-ts="xl"]) .an-filters,:where(html[data-ts="xl"]) .an-select{width:100%}:where(html[data-ts="xl"]) .an-filters .ai-per{width:100%}:where(html[data-ts="xl"]) .an-funnel li>div{grid-template-columns:1.625rem minmax(0,1fr)}:where(html[data-ts="xl"]) .an-funnel em{grid-column:2;white-space:normal}:where(html[data-ts="xl"]) .an-funnel li>i{margin-left:2.25rem}:where(html[data-ts="xl"]) .an-map-head{align-items:stretch;flex-direction:column}:where(html[data-ts="xl"]) .an-map-seg{display:grid;grid-template-columns:repeat(3,1fr)}:where(html[data-ts="xl"]) .an-map-seg button{padding-inline:.35rem}:where(html[data-ts="xl"]) .an-map-device{width:100%}:where(html[data-ts="xl"]) .an-map-scale{width:100%;margin-left:0;justify-content:start}:where(html[data-ts="xl"]) .an-map-summary>span:nth-child(2){display:none}}
 /* Diálogo «Límite de IA» */
 .dlg-body{text-align:left;display:flex;flex-direction:column;gap:1rem;margin:-.5rem 0 1.375rem}
 .dlg-body .hint{margin:0;font-size:.8125rem;color:var(--ink-3);line-height:1.45}
@@ -4935,6 +4968,35 @@ const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
 const esc = s => String(s??"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'id-'+Date.now()+'-'+Math.random().toString(36).slice(2,10));
 const now = () => new Date().toISOString();
+/* Desplegable propio de Colmena. Conserva el <select> como estado interno para no romper
+   formularios ni listeners existentes, pero nunca muestra el control nativo del navegador. */
+const DropList = (()=>{
+  let current=null, seq=0;
+  const selected=s=>s.options[s.selectedIndex]||s.options[0];
+  function accessibleName(s){ const own=s.getAttribute("aria-label"); if(own) return own; const lab=s.id&&document.querySelector(`label[for="${CSS.escape(s.id)}"]`); return (lab&&lab.textContent.trim())||"Elegir opción"; }
+  function sync(s){ if(!s||!s._drop) return; const o=selected(s), d=s._drop; d.text.textContent=o?o.textContent:"Elegir…"; d.btn.disabled=!!s.disabled; d.btn.setAttribute("aria-label",`${d.name}: ${o?o.textContent:"sin elegir"}`); }
+  function close(focus){ if(!current) return; const d=current._drop; d.btn.setAttribute("aria-expanded","false"); d.menu.remove(); d.menu=null; const b=d.btn; current=null; if(focus) b.focus(); }
+  function choose(s,value){ if(s.disabled) return; s.value=value; sync(s); close(true); s.dispatchEvent(new Event("change",{bubbles:true})); }
+  function position(d){ const r=d.btn.getBoundingClientRect(), m=d.menu, gap=6, pad=8; m.style.minWidth=Math.max(180,r.width)+"px"; m.style.maxWidth=Math.max(240,innerWidth-pad*2)+"px"; m.style.left=Math.max(pad,Math.min(r.left,innerWidth-m.offsetWidth-pad))+"px"; const below=innerHeight-r.bottom-gap, above=r.top-gap; m.style.maxHeight=Math.max(128,Math.min(320,Math.max(below,above)))+"px"; m.style.top=(below>=Math.min(240,m.scrollHeight)||below>=above?r.bottom+gap:Math.max(pad,r.top-gap-m.offsetHeight))+"px"; }
+  function open(s){ if(s.disabled) return; if(current===s){ close(false); return; } close(false); const d=s._drop, m=document.createElement("div"); d.menu=m; current=s; m.className="drop-menu"; m.id=d.menuId; m.setAttribute("role","listbox"); m.setAttribute("aria-label",d.name);
+    [...s.options].forEach(o=>{ const b=document.createElement("button"); b.type="button"; b.className="drop-option"; b.setAttribute("role","option"); b.setAttribute("aria-selected",String(o.value===s.value)); b.disabled=o.disabled; b.dataset.value=o.value; b.textContent=o.textContent; b.onclick=()=>choose(s,o.value); m.appendChild(b); });
+    document.body.appendChild(m); d.btn.setAttribute("aria-expanded","true"); position(d); const opts=[...m.querySelectorAll('.drop-option:not(:disabled)')], active=opts.find(x=>x.getAttribute("aria-selected")==="true")||opts[0]; if(active){ active.tabIndex=0; active.focus({preventScroll:true}); }
+    m.onkeydown=e=>{ const a=[...m.querySelectorAll('.drop-option:not(:disabled)')], i=a.indexOf(document.activeElement); if(e.key==="Escape"){ e.preventDefault(); close(true); } else if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); a[(i+(e.key==="ArrowDown"?1:-1)+a.length)%a.length]?.focus(); } else if(e.key==="Home"){ e.preventDefault(); a[0]?.focus(); } else if(e.key==="End"){ e.preventDefault(); a[a.length-1]?.focus(); } else if(e.key==="Tab") close(false); };
+  }
+  function enhance(s){ if(!s||s.dataset.droplist||s.multiple||s.size>1) return; const name=accessibleName(s), wrap=document.createElement("div"), btn=document.createElement("button"), text=document.createElement("span"), chev=document.createElement("span");
+    s.dataset.droplist="true"; wrap.className="drop"; s.before(wrap); wrap.appendChild(s); s.hidden=true; s.tabIndex=-1; s.setAttribute("aria-hidden","true");
+    btn.type="button"; btn.className="drop-btn"; btn.setAttribute("aria-haspopup","listbox"); btn.setAttribute("aria-expanded","false"); const menuId=`drop-${++seq}`; btn.setAttribute("aria-controls",menuId); text.className="drop-value"; chev.className="drop-chevron"; chev.innerHTML=typeof icon==="function"?icon("chevdown"):"⌄"; btn.append(text,chev); wrap.appendChild(btn); s._drop={wrap,btn,text,chev,name,menuId,menu:null};
+    btn.onclick=()=>open(s); btn.onkeydown=e=>{ if(["ArrowDown","ArrowUp"," ","Enter"].includes(e.key)){ e.preventDefault(); open(s); } }; sync(s);
+  }
+  function scan(root){ if(root&&root.matches&&root.matches("select")) enhance(root); if(root&&root.querySelectorAll) root.querySelectorAll("select").forEach(enhance); }
+  document.addEventListener("change",e=>{ if(e.target&&e.target.matches&&e.target.matches("select[data-droplist]")) sync(e.target); },true);
+  document.addEventListener("pointerdown",e=>{ if(current&&!current._drop.menu.contains(e.target)&&!current._drop.btn.contains(e.target)) close(false); },true);
+  addEventListener("resize",()=>{ if(current) position(current._drop); });
+  addEventListener("scroll",e=>{ if(current&&!(current._drop.menu&&current._drop.menu.contains(e.target))) close(false); },true);
+  const start=()=>{ scan(document); new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(scan))).observe(document.body,{childList:true,subtree:true}); };
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",start,{once:true}); else start();
+  return {enhance:scan,sync,close};
+})();
 /* v2.3 · Analítica propia y privada. Solo envía nombres de evento y contexto técnico acotado:
    nunca lee campos, respuestas, nombres, correos, códigos ni texto visible. Si falla, la app sigue normal. */
 const Telemetry = (()=>{
@@ -4957,8 +5019,48 @@ const Telemetry = (()=>{
   function context(p){ Object.assign(C,p||{}); }
   function reset(){ C.session_id=C.flow=C.step=null; }
   function newJourney(){ client=makeUuid(); try{ sessionStorage.setItem("colmena_telemetry_journey",client); }catch(e){} return client; }
+  /* v2.3.2 · Mapa de calor semántico: catálogo cerrado de acciones. No lee texto, valores,
+     coordenadas ni identificadores de tarjetas/personas. */
+  const ACTION_IDS={
+    jgo:"join_attempt",wgo:"onboarding_start",obNext:"onboarding_continue",obBack:"onboarding_back",pswGo:"phase_start",ngOk:"notice_dismiss",
+    ckGo:"checkin_submit",ckEdit:"checkin_edit",painGo:"card_publish",painDone:"cards_complete",qwPropose:"improvement_propose",
+    qwFinish:"validation_complete",qwCont:"validation_continue",qwNextQ:"validation_next_pending",ideaGo:"idea_publish",ideasDoneBtn:"ideas_complete",
+    hCreate:"creator_start",wtCreate:"creator_start",wtCreate2:"creator_start",bfGo:"creator_prepare",bfBack:"creator_back",
+    bfManual:"creator_manual",bfManualBody:"creator_manual",bfManual2:"creator_manual",bfRetry:"ai_retry",rvRetry:"ai_retry",
+    rvRegen:"ai_regenerate",rvAdjust:"ai_adjust",rvCover:"ai_cover",wCreate:"workshop_open",wPrev:"creator_back",wNext:"creator_continue",
+    btnQR:"qr_present",bandQR:"qr_present",joinBig:"qr_present",btnCode:"link_copy",joinCopy:"link_copy",qrCopy:"link_copy",
+    fxNext:"phase_advance",mnNext:"phase_advance",bandEdit:"workshop_edit",mnEdit:"workshop_edit",pbTime:"timer_open",
+    resPresent:"results_present",bandPresent:"results_present",mnPresent:"results_present",resShare:"results_share",bandShare:"results_share",
+    mnShare:"results_share",shGo:"results_export",sumGo:"summary_generate",sumEdit:"summary_edit",sumCopy:"summary_copy",
+    bandInvite:"invite_start",invGo:"invite_send"
+  };
+  function actionOf(b){
+    if(ACTION_IDS[b.id]) return ACTION_IDS[b.id];
+    if(b.matches(".ah-tab")){ const v=b.dataset.view; return ["home","mine","all","team","analytics","ai"].includes(v)?"navigate_"+v:null; }
+    if(b.matches("[data-kind-start]")) return "creator_goal_select";
+    if(b.matches(".mood-opt")) return "mood_select";
+    if(b.matches(".avatar-pick")) return "avatar_select";
+    if(b.closest("#f-area")) return "onboarding_area_select";
+    if(b.closest("#f-rol")) return "onboarding_role_select";
+    if(b.closest("#f-etapas")) return "onboarding_stage_select";
+    if(b.closest("#f-stage")) return "card_category_select";
+    if(b.closest("#f-task")) return "card_task_select";
+    if(b.closest("#f-tool")) return "card_tool_select";
+    if(b.closest("#f-sev")) return "card_severity_select";
+    if(b.matches(".vbtn")) return b.dataset.d==="-1"?"vote_remove":"vote_add";
+    if(b.closest(".v-filter")) return "vote_filter";
+    if(b.closest(".seg")) return "rating_select";
+    if(b.matches(".qw-st")) return "validation_step_select";
+    if(b.closest("#f-qwstage")) return "improvement_stage_select";
+    if(b.closest("#retos")) return "idea_challenge_select";
+    if(b.matches(".support")) return b.classList.contains("on")?"idea_support_remove":"idea_support_add";
+    if(b.matches(".st-b")) return "phase_open";
+    if(b.matches("[data-view-go]")) return "dashboard_open_list";
+    return null;
+  }
   let last={key:"",at:0,n:0};
-  addEventListener("pointerup",e=>{ const b=e.target&&e.target.closest&&e.target.closest("button,a,[role=button]"); if(!b) return; const raw=b.id||b.dataset.view||b.dataset.ph||b.dataset.mac||b.dataset.kindStart||b.tagName.toLowerCase(), key=String(raw).replace(/[^a-zA-Z0-9_-]/g,"").slice(0,40)||"action", t=Date.now();
+  addEventListener("pointerup",e=>{ const b=e.target&&e.target.closest&&e.target.closest("button,a,[role=button]"); if(!b) return; const action=actionOf(b), raw=action||b.id||b.dataset.view||b.dataset.ph||b.dataset.mac||b.dataset.kindStart||b.tagName.toLowerCase(), key=String(raw).replace(/[^a-zA-Z0-9_-]/g,"").slice(0,40)||"action", t=Date.now();
+    if(action) track("ui_action",{properties:{action,result:b.disabled?"blocked":"attempt"}});
     if(b.disabled&&b.id==="obNext") track("onboarding_validation_failed",{flow:"participant",step:"onboarding",properties:{target:"continue"}});
     else if(b.disabled&&b.id==="wCreate") track("validation_failed",{flow:"creator",step:"review",properties:{target:"open_workshop"}});
     last=last.key===key&&t-last.at<900?{key,at:t,n:last.n+1}:{key,at:t,n:1}; if(last.n===3) track("rage_click",{properties:{target:key}}); },{passive:true,capture:true});
@@ -5166,7 +5268,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261021005333";
+const APP_BUILD="20261021015600";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -5803,6 +5905,7 @@ const SupaStore = {
   /* v2.3 · La telemetría solo entra y la analítica solo sale por RPC; las tablas no se exponen al navegador. */
   async telemetry(events){ if(!events||!events.length) return 0; const {data,error}=await this.client.rpc("ws_telemetry_ingest",{p_events:events}); if(error) throw error; return data||0; },
   async analytics(from,to,session){ const {data,error}=await this.client.rpc("ws_analytics",{p_from:from||null,p_to:to||null,p_session:session||null}); if(error) throw error; return data||{}; },
+  async interactionMap(from,to,session){ const {data,error}=await this.client.rpc("ws_interaction_map",{p_from:from||null,p_to:to||null,p_session:session||null}); if(error) throw error; return data||[]; },
   async setAiLimit(user,enabled,cap){ const {error}=await this.client.rpc("ws_set_ai_limit",{p_user:user,p_enabled:enabled,p_cap:cap==null?null:cap}); if(error) throw error; },
   async aiLink(draft,session){ if(!draft||!session) return; const {error}=await this.client.rpc("ws_ai_link",{p_draft:draft,p_session:session}); if(error) throw error; },
   /* v1.6 · Centro de notificaciones */
@@ -6058,6 +6161,19 @@ const DemoStore = {
   async telemetry(){ return 0; },
   async analytics(from,to,session){ return {from:from||new Date(Date.now()-30*864e5).toISOString(),to:to||now(),retention_days:90,
     overview:{events:0,journeys:0,workshops:0,errors:0,p50_ms:0},participant_funnel:[],creator_funnel:[],friction:[],devices:[],workshops:[],trend:[]}; },
+  async interactionMap(){ return [
+    {audience:"participant",flow:"participant",step:"checkin",action:"mood_select",device:"mobile",interactions:38,journeys:18,workshops:2},
+    {audience:"participant",flow:"participant",step:"checkin",action:"checkin_submit",device:"mobile",interactions:19,journeys:18,workshops:2},
+    {audience:"participant",flow:"participant",step:"pains",action:"card_publish",device:"mobile",interactions:31,journeys:16,workshops:2},
+    {audience:"participant",flow:"participant",step:"votes",action:"vote_add",device:"mobile",interactions:54,journeys:15,workshops:2},
+    {audience:"participant",flow:"participant",step:"quickwins",action:"rating_select",device:"mobile",interactions:42,journeys:14,workshops:2},
+    {audience:"participant",flow:"participant",step:"ideas",action:"idea_support_add",device:"mobile",interactions:17,journeys:11,workshops:2},
+    {audience:"participant",flow:"participant",step:"onboarding",action:"onboarding_continue",device:"desktop",interactions:8,journeys:3,workshops:1},
+    {audience:"facilitator",flow:"facilitator",step:"lobby",action:"qr_present",device:"desktop",interactions:6,journeys:2,workshops:2},
+    {audience:"facilitator",flow:"facilitator",step:"pains",action:"phase_advance",device:"desktop",interactions:5,journeys:2,workshops:2},
+    {audience:"creator",flow:"creator",step:"goal",action:"creator_goal_select",device:"desktop",interactions:9,journeys:4,workshops:0},
+    {audience:"creator",flow:"creator",step:"review",action:"workshop_open",device:"desktop",interactions:3,journeys:3,workshops:3}
+  ]; },
   async suggestWorkshop(payload){ const db0=this.db(), me=this._aiStaff(db0)[0], used=(db0.aiLog||[]).filter(l=>l.user_id==="demo" && new Date(l.at)>=new Date(new Date().getFullYear(),new Date().getMonth(),1)).reduce((a,l)=>a+l.input_tokens+l.output_tokens,0);
     if(!me.ai_enabled) throw new Error("Tu admin pausó la IA para tu cuenta. Puedes armar el taller a mano.");
     if(me.ai_monthly_cap!=null && used>=me.ai_monthly_cap) throw new Error(`Llegaste a tu tope de IA de este mes (${me.ai_monthly_cap.toLocaleString("es-MX")} tokens). Pídele a tu admin que lo amplíe o arma el taller a mano.`);
@@ -11294,24 +11410,41 @@ window.addEventListener("resize",()=>{ if(A.project) fitSlide(); });
    v2.3 · Analítica privada de producto (solo admin)
    Eventos técnicos sin contenido; detalle 90 días, agregados históricos.
    ============================================================ */
-const AN={period:"30",session:"",data:null,options:[],err:null,chart:null};
+const AN={period:"30",session:"",audience:"participant",device:"all",data:null,map:[],options:[],err:null,mapErr:null,chart:null};
 const AN_EVENT_T={action_failed:"Acción que no guardó",join_failed:"No pudo entrar",validation_failed:"Validación en el creador",onboarding_validation_failed:"Validación al registrarse",retry:"Reintento",rage_click:"Clics repetidos",app_error:"Error de la app"};
-const AN_STEP_T={goal:"Objetivo",context:"Contexto",review:"Revisión",onboarding:"Registro",checkin:"Check-in",pains:"Tarjetas",votes:"Votación",quickwins:"Validación",ideas:"Ideas",results:"Resultados",lobby:"Sala de espera"};
+const AN_STEP_T={goal:"Objetivo",context:"Contexto",review:"Revisión",welcome:"Bienvenida",onboarding:"Registro",checkin:"Check-in",pains:"Tarjetas",votes:"Votación",quickwins:"Validación",ideas:"Ideas",results:"Resultados",lobby:"Sala de espera",home:"Inicio",app:"App"};
+const AN_ACTION_T={join_attempt:"Intentar entrar",onboarding_start:"Empezar registro",onboarding_continue:"Continuar registro",onboarding_back:"Regresar en registro",avatar_select:"Elegir avatar",onboarding_area_select:"Elegir área",onboarding_role_select:"Elegir rol",onboarding_stage_select:"Elegir etapa",phase_start:"Empezar actividad",notice_dismiss:"Cerrar aviso",mood_select:"Elegir estado de ánimo",checkin_submit:"Enviar check-in",checkin_edit:"Editar check-in",card_category_select:"Elegir categoría",card_task_select:"Elegir tarea",card_tool_select:"Elegir herramienta",card_severity_select:"Elegir severidad",card_publish:"Publicar tarjeta",cards_complete:"Terminar tarjetas",vote_add:"Dar voto",vote_remove:"Quitar voto",vote_filter:"Filtrar tarjetas",rating_select:"Calificar mejora",validation_step_select:"Cambiar bloque de validación",improvement_stage_select:"Elegir etapa de mejora",improvement_propose:"Proponer mejora",validation_complete:"Terminar validación",validation_continue:"Continuar validación",validation_next_pending:"Saltar pregunta pendiente",idea_challenge_select:"Elegir reto",idea_publish:"Publicar idea",ideas_complete:"Terminar ideas",idea_support_add:"Apoyar idea",idea_support_remove:"Quitar apoyo",creator_start:"Empezar creador",creator_goal_select:"Elegir objetivo",creator_prepare:"Preparar plan",creator_back:"Regresar en creador",creator_continue:"Continuar creador",creator_manual:"Armar manualmente",ai_retry:"Reintentar IA",ai_regenerate:"Otra propuesta de IA",ai_adjust:"Ajustar propuesta",ai_cover:"Completar con IA",workshop_open:"Abrir taller",qr_present:"Proyectar QR",link_copy:"Copiar acceso",phase_advance:"Abrir siguiente actividad",phase_open:"Abrir fase",workshop_edit:"Editar taller",timer_open:"Abrir reloj",results_present:"Presentar resultados",results_share:"Compartir resultados",results_export:"Exportar resultados",summary_generate:"Generar resumen",summary_edit:"Editar resumen",summary_copy:"Copiar resumen",invite_start:"Invitar al equipo",invite_send:"Enviar invitación",dashboard_open_list:"Abrir lista",navigate_home:"Ir a Inicio",navigate_mine:"Ir a Mis talleres",navigate_all:"Ir a Todos",navigate_team:"Ir a Equipo",navigate_analytics:"Ir a Analítica",navigate_ai:"Ir a Uso de IA"};
 function analyticsFrom(){ return new Date(Date.now()-(+AN.period||30)*864e5).toISOString(); }
 function skAnalytics(){ return skPage("Cargando analítica…",skBand()+skKpis()+`<div class="an-grid"><section class="panel">${skb("100%","16rem","ctl")}</section><section class="panel">${skb("100%","16rem","ctl")}</section></div>`); }
 async function analyticsView(){
   document.body.classList.add("admin-theme");
-  $("#app").innerHTML=shellHTML(skAnalytics(),"an-view"); wireTop(); AN.err=null;
-  try{ AN.data=await Store.analytics(analyticsFrom(),new Date().toISOString(),AN.session||null); if(!AN.session) AN.options=AN.data.workshops||[]; }
+  $("#app").innerHTML=shellHTML(skAnalytics(),"an-view"); wireTop(); AN.err=null; AN.mapErr=null;
+  try{ const to=new Date().toISOString(), from=analyticsFrom(); [AN.data,AN.map]=await Promise.all([
+      Store.analytics(from,to,AN.session||null),
+      Store.interactionMap(from,to,AN.session||null).catch(e=>{ console.warn("[Colmena] mapa de interacciones:",e); AN.mapErr=/ws_interaction_map|PGRST202|does not exist|Could not find/i.test(String(e&&(e.message||e.code)))?"Falta activar el mapa de interacciones en Supabase.":friendlyAuthError(e); return []; })
+    ]); if(!AN.session) AN.options=AN.data.workshops||[]; }
   catch(e){ console.error("[Colmena] analítica:",e); AN.err=/ws_analytics|PGRST202|does not exist|Could not find/i.test(String(e&&(e.message||e.code)))?"Falta correr migracion-v230-analitica.sql en Supabase para activar esta vista.":friendlyAuthError(e); }
   if(AH.view==="analytics") drawAnalytics();
 }
 function anFunnel(rows){ const max=Math.max(1,...rows.map(x=>+x.journeys||0)); return rows.length?`<ol class="an-funnel">${rows.map((x,i)=>{ const n=+x.journeys||0, prev=i?+rows[i-1].journeys||0:n, rate=i&&prev?Math.round(n/prev*100):100; return `<li><div><span>${i+1}</span><b>${esc(x.stage)}</b><em>${n.toLocaleString("es-MX")}${i?` · ${rate}% del paso anterior`:""}</em></div><i><span style="width:${n/max*100}%"></span></i></li>`; }).join("")}</ol>`:`<div class="an-empty">Aún no hay recorridos en este periodo.</div>`; }
+function anInteractionMap(rows){
+  const aud=AN.audience, device=AN.device, filtered=(rows||[]).filter(x=>x.audience===aud&&(device==="all"||x.device===device));
+  const by={}; filtered.forEach(x=>{ const k=[x.flow,x.step,x.action].join("|"); const g=by[k]||(by[k]={flow:x.flow,step:x.step,action:x.action,devices:{},interactions:0,journeys:0}); const n=+x.interactions||0; g.devices[x.device]=(g.devices[x.device]||0)+n; g.interactions+=n; g.journeys+=+x.journeys||0; });
+  const list=Object.values(by).sort((a,b)=>b.interactions-a.interactions).slice(0,30), devices=device==="all"?["mobile","tablet","desktop","other"]:[device], max=Math.max(1,...list.flatMap(x=>devices.map(d=>x.devices[d]||0)));
+  const audience=`<div class="an-map-seg" role="group" aria-label="Audiencia">${[["participant","Participantes"],["facilitator","Facilitación"],["creator","Creador"]].map(([k,t])=>`<button type="button" data-anaud="${k}" class="${aud===k?"on":""}" aria-pressed="${aud===k}">${t}</button>`).join("")}</div>`;
+  const deviceFilter=`<div class="an-map-device"><span id="anDeviceLabel">Dispositivo</span><select class="input" id="anDevice" aria-label="Dispositivo">${[["all","Todos"],["mobile","Celular"],["tablet","Tableta"],["desktop","Computadora"],["other","Otro"]].map(([k,t])=>`<option value="${k}"${device===k?" selected":""}>${t}</option>`).join("")}</select></div>`;
+  if(AN.mapErr) return `<div class="an-map-head">${audience}${deviceFilter}</div><div class="ai-note">${icon("alert")}<span>${esc(AN.mapErr)}</span></div>`;
+  if(!list.length) return `<div class="an-map-head">${audience}${deviceFilter}</div><div class="an-empty an-map-empty">Aún no hay interacciones de ${aud==="participant"?"participantes":aud==="creator"?"creación":"facilitación"} en este periodo. El mapa empieza a llenarse con los próximos usos.</div>`;
+  const total=list.reduce((n,x)=>n+x.interactions,0), journeys=Math.max(...list.map(x=>x.journeys),0);
+  const labels={mobile:"Celular",tablet:"Tableta",desktop:"Computadora",other:"Otro"};
+  return `<div class="an-map-head">${audience}${deviceFilter}</div><div class="an-map-summary"><b>${total.toLocaleString("es-MX")} interacciones</b><span>·</span><span>${journeys.toLocaleString("es-MX")} recorridos por acción (máximo)</span><span class="an-map-scale"><i></i><i></i><i></i><em>menos</em><em>más</em></span></div>
+    <div class="tbl-wrap an-map-wrap"><table class="an-map"><thead><tr><th>Acción</th><th>Pantalla</th>${devices.map(d=>`<th class="r">${labels[d]}</th>`).join("")}<th class="r">Total</th></tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(AN_ACTION_T[x.action]||x.action)}</b></td><td><span>${esc(AN_STEP_T[x.step]||x.step||"App")}</span></td>${devices.map(d=>{ const n=x.devices[d]||0, heat=n/max; return `<td class="r"><span class="an-heat${n?" has":""}" style="--heat:${heat.toFixed(3)}" aria-label="${esc(AN_ACTION_T[x.action]||x.action)}, ${labels[d]}: ${n} interacciones"><i aria-hidden="true"></i><b>${n?n.toLocaleString("es-MX"):"—"}</b></span></td>`; }).join("")}<td class="r num"><strong>${x.interactions.toLocaleString("es-MX")}</strong></td></tr>`).join("")}</tbody></table></div>`;
+}
 function drawAnalytics(){
   const main=$(".ah-wide.an-view"); if(!main||AH.view!=="analytics") return; const d=AN.data||{}, o=d.overview||{};
   const periods=`<div class="ai-per" role="group" aria-label="Periodo">${[["7","7 días"],["30","30 días"],["90","90 días"]].map(([k,t])=>`<button type="button" class="${AN.period===k?"on":""}" aria-pressed="${AN.period===k}" data-anper="${k}">${t}</button>`).join("")}</div>`;
   const opts=(AN.options||[]).map(x=>`<option value="${esc(x.id)}"${AN.session===x.id?" selected":""}>${esc(x.name)} · ${esc(x.code)}</option>`).join("");
-  const filter=`<label class="an-select"><span class="sr">Taller</span><select class="input" id="anSession"><option value="">Todos los talleres</option>${opts}</select></label>`;
+  const filter=`<div class="an-select"><span class="sr" id="anSessionLabel">Taller</span><select class="input" id="anSession" aria-label="Taller"><option value="">Todos los talleres</option>${opts}</select></div>`;
   const head=`<section class="pband noroom pb-an vi" style="--i:0" aria-label="Analítica"><div class="pb-main"><div class="pb-k"><span class="pb-n hexs" aria-hidden="true">${icon("trendup")}</span><span>Privada · solo administradores</span></div><h1 class="pb-t page-t">Analítica</h1><p class="pb-d page-s">Dónde se detiene la gente, cuánto tarda y desde qué dispositivos usa Colmena. <b>No se guardan respuestas, nombres, correos ni texto escrito.</b></p><div class="pb-acts an-filters">${periods}${filter}</div></div>${pnArt("results")}</section>`;
   if(AN.err){ main.innerHTML=head.replace("pband noroom","pband noroom pb-flat")+`<section class="panel"><div class="ai-note">${icon("alert")}<span>${esc(AN.err)}</span></div></section>`; wireAnalytics(); return; }
   const kpis=pnKpis([
@@ -11324,16 +11457,19 @@ function drawAnalytics(){
   const friction=fr.length?`<ul class="an-friction">${fr.map(x=>`<li><span class="an-signal">${icon(x.event_name==="rage_click"?"bolt":"alert")}</span><div><b>${esc(AN_EVENT_T[x.event_name]||x.event_name)}</b><small>${esc(AN_STEP_T[x.step]||x.step||x.flow||"App")} · ${x.journeys} recorrido${+x.journeys===1?"":"s"}</small></div><strong>${(+x.occurrences).toLocaleString("es-MX")}</strong></li>`).join("")}</ul>`:`<div class="an-empty">Sin señales de fricción en este periodo.</div>`;
   const devRows=devices.map(x=>{ const br=({chrome:"Chrome",safari:"Safari",edge:"Edge",firefox:"Firefox",other:"Otro"})[x.browser]||x.browser||"Otro"; return `<tr><td><b>${esc(({mobile:"Celular",tablet:"Tableta",desktop:"Computadora",other:"Otro"})[x.device]||x.device)}</b><small>${esc(br)} · ${x.display_mode==="standalone"?"App instalada":"Navegador"}</small></td><td class="r num">${(+x.journeys).toLocaleString("es-MX")}</td><td class="r num">${(+x.events).toLocaleString("es-MX")}</td><td class="r num ${+x.errors?"an-bad":""}">${+x.errors||0}</td></tr>`; }).join("");
   const wsRows=workshops.map(x=>`<tr><td><b>${esc(x.name)}</b><small>${esc(x.code)} · ${esc((KINDS[x.kind]||KINDS.dt).t)}</small></td><td>${esc(x.facilitator||"")}</td><td class="r num">${+x.journeys||0}</td><td class="r num">${+x.joined||0}</td><td class="r num">${+x.completed||0}</td><td class="r num ${+x.errors?"an-bad":""}">${+x.errors||0}</td></tr>`).join("");
-  main.innerHTML=head+kpis+`<div class="an-grid vi" style="--i:2"><section class="panel an-card"><div class="ai-h"><h2>Embudo de participantes</h2><p class="hint">Personas que llegan a cada punto del recorrido</p></div>${anFunnel(d.participant_funnel||[])}</section><section class="panel an-card"><div class="ai-h"><h2>Embudo del creador</h2><p class="hint">De abrir el creador a abrir la sala</p></div>${anFunnel(d.creator_funnel||[])}</section></div>
-    <div class="an-grid vi" style="--i:3"><section class="panel an-card"><div class="ai-h"><h2>Dónde hay fricción</h2><p class="hint">Errores, validaciones, reintentos y clics repetidos</p></div>${friction}</section><section class="panel an-card"><div class="ai-h"><h2>Actividad por día</h2><p class="hint">Recorridos y señales de fricción</p></div>${(d.trend||[]).length?'<div class="cv lg"><canvas id="anTrend" aria-label="Actividad diaria"></canvas></div>':'<div class="an-empty">Aún no hay actividad para graficar.</div>'}</section></div>
-    <section class="panel vi an-card" style="--i:4"><div class="ai-h"><h2>Dispositivos</h2><p class="hint">Ayuda a separar una fricción de celular, navegador o app instalada</p></div>${devRows?`<div class="tbl-wrap"><table class="ai-tbl an-table"><thead><tr><th>Dispositivo</th><th class="r">Recorridos</th><th class="r">Eventos</th><th class="r">Fricción</th></tr></thead><tbody>${devRows}</tbody></table></div>`:'<div class="an-empty">Sin datos de dispositivos.</div>'}</section>
-    <section class="panel vi an-card" style="--i:5"><div class="ai-h"><h2>Por taller</h2><p class="hint">Compara entrada, avance y fricción sin abrir respuestas</p></div>${wsRows?`<div class="tbl-wrap"><table class="ai-tbl an-table"><thead><tr><th>Taller</th><th>Facilitador</th><th class="r">Recorridos</th><th class="r">Entraron</th><th class="r">Actividades terminadas</th><th class="r">Fricción</th></tr></thead><tbody>${wsRows}</tbody></table></div>`:'<div class="an-empty">Aún no hay talleres medidos.</div>'}</section>
-    <p class="an-privacy vi" style="--i:6">${icon("key")}El detalle técnico se elimina a los ${d.retention_days||90} días. Los conteos diarios agregados se conservan para comparar tendencias históricas.</p>`;
+  main.innerHTML=head+kpis+`<section class="panel vi an-card an-map-card" style="--i:2"><div class="ai-h"><h2>Mapa de interacciones</h2><p class="hint">Qué acciones se intentan más en cada pantalla. La intensidad indica volumen, no guarda coordenadas ni contenido.</p></div>${anInteractionMap(AN.map)}</section>
+    <div class="an-grid vi" style="--i:3"><section class="panel an-card"><div class="ai-h"><h2>Embudo de participantes</h2><p class="hint">Personas que llegan a cada punto del recorrido</p></div>${anFunnel(d.participant_funnel||[])}</section><section class="panel an-card"><div class="ai-h"><h2>Embudo del creador</h2><p class="hint">De abrir el creador a abrir la sala</p></div>${anFunnel(d.creator_funnel||[])}</section></div>
+    <div class="an-grid vi" style="--i:4"><section class="panel an-card"><div class="ai-h"><h2>Dónde hay fricción</h2><p class="hint">Errores, validaciones, reintentos y clics repetidos</p></div>${friction}</section><section class="panel an-card"><div class="ai-h"><h2>Actividad por día</h2><p class="hint">Recorridos y señales de fricción</p></div>${(d.trend||[]).length?'<div class="cv lg"><canvas id="anTrend" aria-label="Actividad diaria"></canvas></div>':'<div class="an-empty">Aún no hay actividad para graficar.</div>'}</section></div>
+    <section class="panel vi an-card" style="--i:5"><div class="ai-h"><h2>Dispositivos</h2><p class="hint">Ayuda a separar una fricción de celular, navegador o app instalada</p></div>${devRows?`<div class="tbl-wrap"><table class="ai-tbl an-table"><thead><tr><th>Dispositivo</th><th class="r">Recorridos</th><th class="r">Eventos</th><th class="r">Fricción</th></tr></thead><tbody>${devRows}</tbody></table></div>`:'<div class="an-empty">Sin datos de dispositivos.</div>'}</section>
+    <section class="panel vi an-card" style="--i:6"><div class="ai-h"><h2>Por taller</h2><p class="hint">Compara entrada, avance y fricción sin abrir respuestas</p></div>${wsRows?`<div class="tbl-wrap"><table class="ai-tbl an-table"><thead><tr><th>Taller</th><th>Facilitador</th><th class="r">Recorridos</th><th class="r">Entraron</th><th class="r">Actividades terminadas</th><th class="r">Fricción</th></tr></thead><tbody>${wsRows}</tbody></table></div>`:'<div class="an-empty">Aún no hay talleres medidos.</div>'}</section>
+    <p class="an-privacy vi" style="--i:7">${icon("key")}El mapa registra únicamente nombres técnicos de acciones. Nunca guarda coordenadas, texto, respuestas ni identificadores de tarjetas. El detalle se elimina a los ${d.retention_days||90} días.</p>`;
   wireAnalytics(); analyticsChart(d.trend||[]);
 }
 function wireAnalytics(){
   $$('[data-anper]').forEach(b=>b.onclick=()=>{ if(AN.period===b.dataset.anper)return; AN.period=b.dataset.anper; analyticsView(); });
   const s=$("#anSession"); if(s) s.onchange=()=>{ AN.session=s.value; analyticsView(); };
+  $$('[data-anaud]').forEach(b=>b.onclick=()=>{ if(AN.audience===b.dataset.anaud)return; AN.audience=b.dataset.anaud; drawAnalytics(); });
+  const d=$("#anDevice"); if(d) d.onchange=()=>{ AN.device=d.value; drawAnalytics(); };
 }
 function analyticsChart(rows){ if(AN.chart){ try{AN.chart.destroy();}catch(e){} AN.chart=null; } const c=$("#anTrend"); if(!c||!rows.length||typeof Chart==="undefined")return; const T=chartTheme();
   AN.chart=new Chart(c,{type:"line",data:{labels:rows.map(x=>new Date(x.day+"T12:00:00").toLocaleDateString("es-MX",{day:"numeric",month:"short"})),datasets:[{label:"Recorridos",data:rows.map(x=>+x.journeys||0),borderColor:T.c[0],backgroundColor:T.c[0]+"22",fill:true,tension:.35,pointRadius:2},{label:"Fricción",data:rows.map(x=>+x.errors||0),borderColor:T.c[1],backgroundColor:T.c[1],tension:.35,pointRadius:2}]},options:{...T.base,interaction:{mode:"index",intersect:false},scales:{x:{grid:{display:false},ticks:{color:T.ink3,maxTicksLimit:8,maxRotation:0}},y:{beginAtZero:true,grid:{color:T.grid},ticks:{color:T.ink3,precision:0}}},plugins:{...T.plugins,tooltip:{...T.tip}}}}); }
