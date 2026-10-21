@@ -2958,6 +2958,36 @@ html.dark{--dv1:#3987e5;--dv2:#d95926;--dv3:#199e70;--dv4:#c98500;--dv5:#d55181}
 .ai-tbl .r{text-align:right}
 .ai-tbl .mini{display:inline-block;height:.4375rem;min-width:2px;border-radius:99px;background:var(--dv1);margin-right:.5rem;vertical-align:1px}
 .tbl-wrap{overflow-x:auto;margin:0 -1.25rem;padding:0 1.25rem}
+/* v2.3 · Analítica privada */
+.an-filters{display:flex;align-items:center;gap:.625rem;flex-wrap:wrap}
+.an-select{display:block;min-width:min(18rem,100%)}
+.an-select .input{height:2.625rem;padding-block:.375rem}
+.an-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--kpi-gap,1rem)}
+.an-card{min-width:0;padding:1.25rem}
+.an-funnel,.an-friction{list-style:none;margin:0;padding:0}
+.an-funnel{display:flex;flex-direction:column;gap:.875rem}
+.an-funnel li>div{display:grid;grid-template-columns:1.625rem minmax(0,1fr) auto;align-items:center;gap:.625rem}
+.an-funnel li>div>span{display:grid;place-items:center;width:1.625rem;height:1.625rem;clip-path:var(--pn-hex);background:var(--accent-soft);color:var(--accent-strong);font-size:.71875rem;font-weight:800}
+.an-funnel b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.84375rem;color:var(--ink)}
+.an-funnel em{font-style:normal;font-size:.71875rem;font-weight:650;color:var(--ink-3);white-space:nowrap}
+.an-funnel li>i{display:block;height:.375rem;margin:.375rem 0 0 2.25rem;overflow:hidden;border-radius:99px;background:var(--track)}
+.an-funnel li>i>span{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--accent-strong),var(--dv3));transition:width .5s var(--spring-quick,ease)}
+.an-friction{display:flex;flex-direction:column}
+.an-friction li{display:grid;grid-template-columns:2.25rem minmax(0,1fr) auto;align-items:center;gap:.75rem;padding:.6875rem 0;border-top:1px solid var(--line)}
+.an-friction li:first-child{border-top:0;padding-top:0}
+.an-signal{display:grid;place-items:center;width:2.25rem;height:2.25rem;border-radius:10px;background:var(--warn-soft);color:var(--warn-ink)}
+.an-signal svg{width:1rem;height:1rem}
+.an-friction li>div{display:flex;flex-direction:column;gap:.125rem;min-width:0}
+.an-friction b{font-size:.84375rem;color:var(--ink)}
+.an-friction small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.71875rem;color:var(--ink-3)}
+.an-friction strong{font-family:var(--pn-display);font-size:1.125rem;color:var(--ink)}
+.an-empty{display:grid;place-items:center;min-height:10rem;padding:1rem;text-align:center;font-size:.8125rem;color:var(--ink-3)}
+.an-table td:first-child small{display:block;margin-top:.125rem}
+.an-table .an-bad{color:var(--danger);font-weight:750}
+.an-privacy{display:flex;align-items:flex-start;gap:.5rem;margin:0;padding:.875rem 1rem;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:.78125rem;line-height:1.45;color:var(--ink-3)}
+.an-privacy svg{flex:none;width:1rem;height:1rem;margin-top:.1rem;color:var(--accent-strong)}
+@media (max-width:900px){.an-grid{grid-template-columns:minmax(0,1fr)}}@media (max-width:1012px){:where(html[data-ts="l"]) .an-grid{grid-template-columns:minmax(0,1fr)}}@media (max-width:1125px){:where(html[data-ts="xl"]) .an-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:600px){.an-filters,.an-select{width:100%}.an-filters .ai-per{width:100%}.an-funnel li>div{grid-template-columns:1.625rem minmax(0,1fr)}.an-funnel em{grid-column:2;white-space:normal}.an-funnel li>i{margin-left:2.25rem}}@media (max-width:675px){:where(html[data-ts="l"]) .an-filters,:where(html[data-ts="l"]) .an-select{width:100%}:where(html[data-ts="l"]) .an-filters .ai-per{width:100%}:where(html[data-ts="l"]) .an-funnel li>div{grid-template-columns:1.625rem minmax(0,1fr)}:where(html[data-ts="l"]) .an-funnel em{grid-column:2;white-space:normal}:where(html[data-ts="l"]) .an-funnel li>i{margin-left:2.25rem}}@media (max-width:750px){:where(html[data-ts="xl"]) .an-filters,:where(html[data-ts="xl"]) .an-select{width:100%}:where(html[data-ts="xl"]) .an-filters .ai-per{width:100%}:where(html[data-ts="xl"]) .an-funnel li>div{grid-template-columns:1.625rem minmax(0,1fr)}:where(html[data-ts="xl"]) .an-funnel em{grid-column:2;white-space:normal}:where(html[data-ts="xl"]) .an-funnel li>i{margin-left:2.25rem}}
 /* Diálogo «Límite de IA» */
 .dlg-body{text-align:left;display:flex;flex-direction:column;gap:1rem;margin:-.5rem 0 1.375rem}
 .dlg-body .hint{margin:0;font-size:.8125rem;color:var(--ink-3);line-height:1.45}
@@ -4901,6 +4931,38 @@ const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
 const esc = s => String(s??"").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid = () => (crypto.randomUUID ? crypto.randomUUID() : 'id-'+Date.now()+'-'+Math.random().toString(36).slice(2,10));
 const now = () => new Date().toISOString();
+/* v2.3 · Analítica propia y privada. Solo envía nombres de evento y contexto técnico acotado:
+   nunca lee campos, respuestas, nombres, correos, códigos ni texto visible. Si falla, la app sigue normal. */
+const Telemetry = (()=>{
+  const Q=[], C={session_id:null,flow:null,step:null}; let timer=null, sending=false, off=false;
+  const makeUuid=()=>crypto.randomUUID?crypto.randomUUID():`${Math.random().toString(16).slice(2,10)}-${Math.random().toString(16).slice(2,6)}-4${Math.random().toString(16).slice(2,5)}-a${Math.random().toString(16).slice(2,5)}-${Math.random().toString(16).slice(2,14)}`.slice(0,36);
+  const uuid=()=>{ try{ const k="colmena_telemetry_journey"; let v=sessionStorage.getItem(k); if(!/^[0-9a-f-]{36}$/i.test(v||"")){ v=makeUuid(); sessionStorage.setItem(k,v); } return v; } catch(e){ return makeUuid(); } };
+  let client=uuid(); const ua=navigator.userAgent||"";
+  const device=()=>/iPad/i.test(ua)||(/Macintosh/i.test(ua)&&navigator.maxTouchPoints>1)||(/Android/i.test(ua)&&!/Mobile/i.test(ua))?"tablet":/Mobi|iPhone|Android/i.test(ua)?"mobile":"desktop";
+  const browser=()=>/Edg\//.test(ua)?"edge":/Firefox\//.test(ua)?"firefox":/CriOS|Chrome\//.test(ua)?"chrome":/Safari\//.test(ua)?"safari":"other";
+  const os=()=>/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1)?"ios":/Android/.test(ua)?"android":/Windows/.test(ua)?"windows":/Macintosh/.test(ua)?"macos":/Linux/.test(ua)?"linux":"other";
+  const viewport=()=>innerWidth<480?"xs":innerWidth<760?"sm":innerWidth<1024?"md":innerWidth<1440?"lg":"xl";
+  const connection=()=>!navigator.onLine?"offline":((navigator.connection&&navigator.connection.effectiveType)||"unknown");
+  const cleanProps=p=>Object.fromEntries(Object.entries(p||{}).filter(([k,v])=>["method","action","reason","target","from","to","result","source","count"].includes(k)&&["string","number","boolean"].includes(typeof v)).map(([k,v])=>[k,String(v).slice(0,80)]));
+  async function flush(){ const store=window.ColmenaStore; if(off||sending||!Q.length||!store||!store.telemetry) return; sending=true; clearTimeout(timer); timer=null; const batch=Q.splice(0,25);
+    try{ await store.telemetry(batch); }catch(e){ if(/ws_telemetry_ingest|42883|404|schema cache/i.test(String(e&&(e.code||e.message)||e))) off=true; } finally{ sending=false; if(Q.length&&!off) timer=setTimeout(flush,1200); } }
+  function track(name,o){ if(off) return; o=o||{}; Q.push({name,client_id:client,occurred_at:now(),session_id:o.session_id||C.session_id||null,flow:o.flow||C.flow||null,step:o.step||C.step||null,
+      duration_ms:o.duration_ms==null?null:Math.max(0,Math.round(o.duration_ms)),device:device(),browser:browser(),os:os(),viewport:viewport(),
+      display_mode:matchMedia("(display-mode: standalone)").matches||navigator.standalone?"standalone":"browser",connection:connection(),properties:cleanProps(o.properties)});
+    if(Q.length>=10) flush(); else { clearTimeout(timer); timer=setTimeout(flush,800); } }
+  function context(p){ Object.assign(C,p||{}); }
+  function reset(){ C.session_id=C.flow=C.step=null; }
+  function newJourney(){ client=makeUuid(); try{ sessionStorage.setItem("colmena_telemetry_journey",client); }catch(e){} return client; }
+  let last={key:"",at:0,n:0};
+  addEventListener("pointerup",e=>{ const b=e.target&&e.target.closest&&e.target.closest("button,a,[role=button]"); if(!b) return; const raw=b.id||b.dataset.view||b.dataset.ph||b.dataset.mac||b.dataset.kindStart||b.tagName.toLowerCase(), key=String(raw).replace(/[^a-zA-Z0-9_-]/g,"").slice(0,40)||"action", t=Date.now();
+    if(b.disabled&&b.id==="obNext") track("onboarding_validation_failed",{flow:"participant",step:"onboarding",properties:{target:"continue"}});
+    else if(b.disabled&&b.id==="wCreate") track("validation_failed",{flow:"creator",step:"review",properties:{target:"open_workshop"}});
+    last=last.key===key&&t-last.at<900?{key,at:t,n:last.n+1}:{key,at:t,n:1}; if(last.n===3) track("rage_click",{properties:{target:key}}); },{passive:true,capture:true});
+  addEventListener("error",()=>track("app_error",{properties:{source:"script"}}));
+  addEventListener("unhandledrejection",()=>track("app_error",{properties:{source:"promise"}}));
+  document.addEventListener("visibilitychange",()=>{ if(document.hidden) flush(); });
+  return {track,context,reset,flush,newJourney};
+})();
 /* v1.18 · Si ya había un aviso a la vista, el anterior se recorre hacia arriba y se desvanece mientras entra el nuevo (#toast siempre tiene el más reciente) */
 function toast(msg){ const t=$("#toast"), was=t.classList.contains("show")?t.textContent:"";
   if(was && was!==msg && typeof Motion!=="undefined" && Motion.ok()){
@@ -5100,7 +5162,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261019235547";
+const APP_BUILD="20261020234930";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -5733,6 +5795,9 @@ const SupaStore = {
   async aiUsage(from,to){ const a={}; if(from) a.p_from=from; if(to) a.p_to=to; const {data,error}=await this.client.rpc("ws_ai_usage",a); if(error) throw error; return data||[]; },
   async aiLimits(){ const {data,error}=await this.client.rpc("ws_ai_limits"); if(error) throw error; return data||[]; },
   async homeStats(from,prev){ const {data,error}=await this.client.rpc("ws_home_stats",{p_from:from||null,p_prev:prev||null}); if(error) throw error; return data; },
+  /* v2.3 · La telemetría solo entra y la analítica solo sale por RPC; las tablas no se exponen al navegador. */
+  async telemetry(events){ if(!events||!events.length) return 0; const {data,error}=await this.client.rpc("ws_telemetry_ingest",{p_events:events}); if(error) throw error; return data||0; },
+  async analytics(from,to,session){ const {data,error}=await this.client.rpc("ws_analytics",{p_from:from||null,p_to:to||null,p_session:session||null}); if(error) throw error; return data||{}; },
   async setAiLimit(user,enabled,cap){ const {error}=await this.client.rpc("ws_set_ai_limit",{p_user:user,p_enabled:enabled,p_cap:cap==null?null:cap}); if(error) throw error; },
   async aiLink(draft,session){ if(!draft||!session) return; const {error}=await this.client.rpc("ws_ai_link",{p_draft:draft,p_session:session}); if(error) throw error; },
   /* v1.6 · Centro de notificaciones */
@@ -5984,6 +6049,9 @@ const DemoStore = {
         top_text:card?card.texto:null, top_pts:top?top[1].pts:0, top_voters:top?top[1].who.size:0}; }).sort((a,b)=>String(b.at).localeCompare(String(a.at))).slice(0,4);
     return {months, cur:tot(cur), prev:prv?tot(prv):null, funnel, moods, moodAreas:Object.values(ma).filter(o=>o.n>=3).sort((a,b)=>b.neg/b.n-a.neg/a.n||b.n-a.n),
       areas:Object.values(ar).filter(o=>o.cur||o.prev).sort((a,b)=>b.cur-a.cur||b.prev-a.prev).slice(0,8), qwTop:qwTop.slice(0,4), results}; },
+  async telemetry(){ return 0; },
+  async analytics(from,to,session){ return {from:from||new Date(Date.now()-30*864e5).toISOString(),to:to||now(),retention_days:90,
+    overview:{events:0,journeys:0,workshops:0,errors:0,p50_ms:0},participant_funnel:[],creator_funnel:[],friction:[],devices:[],workshops:[],trend:[]}; },
   async suggestWorkshop(payload){ const db0=this.db(), me=this._aiStaff(db0)[0], used=(db0.aiLog||[]).filter(l=>l.user_id==="demo" && new Date(l.at)>=new Date(new Date().getFullYear(),new Date().getMonth(),1)).reduce((a,l)=>a+l.input_tokens+l.output_tokens,0);
     if(!me.ai_enabled) throw new Error("Tu admin pausó la IA para tu cuenta. Puedes armar el taller a mano.");
     if(me.ai_monthly_cap!=null && used>=me.ai_monthly_cap) throw new Error(`Llegaste a tu tope de IA de este mes (${me.ai_monthly_cap.toLocaleString("es-MX")} tokens). Pídele a tu admin que lo amplíe o arma el taller a mano.`);
@@ -6115,6 +6183,7 @@ const DemoStore = {
 };
 
 const Store = HAS_SUPA ? SupaStore : DemoStore;
+window.ColmenaStore = Store;
 Store.init();
 if(!HAS_SUPA){
   $("#banner").innerHTML = '<div class="banner-demo">Modo demo: sin base de datos conectada — lo que captures vive solo en este navegador. Sigue el README para conectar Supabase.</div>';
@@ -6362,7 +6431,8 @@ async function setDone(ph,on,quiet){
   if(on) cur.add(ph); else cur.delete(ph);
   const arr=[...cur]; P.me.done_phases=arr;
   try{ await Store.updateParticipant(P.me.id,{done_phases:arr}); }
-  catch(e){ console.error(e); P.me.done_phases=prev; if(!quiet) toast("No se pudo guardar. Revisa tu conexión e intenta de nuevo."); return false; }
+  catch(e){ console.error(e); P.me.done_phases=prev; Telemetry.track("action_failed",{session_id:P.session.id,flow:"participant",step:ph,properties:{action:"phase_complete",reason:"save"}}); if(!quiet) toast("No se pudo guardar. Revisa tu conexión e intenta de nuevo."); return false; }
+  if(on) Telemetry.track("phase_completed",{session_id:P.session.id,flow:"participant",step:ph,duration_ms:P.phaseAt?Date.now()-P.phaseAt:null,properties:{method:P.session.kind||"dt"}});
   loadProgress(); return true;
 }
 /* v2.1 · Botón «Terminé»: se desactiva mientras guarda (un doble toque no cuenta dos veces) y solo avanza si se guardó */
@@ -6444,7 +6514,7 @@ function screenWelcome(){
     <div class="p-cta">${go}</div>
   </div>`;
   }
-  $("#wgo").onclick=()=>pGo(()=>{ P.step=0; P.obg=0; renderOnboarding(); });
+  $("#wgo").onclick=()=>{ P.onboardingAt=Date.now(); Telemetry.context({session_id:s.id,flow:"participant",step:"onboarding"}); Telemetry.track("onboarding_started",{session_id:s.id,flow:"participant",step:"onboarding",properties:{method:s.kind||"dt"}}); pGo(()=>{ P.step=0; P.obg=0; renderOnboarding(); }); };
 }
 
 /* ---------- Onboarding: los pasos dependen de cómo se configuró el taller ---------- */
@@ -6548,10 +6618,10 @@ function renderObLarge(){
   g.forEach(i=>{ if(steps[i].wire) steps[i].wire(); });
   $$(".p-body .input").forEach(el=>el.addEventListener("input",()=>{ noTagsInput(el); g.forEach(i=>steps[i].read()); refreshCTA(); }));
   refreshCTA();
-  const back=$("#obBack"); if(back) back.onclick=()=>{ g.forEach(i=>steps[i].read()); P.obg--; pGo(renderOnboarding,-1); };
+  const back=$("#obBack"); if(back) back.onclick=()=>{ g.forEach(i=>steps[i].read()); Telemetry.track("onboarding_back",{session_id:P.session.id,flow:"participant",step:"onboarding",properties:{from:String(P.obg+1),to:String(P.obg)}}); P.obg--; pGo(renderOnboarding,-1); };
   $("#obNext").onclick = async ()=>{
     g.forEach(i=>steps[i].read()); const bad=g.map(i=>steps[i]).find(s=>!s.valid()); if(bad) return;
-    if(!last){ P.obg++; pGo(renderOnboarding,1); return; }
+    if(!last){ Telemetry.track("onboarding_step",{session_id:P.session.id,flow:"participant",step:"onboarding",properties:{from:String(P.obg+1),to:String(P.obg+2)}}); P.obg++; pGo(renderOnboarding,1); return; }
     await obJoin();
   };
   const first=$(".p-body .input"); if(first && !first.value) setTimeout(()=>{ try{ first.focus({preventScroll:true}); }catch(e){} },60);
@@ -6561,9 +6631,9 @@ async function obJoin(){
   try{
     const me = await Store.joinParticipant({ session_id:P.session.id, nombre:noTags(P.form.nombre).trim(), apellido:noTags(P.form.apellido).trim(),
       area:noTags(P.form.area).trim(), rol:noTags(P.form.rol).trim(), etapas:P.form.etapas, emoji:P.form.emoji });
-    P.me=me; P.banner=P.session.phase;
+    P.me=me; P.banner=P.session.phase; Telemetry.track("participant_joined",{session_id:P.session.id,flow:"participant",step:"onboarding",duration_ms:P.onboardingAt?Date.now()-P.onboardingAt:null,properties:{method:P.session.kind||"dt"}});
     pGo(()=>renderPhaseSafe());
-  }catch(e){ console.error(e); toast(friendlyAuthError(e).startsWith("No hay conexión")?friendlyAuthError(e):"No se pudo entrar. Intenta de nuevo."); if(b) b.disabled=false; }
+  }catch(e){ console.error(e); Telemetry.track("join_failed",{session_id:P.session.id,flow:"participant",step:"onboarding",properties:{reason:"server"}}); toast(friendlyAuthError(e).startsWith("No hay conexión")?friendlyAuthError(e):"No se pudo entrar. Intenta de nuevo."); if(b) b.disabled=false; }
   finally{ P.sending=false; }
 }
 
@@ -6587,10 +6657,10 @@ function renderOnboarding(){
   if(st.wire) st.wire();
   $$(".p-body .input").forEach(i=>i.addEventListener("input",()=>{ noTagsInput(i); st.read(); refreshCTA(); }));
   refreshCTA();
-  const back=$("#obBack"); if(back) back.onclick=()=>{ st.read(); P.step--; pGo(renderOnboarding,-1); };
+  const back=$("#obBack"); if(back) back.onclick=()=>{ st.read(); Telemetry.track("onboarding_back",{session_id:P.session.id,flow:"participant",step:"onboarding",properties:{from:String(P.step+1),to:String(P.step)}}); P.step--; pGo(renderOnboarding,-1); };
   $("#obNext").onclick = async ()=>{
     st.read(); if(!st.valid()) return;
-    if(P.step<steps.length-1){ P.step++; pGo(renderOnboarding,1); return; }
+    if(P.step<steps.length-1){ Telemetry.track("onboarding_step",{session_id:P.session.id,flow:"participant",step:"onboarding",properties:{from:String(P.step+1),to:String(P.step+2)}}); P.step++; pGo(renderOnboarding,1); return; }
     await obJoin();
   };
 }
@@ -6625,8 +6695,8 @@ function keepScroll(fn){ const y=window.scrollY; fn(); requestAnimationFrame(()=
 
 async function renderPhaseSafe(o){
   const ph=P.session&&P.session.phase, prev=P.renderedPh;
-  try{ await renderPhase(); P.renderedPh=ph; if(o && o.enter && prev && prev!==ph) pEnter(); }
-  catch(e){ console.error(e); P.renderedPh=null; toast("No se pudo cargar la actividad. Reintentando…"); }
+  try{ await renderPhase(); P.renderedPh=ph; if(prev!==ph){ Telemetry.context({session_id:P.session.id,flow:"participant",step:ph}); Telemetry.track("phase_viewed",{session_id:P.session.id,flow:"participant",step:ph,properties:{from:prev||"join",method:P.session.kind||"dt"}}); } if(o && o.enter && prev && prev!==ph) pEnter(); }
+  catch(e){ console.error(e); P.renderedPh=null; Telemetry.track("app_error",{session_id:P.session&&P.session.id,flow:"participant",step:ph,properties:{source:"phase_render"}}); toast("No se pudo cargar la actividad. Reintentando…"); }
   pnStartArt($("#app"));
   /* v1.25 · Portada de la actividad nueva (y después, si aplica, el aviso de texto que no se alcanzó a publicar) */
   const w=P.pendingSwitch; if(w && w.ph===P.session.phase){ P.pendingSwitch=null; if(P.sw) P.sw.remove(); pSwitch(w.ph, w.old, w.old?()=>lostDraftSheet(w.old):null); }
@@ -6728,8 +6798,8 @@ function renderCheckin(){
   $$("#moods .mood-opt").forEach(b=>b.onclick=()=>{ mood=b.dataset.v; keep(); $$("#moods .mood-opt").forEach(x=>{ x.classList.toggle("on",x===b); x.setAttribute("aria-checked",x===b); }); $("#ckGo").disabled=false; $("#ckHint").textContent=""; });
   $("#f-exp").addEventListener("input",e=>{ expect=e.target.value.trim(); keep(); });
   $("#ckGo").onclick=async()=>{ if(P.sending)return; P.sending=true; $("#ckGo").disabled=true;
-    try{ await Store.updateParticipant(P.me.id,{mood,expectativa:expect}); P.me.mood=mood; P.me.expectativa=expect; if(!(await setDone("checkin",true,true))) throw new Error("done_phases"); P.editCheckin=false; P.ckDraft=null; pGo(()=>{ window.scrollTo(0,0); renderCheckin(); pDonePop(); }); }
-    catch(e){ toast("No se pudo enviar, intenta otra vez"); $("#ckGo").disabled=false; } finally{ P.sending=false; } };
+    try{ await Store.updateParticipant(P.me.id,{mood,expectativa:expect}); P.me.mood=mood; P.me.expectativa=expect; if(!(await setDone("checkin",true,true))) throw new Error("done_phases"); Telemetry.track("action_succeeded",{session_id:s.id,flow:"participant",step:"checkin",properties:{action:"checkin_submit"}}); P.editCheckin=false; P.ckDraft=null; pGo(()=>{ window.scrollTo(0,0); renderCheckin(); pDonePop(); }); }
+    catch(e){ Telemetry.track("action_failed",{session_id:s.id,flow:"participant",step:"checkin",properties:{action:"checkin_submit",reason:"save"}}); toast("No se pudo enviar, intenta otra vez"); $("#ckGo").disabled=false; } finally{ P.sending=false; } };
 }
 
 /* ---------- Dolores: texto + etapa + actividad/herramienta (opcional) + severidad ---------- */
@@ -6815,11 +6885,12 @@ async function renderPains(){
     try{
       await Store.addCard(dt? {session_id:s.id, participant_id:P.me.id, texto:$("#f-pain").value.trim(), etapa:stage, actividad:task||null, herramienta:tool||null, severidad:sev}
         : {session_id:s.id, participant_id:P.me.id, texto:$("#f-pain").value.trim(), etapa:stage||null});
+      Telemetry.track("action_succeeded",{session_id:s.id,flow:"participant",step:"pains",properties:{action:"card_publish",method:s.kind||"dt"}});
       const ta=$("#f-pain"), r0=ta?ta.getBoundingClientRect():null, y0=window.scrollY;
       clearDraft("pains"); P.sending=false; P.flash="pub"; P.painStage=stage;
       if(pLarge()){ await renderPhase(); flyCard(r0, window.scrollY); const t=$("#f-pain"); if(t) t.focus({preventScroll:true}); }
       else { window.scrollTo(0,0); await renderPhase(); flyCard(r0, y0); }
-    }catch(e){ toast("No se pudo publicar"); P.sending=false; val(); }
+    }catch(e){ Telemetry.track("action_failed",{session_id:s.id,flow:"participant",step:"pains",properties:{action:"card_publish",reason:"save"}}); toast("No se pudo publicar"); P.sending=false; val(); }
   };
   const dn=$("#painDone"); if(dn) dn.onclick=async()=>{ if(!(await doneTap(dn,"pains"))) return; pGo(async()=>{ window.scrollTo(0,0); await renderPhase(); pDonePop(); }); };
   $$("#mine .del").forEach(b=>b.onclick=async()=>{ try{ await Store.deleteCard(b.dataset.id); }catch(e){ toast("No se pudo eliminar"); } renderPhase(); });
@@ -6908,8 +6979,8 @@ async function renderVotes(){
     if(P.sending) return; P.sending=true;
     const id=b.dataset.id, d=+b.dataset.d, cur=my[id]||0, next=cur+d;
     if(next<0 || (d>0 && left<=0)){ P.sending=false; return; }
-    try{ await Store.setVote({session_id:s.id, participant_id:P.me.id, card_id:id, points:next}); }
-    catch(e){ toast(/votos/.test(String(e&&e.message))?"Ya usaste todos tus votos":"No se pudo guardar el voto"); }
+    try{ await Store.setVote({session_id:s.id, participant_id:P.me.id, card_id:id, points:next}); Telemetry.track("action_succeeded",{session_id:s.id,flow:"participant",step:"votes",properties:{action:d>0?"vote_add":"vote_remove"}}); }
+    catch(e){ Telemetry.track("action_failed",{session_id:s.id,flow:"participant",step:"votes",properties:{action:"vote",reason:"save"}}); toast(/votos/.test(String(e&&e.message))?"Ya usaste todos tus votos":"No se pudo guardar el voto"); }
     P.sending=false; P.votesTop = left-d===0 && !done; const wasDone=done;
     await renderVotes();
     const card=$(`.votecard[data-k="v-${id}"]`); if(card && d>0) Motion.pop($(".vhex",card),{from:.4, fade:false});
@@ -7039,8 +7110,9 @@ async function renderQuickwins(){
     card.classList.add("done"); $$("button",card).forEach(x=>{ const on=+x.dataset.v===v; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on); });
     okLabel(card);
     hint();
-    try{ await Store.setQwRating({session_id:s.id, participant_id:P.me.id, qw_id:id, score:v}); }
+    try{ await Store.setQwRating({session_id:s.id, participant_id:P.me.id, qw_id:id, score:v}); Telemetry.track("action_succeeded",{session_id:s.id,flow:"participant",step:"quickwins",properties:{action:"rating_save"}}); }
     catch(e){ console.error(e); toast("No se guardó tu respuesta. Intenta de nuevo.");
+      Telemetry.track("action_failed",{session_id:s.id,flow:"participant",step:"quickwins",properties:{action:"rating_save",reason:"save"}});
       if(prev===undefined){ delete P.qw.ratings[id]; card.classList.remove("done"); } else P.qw.ratings[id]=prev;
       $$("button",card).forEach(x=>{ const on=+x.dataset.v===P.qw.ratings[id]; x.classList.toggle("on",on); x.setAttribute("aria-pressed",on); });
       okLabel(card); hint(); }
@@ -7116,9 +7188,9 @@ async function renderIdeas(){
   $$("#retos .chip").forEach(ch=>ch.onclick=()=>{ P.ideas.reto=+ch.dataset.i; $$("#retos .chip").forEach(x=>x.classList.toggle("on",x===ch)); drawReto(); drawIdeaList(); });
   const ta=$("#f-idea"); bindDraft(ta,"ideas"); const chk=()=>{ $("#ideaGo").disabled = ta.value.trim().length<8; }; ta.addEventListener("input",chk); chk();
   $("#ideaGo").onclick=async()=>{ if(P.sending) return; P.sending=true; $("#ideaGo").disabled=true;
-    try{ await Store.addIdea({session_id:s.id, participant_id:P.me.id, kind:"idea", card_id:T[P.ideas.reto].id, texto:ta.value.trim()});
+    try{ await Store.addIdea({session_id:s.id, participant_id:P.me.id, kind:"idea", card_id:T[P.ideas.reto].id, texto:ta.value.trim()}); Telemetry.track("action_succeeded",{session_id:s.id,flow:"participant",step:"ideas",properties:{action:"idea_publish"}});
       ta.value=""; clearDraft("ideas"); toast(I.okT); await refreshIdeas(); }
-    catch(e){ console.error(e); toast("No se pudo publicar la idea"); $("#ideaGo").disabled=false; }
+    catch(e){ console.error(e); Telemetry.track("action_failed",{session_id:s.id,flow:"participant",step:"ideas",properties:{action:"idea_publish",reason:"save"}}); toast("No se pudo publicar la idea"); $("#ideaGo").disabled=false; }
     P.sending=false; };
   const db=$("#ideasDoneBtn"); if(db) db.onclick=async()=>{ if(!(await doneTap(db,"ideas"))) return; pGo(async()=>{ window.scrollTo(0,0); await renderIdeas(); pDonePop(); }); };
   await refreshIdeas(true);
@@ -7149,9 +7221,9 @@ async function renderIdeasLarge(T, done){
       bindDraft(ta, three?"ideas_r"+i:"ideas");
       const chk=()=>{ go.disabled = ta.value.trim().length<8; }; ta.addEventListener("input",chk); chk();
       go.onclick=async()=>{ if(P.sending) return; P.sending=true; go.disabled=true;
-        try{ await Store.addIdea({session_id:s.id, participant_id:P.me.id, kind:"idea", card_id:T[i].id, texto:ta.value.trim()});
+        try{ await Store.addIdea({session_id:s.id, participant_id:P.me.id, kind:"idea", card_id:T[i].id, texto:ta.value.trim()}); Telemetry.track("action_succeeded",{session_id:s.id,flow:"participant",step:"ideas",properties:{action:"idea_publish"}});
           ta.value=""; clearDraft(three?"ideas_r"+i:"ideas"); toast(I.okT); await refreshIdeas(); }
-        catch(e){ console.error(e); toast("No se pudo publicar la idea"); go.disabled=false; }
+        catch(e){ console.error(e); Telemetry.track("action_failed",{session_id:s.id,flow:"participant",step:"ideas",properties:{action:"idea_publish",reason:"save"}}); toast("No se pudo publicar la idea"); go.disabled=false; }
         P.sending=false; };
     });
   };
@@ -7201,9 +7273,9 @@ function drawIdeaList(){
       if(P.sending) return; const id=b.dataset.sup, on=P.ideas.mine.has(id);
       if(!on && left<=0) return toast(`Ya usaste tus ${total} apoyos. Quita uno para apoyar otra idea.`);
       P.sending=true;
-      try{ await Store.setIdeaVote({session_id:s.id, participant_id:P.me.id, idea_id:id}, !on); if(on) P.ideas.mine.delete(id); else P.ideas.mine.add(id); drawIdeaList();
+      try{ await Store.setIdeaVote({session_id:s.id, participant_id:P.me.id, idea_id:id}, !on); Telemetry.track("action_succeeded",{session_id:s.id,flow:"participant",step:"ideas",properties:{action:on?"support_remove":"support_add"}}); if(on) P.ideas.mine.delete(id); else P.ideas.mine.add(id); drawIdeaList();
         if(!on) Motion.pop($(`[data-sup="${id}"] .vhex`),{from:.4, fade:false}); }
-      catch(e){ console.error(e); toast(/apoyos/.test(String(e&&e.message))?"Ya usaste todos tus apoyos":"No se pudo guardar tu apoyo"); }
+      catch(e){ console.error(e); Telemetry.track("action_failed",{session_id:s.id,flow:"participant",step:"ideas",properties:{action:"support",reason:"save"}}); toast(/apoyos/.test(String(e&&e.message))?"Ya usaste todos tus apoyos":"No se pudo guardar tu apoyo"); }
       P.sending=false; });
     $$("[data-del]",el).forEach(b=>b.onclick=async()=>{ try{ await Store.deleteIdea(b.dataset.del); await refreshIdeas(true); }catch(e){ toast("No se pudo eliminar"); } });
   });
@@ -7278,7 +7350,7 @@ async function startParticipant(code){
     s = await Store.lookupSession(code);
   }catch(e){ console.error(e); screenJoin(friendlyAuthError(e), "net"); return; }
   if(!s){ screenJoin("El código «"+code+"» no corresponde a ningún taller."); return; }
-  P.session=s; syncActs(s);
+  P.session=s; Telemetry.newJourney(); Telemetry.context({session_id:s.id,flow:"participant",step:"welcome"}); Telemetry.track("workshop_opened",{session_id:s.id,flow:"participant",step:"welcome",properties:{method:s.kind||"dt"}}); syncActs(s);
   try{ P.me = await Store.myParticipant(s.id); }catch(e){ P.me=null; }
   if(!P.me && s.phase==="closed"){ screenClosed(s); return; }
   /* v1.15 · Talleres grandes: el celular no abre conexión en tiempo real. Cada 6–8.5 s (al azar, para que
@@ -7345,7 +7417,7 @@ const A = { session:null, participants:[], cards:[], votes:[], qwRatings:[], ide
    Es solo para mostrar la interfaz correcta: quien decide qué datos se entregan es la base de datos. */
 const ME = { role:"facilitator", uid:null, email:"", name:"", title:"", avatar:"" };
 const AH = { view:"home", owner:"", q:"", staff:[] };
-const VIEWS_ALL = ["home","mine","create","all","team","ai","notifs","settings"], VIEWS_FAC = ["home","mine","create","ai","notifs","settings"];
+const VIEWS_ALL = ["home","mine","create","all","team","analytics","ai","notifs","settings"], VIEWS_FAC = ["home","mine","create","ai","notifs","settings"];
 const viewOk = v => (isAdminRole()?VIEWS_ALL:VIEWS_FAC).includes(v);
 const isAdminRole = () => ME.role === "admin";
 const ROLE_T = { admin:"Admin", facilitator:"Facilitador" };
@@ -7394,6 +7466,7 @@ async function adminBoot(openCode){
   if(st.state==="verify")    return adminVerify(st);
   if(st.state==="forbidden") return adminForbidden(st.email, st.reason);
   Object.assign(ME, { role:st.role||"facilitator", uid:st.uid||null, email:st.email||"", name:st.name||"", title:st.title||"", avatar:st.avatar||"", passkey:!!st.passkey });
+  Telemetry.context({flow:"admin",step:AH.view}); Telemetry.track("app_open",{flow:"admin",step:AH.view,properties:{source:"panel"}});
   clearInvite();                                   /* ya estás dentro: la invitación guardada ya no hace falta */
   if(isAdminRole()) await loadStaff();
   if(!viewOk(AH.view)) AH.view="home";
@@ -7863,7 +7936,7 @@ async function adminSignup(msg){
    derecha del contenido en escritorio (≥1024 px) y en la barra superior en celular/tableta. Un solo DOM: .ah-head
    es la barra superior en celular y «se disuelve» (display:contents) en escritorio. */
 function ahTop(){
-  const tabsDef = [["home","Inicio","hexagon","Inicio"],["mine","Mis talleres","grid","Míos"]].concat(isAdminRole()?[["all","Todos los talleres","chart","Todos"],["team","Equipo","users","Equipo"]]:[]).concat([["ai","Uso de IA","sparkle","IA"]]);
+  const tabsDef = [["home","Inicio","hexagon","Inicio"],["mine","Mis talleres","grid","Míos"]].concat(isAdminRole()?[["all","Todos los talleres","chart","Todos"],["team","Equipo","users","Equipo"],["analytics","Analítica","trendup","Datos"]]:[]).concat([["ai","Uso de IA","sparkle","IA"]]);
   const cur = AH.view==="create" ? "home" : AH.view;   /* v2.1 · Crear taller se abre desde Inicio: el menú marca Inicio (antes «Mis talleres») */
   /* v1.17 · En escritorio esta barra es la barra lateral; .ah-ind es el fondo de la sección activa, que se desliza.
      v1.19 · Notificaciones y Ajustes no tienen pestaña: ninguna queda activa */
@@ -7883,7 +7956,7 @@ function fmtTok(n){ n=Number(n)||0; return n>=1e6?(n/1e6).toFixed(n>=1e7?0:1).re
 function aiCost(tin,tout){ return (Number(tin)||0)/1e6*1 + (Number(tout)||0)/1e6*5; }
 function fmtUSD(v){ return "US$"+(v<0.01&&v>0?v.toFixed(3):v.toFixed(2)); }
 /* v1.20 · Breadcrumbs: dónde estás y cómo regresar. Escritorio: en el encabezado; celular: arriba del título en Crear taller, Notificaciones y Ajustes (en las demás ya lo dice la pestaña activa) */
-const CRUMB_T={home:"Inicio", mine:"Mis talleres", all:"Todos los talleres", team:"Equipo", ai:"Uso de IA", notifs:"Notificaciones", settings:"Ajustes", create:"Preparar taller"};
+const CRUMB_T={home:"Inicio", mine:"Mis talleres", all:"Todos los talleres", team:"Equipo", analytics:"Analítica", ai:"Uso de IA", notifs:"Notificaciones", settings:"Ajustes", create:"Preparar taller"};
 function crumbTrail(){ const v=AH.view||"home";
   if(v==="home") return [["home"]];
   if(v==="create") return [["home"],["create"],[null, wzCrumb(), "crumbStep"]];
@@ -7921,9 +7994,9 @@ function wireTop(){
 }
 /* v1.18 · Navegar entre secciones con transición de pantalla: la barra lateral se queda quieta, el contenido se desliza
    en la dirección de la sección (abajo/derecha = adelante) y se espera un instante a que lleguen los datos */
-const VIEW_ORDER=["home","mine","create","all","team","ai","notifs","settings"];
+const VIEW_ORDER=["home","mine","create","all","team","analytics","ai","notifs","settings"];
 function navView(v, o){ o=o||{}; const from=VIEW_ORDER.indexOf(AH.view==="create"?"home":AH.view), to=VIEW_ORDER.indexOf(v==="create"?"home":v);
-  return Motion.go(()=>{ if(o.before) o.before(); AH.view=v; const p=adminHome(); window.scrollTo(0,0); return p; }, {kind:"axis", dir:o.dir!=null?o.dir:Math.sign(to-from), wait:200}); }
+  return Motion.go(()=>{ if(o.before) o.before(); AH.view=v; Telemetry.context({session_id:null,flow:v==="create"?"creator":"admin",step:v}); Telemetry.track("view_opened",{flow:v==="create"?"creator":"admin",step:v}); const p=adminHome(); window.scrollTo(0,0); return p; }, {kind:"axis", dir:o.dir!=null?o.dir:Math.sign(to-from), wait:200}); }
 /* v1.17 · Barra lateral: el fondo de la sección activa se desliza desde donde estaba (cada vista vuelve a pintar el shell).
    v1.18 · Con resorte (Quick) y también en las pestañas superiores de celular/tableta (horizontal).
    v1.19 · Sin sección activa (Notificaciones, Ajustes) el fondo se oculta y la próxima vez nace en su lugar */
@@ -8193,6 +8266,7 @@ async function openSession(code, btn, src){ if(btn) btn.disabled=true; const s=a
    se transforma en el título del panel (elemento compartido estilo Smart Animate). Al volver, al revés. */
 function navOpen(s, src){
   A._from = src ? (src.closest(".rail-it,.dn-c")?"rail":src.closest(".adm-row,.all-workshops-table")?"all":"table") : null;
+  Telemetry.context({session_id:s.id,flow:"facilitation",step:s.phase||"lobby"}); Telemetry.track("workshop_opened",{session_id:s.id,flow:"facilitation",step:s.phase||"lobby",properties:{method:s.kind||"dt"}});
   return Motion.go(()=>startAdmin(s), {kind:"push", dir:1, shared:src?{from:src, to:()=>$(".at-n")}:null, wait:200, until:()=>A._ready});
 }
 /* Fila de la vista actual que corresponde al taller (para que el título vuelva a su lugar) */
@@ -8206,6 +8280,7 @@ function rowTitle(code){
 async function adminHome(){
   if(isAdminRole() && AH.view==="all")  return adminAllView();
   if(isAdminRole() && AH.view==="team") return adminTeamView();
+  if(isAdminRole() && AH.view==="analytics") return analyticsView();
   if(AH.view==="create") return createView();
   if(AH.view==="mine")   return mineView();
   if(AH.view==="ai")     return aiView();
@@ -8801,7 +8876,7 @@ function openRowMenu(btn, items, o){ o=o||{};
 }
 
 /* ---------- Creador paso a paso ---------- */
-const W = { step:0, entry:"kind", d:null, b:null, draftId:null, editId:null, editCode:null, seen:new Set(), _t:null, _srv:null, _saving:null };
+const W = { step:0, entry:"kind", d:null, b:null, draftId:null, editId:null, editCode:null, seen:new Set(), _t:null, _srv:null, _saving:null, startedAt:0, contextAt:0 };
 const W_STEPS = [
   {k:"brief", t:"Cuéntanos",   s:"Contexto para la IA"},
   {k:"data", t:"Datos",       s:"Nombre y votos"},
@@ -8854,10 +8929,10 @@ function persistDraft(now){
 }
 async function flushDraft(){ clearTimeout(W._t); clearTimeout(W._srv); if(draftHasContent()){ wzLocal(); await persistDraft(true); } else if(W._saving) await W._saving; }
 function resetWizard(){ W.d=null; W.b=null; W.draftId=null; W.editId=null; W.editCode=null; W.step=0; W.entry="kind"; W.seen=new Set([0]); W.aiErr=null; W.aiBusy=false;
-  W.aiBack=null; W.aiBackEntry=null;
+  W.aiBack=null; W.aiBackEntry=null; W.startedAt=Date.now(); W.contextAt=0;
   W.aiRun=(W.aiRun||0)+1; clearInterval(W._msg);   /* v1.12.2 · una propuesta que aún venía en camino ya no se mete al taller nuevo */
   clearWzDraft(); }
-async function startNewWorkshop(){ await flushDraft().catch(()=>{}); return navView("create",{dir:1, before:resetWizard}); }
+async function startNewWorkshop(){ await flushDraft().catch(()=>{}); Telemetry.newJourney(); Telemetry.context({session_id:null,flow:"creator",step:"goal"}); Telemetry.track("creator_started",{flow:"creator",step:"goal"}); return navView("create",{dir:1, before:resetWizard}); }
 async function openDraft(id, btn){
   if(btn && "disabled" in btn) btn.disabled=true;
   await flushDraft().catch(()=>{});
@@ -9141,10 +9216,10 @@ function drawKindStart(B, head){
     if(changed&&W.d&&!(await askDialog({kind:"bee",title:"¿Cambiar el objetivo del taller?",text:"Conservaremos el contexto, pero se reemplazarán el plan y cualquier personalización que hayas hecho.",ok:"Cambiar objetivo",cancel:"Conservar el actual"}))) return;
     if(changed&&W.d) W.d=null;
     W.b={...old,kind:k,contexto:ctx,proceso:ctx,dolor:k==="dt"?ctx:"",objetivo:k==="dt"?(old.objetivo||"dolores"):"dolores",herramientas:k==="dt"?(old.herramientas||""):""};
-    if(empty||changed) W.b.duracion=KIND_DEFAULT_DUR[k]||"90"; W.aiErr=null; W.entry="brief"; saveWzDraftNow(); wzEntry("brief",{save:false}); });
+    if(empty||changed) W.b.duracion=KIND_DEFAULT_DUR[k]||"90"; W.aiErr=null; W.entry="brief"; W.contextAt=Date.now(); Telemetry.track("creator_goal_selected",{flow:"creator",step:"goal",duration_ms:W.startedAt?Date.now()-W.startedAt:null,properties:{method:k}}); saveWzDraftNow(); wzEntry("brief",{save:false}); });
   const cp=$("#kindCopy"), go=$("#kindCopyGo"); if(cp&&go){ cp.onchange=()=>{ go.disabled=!cp.value; }; go.onclick=async()=>{ const code=cp.value; if(!code) return; go.disabled=true;
       const x=await Store.getMySession(code).catch(()=>null); if(!x){ go.disabled=false; return toast("No se pudo leer ese taller"); }
-      W.d=fromPreset({...x,template:"copy",name:copyName(x.name)}); W.b=briefFromDraft(W.d,null); W.entry="review"; saveWzDraftNow(); wzTo(W_STEPS.length-1,{save:false}); }; }
+      W.d=fromPreset({...x,template:"copy",name:copyName(x.name)}); W.b=briefFromDraft(W.d,null); W.entry="review"; Telemetry.track("creator_plan_ready",{flow:"creator",step:"review",properties:{method:W.d.kind||"dt",action:"copy"}}); Telemetry.track("creator_reviewed",{flow:"creator",step:"review",properties:{method:W.d.kind||"dt"}}); saveWzDraftNow(); wzTo(W_STEPS.length-1,{save:false}); }; }
   const ft=$("#wFoot"); if(ft){ ft.innerHTML=""; ft.hidden=true; }
 }
 function drawBrief(B, head){
@@ -9204,7 +9279,8 @@ function drawBrief(B, head){
   const backKind=()=>wzEntry("kind"); [$("#bfBack"),$("#bfKind")].forEach(x=>{ if(x) x.onclick=backKind; });
   $$("#wBody [data-pk]").forEach(x=>x.onclick=()=>{ const key=x.dataset.pk,v=x.dataset.v; b[key]=v; $$(`#wBody [data-pk="${key}"]`).forEach(y=>{ const on=b[key]===y.dataset.v; y.classList.toggle("on",on); y.setAttribute("aria-checked",on); }); if(key==="duracion"){ const t=$("#bfDurT"); if(t) t.textContent=({"60":"60 min","90":"90 min","120":"2 h","240":"Medio día"})[v]||"90 min"; } keep(); });
   $("#bfGo").onclick=()=>{ const c=briefContext(b,w); let bad=""; if(c.length<8) bad="Cuéntanos un poco más para preparar el taller."; else if(dt&&!noAI&&c.length<20) bad="Agrega un poco más de contexto para que la IA pueda proponer un plan útil.";
-    if(bad){ fieldErr(ci,bad); ci.focus({preventScroll:true}); ci.scrollIntoView({block:"center",behavior:document.documentElement.classList.contains("rm")?"auto":"smooth"}); return; }
+    if(bad){ Telemetry.track("validation_failed",{flow:"creator",step:"context",properties:{reason:"context_too_short",method:w.k}}); fieldErr(ci,bad); ci.focus({preventScroll:true}); ci.scrollIntoView({block:"center",behavior:document.documentElement.classList.contains("rm")?"auto":"smooth"}); return; }
+    Telemetry.track("creator_context_completed",{flow:"creator",step:"context",duration_ms:W.contextAt?Date.now()-W.contextAt:null,properties:{method:w.k}});
     if(!dt) return kindDraft(); if(noAI) return manualDraft(); runAI({}); };
   const mm=()=>manualDraft(); [$("#bfManual"),$("#bfManual2"),$("#bfManualBody")].forEach(x=>{ if(x) x.onclick=mm; });
   const rt=$("#bfRetry"); if(rt) rt.onclick=()=>runAI(W.aiLast||{});
@@ -9226,14 +9302,14 @@ function manualDraft(){
     q_pain:`Piensa en tu día a día en ${shortProc(f.proceso)||"este proceso"}. ¿Qué es lo que más tiempo te roba o más te frustra?`,
     q_checkin:usted?"¿Cómo llega a este taller?":"¿Cómo llegas a este taller?", q_expect:usted?"En una frase: ¿qué espera de este taller?":"En una frase: ¿qué esperas de este taller?",
     q_idea:"¿Cómo podríamos resolverlo?", ...briefNumbers(b) });
-  W.aiErr=null; W.entry="review"; wzTo(W_STEPS.length-1); toast("Plan listo: revísalo y personaliza solo lo que necesites");
+  W.aiErr=null; W.entry="review"; Telemetry.track("creator_plan_ready",{flow:"creator",step:"review",properties:{method:w.k,action:"manual"}}); Telemetry.track("creator_reviewed",{flow:"creator",step:"review",properties:{method:w.k}}); wzTo(W_STEPS.length-1); toast("Plan listo: revísalo y personaliza solo lo que necesites");
 }
 /* v2.0 · Tipos nuevos: el taller se arma al instante con las palabras y preguntas del tipo (sin IA) */
 function kindDraft(){
   const b=W.b||briefBlank(), w=KINDS[b.kind]||KINDS.dt, f=preparedBrief(b,w), q=w.qs(f.proceso, f.trato==="usted");
   W.d=fromPreset({ template:"kind", kind:w.k, name:quickName(b,w,f.contexto), noVal:true, facilitator:ME.name||"",
     areas:b.segmentar&&b.participantes.length?b.participantes.slice():["General"], roles:[], stages:(w.cats||[]).slice(), tools:{}, tasks:{}, quickwins:[], ...q, ...briefNumbers(b) });
-  W.aiErr=null; W.entry="review"; wzTo(W_STEPS.length-1); toast("Plan listo: revísalo y personaliza solo lo que necesites");
+  W.aiErr=null; W.entry="review"; Telemetry.track("creator_plan_ready",{flow:"creator",step:"review",properties:{method:w.k,action:"template"}}); Telemetry.track("creator_reviewed",{flow:"creator",step:"review",properties:{method:w.k}}); wzTo(W_STEPS.length-1); toast("Plan listo: revísalo y personaliza solo lo que necesites");
 }
 async function runAI(opt){
   const b=W.b; if(!b) return; opt=opt||{}; const w=KINDS[b.kind]||KINDS.dt, f=preparedBrief(b,w);
@@ -9252,7 +9328,7 @@ async function runAI(opt){
     const count=(W.d&&W.d.aiCount||0)+1;
     W.d=fromPreset({...draft, template:"ai", facilitator:ME.name||"", aiCount:count});
     if(!b.segmentar) W.d.areas=["General"]; else if(!W.d.areas.length) W.d.areas=b.participantes.length?b.participantes.slice():["General"];
-    W.aiBusy=false; clearInterval(W._msg); W.entry="review"; W.step=W_STEPS.length-1; saveWzDraftNow();
+    W.aiBusy=false; clearInterval(W._msg); W.entry="review"; W.step=W_STEPS.length-1; Telemetry.track("creator_plan_ready",{flow:"creator",step:"review",properties:{method:w.k,action:opt.adjust?"ai_adjust":"ai"}}); Telemetry.track("creator_reviewed",{flow:"creator",step:"review",properties:{method:w.k}}); saveWzDraftNow();
     if(!onScreen()){ toast("Tu propuesta quedó lista: la encuentras en Mis talleres, en Borradores"); return; }
     W.step=0; wzTo(W_STEPS.length-1,{save:false});
     const la=Store.lastAi, tk=la&&la.usage?(Number(la.usage.input_tokens)||0)+(Number(la.usage.output_tokens)||0):0;
@@ -9261,7 +9337,7 @@ async function runAI(opt){
     console.error("[Colmena] propuesta con IA:", e);
     if(e && e.status===501) AH.ai=false;          /* la función dijo que no hay llave: se ofrece «Armar a mano» */
     if(/pausó la IA/.test(String(e&&e.message))) AH.aiBlock="paused"; else if(/tope de IA/.test(String(e&&e.message))) AH.aiBlock="cap";
-    W.aiErr=friendlyAuthError(e); W.step=opt.adjust||opt.regen?back:0;
+    W.aiErr=friendlyAuthError(e); W.step=opt.adjust||opt.regen?back:0; Telemetry.track("action_failed",{flow:"creator",step:"context",properties:{action:"ai_plan",reason:"service"}});
     if(!onScreen()) return;
     drawWizard(); if(W.step!==0) toast(W.aiErr); }
 }
@@ -9408,8 +9484,9 @@ async function createFromWizard(){
       const patch={...s,caso:s.caso||null}; delete patch.code; delete patch.phase; await Store.updateSession(editId,patch); created=await Store.getMySession(editCode); if(!created) throw new Error("No se pudo volver a abrir el taller actualizado."); }
     else for(let i=0;i<3 && !created;i++){ try{ created=await Store.createSession(s); }catch(e){ if(/23505|duplicate key|ws_sessions_code/i.test(String(e&&(e.code||"")+" "+(e.message||""))) && i<2){ s.code=makeCode(); continue; } throw e; } }
     const did=W.draftId; clearTimeout(W._srv); if(!editId&&did){ Store.aiLink(did, created.id).catch(e=>console.warn("[Colmena] ai_link:", e)); Store.deleteDraft(did).catch(e=>console.error(e)); }
+    Telemetry.track(editId?"workshop_updated":"workshop_created",{session_id:created.id,flow:"creator",step:"opened",duration_ms:W.startedAt?Date.now()-W.startedAt:null,properties:{method:w.k}});
     resetWizard(); AH.view="home"; navOpen(created); toast(editId?"Cambios guardados":"Taller creado: "+created.code); }
-  catch(e){ console.error(e); toast((W.editId?"No se pudieron guardar los cambios: ":"No se pudo abrir la sala: ")+friendlyAuthError(e)); b.disabled=false; }
+  catch(e){ console.error(e); Telemetry.track("action_failed",{flow:"creator",step:"review",properties:{action:W.editId?"update_workshop":"create_workshop",reason:"server"}}); toast((W.editId?"No se pudieron guardar los cambios: ":"No se pudo abrir la sala: ")+friendlyAuthError(e)); b.disabled=false; }
 }
 /* v2.1 · Error junto al campo: borde, mensaje debajo (role=alert) y aria-invalid. fieldOk lo quita. */
 function fieldErr(input, msg){ if(!input) return; const f=input.closest(".field"); if(!f) return; let p=f.querySelector(".err-f");
@@ -10498,6 +10575,7 @@ function renderAdmin(mode){
   A.cards.forEach(c=>A.seen.add(c.id)); A.ideas.forEach(i=>A.seen.add(i.id));
   const goPhase=async ph=>{
     if(ph===s.phase) return;
+    const previousPhase=s.phase;
     if(A.readonly) return toast("Solo lectura: solo quien facilita puede cambiar de fase");
     if(ph==="closed" && !(await askDialog({kind:"bee", title:"¿Cerrar el taller para todos?", text:"Los celulares mostrarán el cierre y nadie podrá enviar más respuestas. Todo lo capturado queda guardado para compartirlo.", ok:"Cerrar para todos"}))) return;
     /* v1.16 · Saltar fases o regresar mueve a TODA la sala: se confirma. Abrir la siguiente fase no pregunta. */
@@ -10510,9 +10588,10 @@ function renderAdmin(mode){
     }
     /* v1.16 · Si la fase sí cambió pero falla la recarga del panel, no se dice «No se pudo cambiar la fase» */
     try{ await Store.updateSession(s.id,{phase:ph}); }
-    catch(e){ console.error(e); toast("No se pudo cambiar la fase: "+friendlyAuthError(e)); return; }
+    catch(e){ console.error(e); Telemetry.track("action_failed",{session_id:s.id,flow:"facilitation",step:s.phase,properties:{action:"phase_change",to:ph}}); toast("No se pudo cambiar la fase: "+friendlyAuthError(e)); return; }
     const from=flowOf(A.session).findIndex(p=>p.id===A.session.phase), to=flowOf(A.session).findIndex(p=>p.id===ph);
     A.session.phase=ph;
+    Telemetry.context({session_id:s.id,flow:"facilitation",step:ph}); Telemetry.track("phase_changed",{session_id:s.id,flow:"facilitation",step:ph,properties:{from:previousPhase,to:ph,method:s.kind||"dt"}});
     try{ await refetchAll(); }catch(e){ console.error(e); toast(`La sala ya está en ${phaseName(ph, A.session)}. El panel se actualizará solo en unos segundos.`); }
     Motion.go(()=>{ renderAdmin("nav"); window.scrollTo(0,0); }, {kind:"axis", dir:Math.sign(to-from)});
   };
@@ -11199,6 +11278,54 @@ document.addEventListener("keydown",e=>{
 });
 document.addEventListener("fullscreenchange",()=>{ if(!document.fullscreenElement && A.project && $(".pres")) stopPresentation(); });
 window.addEventListener("resize",()=>{ if(A.project) fitSlide(); });
+
+/* ============================================================
+   v2.3 · Analítica privada de producto (solo admin)
+   Eventos técnicos sin contenido; detalle 90 días, agregados históricos.
+   ============================================================ */
+const AN={period:"30",session:"",data:null,options:[],err:null,chart:null};
+const AN_EVENT_T={action_failed:"Acción que no guardó",join_failed:"No pudo entrar",validation_failed:"Validación en el creador",onboarding_validation_failed:"Validación al registrarse",retry:"Reintento",rage_click:"Clics repetidos",app_error:"Error de la app"};
+const AN_STEP_T={goal:"Objetivo",context:"Contexto",review:"Revisión",onboarding:"Registro",checkin:"Check-in",pains:"Tarjetas",votes:"Votación",quickwins:"Validación",ideas:"Ideas",results:"Resultados",lobby:"Sala de espera"};
+function analyticsFrom(){ return new Date(Date.now()-(+AN.period||30)*864e5).toISOString(); }
+function skAnalytics(){ return skPage("Cargando analítica…",skBand()+skKpis()+`<div class="an-grid"><section class="panel">${skb("100%","16rem","ctl")}</section><section class="panel">${skb("100%","16rem","ctl")}</section></div>`); }
+async function analyticsView(){
+  document.body.classList.add("admin-theme");
+  $("#app").innerHTML=shellHTML(skAnalytics(),"an-view"); wireTop(); AN.err=null;
+  try{ AN.data=await Store.analytics(analyticsFrom(),new Date().toISOString(),AN.session||null); if(!AN.session) AN.options=AN.data.workshops||[]; }
+  catch(e){ console.error("[Colmena] analítica:",e); AN.err=/ws_analytics|PGRST202|does not exist|Could not find/i.test(String(e&&(e.message||e.code)))?"Falta correr migracion-v230-analitica.sql en Supabase para activar esta vista.":friendlyAuthError(e); }
+  if(AH.view==="analytics") drawAnalytics();
+}
+function anFunnel(rows){ const max=Math.max(1,...rows.map(x=>+x.journeys||0)); return rows.length?`<ol class="an-funnel">${rows.map((x,i)=>{ const n=+x.journeys||0, prev=i?+rows[i-1].journeys||0:n, rate=i&&prev?Math.round(n/prev*100):100; return `<li><div><span>${i+1}</span><b>${esc(x.stage)}</b><em>${n.toLocaleString("es-MX")}${i?` · ${rate}% del paso anterior`:""}</em></div><i><span style="width:${n/max*100}%"></span></i></li>`; }).join("")}</ol>`:`<div class="an-empty">Aún no hay recorridos en este periodo.</div>`; }
+function drawAnalytics(){
+  const main=$(".ah-wide.an-view"); if(!main||AH.view!=="analytics") return; const d=AN.data||{}, o=d.overview||{};
+  const periods=`<div class="ai-per" role="group" aria-label="Periodo">${[["7","7 días"],["30","30 días"],["90","90 días"]].map(([k,t])=>`<button type="button" class="${AN.period===k?"on":""}" aria-pressed="${AN.period===k}" data-anper="${k}">${t}</button>`).join("")}</div>`;
+  const opts=(AN.options||[]).map(x=>`<option value="${esc(x.id)}"${AN.session===x.id?" selected":""}>${esc(x.name)} · ${esc(x.code)}</option>`).join("");
+  const filter=`<label class="an-select"><span class="sr">Taller</span><select class="input" id="anSession"><option value="">Todos los talleres</option>${opts}</select></label>`;
+  const head=`<section class="pband noroom pb-an vi" style="--i:0" aria-label="Analítica"><div class="pb-main"><div class="pb-k"><span class="pb-n hexs" aria-hidden="true">${icon("trendup")}</span><span>Privada · solo administradores</span></div><h1 class="pb-t page-t">Analítica</h1><p class="pb-d page-s">Dónde se detiene la gente, cuánto tarda y desde qué dispositivos usa Colmena. <b>No se guardan respuestas, nombres, correos ni texto escrito.</b></p><div class="pb-acts an-filters">${periods}${filter}</div></div>${pnArt("results")}</section>`;
+  if(AN.err){ main.innerHTML=head.replace("pband noroom","pband noroom pb-flat")+`<section class="panel"><div class="ai-note">${icon("alert")}<span>${esc(AN.err)}</span></div></section>`; wireAnalytics(); return; }
+  const kpis=pnKpis([
+    {k:"anj",ic:"users",l:"Recorridos",v:+o.journeys||0,c:"Navegadores distintos en el periodo"},
+    {k:"anw",ic:"grid",l:"Talleres medidos",v:+o.workshops||0,c:"Con actividad registrada"},
+    {k:"ane",ic:"alert",l:"Señales de fricción",v:+o.errors||0,c:o.events?`${Math.round((+o.errors||0)/(+o.events||1)*100)}% de ${(+o.events).toLocaleString("es-MX")} eventos`:"Sin eventos",tone:+o.errors?"warn":""},
+    {k:"ant",ic:"clock",l:"Tiempo mediano",v:o.p50_ms?`${Math.round(o.p50_ms/1000)} s`:"—",c:"En pasos con duración"}
+  ]);
+  const fr=d.friction||[], devices=d.devices||[], workshops=d.workshops||[];
+  const friction=fr.length?`<ul class="an-friction">${fr.map(x=>`<li><span class="an-signal">${icon(x.event_name==="rage_click"?"bolt":"alert")}</span><div><b>${esc(AN_EVENT_T[x.event_name]||x.event_name)}</b><small>${esc(AN_STEP_T[x.step]||x.step||x.flow||"App")} · ${x.journeys} recorrido${+x.journeys===1?"":"s"}</small></div><strong>${(+x.occurrences).toLocaleString("es-MX")}</strong></li>`).join("")}</ul>`:`<div class="an-empty">Sin señales de fricción en este periodo.</div>`;
+  const devRows=devices.map(x=>{ const br=({chrome:"Chrome",safari:"Safari",edge:"Edge",firefox:"Firefox",other:"Otro"})[x.browser]||x.browser||"Otro"; return `<tr><td><b>${esc(({mobile:"Celular",tablet:"Tableta",desktop:"Computadora",other:"Otro"})[x.device]||x.device)}</b><small>${esc(br)} · ${x.display_mode==="standalone"?"App instalada":"Navegador"}</small></td><td class="r num">${(+x.journeys).toLocaleString("es-MX")}</td><td class="r num">${(+x.events).toLocaleString("es-MX")}</td><td class="r num ${+x.errors?"an-bad":""}">${+x.errors||0}</td></tr>`; }).join("");
+  const wsRows=workshops.map(x=>`<tr><td><b>${esc(x.name)}</b><small>${esc(x.code)} · ${esc((KINDS[x.kind]||KINDS.dt).t)}</small></td><td>${esc(x.facilitator||"")}</td><td class="r num">${+x.journeys||0}</td><td class="r num">${+x.joined||0}</td><td class="r num">${+x.completed||0}</td><td class="r num ${+x.errors?"an-bad":""}">${+x.errors||0}</td></tr>`).join("");
+  main.innerHTML=head+kpis+`<div class="an-grid vi" style="--i:2"><section class="panel an-card"><div class="ai-h"><h2>Embudo de participantes</h2><p class="hint">Personas que llegan a cada punto del recorrido</p></div>${anFunnel(d.participant_funnel||[])}</section><section class="panel an-card"><div class="ai-h"><h2>Embudo del creador</h2><p class="hint">De abrir el creador a abrir la sala</p></div>${anFunnel(d.creator_funnel||[])}</section></div>
+    <div class="an-grid vi" style="--i:3"><section class="panel an-card"><div class="ai-h"><h2>Dónde hay fricción</h2><p class="hint">Errores, validaciones, reintentos y clics repetidos</p></div>${friction}</section><section class="panel an-card"><div class="ai-h"><h2>Actividad por día</h2><p class="hint">Recorridos y señales de fricción</p></div>${(d.trend||[]).length?'<div class="cv lg"><canvas id="anTrend" aria-label="Actividad diaria"></canvas></div>':'<div class="an-empty">Aún no hay actividad para graficar.</div>'}</section></div>
+    <section class="panel vi an-card" style="--i:4"><div class="ai-h"><h2>Dispositivos</h2><p class="hint">Ayuda a separar una fricción de celular, navegador o app instalada</p></div>${devRows?`<div class="tbl-wrap"><table class="ai-tbl an-table"><thead><tr><th>Dispositivo</th><th class="r">Recorridos</th><th class="r">Eventos</th><th class="r">Fricción</th></tr></thead><tbody>${devRows}</tbody></table></div>`:'<div class="an-empty">Sin datos de dispositivos.</div>'}</section>
+    <section class="panel vi an-card" style="--i:5"><div class="ai-h"><h2>Por taller</h2><p class="hint">Compara entrada, avance y fricción sin abrir respuestas</p></div>${wsRows?`<div class="tbl-wrap"><table class="ai-tbl an-table"><thead><tr><th>Taller</th><th>Facilitador</th><th class="r">Recorridos</th><th class="r">Entraron</th><th class="r">Actividades terminadas</th><th class="r">Fricción</th></tr></thead><tbody>${wsRows}</tbody></table></div>`:'<div class="an-empty">Aún no hay talleres medidos.</div>'}</section>
+    <p class="an-privacy vi" style="--i:6">${icon("key")}El detalle técnico se elimina a los ${d.retention_days||90} días. Los conteos diarios agregados se conservan para comparar tendencias históricas.</p>`;
+  wireAnalytics(); analyticsChart(d.trend||[]);
+}
+function wireAnalytics(){
+  $$('[data-anper]').forEach(b=>b.onclick=()=>{ if(AN.period===b.dataset.anper)return; AN.period=b.dataset.anper; analyticsView(); });
+  const s=$("#anSession"); if(s) s.onchange=()=>{ AN.session=s.value; analyticsView(); };
+}
+function analyticsChart(rows){ if(AN.chart){ try{AN.chart.destroy();}catch(e){} AN.chart=null; } const c=$("#anTrend"); if(!c||!rows.length||typeof Chart==="undefined")return; const T=chartTheme();
+  AN.chart=new Chart(c,{type:"line",data:{labels:rows.map(x=>new Date(x.day+"T12:00:00").toLocaleDateString("es-MX",{day:"numeric",month:"short"})),datasets:[{label:"Recorridos",data:rows.map(x=>+x.journeys||0),borderColor:T.c[0],backgroundColor:T.c[0]+"22",fill:true,tension:.35,pointRadius:2},{label:"Fricción",data:rows.map(x=>+x.errors||0),borderColor:T.c[1],backgroundColor:T.c[1],tension:.35,pointRadius:2}]},options:{...T.base,interaction:{mode:"index",intersect:false},scales:{x:{grid:{display:false},ticks:{color:T.ink3,maxTicksLimit:8,maxRotation:0}},y:{beginAtZero:true,grid:{color:T.grid},ticks:{color:T.ink3,precision:0}}},plugins:{...T.plugins,tooltip:{...T.tip}}}}); }
 
 
 /* ---------- Diálogo propio (reemplaza al confirm del navegador) ---------- */
