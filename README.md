@@ -1,5 +1,14 @@
 # Colmena · Quality & Knowledge
 
+> **Desde el 28 oct 2026: landing + app.** `colmena.work` es la landing de producto (`index.html` + `img/` en la raíz) y la app vive en **`colmena.work/app/`** (carpeta `app/`).
+> - Mismo dominio: quien ya inició sesión sigue dentro, y las passkeys siguen sirviendo.
+> - La landing tiene una «puerta»: las ligas de antes (`?s=CÓDIGO`, invitaciones `?inv=`, accesos `?lt=`, `?pr=`, `#admin`) y la app instalada se mandan solas a `/app/` con todo y su código.
+> - Para publicar una versión nueva de la app: `python3 build.py` (ahora arma `app/index.html` y `app/sw.js`) y sube **`app/index.html` y `app/sw.js`**. Ya no subas `index.html` de la raíz: es la landing.
+> - En la raíz se quedan `sw.js`, `manifest.json`, `icons/` y `email/` para las apps ya instaladas y los correos ya enviados.
+> - Supabase → Edge Functions → Secrets: `SITE_URL` = `https://colmena.work/app/` (las ligas nuevas de los correos van directo a la app).
+> - WordPress: vuelve a pegar `colmena-iframe.html` (ahora abre `colmena.work/app/`).
+> - Formulario «Pide tu taller de prueba» (landing): corre `migracion-v240-solicitudes-prueba.sql` (tabla `ws_trial_requests`) y crea la función `trial-request` con `supabase/functions/trial-request/index.ts` (**Verify JWT apagado**). Usa los mismos secretos del correo de invitaciones; las solicitudes llegan a `LEADS_TO` (si no existe, al correo que viene escrito en la función). Opcional: `TURNSTILE_SECRET` + la clave pública en `TURNSTILE_SITEKEY` de `index.html`.
+
 Herramienta propia para talleres en vivo: design thinking («Mejora de procesos», el de siempre) y, desde la v2.0, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
 
 - **Participantes:** entran con un **QR desde su celular** y se registran (nombre, área, rol, etapas en las que participan y avatar).
