@@ -16,6 +16,17 @@
   if(deLaApp || anclas.indexOf(h)<0 || instalada){ window['ga-disable-G-S7PEX7TTWP']=true; L.replace('app/'+L.search+L.hash); }
 }catch(e){}})();
 </script>
+<script>
+/* Idioma: si la página se va a mostrar en inglés, se oculta un instante (máx. 2.5 s) para no ver primero el español */
+(function(){try{
+  var q=(new URLSearchParams(location.search).get('lang')||'').toLowerCase(), s=null; try{ s=localStorage.getItem('colmena-lang'); }catch(e){}
+  var w=(q==='es'||q==='en')?q:(s==='es'||s==='en')?s:null;
+  if(!w){ var n=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||'es'];
+    for(var i=0;i<n.length&&!w;i++){ var t=String(n[i]).toLowerCase(); if(t.slice(0,2)==='es') w='es'; else if(t.slice(0,2)==='en') w='en'; }
+    if(!w) w=n.length?'en':'es'; }
+  if(w==='en'){ var h=document.documentElement; h.classList.add('i18n-wait'); setTimeout(function(){ h.classList.remove('i18n-wait'); },2500); }
+}catch(e){}})();
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-S7PEX7TTWP"></script>
 <script>
@@ -294,25 +305,46 @@ img.m.on{transform:none}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .cf-slot:empty{display:none}
 .lead-form h3,.lead-ok h3{font:700 clamp(1.375rem,2vw,1.625rem)/1.15 var(--display);letter-spacing:-.015em}
+.form-head{display:grid;gap:.375rem}
+.req-note{font:500 .8125rem/1.4 var(--body);color:var(--ink-3)}
+.req{color:#B42318;font-weight:700;margin-left:.125rem}
 /* Dos columnas solo si caben; si no, una (sin cortes por dispositivo) */
 .form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:1.125rem}
+.form-row.names{grid-template-columns:repeat(2,minmax(0,1fr))}
 .field{display:grid;gap:.5rem;border:0;margin:0;padding:0;min-width:0}
-.field>label,.field>legend{font:700 .875rem/1.3 var(--body);color:var(--ink);padding:0}
-.field>legend{margin-bottom:.5rem}
-.opt{font-weight:500;color:var(--ink-3)}
+.field>label{font:700 .875rem/1.3 var(--body);color:var(--ink);padding:0}
+.lbl{cursor:default}
 .input{width:100%;min-height:3rem;border:1.5px solid var(--line);border-radius:.75rem;padding:.6875rem .875rem;font:500 1rem/1.3 var(--body);color:var(--ink);background:#fff;transition:border-color .15s,box-shadow .15s}
 .input::placeholder{color:#8F9BAE}
 .input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 .25rem rgba(39,143,216,.18)}
 .input[aria-invalid="true"]{border-color:#C0392B}
-select.input{appearance:none;-webkit-appearance:none;padding-right:2.625rem;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2346536E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .875rem center;background-size:1.125rem}
 .err{font:600 .8125rem/1.35 var(--body);color:#B42318}
-.chips-r{display:flex;flex-wrap:wrap;gap:.5rem}
-.chip-r{position:relative;display:inline-flex}
-.chip-r input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
-.chip-r span{display:inline-flex;align-items:center;min-height:2.75rem;padding:0 clamp(.75rem,3vw,1rem);border-radius:999px;border:1.5px solid var(--line);font:600 .875rem/1.2 var(--body);color:var(--ink-2);background:#fff;transition:background .15s,border-color .15s,color .15s}
-.chip-r:hover span{border-color:#9CC9EE}
-.chip-r input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
-.chip-r input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+/* Listas desplegables propias: se ven igual en todos los navegadores y equipos.
+   Teclado: flechas, Inicio/Fin, Enter o espacio para elegir, Esc para cerrar y letras para saltar. */
+.dd{position:relative}
+.dd-btn{display:flex;align-items:center;justify-content:space-between;gap:.75rem;cursor:pointer;user-select:none;-webkit-user-select:none;text-align:left}
+.dd-btn:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 .25rem rgba(39,143,216,.18)}
+.dd-btn:focus:not(:focus-visible){outline:none}
+.dd-btn:not(:focus):hover{border-color:#9CC9EE}
+.dd.open .dd-btn{border-color:var(--accent)}
+.dd-val{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#8F9BAE}
+.dd.has-val .dd-val{color:var(--ink)}
+.dd-chev{flex:none;width:1.125rem;height:1.125rem;color:var(--ink-2);transition:transform .2s ease}
+.dd.open .dd-chev{transform:rotate(180deg)}
+.dd-list{position:absolute;left:0;right:0;top:calc(100% + .375rem);z-index:30;margin:0;padding:.375rem;list-style:none;
+  max-height:min(17rem,60vh);overflow:auto;overscroll-behavior:contain;background:#fff;border:1px solid var(--line);border-radius:.875rem;
+  box-shadow:0 1.25rem 2.5rem -1rem rgba(1,19,59,.38);transform-origin:50% 0;animation:dd-in .14s ease-out}
+.dd.up .dd-list{top:auto;bottom:calc(100% + .375rem);transform-origin:50% 100%}
+@keyframes dd-in{from{opacity:0;transform:translateY(-.25rem) scale(.98)}to{opacity:1;transform:none}}
+.dd.up .dd-list{animation-name:dd-in-up}
+@keyframes dd-in-up{from{opacity:0;transform:translateY(.25rem) scale(.98)}to{opacity:1;transform:none}}
+.dd-list [role="option"]{display:flex;align-items:center;justify-content:space-between;gap:.75rem;min-height:2.75rem;padding:.5rem .75rem;border-radius:.5rem;
+  font:500 .9375rem/1.3 var(--body);color:var(--ink);cursor:pointer}
+.dd-list [role="option"].is-active{background:var(--surface)}
+.dd-list [role="option"][aria-selected="true"]{font-weight:700;color:var(--accent-strong);background:#E6F2FB}
+.dd-list [role="option"][aria-selected="true"]::after{content:"";flex:none;width:.75rem;height:.4375rem;border-left:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:translateY(-.125rem) rotate(-45deg)}
+.dd-btn[aria-invalid="true"]{border-color:#C0392B}
+@media (prefers-reduced-motion:reduce){ .dd-list{animation:none} .dd-chev{transition:none} }
 .consent{font:500 .8125rem/1.5 var(--body);color:var(--ink-3)}
 .lead-form .btn{width:100%;min-height:3.375rem}
 .lead-form .btn:disabled{opacity:.7;cursor:progress}
@@ -402,6 +434,33 @@ button.login{background:none;border:0;cursor:pointer}
   .nav .bt{display:none}
 }
 
+/* ---------- Idioma ----------
+   Español e inglés, con un solo botón doble en la barra (ES | EN). La traducción sale de i18n/en.po. */
+.lang{display:inline-flex;align-items:center;gap:.125rem;padding:.1875rem;border:1px solid var(--line);border-radius:999px;background:#fff;flex:none}
+.lang-opt{min-width:2.5rem;min-height:2.25rem;padding:0 .625rem;border:0;border-radius:999px;background:none;color:var(--ink-2);
+  font:700 .75rem/1 var(--body);letter-spacing:.06em;cursor:pointer;transition:background-color .2s,color .2s}
+.lang-opt:hover{color:var(--ink)}
+.lang-opt[aria-pressed="true"]{background:var(--ink);color:#fff;cursor:default}
+.lang-opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+html.i18n-wait body{opacity:0}
+body{transition:opacity .2s ease}
+/* En inglés algunos textos son más largos: las palabras largas se parten antes de salirse */
+h1,h2,h3,.big,.say,.lead,.body,.btn,.who,.tag,.step-n,.chips li,label,.dd-list [role="option"]{overflow-wrap:break-word}
+/* En inglés los nombres de los momentos son más largos: cada pestaña toma el ancho de su texto */
+html[lang="en"] .phases li{flex:1 1 auto}
+.login-ic{display:none;width:1.375rem;height:1.375rem}
+@media (max-width:30em){
+  .nav .bt{display:none}
+  .nav-in{gap:.5rem}
+  .lang{padding:.125rem}
+  .lang-opt{min-width:2rem;min-height:2.125rem;padding:0 .4375rem;font-size:.6875rem}
+}
+@media (max-width:24em){
+  .nav .login-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .nav .login-ic{display:block}
+  .nav .login{padding:0 .5rem}
+}
+
 /* ---------- Volver arriba ----------
    Aparece después de la primera pantalla; el anillo miel marca cuánto llevas de la página.
    Azul marino con filo claro para que se vea igual sobre fondo blanco y sobre la banda «En vivo». */
@@ -419,6 +478,7 @@ button.login{background:none;border:0;cursor:pointer}
 .to-top .ring .bar{stroke:var(--miel);stroke-linecap:round}
 .to-top .arrow{position:relative;width:1.25rem;height:1.25rem}
 @media print{.to-top{display:none}}
+@media (max-width:40em){ body:has(.lead-form :focus) .to-top{opacity:0;visibility:hidden} }
 
 /* ---------- Movimiento reducido ---------- */
 @media (prefers-reduced-motion:reduce){
@@ -435,7 +495,7 @@ button.login{background:none;border:0;cursor:pointer}
 <body>
 <header class="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top" aria-label="Colmena, inicio"><span class="hex bee" aria-hidden="true">🐝</span><span class="bt">Colmena</span></a>
+    <a class="brand" href="#top" aria-label="Colmena, inicio"><span class="hex bee" aria-hidden="true">🐝</span><span class="bt" translate="no">Colmena</span></a>
     <nav class="links" aria-label="Secciones">
       <a href="#como">Cómo funciona</a>
       <a href="#vivo">En vivo</a>
@@ -443,8 +503,12 @@ button.login{background:none;border:0;cursor:pointer}
       <a href="#preguntas">Preguntas</a>
     </nav>
     <button type="button" class="login join-nav" data-join>Tengo un código</button>
-    <a class="login" href="app/#admin" data-login="Ir a mis talleres">Iniciar sesión</a>
+    <a class="login" href="app/#admin" data-login="Ir a mis talleres"><svg class="login-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c1.4-3.6 4.2-5.5 7.5-5.5s6.1 1.9 7.5 5.5"/></svg><span class="login-t">Iniciar sesión</span></a>
     <a class="btn miel sm" href="#prueba">Pruébala</a>
+    <div class="lang" role="group" aria-label="Idioma">
+      <button type="button" class="lang-opt" data-lang="es" lang="es" aria-pressed="true" title="Español" translate="no">ES</button>
+      <button type="button" class="lang-opt" data-lang="en" lang="en" aria-pressed="false" title="English" translate="no">EN</button>
+    </div>
   </div>
 </header>
 
@@ -454,7 +518,7 @@ button.login{background:none;border:0;cursor:pointer}
   <section class="hero" aria-labelledby="t-hero">
     <div class="pin">
       <div class="wrap hero-copy">
-        <p class="eyebrow">Colmena</p>
+        <p class="eyebrow" translate="no">Colmena</p>
         <h1 class="h1" id="t-hero">Talleres donde toda la sala participa.</h1>
         <p class="lead">Cada persona responde desde su celular o su computadora. Tú ves todo al instante.</p>
         <div class="ctas">
@@ -668,7 +732,7 @@ button.login{background:none;border:0;cursor:pointer}
                 <img class="m" data-show="3" src="img/p09b.webp" alt="Celular: calificar cada mejora con mucho, algo, poco o no aplica" loading="lazy">
                 <img class="m" data-show="4" src="img/p10b.webp" alt="Celular: proponer una idea para el reto" loading="lazy">
               </div></div>
-              <p class="ping" aria-hidden="true"><i></i><span>Se abrió «<b>Check-in</b>»</span></p>
+              <p class="ping" aria-hidden="true"><i></i><span class="ping-t" data-i18n-skip>Se abrió «<b>Check-in</b>»</span></p>
             </figure>
           </div>
           <div class="media-caps">
@@ -844,37 +908,47 @@ button.login{background:none;border:0;cursor:pointer}
       </div>
       <div class="form-col">
         <form class="lead-form" id="leadForm" novalidate aria-labelledby="t-form">
-          <h3 id="t-form">Pide tu taller de prueba</h3>
+          <div class="form-head">
+            <h3 id="t-form">Pide tu taller de prueba</h3>
+            <p class="req-note"><span class="req" aria-hidden="true">*</span> Todos los campos son obligatorios.</p>
+          </div>
+          <div class="form-row names">
+            <div class="field"><label for="f-nombre">Nombre<span class="req" aria-hidden="true">*</span></label><input class="input" id="f-nombre" name="nombre" autocomplete="given-name" maxlength="40" aria-describedby="f-nombre-err" required><p class="err" id="f-nombre-err" hidden></p></div>
+            <div class="field"><label for="f-apellido">Apellido<span class="req" aria-hidden="true">*</span></label><input class="input" id="f-apellido" name="apellido" autocomplete="family-name" maxlength="40" aria-describedby="f-apellido-err" required><p class="err" id="f-apellido-err" hidden></p></div>
+          </div>
           <div class="form-row">
-            <div class="field"><label for="f-nombre">Nombre</label><input class="input" id="f-nombre" name="nombre" autocomplete="name" aria-describedby="f-nombre-err" required><p class="err" id="f-nombre-err" hidden></p></div>
-            <div class="field"><label for="f-empresa">Empresa</label><input class="input" id="f-empresa" name="empresa" autocomplete="organization" aria-describedby="f-empresa-err" required><p class="err" id="f-empresa-err" hidden></p></div>
+            <div class="field"><label for="f-correo">Correo de trabajo<span class="req" aria-hidden="true">*</span></label><input class="input" id="f-correo" name="correo" type="email" inputmode="email" autocomplete="email" maxlength="160" placeholder="ana@empresa.com" aria-describedby="f-correo-err" required><p class="err" id="f-correo-err" hidden></p></div>
+            <div class="field"><label for="f-empresa">Empresa<span class="req" aria-hidden="true">*</span></label><input class="input" id="f-empresa" name="empresa" autocomplete="organization" maxlength="120" aria-describedby="f-empresa-err" required><p class="err" id="f-empresa-err" hidden></p></div>
           </div>
-          <div class="field"><label for="f-correo">Correo de trabajo</label><input class="input" id="f-correo" name="correo" type="email" inputmode="email" autocomplete="email" placeholder="ana@empresa.com" aria-describedby="f-correo-err" required><p class="err" id="f-correo-err" hidden></p></div>
-          <fieldset class="field" id="g-gente" aria-describedby="g-gente-err">
-            <legend>¿Cuántas personas suelen participar?</legend>
-            <div class="chips-r">
-              <label class="chip-r"><input type="radio" name="gente" value="hasta-15" id="r-g1"><span>Hasta 15</span></label>
-              <label class="chip-r"><input type="radio" name="gente" value="16-30" id="r-g2"><span>16 a 30</span></label>
-              <label class="chip-r"><input type="radio" name="gente" value="31-60" id="r-g3"><span>31 a 60</span></label>
-              <label class="chip-r"><input type="radio" name="gente" value="mas-60" id="r-g4"><span>Más de 60</span></label>
+          <div class="form-row">
+            <div class="field">
+              <label class="lbl" id="l-gente">Personas por taller<span class="req" aria-hidden="true">*</span></label>
+              <div class="dd" data-dd>
+                <input type="hidden" name="gente" value="">
+                <div class="input dd-btn" id="f-gente" role="combobox" tabindex="0" aria-labelledby="l-gente" aria-haspopup="listbox" aria-controls="lb-gente" aria-expanded="false" aria-required="true" aria-describedby="f-gente-err"><span class="dd-val" data-i18n-skip>Elige una opción</span><svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+                <ul class="dd-list" id="lb-gente" role="listbox" aria-labelledby="l-gente" hidden><li role="option" id="o-gente-1" data-value="hasta-15" aria-selected="false">Hasta 15</li><li role="option" id="o-gente-2" data-value="16-30" aria-selected="false">16 a 30</li><li role="option" id="o-gente-3" data-value="31-60" aria-selected="false">31 a 60</li><li role="option" id="o-gente-4" data-value="mas-60" aria-selected="false">Más de 60</li></ul>
+              </div>
+              <p class="err" id="f-gente-err" hidden></p>
             </div>
-            <p class="err" id="g-gente-err" hidden></p>
-          </fieldset>
-          <fieldset class="field" id="g-frec" aria-describedby="g-frec-err">
-            <legend>¿Cada cuánto harías talleres?</legend>
-            <div class="chips-r">
-              <label class="chip-r"><input type="radio" name="frecuencia" value="uno" id="r-f1"><span>Solo uno por ahora</span></label>
-              <label class="chip-r"><input type="radio" name="frecuencia" value="cada-2-3-meses" id="r-f2"><span>Cada 2 o 3 meses</span></label>
-              <label class="chip-r"><input type="radio" name="frecuencia" value="1-2-al-mes" id="r-f3"><span>1 o 2 al mes</span></label>
-              <label class="chip-r"><input type="radio" name="frecuencia" value="semanal" id="r-f4"><span>Cada semana</span></label>
+            <div class="field">
+              <label class="lbl" id="l-frecuencia">Frecuencia de talleres<span class="req" aria-hidden="true">*</span></label>
+              <div class="dd" data-dd>
+                <input type="hidden" name="frecuencia" value="">
+                <div class="input dd-btn" id="f-frecuencia" role="combobox" tabindex="0" aria-labelledby="l-frecuencia" aria-haspopup="listbox" aria-controls="lb-frecuencia" aria-expanded="false" aria-required="true" aria-describedby="f-frecuencia-err"><span class="dd-val" data-i18n-skip>Elige una opción</span><svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+                <ul class="dd-list" id="lb-frecuencia" role="listbox" aria-labelledby="l-frecuencia" hidden><li role="option" id="o-frecuencia-1" data-value="uno" aria-selected="false">Solo uno por ahora</li><li role="option" id="o-frecuencia-2" data-value="cada-2-3-meses" aria-selected="false">Cada 2 o 3 meses</li><li role="option" id="o-frecuencia-3" data-value="1-2-al-mes" aria-selected="false">1 o 2 al mes</li><li role="option" id="o-frecuencia-4" data-value="semanal" aria-selected="false">Cada semana</li></ul>
+              </div>
+              <p class="err" id="f-frecuencia-err" hidden></p>
             </div>
-            <p class="err" id="g-frec-err" hidden></p>
-          </fieldset>
-          <div class="field"><label for="f-tipo">¿Qué taller quieres probar? <span class="opt">Opcional</span></label>
-            <select class="input" id="f-tipo" name="tipo">
-              <option value="">Elige una opción</option><option>Mejorar un proceso</option><option>Definir un rol</option><option>Entender cómo estamos</option><option>Juntar ideas para un reto</option><option>Revisar un proyecto</option><option>Aún no lo sé</option>
-            </select>
           </div>
+          <div class="field">
+              <label class="lbl" id="l-tipo">Taller que quieres probar<span class="req" aria-hidden="true">*</span></label>
+              <div class="dd" data-dd>
+                <input type="hidden" name="tipo" value="">
+                <div class="input dd-btn" id="f-tipo" role="combobox" tabindex="0" aria-labelledby="l-tipo" aria-haspopup="listbox" aria-controls="lb-tipo" aria-expanded="false" aria-required="true" aria-describedby="f-tipo-err"><span class="dd-val" data-i18n-skip>Elige una opción</span><svg class="dd-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>
+                <ul class="dd-list" id="lb-tipo" role="listbox" aria-labelledby="l-tipo" hidden><li role="option" id="o-tipo-1" data-value="Mejorar un proceso" aria-selected="false">Mejorar un proceso</li><li role="option" id="o-tipo-2" data-value="Definir un rol" aria-selected="false">Definir un rol</li><li role="option" id="o-tipo-3" data-value="Entender cómo estamos" aria-selected="false">Entender cómo estamos</li><li role="option" id="o-tipo-4" data-value="Juntar ideas para un reto" aria-selected="false">Juntar ideas para un reto</li><li role="option" id="o-tipo-5" data-value="Revisar un proyecto" aria-selected="false">Revisar un proyecto</li><li role="option" id="o-tipo-6" data-value="Aún no lo sé" aria-selected="false">Aún no lo sé</li></ul>
+              </div>
+              <p class="err" id="f-tipo-err" hidden></p>
+            </div>
           <div class="hp" aria-hidden="true"><label for="f-web">Deja este campo vacío</label><input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
           <div class="cf-slot" id="cfSlot"></div>
           <p class="err" id="cf-err" hidden></p>
@@ -883,8 +957,8 @@ button.login{background:none;border:0;cursor:pointer}
         </form>
         <div class="lead-ok" id="leadDone" tabindex="-1" role="status" hidden>
           <span class="hex done-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-          <h3>¡Gracias, <span id="doneName">Ana</span>!</h3>
-          <p>Te escribiremos a <b id="doneMail">ana@empresa.com</b> para preparar tu primer taller.</p>
+          <h3 id="doneTitle" data-i18n-skip>¡Gracias, Ana!</h3>
+          <p id="doneText" data-i18n-skip>Te escribiremos a <b>ana@empresa.com</b> para preparar tu primer taller.</p>
           <button class="btn link" type="button" id="leadAgain">Llenar otra vez</button>
         </div>
       </div>
@@ -907,10 +981,12 @@ button.login{background:none;border:0;cursor:pointer}
 
 <footer>
   <div class="wrap foot">
-    <a class="brand" href="#top"><span class="hex bee" aria-hidden="true">🐝</span>Colmena <span class="site">colmena.work</span></a>
-    <div class="powered"><span>Powered by</span><img src="img/brand-qk.png" alt="Quality &amp; Knowledge"></div>
+    <a class="brand" href="#top" translate="no"><span class="hex bee" aria-hidden="true">🐝</span>Colmena <span class="site">colmena.work</span></a>
+    <div class="powered" translate="no"><span>Powered by</span><img src="img/brand-qk.png" alt="Quality &amp; Knowledge"></div>
   </div>
 </footer>
+
+<script type="application/json" id="i18n-en">{"Cómo funciona":"How it works","En vivo":"Live","Resultados":"Results","Preguntas":"FAQ","Tengo un código":"I have a code","Iniciar sesión":"Log in","Pruébala":"Try it","Talleres donde toda la sala participa.":"Workshops where the whole room takes part.","Cada persona responde desde su celular o su computadora. Tú ves todo al instante.":"Everyone answers from their phone or computer. You see it all instantly.","Pruébala en tu próximo taller":"Try it in your next workshop","Ver cómo funciona":"See how it works","¿Vas a participar en un taller?":"Joining a workshop?","Entra con tu código":"Enter your code","Tú diriges desde tu computadora. La sala responde desde su lugar.":"You lead from your computer. The room answers from their seats.","Dos pantallas, un mismo taller.":"Two screens, one workshop.","Tú diriges desde tu computadora. Cada persona responde desde su celular o su computadora. Colmena mantiene todo sincronizado en tiempo real.":"You lead from your computer. Everyone answers from their phone or computer. Colmena keeps it all in sync, in real time.","Quien facilita":"Facilitator","Arma el taller, proyecta el QR y decide cuándo empieza cada momento.":"Builds the workshop, projects the QR code and decides when each activity starts.","Quien participa":"Participants","Entra con el QR o la liga, sin cuenta y sin descargar nada.":"Joins with the QR code or the link. No account, nothing to download.","Tú":"You","Abres un momento":"Open an activity","La sala":"The room","Su pantalla cambia sola":"Their screens change on their own","Ves cada respuesta al instante":"See every answer instantly","Responde desde su lugar":"Answer from their seats","Cierras el taller":"Close the workshop","Ve el cierre y lo que aportó":"See the wrap-up and what they contributed","Paso 1 · Antes del taller":"Step 1 · Before the workshop","Arma tu taller en minutos.":"Build your workshop in minutes.","Le cuentas a Colmena qué necesitas y la IA te propone el taller completo. Tú lo revisas y decides.":"Tell Colmena what you need and the AI drafts the whole workshop. You review it and decide.","Tu pantalla":"Your screen","Objetivo":"Goal","Elige qué quieres lograr.":"Choose what you want to achieve.","Cada opción arma un taller distinto, con su propia duración.":"Each option builds a different workshop, with its own length.","Mejorar un proceso":"Improve a process","Definir un rol":"Define a role","Entender cómo estamos":"Understand where we stand","Juntar ideas para un reto":"Gather ideas for a challenge","Revisar un proyecto":"Review a project","Contexto":"Context","Responde tres preguntas.":"Answer three questions.","¿Para quién es?":"Who is it for?","¿Qué proceso vamos a revisar?":"Which process are we reviewing?","¿Qué problemas tiene hoy?":"What problems does it have today?","Con eso, Colmena tiene lo que necesita.":"That's all Colmena needs.","Revisión":"Review","La IA lo arma. Tú decides.":"The AI builds it. You decide.","En unos 15 segundos tienes la pregunta para la sala, los momentos y sus minutos. Cambias lo que quieras antes de crearlo, o lo armas sin IA si lo prefieres.":"In about 15 seconds you get the question for the room, the activities and their timing. Change anything before you create it, or build it without AI if you prefer.","Paso 2 · Al empezar":"Step 2 · Getting started","Todos entran en segundos.":"Everyone's in within seconds.","Sin cuentas ni descargas. Desde el celular o la computadora, en la sala o a distancia.":"No accounts, no downloads. From a phone or a computer, in the room or remote.","Andrea Salinas entró":"Andrea Salinas joined","Recursos Humanos":"Human Resources","Luis Herrera entró":"Luis Herrera joined","Operaciones":"Operations","Paola Méndez entró":"Paola Méndez joined","Finanzas":"Finance","Jorge Castillo entró":"Jorge Castillo joined","Tecnología":"Technology","Lo que proyectas":"What you project","En la computadora":"On a computer","Lo que ves tú":"What you see","En el celular":"On a phone","Lo que ve Andrea":"What Andrea sees","Código del taller":"Workshop code","Proyectas el QR o compartes la liga.":"Project the QR code or share the link.","Cada taller tiene su código, como ALFA26. En la sala escanean el QR; a distancia abren la liga.":"Every workshop has its own code, like ALFA26. In the room, people scan the QR code; remote participants open the link.","Registro":"Joining","Cada quien escribe su nombre.":"Everyone types their name.","Elige su área, su rol, las etapas en las que participa y su avatar. Funciona igual en el celular que en la computadora.":"They pick their area, their role, the stages they take part in and an avatar. It works the same on a phone or a computer.","Sala de espera":"Waiting room","Y aparece en el panal.":"And shows up in the hive.","Ves en tiempo real quién llegó y de qué área viene. Cuando estén listos, abres el primer momento.":"You see in real time who's arrived and which area they're from. When everyone's ready, you open the first activity.","Paso 3 · Durante el taller":"Step 3 · During the workshop","Tú abres cada momento. La sala responde.":"You open each activity. The room responds.","Cuando abres un momento, la pantalla de cada persona cambia sola. Lo que responden aparece en la tuya al instante.":"When you open an activity, everyone's screen changes on its own. Their answers show up on yours instantly.","Check-in":"Check-in","Dolores":"Pain points","Votación":"Voting","Calificar mejoras":"Rate improvements","Mejoras":"Improvements","Ideas":"Ideas","de 14 ya terminaron":"of 14 are done","La pantalla de cada persona":"Each person's screen","¿Cómo llega el equipo?":"How is the team showing up?","Lees cómo llega el equipo antes de empezar.":"You see how the team is showing up before you start.","Cada quien dice cómo llega, en un toque, y qué espera del taller.":"Everyone shares how they're showing up, in one tap, and what they expect from the workshop.","Lo que estorba, por escrito.":"What gets in the way, in writing.","Ves llegar cada tarjeta y en qué etapa del proceso duele más.":"You watch each card come in and see which stage of the process hurts most.","Escribe lo que le estorba y qué tanto le duele, del 1 al 5.":"They write what gets in their way and how much it hurts, from 1 to 5.","La sala elige qué pesa más.":"The room decides what matters most.","El ranking se arma solo, voto por voto.":"The ranking builds itself, vote by vote.","Reparte 5 votos entre los dolores de todos.":"They spread 5 votes across everyone's pain points.","Las mejoras rápidas, calificadas.":"Quick improvements, rated.","Sabes qué mejoras apoya el equipo y cuáles no.":"You know which improvements the team backs and which it doesn't.","Califica cada mejora: mucho, algo, poco o no aplica.":"They rate each improvement: a lot, some, a little or not applicable.","Ideas para los retos más votados.":"Ideas for the top-voted challenges.","Las ideas con más apoyos suben solas.":"The most-backed ideas rise to the top on their own.","Propone ideas para los 3 retos más votados y apoya las que más le convencen.":"They suggest ideas for the 3 top-voted challenges and back the ones they like best.","Tú controlas el tiempo.":"You control the clock.","Cada momento tiene sus minutos. Puedes pausar, dar +1 o +5 minutos y abrir el siguiente cuando quieras.":"Each activity has its own time. You can pause, add +1 or +5 minutes and open the next one whenever you want.","Paso 4 · Al cerrar":"Step 4 · Wrapping up","Lo que dijo la sala, listo para usarse.":"What the room said, ready to use.","Sin pasar notas en limpio ni contar post-its.":"No typing up notes, no counting sticky notes.","personas":"people","dolores":"pain points","votos":"votes","ideas":"ideas","Taller de ejemplo «Grupo Alfa · Contratación».":"Sample workshop “Grupo Alfa · Hiring”.","La de cada persona":"Each person's","Todo en una sola vista.":"Everything in one view.","El dolor más votado, la mejora con más apoyo, la etapa que más tarda y la idea ganadora.":"The top-voted pain point, the most-backed improvement, the slowest stage and the winning idea.","Resumen":"Summary","Un resumen hecho con IA.":"An AI-written summary.","Colmena redacta el resumen del taller con lo que dijo la sala. Lo lees, lo editas y lo copias.":"Colmena writes the workshop summary from what the room said. You read it, edit it and copy it.","Presentar":"Present","Lo presentas ahí mismo.":"Present it right there.","El modo presentación muestra los hallazgos uno por uno, en grande, para comentarlos con la sala.":"Presentation mode shows the findings one by one, full size, so you can discuss them with the room.","Compartir":"Share","Lo compartes en Excel, CSV o PDF.":"Share it as Excel, CSV or PDF.","Lo descargas o lo envías por correo. Si es para un cliente, anonimizas a los participantes con un clic.":"Download it or send it by email. If it's for a client, anonymize participants in one click.","Cierre":"Wrap-up","Y cada quien ve lo que aportó.":"And everyone sees what they contributed.","Al cerrar, cada persona ve en su pantalla sus tarjetas, votos, ideas y mejoras calificadas.":"When you close, each person sees their cards, votes, ideas and rated improvements on their screen.","Para qué sirve":"What it's for","Un método, cinco tipos de taller.":"One method, five kinds of workshops.","Lo que viste es un taller para mejorar un proceso. Con la misma dinámica en vivo también puedes:":"What you just saw is a workshop to improve a process. With the same live format you can also:","Encuentran qué estorba y cómo mejorarlo.":"Find what gets in the way and how to fix it.","Mejora de procesos":"Process improvement","60–120 min":"60–120 min","Acuerdan qué hace bien una persona en un puesto.":"Agree on what doing a role well looks like.","Definir competencias":"Competency mapping","60–90 min":"60–90 min","Un diagnóstico antes de decidir.":"An assessment before you decide.","Diagnóstico":"Assessment","45–90 min":"45–90 min","Muchas ideas y las mejores, elegidas por la sala.":"Lots of ideas, with the best ones chosen by the room.","Lluvia de ideas":"Brainstorming","Qué funcionó, qué no y qué haremos distinto.":"What worked, what didn't and what we'll do differently.","Retrospectiva":"Retrospective","45–60 min":"45–60 min","Preguntas frecuentes.":"Frequently asked questions.","¿Quienes participan necesitan una cuenta o instalar algo?":"Do participants need an account or to install anything?","No. Entran con el QR o la liga, escriben su nombre y listo. Funciona en el navegador del celular o de la computadora.":"No. They join with the QR code or the link, type their name and they're in. It works in any phone or computer browser.","¿Sirve si hay personas a distancia?":"Does it work with remote participants?","Sí. Compartes la liga y cada quien entra desde donde esté. Tú proyectas tu pantalla en la sala o la compartes en la videollamada.":"Yes. Share the link and everyone joins from wherever they are. Project your screen in the room or share it on the video call.","¿Tengo que usar la IA?":"Do I have to use the AI?","No. La IA te propone el taller y redacta el resumen final, y tú decides qué se queda. También puedes armar el taller sin IA.":"No. The AI suggests the workshop and writes the final summary, and you decide what stays. You can also build the workshop without AI.","¿Qué me llevo al terminar?":"What do I get at the end?","Los resultados en pantalla, un resumen hecho con IA y todos los datos en Excel, CSV o PDF.":"On-screen results, an AI-written summary and all the data in Excel, CSV or PDF.","Prueba Colmena":"Try Colmena","Pruébala en tu próximo taller.":"Try it in your next workshop.","Déjanos tus datos y te contactamos para preparar tu primer taller con tu equipo.":"Leave your details and we'll reach out to set up your first workshop with your team.","Quienes participan no necesitan cuenta ni descargar nada.":"Participants don't need an account or to download anything.","Funciona en la sala o a distancia.":"Works in the room or remotely.","Te llevas los resultados en Excel, CSV o PDF.":"Take the results with you in Excel, CSV or PDF.","¿Ya tienes cuenta?":"Already have an account?","Inicia sesión":"Log in","Pide tu taller de prueba":"Request your trial workshop","Todos los campos son obligatorios.":"All fields are required.","Nombre":"First name","Apellido":"Last name","Correo de trabajo":"Work email","Empresa":"Company","Personas por taller":"People per workshop","Hasta 15":"Up to 15","16 a 30":"16 to 30","31 a 60":"31 to 60","Más de 60":"More than 60","Frecuencia de talleres":"Workshop frequency","Solo uno por ahora":"Just one for now","Cada 2 o 3 meses":"Every 2–3 months","1 o 2 al mes":"1–2 a month","Cada semana":"Every week","Taller que quieres probar":"Workshop you’d like to try","Aún no lo sé":"Not sure yet","Deja este campo vacío":"Leave this field empty","Usaremos tus datos solo para contactarte sobre Colmena.":"We'll only use your details to contact you about Colmena.","Pedir mi taller de prueba":"Request my trial workshop","Llenar otra vez":"Fill it in again","Entra a tu taller":"Join your workshop","Escribe el código que aparece en la pantalla de la sala, junto al QR.":"Type the code shown on the room's screen, next to the QR code.","Entrar al taller":"Join workshop","Cancelar":"Cancel","Colmena, inicio":"Colmena, home","Secciones":"Sections","Ir a mis talleres":"Go to my workshops","Idioma":"Language","Pantalla de quien facilita durante la votación: 5 votos por persona y el ranking de dolores en vivo":"Facilitator's screen during voting: 5 votes per person and the live pain-point ranking","Celular de una participante repartiendo sus votos entre los dolores":"A participant's phone spreading her votes across the pain points","Por qué Colmena":"Why Colmena","Crear taller, paso 1: elegir qué quieres lograr y responder tres preguntas":"Create workshop, step 1: choose what you want to achieve and answer three questions","Crear taller, paso 2: la pregunta para la sala y los momentos con sus minutos":"Create workshop, step 2: the question for the room and the activities with their timing","Tipos de taller":"Workshop types","QR proyectado para entrar al taller con el código ALFA26":"Projected QR code to join the workshop with the code ALFA26","Registro desde la computadora: nombre, área y rol":"Joining from a computer: name, area and role","Sala de espera: el panal se llena con quienes ya entraron":"Waiting room: the hive fills up as people join","Registro desde el celular: elegir avatar":"Joining from a phone: choosing an avatar","Celular en la sala de espera: Ya estás dentro, Andrea":"Phone in the waiting room: You're in, Andrea","Check-in en la pantalla de quien facilita: cómo llega el equipo":"Check-in on the facilitator's screen: how the team is showing up","Dolores: el equipo publica sus tarjetas y se ve en qué etapa duele más":"Pain points: the team posts their cards and you see which stage hurts most","Votación: el ranking de dolores se arma en vivo":"Voting: the pain-point ranking builds live","Calificar mejoras: la sala califica las mejoras rápidas":"Rate improvements: the room rates the quick improvements","Ideas para los 3 retos más votados":"Ideas for the 3 top-voted challenges","Celular: ¿Cómo llegas a este taller?":"Phone: How are you showing up to this workshop?","Celular: escribir un dolor y qué tanto duele":"Phone: writing a pain point and how much it hurts","Celular: repartir 5 votos entre los dolores":"Phone: spreading 5 votes across the pain points","Celular: calificar cada mejora con mucho, algo, poco o no aplica":"Phone: rating each improvement a lot, some, a little or not applicable","Celular: proponer una idea para el reto":"Phone: suggesting an idea for the challenge","Resultados: lo que dijo la sala en una sola vista":"Results: what the room said, in one view","Resumen del taller hecho con IA":"AI-written workshop summary","Modo presentación con el dolor más votado":"Presentation mode with the top-voted pain point","Compartir resultados en Excel, CSV o PDF, con opción de anonimizar":"Share results as Excel, CSV or PDF, with an option to anonymize","Taller cerrado: resultados finales":"Closed workshop: final results","Celular al cierre: Gracias, Andrea, y lo que aportó":"Phone at the wrap-up: Thank you, Andrea, and what she contributed","Ve a tus talleres":"Go to your workshops","ana@empresa.com":"ana@company.com","Ej. ALFA26":"e.g. ALFA26","Volver arriba":"Back to top","Colmena · Talleres en vivo donde toda la sala participa":"Colmena · Live workshops where the whole room takes part","En casi todos los talleres hablan tres personas. El resto se queda callado. Con Colmena, cada quien responde desde su lugar y cada voz pesa lo mismo.":"In almost every workshop, three people do the talking. Everyone else stays quiet. With Colmena, everyone answers from their seat and every voice carries the same weight.","Escribe tu nombre.":"Enter your name.","Escribe tu apellido.":"Enter your last name.","Escribe el nombre de tu empresa.":"Enter your company name.","Escribe un correo válido, por ejemplo ana@empresa.com.":"Enter a valid email, for example ana@company.com.","Elige cuántas personas suelen participar.":"Choose how many people usually take part.","Elige cada cuánto harías talleres.":"Choose how often you'd run workshops.","Elige qué taller quieres probar.":"Choose the workshop you’d like to try.","Elige un tipo de taller de la lista.":"Choose a workshop type from the list.","Elige una opción":"Choose an option","Confirma que eres una persona y vuelve a enviar.":"Please confirm you're human and submit again.","No pudimos confirmar que eres una persona. Recarga la página e intenta de nuevo.":"We couldn't confirm you're human. Reload the page and try again.","Recibimos varias solicitudes desde tu conexión. Intenta de nuevo más tarde.":"We've received several requests from your connection. Please try again later.","No pudimos guardar tu solicitud. Intenta de nuevo en unos minutos.":"We couldn't save your request. Please try again in a few minutes.","Solicitud demasiado grande":"Request too large","Solicitud inválida":"Invalid request","Enviando…":"Sending…","No pudimos enviar tu solicitud. Intenta de nuevo en unos minutos.":"We couldn't send your request. Please try again in a few minutes.","No pudimos enviar tu solicitud. Revisa tu conexión e intenta de nuevo.":"We couldn't send your request. Check your connection and try again.","Escribe el código completo, por ejemplo ALFA26.":"Enter the full code, for example ALFA26.","Se abrió «{fase}»":"“{fase}” is open","¡Gracias, {nombre}!":"Thank you, {nombre}!","Te escribiremos a {correo} para preparar tu primer taller.":"We'll write to you at {correo} to set up your first workshop."}</script>
 
 <a class="to-top" id="toTop" href="#top" aria-label="Volver arriba">
   <svg class="ring" viewBox="0 0 48 48" aria-hidden="true"><circle class="track" cx="24" cy="24" r="21"/><circle class="bar" cx="24" cy="24" r="21"/></svg>
@@ -920,6 +996,68 @@ button.login{background:none;border:0;cursor:pointer}
 <script>
 (function(){
   var D=document;
+
+  /* ---------- Idioma: español (original de esta página) e inglés (sale de i18n/en.po) ----------
+     Cómo se elige: ?lang=es|en en la liga → lo que la persona eligió con el botón ES | EN (se comparte con la app)
+     → el navegador: español si lo tiene antes que el inglés; cualquier otro idioma → inglés. */
+  var EN={}; try{ EN=JSON.parse(D.getElementById('i18n-en').textContent)||{}; }catch(e){}
+  var LANG='es', onLang=[];
+  function norm(x){ return String(x).replace(/\s+/g,' ').trim(); }
+  function T(x,v){ var t=(LANG==='en'&&EN[x])||x; if(v) t=t.replace(/\{(\w+)\}/g,function(m,k){ return v[k]!=null?v[k]:m; }); return t; }
+  /* Textos que arma el script; también están en en.po (incluye los que devuelve la función trial-request) */
+  var MSG={
+    nombre:'Escribe tu nombre.', apellido:'Escribe tu apellido.', empresa:'Escribe el nombre de tu empresa.', correo:'Escribe un correo válido, por ejemplo ana@empresa.com.',
+    gente:'Elige cuántas personas suelen participar.', frec:'Elige cada cuánto harías talleres.', tipoReq:'Elige qué taller quieres probar.', tipo:'Elige un tipo de taller de la lista.',
+    elige:'Elige una opción',
+    captcha:'Confirma que eres una persona y vuelve a enviar.', captchaMal:'No pudimos confirmar que eres una persona. Recarga la página e intenta de nuevo.',
+    muchas:'Recibimos varias solicitudes desde tu conexión. Intenta de nuevo más tarde.', noGuardar:'No pudimos guardar tu solicitud. Intenta de nuevo en unos minutos.',
+    grande:'Solicitud demasiado grande', invalida:'Solicitud inválida',
+    enviando:'Enviando…', noEnviar:'No pudimos enviar tu solicitud. Intenta de nuevo en unos minutos.', sinRed:'No pudimos enviar tu solicitud. Revisa tu conexión e intenta de nuevo.',
+    codigo:'Escribe el código completo, por ejemplo ALFA26.',
+    ping:'Se abrió «{fase}»', gracias:'¡Gracias, {nombre}!', escribiremos:'Te escribiremos a {correo} para preparar tu primer taller.'
+  };
+
+  /* Si en este navegador ya hay una sesión de quien facilita, «Iniciar sesión» lleva directo a sus talleres (antes de leer los textos) */
+  try{ var ses=JSON.parse(localStorage.getItem('colmena-auth')||'null'), u=ses&&ses.user;
+    if(u && u.email && !u.is_anonymous){ [].forEach.call(D.querySelectorAll('[data-login]'),function(a){ (a.querySelector('.login-t')||a).textContent=a.getAttribute('data-login'); }); } }catch(e){}
+
+  /* Se leen una sola vez los textos en español de la página (texto, atributos y título) para poder ir y volver */
+  var tNodes=[], tAttrs=[], TITLE=norm(D.title), LET=/[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]/;
+  (function(){
+    var NO={SCRIPT:1,STYLE:1,NOSCRIPT:1,TEMPLATE:1,svg:1,SVG:1};
+    var w=D.createTreeWalker(D.body,NodeFilter.SHOW_ELEMENT|NodeFilter.SHOW_TEXT,{acceptNode:function(n){
+      if(n.nodeType===1) return (NO[n.tagName]||n.getAttribute('translate')==='no'||n.hasAttribute('data-i18n-skip')||n.hasAttribute('data-words'))?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_SKIP;
+      return LET.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP; }});
+    for(var n=w.nextNode();n;n=w.nextNode()){ var v=n.nodeValue; tNodes.push({n:n,src:norm(v),pre:v.match(/^\s*/)[0],post:v.match(/\s*$/)[0]}); }
+    [].forEach.call(D.querySelectorAll('[alt],[aria-label],[placeholder],[title],[data-login]'),function(el){
+      if(el.closest('[translate="no"],[data-i18n-skip]')) return;
+      ['alt','aria-label','placeholder','title','data-login'].forEach(function(a){ var v=el.getAttribute(a); if(v && LET.test(v)) tAttrs.push({el:el,a:a,src:norm(v)}); }); });
+  })();
+  function srcOf(node){ for(var i=0;i<tNodes.length;i++) if(tNodes[i].n===node) return tNodes[i]; return null; }
+  function applyLang(){
+    tNodes.forEach(function(x){ x.n.nodeValue=x.pre+T(x.src)+x.post; });
+    tAttrs.forEach(function(x){ x.el.setAttribute(x.a,T(x.src)); });
+    D.title=T(TITLE); D.documentElement.lang=LANG;
+    [].forEach.call(D.querySelectorAll('.lang-opt'),function(b){ b.setAttribute('aria-pressed',String(b.getAttribute('data-lang')===LANG)); });
+    onLang.forEach(function(f){ try{ f(); }catch(e){} });
+  }
+  function setLang(l,keep){ LANG=(l==='en')?'en':'es'; if(keep){ try{ localStorage.setItem('colmena-lang',LANG); }catch(e){} } applyLang(); }
+  var LANG0=(function(){
+    var q=(new URLSearchParams(location.search).get('lang')||'').toLowerCase(), s=null; try{ s=localStorage.getItem('colmena-lang'); }catch(e){}
+    if(q==='es'||q==='en') return q;
+    if(s==='es'||s==='en') return s;
+    var n=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||'es'];
+    for(var i=0;i<n.length;i++){ var t=String(n[i]).toLowerCase().slice(0,2); if(t==='es'||t==='en') return t; }
+    return n.length?'en':'es';
+  })();
+  [].forEach.call(D.querySelectorAll('.lang-opt'),function(b){ b.addEventListener('click',function(){
+    var l=b.getAttribute('data-lang'); if(l===LANG) return; setLang(l,true);
+    try{ if(typeof gtag==='function') gtag('event','select_language',{language:l}); }catch(e){} }); });
+  /* Para revisar y para sacar la lista de textos de en.po (tools/i18n.py) */
+  window.colmenaI18n={ lang:function(){ return LANG; }, set:function(l){ setLang(l,false); },
+    sources:function(){ var o={}; tNodes.forEach(function(x){ o[x.src]=1; }); tAttrs.forEach(function(x){ o[x.src]=1; }); o[TITLE]=1; if(ST) o[ST]=1;
+      Object.keys(MSG).forEach(function(k){ o[MSG[k]]=1; }); return Object.keys(o); } };
+
   /* Misma condición que el CSS de pasos apilados: pantallas angostas o verticales */
   var mqRM=matchMedia('(prefers-reduced-motion: reduce)'),
       mqM=matchMedia('(max-width: 40em), (max-width: 64em) and (orientation: portrait)');
@@ -943,10 +1081,11 @@ button.login{background:none;border:0;cursor:pointer}
   }
 
   /* Frase: se ilumina palabra por palabra */
-  var st=D.querySelector('[data-words]'), words=[], lit=-1;
-  if(st){ var txt=st.textContent.trim().split(/\s+/); st.textContent='';
+  var st=D.querySelector('[data-words]'), words=[], lit=-1, ST=st?norm(st.textContent):'';
+  function splitWords(){ if(!st) return; var txt=T(ST).split(' '); st.textContent='';
     txt.forEach(function(w,i){ var s=D.createElement('span'); s.className='w'; s.textContent=w; st.appendChild(s); if(i<txt.length-1) st.appendChild(D.createTextNode(' ')); });
-    words=[].slice.call(st.querySelectorAll('.w')); }
+    words=[].slice.call(st.querySelectorAll('.w')); lit=-1; }
+  splitWords(); onLang.push(function(){ splitWords(); doWords(); });
   function doWords(){
     if(!st) return; var r=st.getBoundingClientRect();
     var p=RM?1:clamp((vh*.82-r.top)/(r.height+vh*.34)), n=Math.round(p*words.length);
@@ -962,7 +1101,11 @@ button.login{background:none;border:0;cursor:pointer}
   }
 
   /* Historias: el paso que cruza la línea activa cambia las pantallas */
-  var PH=['Check-in','Dolores','Votación','Calificar mejoras','Ideas'], DONE=[11,9,11,10,12];
+  var DONE=[11,9,11,10,12];
+  function phaseName(S,idx){ var lf=S.el.querySelectorAll('.phases .lf'); return lf[idx]?lf[idx].textContent:''; }
+  function setPing(ping,fase){ var t=ping.querySelector('.ping-t'), tpl=T(MSG.ping), i=tpl.indexOf('{fase}'); t.textContent='';
+    if(i<0){ t.textContent=tpl; return; }
+    t.appendChild(D.createTextNode(tpl.slice(0,i))); var b=D.createElement('b'); b.textContent=fase; t.appendChild(b); t.appendChild(D.createTextNode(tpl.slice(i+6))); }
   var stories=[].slice.call(D.querySelectorAll('[data-story]')).map(function(el){
     return { el:el, steps:[].slice.call(el.querySelectorAll('.step')), media:el.querySelector('.story-media'),
       items:[].slice.call(el.querySelectorAll('[data-show]')), live:el.hasAttribute('data-live'), act:-1 };
@@ -974,9 +1117,10 @@ button.login{background:none;border:0;cursor:pointer}
     if(S.live){
       [].forEach.call(S.el.querySelectorAll('.phases li'),function(c,i){ c.classList.toggle('done',i<idx); c.classList.toggle('cur',i===idx); });
       var ping=S.el.querySelector('.ping');
-      if(ping && !first){ ping.querySelector('b').textContent=PH[idx]; ping.classList.remove('go'); void ping.offsetWidth; ping.classList.add('go'); }
+      if(ping && !first){ setPing(ping,phaseName(S,idx)); ping.classList.remove('go'); void ping.offsetWidth; ping.classList.add('go'); }
     }
   }
+  onLang.push(function(){ stories.forEach(function(S){ var ping=S.live&&S.el.querySelector('.ping'); if(ping) setPing(ping,phaseName(S,Math.max(S.act,0))); }); });
   function doStories(){
     for(var k=0;k<stories.length;k++){
       var S=stories[k], r=S.el.getBoundingClientRect();
@@ -1023,13 +1167,73 @@ button.login{background:none;border:0;cursor:pointer}
   function onRM(e){ RM=e.matches; req(); }
   function onLayout(){ measure(); req(); }
   if(mqRM.addEventListener){ mqRM.addEventListener('change',onRM); mqM.addEventListener('change',onLayout); }
+  onLang.push(function(){ measure(); req(); });
   measure(); frame();
   if(D.fonts&&D.fonts.ready) D.fonts.ready.then(function(){ measure(); req(); });
+
+  /* Listas desplegables propias (patrón «combobox de solo selección»): el valor vive en un campo oculto del formulario */
+  function Dropdown(root,onChange){
+    var btn=root.querySelector('[role="combobox"]'), list=root.querySelector('[role="listbox"]'), val=root.querySelector('.dd-val'),
+        hid=root.querySelector('input[type="hidden"]'), opts=[].slice.call(list.querySelectorAll('[role="option"]')),
+        active=-1, open=false, typed='', typedAt=0;
+    function idx(v){ for(var k=0;k<opts.length;k++) if(opts[k].getAttribute('data-value')===v) return k; return -1; }
+    function render(){ var i=idx(hid.value);
+      val.textContent=i<0?T(MSG.elige):opts[i].textContent; root.classList.toggle('has-val',i>-1);
+      opts.forEach(function(o,k){ o.setAttribute('aria-selected',String(k===i)); }); }
+    function setActive(i){ if(active>-1&&opts[active]) opts[active].classList.remove('is-active'); active=i;
+      if(i<0){ btn.removeAttribute('aria-activedescendant'); return; }
+      var o=opts[i]; o.classList.add('is-active'); btn.setAttribute('aria-activedescendant',o.id);
+      var top=o.offsetTop, h=o.offsetHeight; if(top<list.scrollTop) list.scrollTop=top-6; else if(top+h>list.scrollTop+list.clientHeight) list.scrollTop=top+h-list.clientHeight+6; }
+    function outside(e){ if(!root.contains(e.target)) close(); }
+    function openAt(i){ if(open){ setActive(i); return; } open=true; list.hidden=false; btn.setAttribute('aria-expanded','true'); root.classList.add('open');
+      var r=btn.getBoundingClientRect(), need=Math.min(list.scrollHeight,list.offsetHeight)+16, below=innerHeight-r.bottom, above=r.top-(D.querySelector('.nav')||{offsetHeight:0}).offsetHeight;
+      root.classList.toggle('up', below<need && above>below);
+      setActive(i); D.addEventListener('pointerdown',outside,true); }
+    function close(){ typed=''; if(!open) return; open=false; list.hidden=true; btn.setAttribute('aria-expanded','false'); root.classList.remove('open','up'); setActive(-1); D.removeEventListener('pointerdown',outside,true); }
+    function choose(i){ if(i<0||!opts[i]) return; var v=opts[i].getAttribute('data-value'), changed=hid.value!==v; hid.value=v; render(); close(); if(changed&&onChange) onChange(v); }
+    function cur(){ return Math.max(0,idx(hid.value)); }
+    function plain(x){ return String(x).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/^[¿¡\s]+/,''); }
+    function seek(ch){ var now=Date.now(); typed=(now-typedAt>700?'':typed)+ch; typedAt=now;
+      var start=active<0?cur():active, n=opts.length, from=typed.length===1?start+1:start;
+      for(var j=0;j<n;j++){ var k=(from+j)%n; if(plain(opts[k].textContent).indexOf(plain(typed))===0){ openAt(k); return; } } }
+    btn.addEventListener('click',function(){ if(open) close(); else openAt(cur()); });
+    btn.addEventListener('keydown',function(e){ var k=e.key;
+      if(k==='Tab'){ if(open) choose(active); return; }
+      if(e.ctrlKey||e.metaKey) return;
+      if(!open){
+        if(k==='ArrowDown'||k==='ArrowUp'||k==='Enter'||k===' '){ e.preventDefault(); openAt(cur()); }
+        else if(k==='Home'){ e.preventDefault(); openAt(0); }
+        else if(k==='End'){ e.preventDefault(); openAt(opts.length-1); }
+        else if(k.length===1&&/\S/.test(k)){ e.preventDefault(); seek(k); }
+        return; }
+      if(k==='ArrowDown'){ e.preventDefault(); setActive(Math.min(opts.length-1,active+1)); }
+      else if(k==='ArrowUp'){ e.preventDefault(); if(e.altKey) choose(active); else setActive(Math.max(0,active-1)); }
+      else if(k==='Home'||k==='PageUp'){ e.preventDefault(); setActive(0); }
+      else if(k==='End'||k==='PageDown'){ e.preventDefault(); setActive(opts.length-1); }
+      else if(k==='Enter'||k===' '){ e.preventDefault(); choose(active); }
+      else if(k==='Escape'){ e.preventDefault(); close(); }
+      else if(k.length===1&&/\S/.test(k)){ e.preventDefault(); seek(k); } });
+    btn.addEventListener('blur',function(){ setTimeout(function(){ if(open&&!root.contains(D.activeElement)) close(); },0); });
+    list.addEventListener('mousedown',function(e){ e.preventDefault(); });
+    opts.forEach(function(o,i){
+      o.addEventListener('pointermove',function(){ if(active!==i) setActive(i); });
+      o.addEventListener('click',function(){ choose(i); btn.focus({preventScroll:true}); }); });
+    var lab=D.getElementById(btn.getAttribute('aria-labelledby')); if(lab) lab.addEventListener('click',function(){ btn.focus(); });
+    render(); onLang.push(render);
+    return { value:function(){ return hid.value; }, reset:function(){ hid.value=''; close(); render(); } };
+  }
 
   /* Formulario de prueba: valida, se protege de bots y se envía a la función «trial-request» de Supabase,
      que guarda la solicitud y te avisa por correo. La llave es la pública (la misma que usa la app). */
   var LEADS_URL='https://drgtkbievjlmhwzebzmg.supabase.co/functions/v1/trial-request', LEADS_KEY='sb_publishable_M_m44DH56kNxz8TU5egqwg_U339aK2m';
-  var form=D.getElementById('leadForm'), done=D.getElementById('leadDone');
+  var form=D.getElementById('leadForm'), done=D.getElementById('leadDone'), lead=null;
+  function renderThanks(){ if(!lead) return;
+    D.getElementById('doneTitle').textContent=T(MSG.gracias,{nombre:lead.n});
+    var p=D.getElementById('doneText'), tpl=T(MSG.escribiremos), i=tpl.indexOf('{correo}'); p.textContent='';
+    if(i<0){ p.textContent=tpl; return; }
+    p.appendChild(D.createTextNode(tpl.slice(0,i))); var b=D.createElement('b'); b.textContent=lead.c; p.appendChild(b); p.appendChild(D.createTextNode(tpl.slice(i+8))); }
+  onLang.push(renderThanks);
+  onLang.push(function(){ [].forEach.call(D.querySelectorAll('.err[data-src]'),function(b){ var x=b.getAttribute('data-src'); if(x) b.textContent=T(x); }); });
   /* Anti-spam, gratis y sin molestar a las personas:
      1) Campo trampa invisible: si llega lleno, es un bot.
      2) Tiempo mínimo: nadie llena el formulario en menos de 3 segundos desde que entra a él.
@@ -1039,54 +1243,64 @@ button.login{background:none;border:0;cursor:pointer}
   var TURNSTILE_SITEKEY='0x4AAAAAAFqJ64EQs8LQ1IFB'; /* Cloudflare Turnstile · widget «Colmena» (colmena.work). La clave secreta va solo en Supabase. */
   var firstTouch=0, cfId=null;
   if(form && TURNSTILE_SITEKEY){
-    window.onColmenaTurnstile=function(){ cfId=window.turnstile.render('#cfSlot',{sitekey:TURNSTILE_SITEKEY,appearance:'interaction-only',language:'es',action:'prueba'}); };
+    var renderTs=function(){ if(!window.turnstile) return; try{ if(cfId!==null) window.turnstile.remove(cfId); }catch(e){}
+      cfId=window.turnstile.render('#cfSlot',{sitekey:TURNSTILE_SITEKEY,appearance:'interaction-only',language:LANG,action:'prueba'}); };
+    window.onColmenaTurnstile=renderTs;
+    onLang.push(function(){ if(window.turnstile && cfId!==null) renderTs(); });
     var cfs=D.createElement('script'); cfs.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onColmenaTurnstile'; cfs.async=true; cfs.defer=true; D.head.appendChild(cfs);
   }
   if(form){
     /* Cuenta desde que la persona toca el formulario (enfocar o escribir); asignar valores por código no cuenta */
     var markTouch=function(){ if(!firstTouch) firstTouch=Date.now(); };
+    var dds={};
+    [].forEach.call(form.querySelectorAll('[data-dd]'),function(root){ var name=root.querySelector('input[type="hidden"]').name;
+      dds[name]=Dropdown(root,function(){ markTouch(); var id='f-'+name, box=D.getElementById(id+'-err'); if(box&&!box.hidden&&!checks[id]()) show(id,''); }); });
     form.addEventListener('focusin',markTouch); form.addEventListener('input',markTouch);
+    /* Los mensajes se guardan en español (data-src) y se muestran traducidos; si cambia el idioma, se traducen de nuevo */
     var show=function(id,msg){
       var box=D.getElementById(id+'-err'), el=D.getElementById(id);
-      if(box){ box.textContent=msg||''; box.hidden=!msg; }
+      if(box){ box.setAttribute('data-src',msg||''); box.textContent=msg?T(msg):''; box.hidden=!msg; }
       if(el && el.tagName!=='FIELDSET'){ if(msg) el.setAttribute('aria-invalid','true'); else el.removeAttribute('aria-invalid'); }
     };
     var checks={
-      'f-nombre':function(){ return form.nombre.value.trim().length>=2?'':'Escribe tu nombre.'; },
-      'f-empresa':function(){ return form.empresa.value.trim().length>=2?'':'Escribe el nombre de tu empresa.'; },
-      'f-correo':function(){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.correo.value.trim())?'':'Escribe un correo válido, por ejemplo ana@empresa.com.'; },
-      'g-gente':function(){ return form.querySelector('input[name="gente"]:checked')?'':'Elige cuántas personas suelen participar.'; },
-      'g-frec':function(){ return form.querySelector('input[name="frecuencia"]:checked')?'':'Elige cada cuánto harías talleres.'; }
+      'f-nombre':function(){ return form.nombre.value.trim().length>=2?'':MSG.nombre; },
+      'f-apellido':function(){ return form.apellido.value.trim().length>=2?'':MSG.apellido; },
+      'f-correo':function(){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(form.correo.value.trim())?'':MSG.correo; },
+      'f-empresa':function(){ return form.empresa.value.trim().length>=2?'':MSG.empresa; },
+      'f-gente':function(){ return dds.gente.value()?'':MSG.gente; },
+      'f-frecuencia':function(){ return dds.frecuencia.value()?'':MSG.frec; },
+      'f-tipo':function(){ return dds.tipo.value()?'':MSG.tipoReq; }
     };
     form.addEventListener('submit',function(e){
       e.preventDefault(); var first=null;
       Object.keys(checks).forEach(function(id){ var m=checks[id](); show(id,m); if(m&&!first) first=id; });
-      if(first){ var el=D.getElementById(first); (el.tagName==='FIELDSET'?el.querySelector('input'):el).focus(); return; }
+      if(first){ D.getElementById(first).focus(); return; }
       var esBot=form.website.value.trim()!=='' || !firstTouch || Date.now()-firstTouch<3000;
       var token=(TURNSTILE_SITEKEY && window.turnstile && cfId!==null)? window.turnstile.getResponse(cfId) : '';
-      if(TURNSTILE_SITEKEY && !token && !esBot){ show('cf','Confirma que eres una persona y vuelve a enviar.'); return; }
+      if(TURNSTILE_SITEKEY && !token && !esBot){ show('cf',MSG.captcha); return; }
       show('cf',''); form.setAttribute('data-ultimo', esBot?'bot':'persona');
-      var listo=function(){ D.getElementById('doneName').textContent=form.nombre.value.trim().split(/\s+/)[0];
-        D.getElementById('doneMail').textContent=form.correo.value.trim(); form.hidden=true; done.hidden=false; done.focus(); };
+      var listo=function(){ lead={n:form.nombre.value.trim().split(/\s+/)[0], c:form.correo.value.trim()}; renderThanks();
+        form.hidden=true; done.hidden=false; done.focus(); };
       /* Al bot se le muestra el mismo «gracias» para no darle pistas, pero no se envía nada */
       if(esBot){ listo(); return; }
-      var btn=form.querySelector('button[type=submit]'), txtBtn=btn.textContent; btn.disabled=true; btn.textContent='Enviando…';
-      var elegido=function(n){ var r=form.querySelector('input[name="'+n+'"]:checked'); return r?r.value:''; };
+      var btn=form.querySelector('button[type=submit]'), bx=srcOf(btn.firstChild); btn.disabled=true; btn.firstChild.nodeValue=T(MSG.enviando);
+      /* Nombre y apellido viajan juntos en «name» (la función y el correo ya los usan así) */
+      var nombreCompleto=(form.nombre.value.trim()+' '+form.apellido.value.trim()).replace(/\s+/g,' ').slice(0,80);
       fetch(LEADS_URL,{method:'POST',headers:{'Content-Type':'application/json','apikey':LEADS_KEY},
-        body:JSON.stringify({name:form.nombre.value.trim(),company:form.empresa.value.trim(),email:form.correo.value.trim(),
-          room_size:elegido('gente'),frequency:elegido('frecuencia'),workshop_type:form.tipo.value,
-          website:form.website.value,ms:Date.now()-firstTouch,token:token})})
+        body:JSON.stringify({name:nombreCompleto,company:form.empresa.value.trim(),email:form.correo.value.trim(),
+          room_size:dds.gente.value(),frequency:dds.frecuencia.value(),workshop_type:dds.tipo.value(),
+          website:form.website.value,ms:Date.now()-firstTouch,token:token,lang:LANG})})
       .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {ok:r.ok && j.ok, j:j}; }); })
-      .then(function(x){ if(x.ok){ listo(); try{ if(typeof gtag==='function') gtag('event','generate_lead',{form_name:'taller_de_prueba'}); }catch(e){} } else { show('cf', x.j.error || 'No pudimos enviar tu solicitud. Intenta de nuevo en unos minutos.'); if(window.turnstile && cfId!==null) window.turnstile.reset(cfId); } },
-            function(){ show('cf','No pudimos enviar tu solicitud. Revisa tu conexión e intenta de nuevo.'); })
-      .then(function(){ btn.disabled=false; btn.textContent=txtBtn; });
+      .then(function(x){ if(x.ok){ listo(); try{ if(typeof gtag==='function') gtag('event','generate_lead',{form_name:'taller_de_prueba'}); }catch(e){} } else { show('cf', x.j.error || MSG.noEnviar); if(window.turnstile && cfId!==null) window.turnstile.reset(cfId); } },
+            function(){ show('cf',MSG.sinRed); })
+      .then(function(){ btn.disabled=false; btn.firstChild.nodeValue=bx?bx.pre+T(bx.src)+bx.post:btn.firstChild.nodeValue; });
     });
     var clear=function(e){
-      var t=e.target, id=t.name==='gente'?'g-gente':t.name==='frecuencia'?'g-frec':t.id, box=D.getElementById(id+'-err');
+      var t=e.target, id=t.id, box=D.getElementById(id+'-err');
       if(box && !box.hidden && checks[id] && !checks[id]()) show(id,'');
     };
     form.addEventListener('input',clear); form.addEventListener('change',clear);
-    D.getElementById('leadAgain').addEventListener('click',function(){ form.reset(); firstTouch=0; if(window.turnstile && cfId!==null) window.turnstile.reset(cfId); done.hidden=true; form.hidden=false; form.nombre.focus(); firstTouch=0; });
+    D.getElementById('leadAgain').addEventListener('click',function(){ form.reset(); Object.keys(dds).forEach(function(k){ dds[k].reset(); }); firstTouch=0; if(window.turnstile && cfId!==null) window.turnstile.reset(cfId); done.hidden=true; form.hidden=false; form.nombre.focus(); firstTouch=0; });
   }
 
   /* Participantes: entrar con el código del taller (también acepta la liga completa) */
@@ -1096,7 +1310,7 @@ button.login{background:none;border:0;cursor:pointer}
     D.getElementById('joinClose').addEventListener('click',function(){ if(dlg.close) dlg.close(); else dlg.removeAttribute('open'); });
     jf.addEventListener('submit',function(e){ e.preventDefault();
       var v=ji.value.trim(), m=v.match(/[?&]s=([A-Za-z0-9]+)/), c=(m?m[1]:v).replace(/[^A-Za-z0-9]/g,'').toUpperCase();
-      if(c.length<4){ je.textContent='Escribe el código completo, por ejemplo ALFA26.'; je.hidden=false; ji.focus(); return; }
+      if(c.length<4){ je.setAttribute('data-src',MSG.codigo); je.textContent=T(MSG.codigo); je.hidden=false; ji.focus(); return; }
       location.href='app/?s='+encodeURIComponent(c); });
   }
 
@@ -1116,9 +1330,9 @@ button.login{background:none;border:0;cursor:pointer}
       var b=D.querySelector('.nav .brand'); if(b) b.focus({preventScroll:true}); });
   }
 
-  /* Si en este navegador ya hay una sesión de quien facilita, «Iniciar sesión» lleva directo a sus talleres */
-  try{ var ses=JSON.parse(localStorage.getItem('colmena-auth')||'null'), u=ses&&ses.user;
-    if(u && u.email && !u.is_anonymous){ [].forEach.call(D.querySelectorAll('[data-login]'),function(a){ a.textContent=a.getAttribute('data-login'); }); } }catch(e){}
+  /* Idioma inicial (español o inglés) y se muestra la página */
+  setLang(LANG0,false);
+  D.documentElement.classList.remove('i18n-wait');
 })();
 </script>
 

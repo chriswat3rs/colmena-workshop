@@ -8,6 +8,11 @@
 > - Supabase → Edge Functions → Secrets: `SITE_URL` = `https://colmena.work/app/` (las ligas nuevas de los correos van directo a la app).
 > - WordPress: vuelve a pegar `colmena-iframe.html` (ahora abre `colmena.work/app/`).
 > - Formulario «Pide tu taller de prueba» (landing): corre `migracion-v240-solicitudes-prueba.sql` (tabla `ws_trial_requests`) y crea la función `trial-request` con `supabase/functions/trial-request/index.ts` (**Verify JWT apagado**). Usa los mismos secretos del correo de invitaciones; las solicitudes llegan a `LEADS_TO` (si no existe, al correo que viene escrito en la función). Opcional: `TURNSTILE_SECRET` + la clave pública en `TURNSTILE_SITEKEY` de `index.html`.
+>
+> **Idiomas (español / inglés), desde el 28 oct 2026.** El original es español. El inglés vive en un solo archivo: **`i18n/en.po`** (`msgid` = español, `msgstr` = inglés; se abre con un editor de texto o con Poedit). Sin IA ni costo.
+> - Landing: después de editar `en.po`, corre `python3 tools/i18n.py` (copia el inglés dentro de `index.html`) y sube `index.html`.
+> - Botón **ES | EN** en la barra. La primera vez: español si el navegador está en español; inglés en cualquier otro idioma. La elección se guarda en el navegador (`colmena-lang`) y la app la usará también. Para revisar: abre `index.html?lang=en`.
+> - Lo que el facilitador escribe a mano (nombre del taller, preguntas propias) no se traduce. Siguiente: la app (pantallas del participante primero), luego facilitador, correos y PDF/Excel, todo desde el mismo `en.po`.
 
 Herramienta propia para talleres en vivo: design thinking («Mejora de procesos», el de siempre) y, desde la v2.0, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
 
