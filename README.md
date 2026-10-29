@@ -17,6 +17,10 @@
 > **29 oct 2026 · v2.5.2.**
 > - Landing: menú de hamburguesa cuando las secciones ya no caben en la barra, caja de Cloudflare visible arriba del botón del formulario y abejas que cruzan entre secciones al hacer scroll (con «reducir movimiento» se quedan quietas).
 > - Invitaciones: quien abría su invitación por segunda vez (la primera no terminó) veía «Email link is invalid or has expired». Corregido en `supabase/functions/account/index.ts`: vuelve a desplegar la función `account` si aún no lo hiciste.
+>
+> **29 oct 2026 · v2.5.3 · Términos y Aviso de privacidad.** `terminos.html` y `privacidad.html` en la raíz (colmena.work/terminos.html y colmena.work/privacidad.html), con ligas en el pie de la landing y un aviso de privacidad corto junto al formulario. Redactados con base en la Ley Federal de Protección de Datos Personales en Posesión de los Particulares de 2025; deben revisarse con el área legal de QK antes de darlos por definitivos. Si cambian proveedores, datos que se piden o plazos, actualiza también `privacidad.html`.
+>
+> **29 oct 2026 · v2.5.4 · Eliminar mi cuenta.** Cada persona del equipo puede borrar su cuenta en **Ajustes → Eliminar mi cuenta** (contraseña + escribir ELIMINAR). Sus talleres pasan a quien la invitó o a la admin más antigua; la última admin no puede eliminarse. Para publicarlo, en este orden: (1) corre `migracion-v250-eliminar-cuenta.sql` en Supabase → SQL Editor, (2) despliega la función `account` con `supabase/functions/account/index.ts`, (3) sube `app/index.html` y `app/sw.js`. Detalle en «v2.5.4 · Eliminar mi cuenta».
 
 Herramienta propia para talleres en vivo: design thinking («Mejora de procesos», el de siempre) y, desde la v2.0, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
 
@@ -50,7 +54,7 @@ La primera cuenta que activó su segundo factor queda como **admin**. Las demás
 ### 1. Base de datos
 
 1. En [supabase.com](https://supabase.com) crea un proyecto (plan gratuito).
-2. **SQL Editor → New query** → pega TODO `setup.sql` → **Run**. Al final sale una fila: `version = 2.3.2` y el mismo número en `tablas` y `con_seguridad` (todas las tablas con seguridad activa).
+2. **SQL Editor → New query** → pega TODO `setup.sql` → **Run**. Al final sale una fila: `version = 2.5.0` y el mismo número en `tablas` y `con_seguridad` (todas las tablas con seguridad activa).
    - Se puede correr las veces que quieras. Si tenías la v1 (con PIN), la reemplaza sola.
    - Si tenías la v1.1, la actualiza **sin borrar** tu cuenta, tus talleres ni lo capturado.
 
@@ -256,7 +260,7 @@ Límites que conviene conocer:
 
 ### Actualizar desde una versión anterior
 
-`setup.sql` se puede volver a correr completo sin perder datos (todo es `if not exists` / `create or replace`). **Es el estado actual (v2.3.2):** lo arma `tools/arma_setup.py` con la base v1.26 y cada migración nueva, así que correrlo nunca regresa funciones a una versión vieja. La base guarda su versión (`ws_schema_version`): un `setup.sql` más viejo o una migración de `migraciones-anteriores/` se detienen con un aviso y no cambian nada. Para una base que ya existe basta con correr, en orden, las migraciones que aún le falten.
+`setup.sql` se puede volver a correr completo sin perder datos (todo es `if not exists` / `create or replace`). **Es el estado actual (v2.5.0):** lo arma `tools/arma_setup.py` con la base v1.26 y cada migración nueva, así que correrlo nunca regresa funciones a una versión vieja. La base guarda su versión (`ws_schema_version`): un `setup.sql` más viejo o una migración de `migraciones-anteriores/` se detienen con un aviso y no cambian nada. Para una base que ya existe basta con correr, en orden, las migraciones que aún le falten.
 
 **De v1.4 a v1.5 (roles):** corre `setup.sql` completo otra vez. Tu cuenta (la primera facilitadora) pasa sola a **admin** y tus talleres se conservan. Luego haz el ajuste de **Confirm email** del paso 2 y sube el nuevo `index.html`.
 
@@ -285,12 +289,13 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | Archivo | Qué es |
 |---|---|
 | `index.html` | Toda la app: participante (móvil) + panel del facilitador. Incluye la librería de Supabase y el generador de QR, sin depender de CDNs. |
-| `setup.sql` | Estado actual de la base (v2.3.2): esquema, reglas de seguridad, tiempo real y analítica privada. Re-ejecutable y sin borrar datos. Se arma con `python3 tools/arma_setup.py`; no se edita a mano. |
+| `setup.sql` | Estado actual de la base (v2.5.0): esquema, reglas de seguridad, tiempo real y analítica privada. Re-ejecutable y sin borrar datos. Se arma con `python3 tools/arma_setup.py`; no se edita a mano. |
 | `migracion-v210-seguridad.sql` | v2.1: lo que corres en una base que ya existe (permisos del participante, candado de votos, versión de la base). |
 | `migracion-v220-lobby-edit.sql` | v2.2: bloquea en PostgreSQL la configuración al entrar la primera persona o iniciar el taller. Incluye protección atómica ante entradas y ediciones simultáneas. |
 | `migracion-v230-analitica.sql` | v2.3: telemetría privada, RPC de ingesta y consulta admin, agregados diarios y retención de 90 días. |
 | `migracion-v231-ultimo-acceso.sql` | v2.3.1: último acceso de cada integrante, visible únicamente para admin en Equipo. |
 | `migracion-v232-mapa-interacciones.sql` | v2.3.2: mapa privado de interacciones por acción, audiencia, pantalla y dispositivo. |
+| `migracion-v250-eliminar-cuenta.sql` | v2.5.0: «Eliminar mi cuenta» en Ajustes. Los talleres pasan a una persona admin y nadie puede dejar a Colmena sin admin. |
 | `migraciones-anteriores/` | Las migraciones de antes y el `setup.sql` anterior (`setup-base-v126.sql`). Ya están dentro de `setup.sql`; cada una se detiene sola en una base versionada actual. |
 | `tools/arma_setup.py` | Arma `setup.sql` juntando la base y las migraciones en orden (`--guardias` pone la guardia a las archivadas). |
 | `pruebas/` | Pruebas de base de datos (`sql/probar_sql.py`), de pantallas (`navegador/`) y de seguridad (`seguridad/`). Ver `pruebas/LEEME.md`. |
@@ -708,6 +713,28 @@ Desplegada en `https://colmena.work` y Supabase el 20 oct 2026.
 El recorrido dejó de depender de un total y números escritos a mano. Ahora identifica cada explicación, registra cuáles se mostraron u omitieron y calcula `Paso X de Y` con el itinerario real. El recorrido completo tiene siete explicaciones —incluida la elección del Objetivo—; si una ruta omite pantallas, el total se reduce, y una entrada directa al panel puede mostrar `Paso 1 de 2`. En el paso 2, tanto una cuenta nueva como una que ya tiene talleres continúa automáticamente al creador en lugar de cerrar la guía.
 
 Validado con recorridos completos y parciales, consola limpia y Lighthouse 100/100/100. Desplegado en `https://colmena.work` el 21 oct 2026.
+
+## v2.5.4 · Eliminar mi cuenta (29 oct 2026)
+
+**Qué hace.** Cualquier persona del equipo (admin o facilitador) puede borrar su propia cuenta en **Ajustes → Eliminar mi cuenta**:
+
+1. Toca **Eliminar mi cuenta**. Colmena le explica qué se borra (nombre, correo, foto, contraseña, Face ID y app autenticadora) y a quién pasan sus talleres y borradores, con nombre y correo.
+2. Confirma con su contraseña y escribiendo **ELIMINAR**. Si no recuerda la contraseña, «Crea una nueva» abre el cambio de contraseña ahí mismo.
+3. Ve una despedida y le llega un correo de confirmación («Si no fuiste tú, escríbenos de inmediato…»).
+
+- Sus talleres, borradores, lo que capturó y las invitaciones pendientes que mandó **pasan a quien la invitó** (si sigue siendo admin activa) o, si no, **a la admin activa más antigua**. Esa persona recibe un aviso en la campana (y por correo, si lo tiene encendido): «Fabiola Ruiz eliminó su cuenta».
+- Las invitaciones pendientes para su correo se cancelan.
+- **Nadie deja a Colmena sin admin.** La última persona admin ve «Eres la única persona admin de Colmena…» con un botón a **Equipo**. La base lo revisa con candado: si dos admins se eliminan al mismo tiempo, el equipo no se queda vacío.
+- El orden importa, igual que en v1.17: primero la base pasa todo y la saca del equipo (`ws_self_remove`, con su propia sesión) y solo si eso salió bien la función `account` borra la cuenta. Si ese último paso falla, la persona ya no tiene acceso y el detalle queda en **Edge Functions → account → Logs**.
+- `terminos.html` y `privacidad.html` ya mencionan la opción.
+
+**Pruebas:** PostgreSQL 16 desechable, **140/140** pruebas de comportamiento (24 nuevas: a quién pasan los talleres, última admin, sin admins activas, participante anónimo y cuenta desactivada) y una prueba aparte de dos bajas al mismo tiempo (solo una pasa). La función `account`, con 12 casos simulados (sin sesión, sin ELIMINAR, contraseña mala, demasiados intentos, última admin, orden de los pasos y correo). El flujo completo, en el navegador a 1440 y 390 px, sin errores.
+
+**Publicar (en este orden):**
+
+1. Supabase → SQL Editor: corre `migracion-v250-eliminar-cuenta.sql`; debe devolver `funciones = 3`, `version = 2.5.0`.
+2. Supabase → Edge Functions → `account`: pega `supabase/functions/account/index.ts` y despliega (**Deploy**). No hay secretos nuevos.
+3. GitHub: sube `app/index.html` y `app/sw.js`.
 
 ## v2.1 · Seguridad y datos + arreglos rápidos al crear (13 oct 2026)
 
