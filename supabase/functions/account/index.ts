@@ -21,6 +21,10 @@
 // v2.5.2 · invite-start: si la cuenta ya existía (la persona abrió su invitación antes y no terminó), se le cambia la
 //           contraseña y DESPUÉS se genera el enlace de un solo uso. Supabase anula los enlaces existentes al cambiar
 //           la contraseña; antes se devolvía el enlace ya anulado y salía «Email link is invalid or has expired».
+// v2.5 · self-delete (con su sesión)  «Eliminar mi cuenta» desde Ajustes. Body: { action: "self-delete", confirm: "ELIMINAR",
+//           password }. Confirma la contraseña; con su sesión, ws_self_remove pasa sus talleres, borradores y lo capturado
+//           a una persona admin y la saca del equipo; después se borra su cuenta y le llega un correo de confirmación.
+//           Requiere migracion-v250-eliminar-cuenta.sql. La última persona admin no puede eliminarse.
 // Secretos: los mismos de send-invite (SMTP_USER/SMTP_PASS o RESEND_API_KEY, INVITE_FROM) y opcional SITE_URL.
 import { createClient } from "npm:@supabase/supabase-js@2";
 import nodemailer from "npm:nodemailer@6.9.16";
@@ -312,6 +316,59 @@ Deno.serve(async (req) => {
       await sendMail(target.email, "Reiniciamos tu acceso a Colmena", m.html, m.text);
       return json(200, { ok: true, email: target.email, sent: true });
     } catch (e) { console.error(e); return json(200, { ok: true, email: target.email, sent: false }); }
+  }
+
+  /* ---------- v2.5 · Eliminar mi cuenta (la persona misma, desde Ajustes) ---------- */
+  if (body.action === "self-delete") {
+    const auth = req.headers.get("Authorization") ?? "";
+    if (!auth.startsWith("Bearer ")) return json(401, { error: "Inicia sesión para eliminar tu cuenta." });
+    const pub = Deno.env.get("SUPABASE_ANON_KEY") || req.headers.get("apikey") || "";
+    const me = createClient(Deno.env.get("SUPABASE_URL")!, pub, { global: { headers: { Authorization: auth } }, auth: { persistSession: false } });
+    const { data: who } = await me.auth.getUser();
+    const uid = String(who?.user?.id || ""), email = String(who?.user?.email || "").trim().toLowerCase();
+    if (!uuidOk.test(uid) || !mailOk.test(email)) return json(401, { error: "Tu sesión expiró. Entra de nuevo." });
+    if (String(body.confirm || "").trim().toUpperCase() !== "ELIMINAR") return json(400, { error: "Escribe ELIMINAR para confirmar.", field: "confirm" });
+    if (!(await rateOk(sb, email, "self-delete", 5))) return json(429, { error: "Demasiados intentos. Espera unos minutos." });
+    // 1) Confirma con su contraseña, en un cliente aparte que no guarda nada; esa sesión de prueba se cierra enseguida
+    const check = createClient(Deno.env.get("SUPABASE_URL")!, pub, { auth: { persistSession: false, autoRefreshToken: false } });
+    const { error: pe } = await check.auth.signInWithPassword({ email, password: String(body.password || "") });
+    if (pe) return json(400, { error: "La contraseña no es correcta. Si no la recuerdas, cámbiala en Ajustes → Acceso y vuelve a intentarlo.", field: "password" });
+    try { await check.auth.signOut({ scope: "local" }); } catch (_e) { /* la cuenta se borra en un momento de todos modos */ }
+    // 2) Con SU sesión (auth.uid() = la persona): talleres, borradores y lo capturado pasan a una persona admin y sale
+    //    del equipo, todo o nada. Si es la última admin, la base no lo permite.
+    const { data: moved, error: e2 } = await me.rpc("ws_self_remove");
+    if (e2) {
+      console.error("self-delete", uid, e2);
+      if (e2.code === "PGRST202") return json(500, { error: "Falta correr migracion-v250-eliminar-cuenta.sql en Supabase." });
+      return json(400, { error: e2.message || "No pudimos eliminar tu cuenta. Intenta de nuevo." });
+    }
+    const r = (moved || {}) as { talleres?: number; borradores?: number; nombre?: string; para?: { nombre?: string; correo?: string } };
+    // 3) Se borra la cuenta, solo si ya no tiene talleres ni borradores a su nombre (se borrarían en cascada).
+    //    Si algo falla, ya no tiene acceso (salió del equipo): queda el detalle en Logs para borrarla a mano.
+    let deleted = false;
+    try {
+      const [ses, dra] = await Promise.all([
+        sb.from("ws_sessions").select("id", { count: "exact", head: true }).eq("owner_id", uid),
+        sb.from("ws_drafts").select("id", { count: "exact", head: true }).eq("owner_id", uid),
+      ]);
+      if (ses.error || dra.error) throw (ses.error || dra.error);
+      if ((ses.count ?? 0) > 0 || (dra.count ?? 0) > 0) throw new Error(`aún tiene ${ses.count} talleres y ${dra.count} borradores a su nombre`);
+      const { error: e3 } = await sb.auth.admin.deleteUser(uid);
+      if (e3) throw e3;
+      deleted = true;
+    } catch (e) { console.error("self-delete: salió del equipo pero no se borró su cuenta", uid, email, e); }
+    // 4) Correo de confirmación (si no sale, la baja ya está hecha)
+    try {
+      const tuvo = ((r.talleres ?? 0) + (r.borradores ?? 0)) > 0;
+      const quien = tuvo && r.para?.nombre ? ` Tus talleres quedaron a cargo de ${esc(r.para.nombre)}, para que tu equipo no pierda los resultados.` : "";
+      const m = mailHTML({ kicker: "Tu cuenta", title: "Eliminamos tu cuenta de Colmena", first: firstName(r.nombre),
+        body: `Tu cuenta, tu acceso y tus datos de perfil se borraron.${quien} Gracias por usar Colmena.`,
+        label: "Ir a Colmena", url: SITE.replace(/app\/$/, ""),
+        foot: "Si no fuiste tú, escríbenos de inmediato a admonrh@qacg.com." });
+      await sendMail(email, "Eliminamos tu cuenta de Colmena", m.html, m.text);
+    } catch (e) { console.error("self-delete: correo de confirmación", e); }
+    await sb.from("ws_auth_mail_log").delete().eq("email", email);
+    return json(200, { ok: true, deleted, email, talleres: r.talleres ?? 0, borradores: r.borradores ?? 0, para: r.para ?? null });
   }
 
   /* ---------- v1.17 · El admin elimina a alguien del equipo ---------- */
