@@ -5284,7 +5284,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261029185550";
+const APP_BUILD="20261029195915";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -8209,7 +8209,7 @@ async function settingsView(){
       <div class="set-col">
         ${card(3,"setNT","Correos de avisos","Todos los avisos llegan a Notificaciones; aquí eliges cuáles también te llegan por correo.",`<div class="me-prefs" id="mePrefs">${skLines("Cargando avisos por correo…",4,true)}</div>`)}
         <section class="panel set-card vi" style="--i:4" aria-labelledby="meA-t"><div class="me-a11y" id="meA11y">${a11y}</div></section>
-        ${card(6,"setXT","Eliminar mi cuenta","Borra tu acceso y tus datos de perfil. No se puede deshacer.",`<div class="me-del" id="meDel"></div>`,"set-del")}
+        ${card(6,"setXT","Eliminar mi cuenta","Borra tu acceso y tus datos de perfil. No se puede deshacer.",`<div class="acct-del" id="acctDel"></div>`,"set-del")}
       </div>
     </div>`;
   $("#app").innerHTML=shellHTML(html,"set-view"); wireTop();
@@ -8259,7 +8259,7 @@ function delErrMsg(e){ const raw=String(e&&(e.message||e.msg)||""), m=friendlyAu
   if(/^Acción no válida/.test(m)) return "Falta actualizar la función «account» en Supabase (v2.5).";
   return m; }
 function drawDelete(info){
-  const box=$("#meDel"); if(!box) return;
+  const box=$("#acctDel"); if(!box) return;
   if(!info){ box.innerHTML=`<div class="me-acts"><button type="button" class="abtn danger" id="delOpen">${icon("trash")}Eliminar mi cuenta</button></div>`;
     $("#delOpen").onclick=()=>{ box.innerHTML=skLines("Revisando qué pasa con tus talleres…",2);
       Store.selfRemoveInfo().then(i=>drawDelete(i||{})).catch(e=>{ drawDelete(); toast(delErrMsg(e)); }); };
