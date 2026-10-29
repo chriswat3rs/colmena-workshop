@@ -13,6 +13,10 @@
 > - Landing: después de editar `en.po`, corre `python3 tools/i18n.py` (copia el inglés dentro de `index.html`) y sube `index.html`.
 > - Botón **ES | EN** en la barra. La primera vez: español si el navegador está en español; inglés en cualquier otro idioma. La elección se guarda en el navegador (`colmena-lang`) y la app la usará también. Para revisar: abre `index.html?lang=en`.
 > - Lo que el facilitador escribe a mano (nombre del taller, preguntas propias) no se traduce. Siguiente: la app (pantallas del participante primero), luego facilitador, correos y PDF/Excel, todo desde el mismo `en.po`.
+>
+> **29 oct 2026 · v2.5.2.**
+> - Landing: menú de hamburguesa cuando las secciones ya no caben en la barra, caja de Cloudflare visible arriba del botón del formulario y abejas que cruzan entre secciones al hacer scroll (con «reducir movimiento» se quedan quietas).
+> - Invitaciones: quien abría su invitación por segunda vez (la primera no terminó) veía «Email link is invalid or has expired». Corregido en `supabase/functions/account/index.ts`: vuelve a desplegar la función `account` si aún no lo hiciste.
 
 Herramienta propia para talleres en vivo: design thinking («Mejora de procesos», el de siempre) y, desde la v2.0, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
 
