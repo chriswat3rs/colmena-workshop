@@ -2856,6 +2856,22 @@ html.dark .rm-pop.rm-sheet{box-shadow:0 0 0 1px var(--line-2),0 -16px 48px rgb(0
 /* Una columna: el orden de lectura (Perfil · Acceso · Correos · Accesibilidad · Ayuda). Dos columnas: columnas
    independientes y parejas (Perfil · Acceso · Ayuda | Correos · Accesibilidad), sin huecos entre tarjetas */
 .set-grid{display:flex;flex-direction:column;gap:var(--gap-page)}
+/* v2.5 · Eliminar mi cuenta (Ajustes): explica qué pasa antes de pedir la contraseña; botón final en rojo sólido */
+.del-box{display:flex;flex-direction:column;gap:1.125rem}
+.set-card .del-box>.me-acts{margin-top:0}
+.del-list{margin:0;padding:0;list-style:none;display:grid;gap:.625rem}
+.del-list li{position:relative;padding-left:1.375rem;font-size:var(--fs-body);line-height:1.55;color:var(--ink-2)}
+.del-list li::before{content:"";position:absolute;left:.0625rem;top:.5em;width:.625rem;height:.5625rem;background:var(--danger);clip-path:var(--pn-hex)}
+.del-list b,.del-why b{color:var(--ink)}
+.del-why{margin:0;font-size:var(--fs-body);line-height:1.55;color:var(--ink-2)}
+.del-form .field{margin-bottom:0}
+.del-form{display:flex;flex-direction:column;gap:1rem}
+.del-form .hint{margin-top:.375rem}
+.abtn.danger-solid{background:var(--danger);border-color:var(--danger);color:#fff}
+.abtn.danger-solid:hover:not(:disabled){filter:brightness(.93)}
+.abtn.danger-solid:disabled{opacity:.45;cursor:not-allowed}
+.abtn.danger{display:inline-flex;align-items:center;gap:.4375rem}
+.abtn.danger svg{width:1rem;height:1rem}
 .set-col{display:contents}
 .set-help{order:9}
 @media (min-width:1200px){:where(html:not([data-ts])) .set-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}:where(html:not([data-ts])) .set-col{display:flex;flex-direction:column;gap:var(--gap-page);min-width:0}}@media (min-width:1350px){:where(html[data-ts="l"]) .set-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}:where(html[data-ts="l"]) .set-col{display:flex;flex-direction:column;gap:var(--gap-page);min-width:0}}@media (min-width:1500px){:where(html[data-ts="xl"]) .set-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}:where(html[data-ts="xl"]) .set-col{display:flex;flex-direction:column;gap:var(--gap-page);min-width:0}}
@@ -5268,7 +5284,7 @@ const APP = { prompt:null, installed:false,
 })();
 
 /* Aviso de versión nueva: si se publicó otra versión mientras la página está abierta, se ofrece recargar */
-const APP_BUILD="20261021185209";
+const APP_BUILD="20261029185550";
 (function watchVersion(){
   if(!/^https?:/.test(location.protocol) || APP_BUILD.startsWith("__")) return;
   let shown=false;
@@ -5830,6 +5846,11 @@ const SupaStore = {
   async adminResetAccess(userId){ return this._account({action:"admin-reset", user_id:userId}); },
   /* v1.17 · Eliminar a alguien del equipo: sus talleres y borradores pasan a ti y luego se borra su cuenta */
   async adminRemoveMember(id){ return this._account({action:"admin-remove", user_id:id}); },
+  /* v2.5 · Eliminar mi cuenta: antes, qué pasará (a quién pasan mis talleres); después, la baja confirmada con mi contraseña */
+  async selfRemoveInfo(){ const {data,error}=await this.client.rpc("ws_self_remove_info"); if(error) throw error; return data||{}; },
+  async deleteMyAccount(password){ const r=await this._account({action:"self-delete", confirm:"ELIMINAR", password});
+    try{ await this.client.auth.signOut({scope:"local"}); }catch(e){ try{ localStorage.removeItem("colmena-auth"); }catch(x){} }
+    return r; },
   async redeemInvitePasskey(code, credId){ const {data,error}=await this.client.rpc("ws_redeem_invite_passkey",{p_code:code, p_cred:credId||null}); if(error) throw error; return data; },
   async reenrollPasskey(credId){ const {data,error}=await this.client.rpc("ws_reenroll_passkey",{p_cred:credId||null}); if(error) throw error; return data; },
   async allowTotp(){ const {error}=await this.client.rpc("ws_allow_totp"); if(error) throw error; },
@@ -6071,6 +6092,15 @@ const DemoStore = {
     (db.invites||[]).forEach(i=>{ if(mail && String(i.email||"").toLowerCase()===mail && !i.used_at && !i.revoked_at) i.revoked_at=now(); });
     db.staff=db.staff.filter(x=>x.user_id!==id); this.save(db);
     return {ok:true, removed:true, account_deleted:true, email:m.email||"", talleres, borradores, participaciones:0}; },
+  /* v2.5 · Eliminar mi cuenta (demo): como en Supabase, la persona demo es admin y necesita otra admin activa que reciba sus talleres.
+     No borra nada del demo: solo muestra la despedida. */
+  async selfRemoveInfo(){ await new Promise(r=>setTimeout(r,350)); const db=this.db(), heir=(db.staff||[]).find(m=>m.active&&m.role==="admin");
+    const talleres=db.sessions.filter(s=>(s.owner_id||"demo")==="demo").length, borradores=(db.drafts||[]).filter(d=>(d.owner_id||"demo")==="demo").length;
+    return heir? {puede:true, rol:"admin", talleres, borradores, para:{nombre:heir.name||heir.email, correo:heir.email}} : {puede:false, rol:"admin", motivo:"ultimo_admin", talleres, borradores}; },
+  async deleteMyAccount(password){ await new Promise(r=>setTimeout(r,900));
+    if(!password){ const e=new Error("La contraseña no es correcta. Si no la recuerdas, cámbiala en Ajustes → Acceso y vuelve a intentarlo."); e.body={field:"password"}; throw e; }
+    const info=await this.selfRemoveInfo(); if(!info.puede) throw new Error("Eres la única persona admin de Colmena. Antes de eliminar tu cuenta, haz admin a alguien más en Equipo.");
+    return {ok:true, deleted:true, email:"modo demo", talleres:info.talleres, borradores:info.borradores, para:info.para}; },
   async redeemInvitePasskey(){ return "facilitator"; }, async reenrollPasskey(){ return 1; }, async allowTotp(){},
   async setPassword(pw){ await new Promise(r=>setTimeout(r,400)); },
   /* v1.26 · En la vista de prueba: un enlace con «VENC» se comporta como vencido */
@@ -8179,10 +8209,11 @@ async function settingsView(){
       <div class="set-col">
         ${card(3,"setNT","Correos de avisos","Todos los avisos llegan a Notificaciones; aquí eliges cuáles también te llegan por correo.",`<div class="me-prefs" id="mePrefs">${skLines("Cargando avisos por correo…",4,true)}</div>`)}
         <section class="panel set-card vi" style="--i:4" aria-labelledby="meA-t"><div class="me-a11y" id="meA11y">${a11y}</div></section>
+        ${card(6,"setXT","Eliminar mi cuenta","Borra tu acceso y tus datos de perfil. No se puede deshacer.",`<div class="me-del" id="meDel"></div>`,"set-del")}
       </div>
     </div>`;
   $("#app").innerHTML=shellHTML(html,"set-view"); wireTop();
-  drawProfile(); drawBio(); drawPw(); drawPrefs(); wireA11y($("#meA11y"));
+  drawProfile(); drawBio(); drawPw(); drawPrefs(); drawDelete(); wireA11y($("#meA11y"));
   $("#meTour").onclick=()=>TOUR.restart();
   const mi=$("#meInstall"); if(mi) mi.onclick=async()=>{ const ok=await APP.install(); if(ok){ const a=$(".me-app"); if(a) a.remove(); } };
 }
@@ -8220,6 +8251,72 @@ function drawProfile(msg, busy){
   const del=$("#meDel");
   if(del) del.onclick=async()=>{ del.disabled=true; try{ await Store.setMyAvatar(""); ME.avatar=""; syncMe(); drawProfile({t:"Foto quitada"}); }catch(e){ drawProfile({t:friendlyAuthError(e),err:true}); } };
 }
+/* ---------- v2.5 · Eliminar mi cuenta ----------
+   1) Botón; 2) explica qué pasa (qué se borra y a quién pasan tus talleres, para que el equipo no pierda resultados);
+   3) pide tu contraseña y escribir ELIMINAR; 4) despedida. La última persona admin no puede eliminarse: se le explica por qué. */
+function delErrMsg(e){ const raw=String(e&&(e.message||e.msg)||""), m=friendlyAuthError(e);
+  if((e&&e.code==="PGRST202") || /ws_self_remove/.test(raw)) return "Falta correr migracion-v250-eliminar-cuenta.sql en Supabase.";
+  if(/^Acción no válida/.test(m)) return "Falta actualizar la función «account» en Supabase (v2.5).";
+  return m; }
+function drawDelete(info){
+  const box=$("#meDel"); if(!box) return;
+  if(!info){ box.innerHTML=`<div class="me-acts"><button type="button" class="abtn danger" id="delOpen">${icon("trash")}Eliminar mi cuenta</button></div>`;
+    $("#delOpen").onclick=()=>{ box.innerHTML=skLines("Revisando qué pasa con tus talleres…",2);
+      Store.selfRemoveInfo().then(i=>drawDelete(i||{})).catch(e=>{ drawDelete(); toast(delErrMsg(e)); }); };
+    return; }
+  if(!info.puede){
+    const last=info.motivo==="ultimo_admin";
+    box.innerHTML=`<div class="del-box"><p class="del-why">${last?"Eres la única persona admin de Colmena. Para eliminar tu cuenta, primero haz admin a alguien más en <b>Equipo</b>.":"No hay una persona admin activa que reciba tus talleres. Pide ayuda a quien administra Colmena."}</p>
+      <div class="me-acts">${last?`<button type="button" class="abtn" id="delTeam">${icon("users")}Ir a Equipo</button>`:""}<button type="button" class="abtn" id="delNo">Cancelar</button></div></div>`;
+    const t=$("#delTeam"); if(t) t.onclick=()=>navView("team");
+    $("#delNo").onclick=()=>{ drawDelete(); $("#delOpen").focus(); }; return; }
+  const n=info.talleres||0, d=info.borradores||0, para=info.para||{};
+  const items=[n?(n===1?"tu taller":`tus ${n} talleres`):"", d?(d===1?"tu borrador":`tus ${d} borradores`):""].filter(Boolean);
+  const cap=t=>t.charAt(0).toUpperCase()+t.slice(1);
+  const what = !items.length ? "No tienes talleres ni borradores a tu nombre."
+    : `${cap(items.join(" y "))} ${n+d>1?"pasan":"pasa"} a <b>${esc(para.nombre||"")}</b>${para.correo&&para.correo!==para.nombre?` (${esc(para.correo)})`:""}, para que tu equipo no pierda los resultados. Si quieres borrar alguno, hazlo antes en Mis talleres.`;
+  box.innerHTML=`<div class="del-box">
+      <ul class="del-list">
+        <li>Se borran tu nombre, tu correo, tu foto, tu contraseña, tu Face ID y tu app autenticadora.</li>
+        <li>${what}</li>
+        <li>Te enviamos un correo para confirmar la baja.</li>
+      </ul>
+      <form class="del-form" id="delForm" novalidate autocomplete="on">
+        <input type="email" autocomplete="username" value="${esc(ME.email)}" hidden readonly>
+        <div class="field"><label for="delPw">Tu contraseña</label><div class="pw-wrap"><input id="delPw" class="input" type="password" autocomplete="current-password" maxlength="72" required><button type="button" class="pw-eye" id="delEye" aria-pressed="false">Mostrar</button></div>
+          <p class="hint">¿No la recuerdas? <button type="button" class="linkbtn" id="delNewPw">Crea una nueva</button> y vuelve aquí.</p></div>
+        <div class="field"><label for="delOk">Para confirmar, escribe ELIMINAR</label><input id="delOk" class="input" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="20" aria-describedby="delOkH"><p class="hint" id="delOkH">Así evitamos que se elimine por error.</p></div>
+        <p class="err" id="delErr" role="alert" hidden></p>
+        <div class="me-acts"><button class="abtn danger-solid" type="submit" id="delGo" disabled>Eliminar mi cuenta</button><button class="abtn" type="button" id="delNo">Cancelar</button></div>
+      </form></div>`;
+  const pw=$("#delPw"), ok=$("#delOk"), go=$("#delGo"), err=$("#delErr");
+  eyeToggle("#delEye", ["#delPw"]);
+  const check=()=>{ go.disabled=!(pw.value && ok.value.trim().toUpperCase()==="ELIMINAR"); };
+  pw.oninput=check; ok.oninput=check; pw.focus();
+  $("#delNo").onclick=()=>{ drawDelete(); $("#delOpen").focus(); };
+  $("#delNewPw").onclick=()=>{ const o=$("#pwOpen"); if(!o) return; o.click(); const i=$("#pw1"); if(i){ i.scrollIntoView({block:"center", behavior:Motion.ok()?"smooth":"auto"}); i.focus({preventScroll:true}); } };
+  $("#delForm").onsubmit=async e=>{ e.preventDefault(); check(); if(go.disabled) return;
+    go.disabled=true; go.innerHTML=`<span class="spin" aria-hidden="true"></span>Eliminando tu cuenta…`; err.hidden=true;
+    window.__signingOut=true;
+    try{ const r=await Store.deleteMyAccount(pw.value); farewell(r); }
+    catch(x){ window.__signingOut=false; err.hidden=false; err.textContent=delErrMsg(x); go.innerHTML="Eliminar mi cuenta"; check();
+      if(x&&x.body&&x.body.field==="password"){ pw.select(); pw.focus(); } } };
+}
+/* Después de eliminar la cuenta: la sesión ya se cerró en este navegador; nada del equipo queda guardado aquí */
+function farewell(r){
+  if(NT.unsub) NT.unsub(); if(NT.poll) clearInterval(NT.poll); NT.unsub=NT.poll=NT.uid=null; NT.items=[]; NT.loaded=false;
+  resetWizard(); clearInvite(); try{ sessionStorage.removeItem("colmena_totp"); }catch(e){}
+  const mail = r&&r.email&&r.email!=="modo demo" ? r.email : (ME.email&&ME.email!=="modo demo"?ME.email:"");
+  const tuvo = r && ((r.talleres||0)+(r.borradores||0))>0;
+  const para = tuvo && r.para && r.para.nombre ? ` Tus talleres quedaron a cargo de <b>${esc(r.para.nombre)}</b>.` : "";
+  Object.assign(ME,{uid:null,email:"",name:"",title:"",avatar:""}); AH.view="home";
+  aShell(`<div class="panel auth center" role="status"><span class="auth-ic ok">${icon("check")}</span><h2>Tu cuenta se eliminó</h2>
+    <p class="hint">Borramos tu acceso y tus datos de perfil.${para} ${mail?`Te enviamos un correo de confirmación a <b>${esc(mail)}</b>.`:"Te enviamos un correo de confirmación."}</p>
+    <p class="hint">Gracias por usar Colmena.</p>
+    <a class="abtn primary wide" href="../">Ir a colmena.work</a></div>`);
+  setTimeout(()=>{ window.__signingOut=false; },3000);
+}
+
 /* v1.6 · Preferencias de correo: cada aviso importante se puede apagar por tipo */
 const PREF_T = [
   {k:"invite_accepted", t:"Alguien aceptó mi invitación", admin:true},
@@ -8243,7 +8340,7 @@ const NT = { items:[], tab:"all", unsub:null, poll:null, uid:null, loaded:false 
 const NT_ICON = {
   invite_accepted:["users","t-team"], invite_expiring:["mail","t-warn"], invite_expired:["mail","t-warn"],
   session_created:["grid",""], session_closed:["flag",""], phase_done:["check","t-team"],
-  retention:["trash","t-warn"], welcome:["sparkle",""], role_changed:["users","t-acct"], reactivated:["check","t-acct"]
+  retention:["trash","t-warn"], welcome:["sparkle",""], role_changed:["users","t-acct"], reactivated:["check","t-acct"], member_left:["users","t-team"]
 };
 const ntUnread = () => NT.items.filter(n=>!n.read_at).length;
 function bellHTML(cls){ const n=ntUnread(), here=AH.view==="notifs" && !A.session;
