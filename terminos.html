@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Términos y condiciones · Colmena</title>
+<meta name="description" content="Las reglas para usar Colmena: cuentas, talleres de prueba, uso permitido, contenido de los talleres, funciones de IA, datos personales y responsabilidad.">
+<link rel="canonical" href="https://colmena.work/terminos.html">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Colmena">
+<meta property="og:title" content="Términos y condiciones · Colmena">
+<meta property="og:url" content="https://colmena.work/terminos.html">
+<meta property="og:image" content="https://colmena.work/img/og-colmena.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>
+/* Páginas legales de Colmena: mismos colores, tipografía y barra que la landing, pensadas para leerse con calma.
+   Resumen arriba, índice fijo en escritorio (plegable en celular), líneas de ~70 caracteres y versión para imprimir. */
+:root{
+  --bg:#FFFFFF; --surface:#F3F6FB; --ink:#01133B; --ink-2:#3F4C67; --ink-3:#6A7690; --line:#DCE3EE;
+  --accent:#278FD8; --accent-strong:#1B6FAE; --band:#0A1A3F;
+  --display:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --body:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --nav-h:3.5rem;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{max-width:100%;display:block}
+a{color:var(--accent-strong);text-underline-offset:.1875rem}
+a:hover{color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:.375rem}
+.skip{position:absolute;left:-9999px;top:.75rem;z-index:100;background:#fff;color:var(--ink);font:700 .9375rem/1 var(--body);padding:.875rem 1.125rem;border-radius:.75rem;box-shadow:0 .75rem 2rem -.75rem rgba(1,19,59,.35)}
+.skip:focus{left:1rem}
+.wrap{max-width:77.5rem;margin-inline:auto;padding-left:max(16px,4%,env(safe-area-inset-left,0px));padding-right:max(16px,4%,env(safe-area-inset-right,0px))}
+.hex{clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.bee{display:inline-grid;place-items:center;width:1.75rem;aspect-ratio:7/8;background:#CFE5F7;font-size:1.0625rem;line-height:1}
+
+/* ---------- Barra ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,255,255,.88);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid rgba(1,19,59,.08)}
+.nav-in{height:var(--nav-h);display:flex;align-items:center;gap:1rem;padding-left:max(16px,2.5vw,env(safe-area-inset-left,0px));padding-right:max(16px,2.5vw,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:.625rem;font:800 1.25rem/1 var(--display);letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+.brand:hover{color:var(--ink)}
+.doc-nav{display:flex;gap:clamp(1rem,2.5vw,1.75rem);margin-left:auto}
+.doc-nav a{display:inline-flex;align-items:center;min-height:2.75rem;font:600 .875rem/1 var(--body);color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.doc-nav a:hover{color:var(--ink)}
+.doc-nav a[aria-current="page"]{color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent)}
+@media (max-width:23.75em){ .brand .name{display:none} }
+
+/* ---------- Encabezado del documento ---------- */
+.doc-head{padding-block:clamp(2.5rem,8vh,5rem) clamp(1.75rem,4vh,2.5rem);border-bottom:1px solid var(--line)}
+.eyebrow{margin:0;font:700 .8125rem/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-strong)}
+h1{margin:.75rem 0 0;font:700 clamp(2.25rem,5vw,3.5rem)/1.06 var(--display);letter-spacing:-.03em;text-wrap:balance}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1.25rem;margin:1.125rem 0 0;font:500 .9375rem/1.5 var(--body);color:var(--ink-3)}
+.meta button{display:inline-flex;align-items:center;gap:.5rem;min-height:2.75rem;padding:0;border:0;background:none;font:600 .9375rem/1 var(--body);color:var(--accent-strong);cursor:pointer}
+.meta button:hover{color:var(--ink)}
+.meta button svg{width:1.125rem;height:1.125rem}
+.lang-note{margin:.5rem 0 0;font:500 .875rem/1.5 var(--body);color:var(--ink-3)}
+
+/* ---------- Índice + contenido ---------- */
+.doc-grid{display:grid;gap:1.5rem;padding-block:1.5rem clamp(3.5rem,10vh,6rem)}
+.toc{min-width:0}
+.toc details{border:1px solid var(--line);border-radius:1rem;background:#fff}
+.toc summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3rem;padding:0 1rem;cursor:pointer;list-style:none;font:700 .8125rem/1.2 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.toc summary::-webkit-details-marker{display:none}
+.toc summary svg{width:1.125rem;height:1.125rem;transition:transform .2s ease}
+.toc details[open] summary svg{transform:rotate(180deg)}
+.toc ol{list-style:none;margin:0;padding:0 .5rem .75rem;display:grid;gap:.125rem}
+.toc a{display:block;padding:.5rem .625rem;border-radius:.5rem;font:500 .875rem/1.35 var(--body);color:var(--ink-2);text-decoration:none}
+.toc a:hover{background:var(--surface);color:var(--ink)}
+.toc a.is-on{background:var(--surface);color:var(--ink);font-weight:700}
+@media (min-width:64em){
+  .doc-grid{grid-template-columns:15.5rem minmax(0,42rem);justify-content:space-between;gap:4rem;padding-top:2.5rem}
+  .toc{position:sticky;top:calc(var(--nav-h) + 1.5rem);align-self:start;max-height:calc(100vh - var(--nav-h) - 3rem);overflow:auto}
+  .toc details{border:0;background:none}
+  .toc summary{pointer-events:none;padding:0 .625rem;min-height:2rem}
+  .toc summary svg{display:none}
+  .toc ol{padding:.25rem 0 0}
+}
+
+.doc-body{min-width:0;max-width:42rem;font:400 1.0625rem/1.72 var(--body);color:var(--ink-2)}
+.doc-body section{scroll-margin-top:calc(var(--nav-h) + 1.25rem);padding-top:2.75rem}
+.doc-body > section:first-child{padding-top:0}
+.doc-body > .resumen,.doc-body > .resumen:first-child{padding:clamp(1.25rem,3vw,1.875rem)}
+.doc-body h2{margin:0 0 1rem;font:700 clamp(1.375rem,2.2vw,1.625rem)/1.25 var(--display);letter-spacing:-.015em;color:var(--ink);text-wrap:balance}
+.doc-body h3{margin:1.75rem 0 .5rem;font:700 1.0625rem/1.4 var(--display);color:var(--ink)}
+.doc-body p{margin:0 0 1rem}
+.doc-body strong{color:var(--ink);font-weight:700}
+.doc-body ul,.doc-body ol{margin:0 0 1.125rem;padding:0}
+.doc-body ul{list-style:none}
+.doc-body ul>li{position:relative;padding-left:1.375rem;margin:.5rem 0}
+.doc-body ul>li::before{content:"";position:absolute;left:.125rem;top:.62em;width:.5rem;height:.5625rem;background:var(--accent);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.doc-body ol{padding-left:1.5rem}
+.doc-body ol>li{margin:.5rem 0;padding-left:.25rem}
+.doc-body ol>li::marker{font-weight:700;color:var(--ink)}
+.resumen{background:var(--surface);border-radius:1.25rem}
+.resumen h2{font-size:1.125rem;margin-bottom:.5rem}
+.resumen ul{margin-bottom:0}
+.nota{font-size:.9375rem;color:var(--ink-3)}
+.tabla{overflow-x:auto;margin:0 0 1.25rem;border:1px solid var(--line);border-radius:1rem}
+table{width:100%;min-width:30rem;border-collapse:collapse;font:400 .9375rem/1.55 var(--body)}
+th,td{text-align:left;vertical-align:top;padding:.75rem 1rem;border-bottom:1px solid var(--line)}
+th{font:700 .75rem/1.3 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);background:var(--surface)}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:600}
+@media (max-width:40em){
+  .tabla{overflow:visible}
+  table{min-width:0}
+  thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  table,tbody,tr,td{display:block;width:100%}
+  tr{padding:.875rem 1rem;border-bottom:1px solid var(--line)}
+  tr:last-child{border-bottom:0}
+  td{padding:0;border:0}
+  td:first-child{margin-bottom:.25rem}
+}
+.ficha{display:grid;gap:.25rem;margin:0 0 1.25rem;padding:1.125rem 1.25rem;border:1px solid var(--line);border-radius:1rem;font-style:normal}
+.ficha strong{font-size:1rem}
+
+/* ---------- Pie ---------- */
+footer{background:#fff;border-top:1px solid var(--line)}
+.foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.25rem;padding-block:1.75rem}
+.powered{display:flex;align-items:center;gap:.875rem}
+.powered span{font:700 .75rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.powered img{height:2.75rem;width:auto}
+/* Pie: logo + ligas legales a la izquierda (donde iba «colmena.work»), Powered by a la derecha */
+.foot-izq{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 2rem}
+.foot-links{display:flex;flex-wrap:wrap;gap:0 1.5rem}
+.foot-links a{display:inline-flex;align-items:center;min-height:2.75rem;font:600 .875rem/1 var(--body);color:var(--ink-3);text-decoration:none}
+.foot-links a:hover,.foot-links a[aria-current="page"]{color:var(--ink)}
+.foot-links a:hover{text-decoration:underline;text-underline-offset:.25rem}
+
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .toc summary svg{transition:none} }
+@media print{
+  .nav,.toc,.skip,.meta button,footer{display:none!important}
+  body{font-size:10.5pt}
+  .doc-head{padding:0 0 1rem}
+  .doc-grid{display:block;padding:0}
+  .doc-body{font-size:10.5pt;line-height:1.55;color:#000}
+  .doc-body section{padding-top:1.25rem;break-inside:auto}
+  .doc-body h2,.doc-body h3{break-after:avoid}
+  .resumen,.tabla,.ficha{border:1px solid #bbb;background:none}
+  .doc-body ul>li::before{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  a{color:inherit}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="./" aria-label="Colmena, inicio" translate="no"><span class="hex bee" aria-hidden="true">🐝</span><span class="name">Colmena</span></a>
+    <nav class="doc-nav" aria-label="Documentos legales">
+      <a href="terminos.html" aria-current="page">Términos</a>
+      <a href="privacidad.html">Privacidad</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido">
+  <div class="wrap">
+    <header class="doc-head">
+      <p class="eyebrow">Colmena · Legal</p>
+      <h1>Términos y condiciones</h1>
+      <p class="meta"><span>Versión 1.0 · Vigentes desde el 29 de octubre de 2026</span>
+        <button type="button" id="imprimir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg>Imprimir o guardar en PDF</button></p>
+      <p class="lang-note" lang="en">These terms are in Spanish. An English version is coming soon.</p>
+    </header>
+
+    <div class="doc-grid">
+      <aside class="toc">
+        <details id="indice">
+          <summary>En esta página <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <ol>
+            <li><a href="#resumen">En resumen</a></li>
+            <li><a href="#aceptacion">1. Quiénes somos y aceptación</a></li>
+            <li><a href="#servicio">2. Qué es Colmena</a></li>
+            <li><a href="#cuentas">3. Cuentas y acceso</a></li>
+            <li><a href="#comercial">4. Prueba y condiciones comerciales</a></li>
+            <li><a href="#uso">5. Uso permitido</a></li>
+            <li><a href="#contenido-talleres">6. Contenido de los talleres</a></li>
+            <li><a href="#participantes">7. Participantes</a></li>
+            <li><a href="#ia">8. Inteligencia artificial</a></li>
+            <li><a href="#datos">9. Datos personales</a></li>
+            <li><a href="#propiedad">10. Propiedad intelectual</a></li>
+            <li><a href="#disponibilidad">11. Disponibilidad y soporte</a></li>
+            <li><a href="#responsabilidad">12. Responsabilidad</a></li>
+            <li><a href="#terminacion">13. Suspensión y terminación</a></li>
+            <li><a href="#confidencialidad">14. Confidencialidad</a></li>
+            <li><a href="#cambios">15. Cambios a estos términos</a></li>
+            <li><a href="#ley">16. Ley aplicable y tribunales</a></li>
+            <li><a href="#contacto">17. Contacto</a></li>
+          </ol>
+        </details>
+      </aside>
+
+      <article class="doc-body">
+        <section id="resumen" class="resumen" aria-labelledby="t-resumen">
+          <h2 id="t-resumen">En resumen</h2>
+          <ul>
+            <li>Colmena es un servicio de <strong>Quality &amp; Knowledge on IT Services, S.A. de C.V.</strong> (QK) para hacer talleres en vivo.</li>
+            <li>Lo que se escribe en un taller <strong>es de la organización que lo realiza</strong>. QK solo lo usa para darle el servicio.</li>
+            <li>Usa Colmena de buena fe: nada ilegal ni ofensivo, y sin pedir datos sensibles.</li>
+            <li>La IA sugiere; <strong>tú decides</strong>. Revisa lo que propone antes de usarlo.</li>
+            <li>El precio, el número de talleres y los pagos se acuerdan por escrito con cada organización.</li>
+          </ul>
+        </section>
+
+        <section id="aceptacion" aria-labelledby="t-aceptacion">
+          <h2 id="t-aceptacion">1. Quiénes somos y aceptación</h2>
+          <p>Colmena (<a href="./">colmena.work</a>) es un servicio de Quality &amp; Knowledge on IT Services, S.A. de C.V. («QK» o «nosotros»), con domicilio en Ejército Nacional 373, interior 503, colonia Granada, alcaldía Miguel Hidalgo, C.P. 11520, Ciudad de México.</p>
+          <p>Estos términos aplican a todas las personas que usan Colmena: quien administra o facilita talleres (con cuenta), quien participa en un taller (sin cuenta) y quien visita el sitio. Al crear tu cuenta, entrar a un taller o usar el sitio, aceptas estos términos y el <a href="privacidad.html">Aviso de privacidad</a>. Si no estás de acuerdo, no uses Colmena.</p>
+          <p>Si usas Colmena a nombre de una empresa u organización («la organización»), declaras que tienes facultades para aceptar estos términos en su nombre. Si la organización firmó un contrato con QK, ese contrato prevalece sobre estos términos en lo que se contradigan.</p>
+        </section>
+
+        <section id="servicio" aria-labelledby="t-servicio">
+          <h2 id="t-servicio">2. Qué es Colmena</h2>
+          <p>Colmena permite crear talleres en vivo (por ejemplo, de mejora de procesos, diagnóstico, lluvia de ideas o retrospectiva) en los que cada persona responde desde su celular o su computadora, y quien facilita ve las respuestas al instante, obtiene resultados y los exporta. Incluye funciones opcionales de inteligencia artificial.</p>
+          <p>Podemos mejorar, cambiar o retirar funciones. Si un cambio afecta de forma importante cómo usas Colmena, te avisaremos con anticipación razonable.</p>
+        </section>
+
+        <section id="cuentas" aria-labelledby="t-cuentas">
+          <h2 id="t-cuentas">3. Cuentas y acceso</h2>
+          <ul>
+            <li>Las cuentas se crean por invitación de quien administra el equipo de la organización o de QK.</li>
+            <li>Mantén tus datos al día y cuida tu acceso: no compartas tu contraseña ni tus enlaces de acceso. Eres responsable de lo que se haga con tu cuenta.</li>
+            <li>Quien administra puede invitar personas, cambiar roles, reiniciar accesos y dar de baja a alguien de su equipo. Al dar de baja a alguien, sus talleres pasan a quien administra.</li>
+            <li>Puedes eliminar tu cuenta cuando quieras en la app, en <strong>Ajustes → Eliminar mi cuenta</strong>. Tus talleres y borradores pasan a una persona admin de tu equipo para que no se pierdan los resultados. Si eres la única persona admin, primero nombra a otra.</li>
+            <li>Podemos pedir un segundo paso de verificación (Face ID, huella o app autenticadora) a las cuentas de administración.</li>
+            <li>Si sospechas que alguien usó tu cuenta sin permiso, avísanos de inmediato a <a href="mailto:admonrh@qacg.com">admonrh@qacg.com</a>.</li>
+          </ul>
+        </section>
+
+        <section id="comercial" aria-labelledby="t-comercial">
+          <h2 id="t-comercial">4. Taller de prueba y condiciones comerciales</h2>
+          <ul>
+            <li>QK puede ofrecer un taller o un periodo de prueba sin costo, con las condiciones y límites que te indiquemos al aceptarlo.</li>
+            <li>El uso con costo se rige por la propuesta, orden de servicio o contrato que firmemos con la organización: precio, número de talleres, vigencia, forma de pago y facturación.</li>
+            <li>No hacemos cargos que no se hayan acordado por escrito. Los precios no incluyen impuestos, salvo que se indique lo contrario.</li>
+          </ul>
+        </section>
+
+        <section id="uso" aria-labelledby="t-uso">
+          <h2 id="t-uso">5. Uso permitido</h2>
+          <p>Te comprometes a usar Colmena de buena fe y conforme a la ley. No está permitido:</p>
+          <ul>
+            <li>Usar Colmena para fines ilícitos, para acosar, discriminar o difamar, o para publicar contenido ofensivo, violento o que infrinja derechos de otras personas.</li>
+            <li>Pedir o subir datos personales sensibles (como los de salud, origen étnico, religión, opiniones políticas o preferencia sexual), datos financieros o de identificación oficial, salvo que la organización tenga una base legal y el consentimiento expreso y por escrito que exige la ley.</li>
+            <li>Entrar a cuentas, talleres o datos ajenos, probar o vulnerar la seguridad, o eludir los límites del servicio, incluidos los de la IA.</li>
+            <li>Copiar, descompilar o hacer ingeniería inversa del software, salvo lo que la ley permita.</li>
+            <li>Enviar spam, automatizar el acceso con robots o sobrecargar el servicio.</li>
+            <li>Revender Colmena o dar acceso a terceros sin un acuerdo con QK.</li>
+          </ul>
+        </section>
+
+        <section id="contenido-talleres" aria-labelledby="t-contenido">
+          <h2 id="t-contenido">6. Contenido de los talleres</h2>
+          <ul>
+            <li>Lo que la organización, quien facilita y quienes participan escriben o suben (nombres de talleres, preguntas, respuestas, tarjetas, ideas, resultados y resúmenes) es el <strong>contenido de los talleres</strong> y pertenece a la organización o a quien lo creó.</li>
+            <li>La organización nos da permiso, limitado y no exclusivo, para alojar, procesar, mostrar y respaldar ese contenido solo para prestarle el servicio. Este permiso termina cuando el contenido se elimina.</li>
+            <li><strong>No usamos el contenido de los talleres para fines propios ni para entrenar modelos de IA.</strong> Solo generamos estadísticas agregadas y anónimas (por ejemplo, número de talleres o de respuestas) que no identifican a ninguna persona ni organización, para operar y mejorar Colmena.</li>
+            <li>La organización es responsable de que el contenido sea lícito, de tener derecho a usarlo y de informar a sus participantes cómo se usarán sus respuestas.</li>
+            <li>Puedes exportar los resultados (Excel, CSV o PDF) y borrar tus talleres cuando quieras.</li>
+          </ul>
+        </section>
+
+        <section id="participantes" aria-labelledby="t-participantes">
+          <h2 id="t-participantes">7. Participantes</h2>
+          <ul>
+            <li>Para entrar a un taller basta el código o el enlace; no se necesita cuenta.</li>
+            <li>Lo que escribes lo ve quien facilita, junto con tu nombre, y puede mostrarse a la sala como parte de los resultados del grupo. Escribe con respeto y no compartas datos sensibles ni información confidencial que no debas compartir.</li>
+            <li>Quien facilita conduce el taller y decide qué se muestra a la sala.</li>
+            <li>Si quieres que se borren tus respuestas o tienes dudas sobre su uso, pídelo a quien facilita o a la organización. También puedes escribirnos a <a href="mailto:admonrh@qacg.com">admonrh@qacg.com</a>.</li>
+          </ul>
+        </section>
+
+        <section id="ia" aria-labelledby="t-ia">
+          <h2 id="t-ia">8. Funciones de inteligencia artificial</h2>
+          <ul>
+            <li>Son opcionales: puedes armar talleres y resúmenes sin IA.</li>
+            <li>La IA puede equivocarse u omitir información. Revisa y edita las propuestas y los resúmenes antes de usarlos o compartirlos; las decisiones son tuyas.</li>
+            <li>No uses la IA para decisiones que afecten los derechos de las personas (por ejemplo, contratar, evaluar o despedir) sin revisión humana.</li>
+            <li>Para dar estas funciones enviamos a nuestro proveedor de IA solo la información necesaria, como explica el <a href="privacidad.html#compartir">Aviso de privacidad</a>.</li>
+            <li>Puede haber límites de uso por persona, por día o por mes, y la organización puede pausar o limitar la IA para su equipo.</li>
+          </ul>
+        </section>
+
+        <section id="datos" aria-labelledby="t-datos">
+          <h2 id="t-datos">9. Datos personales</h2>
+          <p>Cómo tratamos los datos personales se explica en el <a href="privacidad.html">Aviso de privacidad</a>.</p>
+          <p>Sobre los datos de sus talleres (participantes y respuestas), <strong>la organización es la responsable y QK actúa como su encargado</strong>. Con estos términos, QK se obliga a:</p>
+          <ol>
+            <li>Tratar esos datos solo para prestar el servicio y conforme a las instrucciones de la organización.</li>
+            <li>No usarlos para fines propios ni transferirlos, salvo que la ley lo exija.</li>
+            <li>Guardar confidencialidad, también después de terminar la relación.</li>
+            <li>Aplicar medidas de seguridad administrativas, técnicas y físicas.</li>
+            <li>Apoyarse solo en los proveedores listados en el Aviso de privacidad, que asumen obligaciones equivalentes. La organización los autoriza al aceptar estos términos, y le avisaremos de cambios relevantes.</li>
+            <li>Ayudar a la organización a atender las solicitudes de derechos ARCO de sus participantes.</li>
+            <li>Avisar sin demora a la organización si ocurre una vulneración de seguridad que afecte sus datos.</li>
+            <li>Al terminar el servicio, permitir la exportación de los resultados y eliminar los datos a más tardar 60 días después, salvo que la ley obligue a conservarlos.</li>
+          </ol>
+          <p>Por su parte, la organización, como responsable, pone su aviso de privacidad a disposición de sus participantes (puede apoyarse en el de Colmena), cuenta con una base legal para el tratamiento y no pide datos sensibles sin cumplir lo que exige la ley.</p>
+        </section>
+
+        <section id="propiedad" aria-labelledby="t-propiedad">
+          <h2 id="t-propiedad">10. Propiedad intelectual de Colmena</h2>
+          <p>Colmena, su software, diseño, marcas, logotipos, textos e ilustraciones son de QK o de sus licenciantes. Te damos una licencia personal, no exclusiva, intransferible y revocable para usar Colmena conforme a estos términos; no se te transfiere ningún otro derecho. Si nos das sugerencias o comentarios, podemos usarlos para mejorar Colmena sin obligación hacia ti.</p>
+        </section>
+
+        <section id="disponibilidad" aria-labelledby="t-disponibilidad">
+          <h2 id="t-disponibilidad">11. Disponibilidad y soporte</h2>
+          <p>Trabajamos para que Colmena esté disponible y funcione bien, pero no garantizamos que esté libre de interrupciones o errores: puede haber mantenimientos y fallas de proveedores o de conexión. Te recomendamos exportar los resultados importantes. Para soporte, escribe a <a href="mailto:admonrh@qacg.com">admonrh@qacg.com</a>.</p>
+        </section>
+
+        <section id="responsabilidad" aria-labelledby="t-responsabilidad">
+          <h2 id="t-responsabilidad">12. Responsabilidad</h2>
+          <ul>
+            <li>Colmena se ofrece tal cual y según su disponibilidad. En la medida en que la ley lo permita, QK no responde por daños indirectos, lucro cesante, pérdidas causadas por el uso indebido de Colmena o por terceros, ni por las decisiones que se tomen con base en los resultados o en las sugerencias de la IA.</li>
+            <li>La responsabilidad total de QK frente a la organización, por cualquier causa, se limita al monto que pagó por el servicio en los 12 meses anteriores al hecho que la origine.</li>
+            <li>Cada persona es responsable del contenido que sube y del uso que hace de Colmena, y responderá por los daños que cause por incumplir estos términos.</li>
+            <li>Nada de lo anterior limita la responsabilidad por dolo o mala fe, ni lo que la ley no permita limitar. Si eres consumidor en términos de la Ley Federal de Protección al Consumidor, conservas los derechos que esa ley te otorga.</li>
+          </ul>
+        </section>
+
+        <section id="terminacion" aria-labelledby="t-terminacion">
+          <h2 id="t-terminacion">13. Suspensión y terminación</h2>
+          <ul>
+            <li>Puedes dejar de usar Colmena cuando quieras y eliminar tu cuenta en <strong>Ajustes → Eliminar mi cuenta</strong> (<a href="#cuentas">sección 3</a>). La organización puede pedir la baja de su cuenta escribiéndonos.</li>
+            <li>Podemos suspender o cancelar el acceso si se incumplen estos términos, si hay un riesgo para la seguridad o para otras personas, o si lo exige una autoridad. Cuando sea posible, avisaremos antes.</li>
+            <li>Al terminar, la organización puede exportar sus resultados durante 30 días. Los datos se eliminan a más tardar 60 días después, como indica el Aviso de privacidad.</li>
+            <li>Las secciones que por su naturaleza deban seguir vigentes (contenido, datos personales, confidencialidad, responsabilidad y ley aplicable) seguirán aplicando.</li>
+          </ul>
+        </section>
+
+        <section id="confidencialidad" aria-labelledby="t-confidencialidad">
+          <h2 id="t-confidencialidad">14. Confidencialidad</h2>
+          <p>QK trata como confidencial el contenido de los talleres y la información no pública de la organización. La organización trata como confidencial la información no pública de QK sobre Colmena, como funciones aún no lanzadas o condiciones comerciales especiales.</p>
+        </section>
+
+        <section id="cambios" aria-labelledby="t-cambios">
+          <h2 id="t-cambios">15. Cambios a estos términos</h2>
+          <p>Podemos actualizar estos términos. La versión vigente siempre estará en <a href="terminos.html">colmena.work/terminos.html</a>, con su fecha. Si un cambio es importante, te avisaremos por correo o en Colmena al menos 15 días antes de que aplique. Si sigues usando Colmena después, entenderemos que aceptas los cambios; si no estás de acuerdo, puedes dejar de usarla.</p>
+        </section>
+
+        <section id="ley" aria-labelledby="t-ley">
+          <h2 id="t-ley">16. Ley aplicable y tribunales</h2>
+          <p>Estos términos se rigen por las leyes federales de los Estados Unidos Mexicanos. Para cualquier controversia, las partes se someten a los tribunales competentes de la Ciudad de México y renuncian a cualquier otro fuero que pudiera corresponderles por su domicilio presente o futuro, salvo que la ley aplicable (por ejemplo, en materia de protección al consumidor) disponga otra cosa.</p>
+        </section>
+
+        <section id="contacto" aria-labelledby="t-contacto">
+          <h2 id="t-contacto">17. Contacto</h2>
+          <address class="ficha">
+            <strong>Quality &amp; Knowledge on IT Services, S.A. de C.V.</strong>
+            <span>Ejército Nacional 373, interior 503, colonia Granada, alcaldía Miguel Hidalgo, C.P. 11520, Ciudad de México.</span>
+            <span>Correo: <a href="mailto:admonrh@qacg.com">admonrh@qacg.com</a></span>
+          </address>
+          <p class="nota">Versión 1.0 · Vigentes desde el 29 de octubre de 2026.</p>
+        </section>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-izq">
+      <a class="brand" href="./" translate="no"><span class="hex bee" aria-hidden="true">🐝</span>Colmena</a>
+      <nav class="foot-links" aria-label="Legal"><a href="terminos.html" aria-current="page">Términos y condiciones</a><a href="privacidad.html">Aviso de privacidad</a></nav>
+    </div>
+    <div class="powered" translate="no"><span>Powered by</span><img src="img/brand-qk.png" alt="Quality &amp; Knowledge"></div>
+  </div>
+</footer>
+
+<script>
+/* Índice: abierto en escritorio, plegable en celular; resalta la sección que estás leyendo. Botón para imprimir. */
+(function(){
+  var D=document, det=D.getElementById('indice'), mq=matchMedia('(min-width: 64em)');
+  function ajusta(){ if(mq.matches) det.open=true; }
+  ajusta(); if(mq.addEventListener) mq.addEventListener('change',ajusta);
+  det.addEventListener('click',function(e){ if(e.target.closest('a') && !mq.matches) det.open=false; });
+  var ligas={}; [].forEach.call(det.querySelectorAll('a[href^="#"]'),function(a){ ligas[a.getAttribute('href').slice(1)]=a; });
+  if('IntersectionObserver' in window){
+    var actual=null, io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ if(actual) actual.classList.remove('is-on'); actual=ligas[e.target.id]||null; if(actual) actual.classList.add('is-on'); } });
+    },{rootMargin:'-20% 0px -70% 0px'});
+    [].forEach.call(D.querySelectorAll('.doc-body section[id]'),function(s){ io.observe(s); });
+  }
+  var p=D.getElementById('imprimir'); if(p) p.addEventListener('click',function(){ window.print(); });
+})();
+</script>
+</body>
+</html>

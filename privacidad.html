@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aviso de privacidad · Colmena</title>
+<meta name="description" content="Cómo Quality &amp; Knowledge trata los datos personales en Colmena: visitas al sitio, solicitudes de prueba, cuentas, participantes de talleres y tus derechos ARCO.">
+<link rel="canonical" href="https://colmena.work/privacidad.html">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Colmena">
+<meta property="og:title" content="Aviso de privacidad · Colmena">
+<meta property="og:url" content="https://colmena.work/privacidad.html">
+<meta property="og:image" content="https://colmena.work/img/og-colmena.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>
+/* Páginas legales de Colmena: mismos colores, tipografía y barra que la landing, pensadas para leerse con calma.
+   Resumen arriba, índice fijo en escritorio (plegable en celular), líneas de ~70 caracteres y versión para imprimir. */
+:root{
+  --bg:#FFFFFF; --surface:#F3F6FB; --ink:#01133B; --ink-2:#3F4C67; --ink-3:#6A7690; --line:#DCE3EE;
+  --accent:#278FD8; --accent-strong:#1B6FAE; --band:#0A1A3F;
+  --display:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --body:"Montserrat",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --nav-h:3.5rem;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{max-width:100%;display:block}
+a{color:var(--accent-strong);text-underline-offset:.1875rem}
+a:hover{color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:.375rem}
+.skip{position:absolute;left:-9999px;top:.75rem;z-index:100;background:#fff;color:var(--ink);font:700 .9375rem/1 var(--body);padding:.875rem 1.125rem;border-radius:.75rem;box-shadow:0 .75rem 2rem -.75rem rgba(1,19,59,.35)}
+.skip:focus{left:1rem}
+.wrap{max-width:77.5rem;margin-inline:auto;padding-left:max(16px,4%,env(safe-area-inset-left,0px));padding-right:max(16px,4%,env(safe-area-inset-right,0px))}
+.hex{clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.bee{display:inline-grid;place-items:center;width:1.75rem;aspect-ratio:7/8;background:#CFE5F7;font-size:1.0625rem;line-height:1}
+
+/* ---------- Barra ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,255,255,.88);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid rgba(1,19,59,.08)}
+.nav-in{height:var(--nav-h);display:flex;align-items:center;gap:1rem;padding-left:max(16px,2.5vw,env(safe-area-inset-left,0px));padding-right:max(16px,2.5vw,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:.625rem;font:800 1.25rem/1 var(--display);letter-spacing:-.02em;text-decoration:none;color:var(--ink)}
+.brand:hover{color:var(--ink)}
+.doc-nav{display:flex;gap:clamp(1rem,2.5vw,1.75rem);margin-left:auto}
+.doc-nav a{display:inline-flex;align-items:center;min-height:2.75rem;font:600 .875rem/1 var(--body);color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.doc-nav a:hover{color:var(--ink)}
+.doc-nav a[aria-current="page"]{color:var(--ink);box-shadow:inset 0 -2px 0 var(--accent)}
+@media (max-width:23.75em){ .brand .name{display:none} }
+
+/* ---------- Encabezado del documento ---------- */
+.doc-head{padding-block:clamp(2.5rem,8vh,5rem) clamp(1.75rem,4vh,2.5rem);border-bottom:1px solid var(--line)}
+.eyebrow{margin:0;font:700 .8125rem/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-strong)}
+h1{margin:.75rem 0 0;font:700 clamp(2.25rem,5vw,3.5rem)/1.06 var(--display);letter-spacing:-.03em;text-wrap:balance}
+.meta{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1.25rem;margin:1.125rem 0 0;font:500 .9375rem/1.5 var(--body);color:var(--ink-3)}
+.meta button{display:inline-flex;align-items:center;gap:.5rem;min-height:2.75rem;padding:0;border:0;background:none;font:600 .9375rem/1 var(--body);color:var(--accent-strong);cursor:pointer}
+.meta button:hover{color:var(--ink)}
+.meta button svg{width:1.125rem;height:1.125rem}
+.lang-note{margin:.5rem 0 0;font:500 .875rem/1.5 var(--body);color:var(--ink-3)}
+
+/* ---------- Índice + contenido ---------- */
+.doc-grid{display:grid;gap:1.5rem;padding-block:1.5rem clamp(3.5rem,10vh,6rem)}
+.toc{min-width:0}
+.toc details{border:1px solid var(--line);border-radius:1rem;background:#fff}
+.toc summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3rem;padding:0 1rem;cursor:pointer;list-style:none;font:700 .8125rem/1.2 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.toc summary::-webkit-details-marker{display:none}
+.toc summary svg{width:1.125rem;height:1.125rem;transition:transform .2s ease}
+.toc details[open] summary svg{transform:rotate(180deg)}
+.toc ol{list-style:none;margin:0;padding:0 .5rem .75rem;display:grid;gap:.125rem}
+.toc a{display:block;padding:.5rem .625rem;border-radius:.5rem;font:500 .875rem/1.35 var(--body);color:var(--ink-2);text-decoration:none}
+.toc a:hover{background:var(--surface);color:var(--ink)}
+.toc a.is-on{background:var(--surface);color:var(--ink);font-weight:700}
+@media (min-width:64em){
+  .doc-grid{grid-template-columns:15.5rem minmax(0,42rem);justify-content:space-between;gap:4rem;padding-top:2.5rem}
+  .toc{position:sticky;top:calc(var(--nav-h) + 1.5rem);align-self:start;max-height:calc(100vh - var(--nav-h) - 3rem);overflow:auto}
+  .toc details{border:0;background:none}
+  .toc summary{pointer-events:none;padding:0 .625rem;min-height:2rem}
+  .toc summary svg{display:none}
+  .toc ol{padding:.25rem 0 0}
+}
+
+.doc-body{min-width:0;max-width:42rem;font:400 1.0625rem/1.72 var(--body);color:var(--ink-2)}
+.doc-body section{scroll-margin-top:calc(var(--nav-h) + 1.25rem);padding-top:2.75rem}
+.doc-body > section:first-child{padding-top:0}
+.doc-body > .resumen,.doc-body > .resumen:first-child{padding:clamp(1.25rem,3vw,1.875rem)}
+.doc-body h2{margin:0 0 1rem;font:700 clamp(1.375rem,2.2vw,1.625rem)/1.25 var(--display);letter-spacing:-.015em;color:var(--ink);text-wrap:balance}
+.doc-body h3{margin:1.75rem 0 .5rem;font:700 1.0625rem/1.4 var(--display);color:var(--ink)}
+.doc-body p{margin:0 0 1rem}
+.doc-body strong{color:var(--ink);font-weight:700}
+.doc-body ul,.doc-body ol{margin:0 0 1.125rem;padding:0}
+.doc-body ul{list-style:none}
+.doc-body ul>li{position:relative;padding-left:1.375rem;margin:.5rem 0}
+.doc-body ul>li::before{content:"";position:absolute;left:.125rem;top:.62em;width:.5rem;height:.5625rem;background:var(--accent);clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.doc-body ol{padding-left:1.5rem}
+.doc-body ol>li{margin:.5rem 0;padding-left:.25rem}
+.doc-body ol>li::marker{font-weight:700;color:var(--ink)}
+.resumen{background:var(--surface);border-radius:1.25rem}
+.resumen h2{font-size:1.125rem;margin-bottom:.5rem}
+.resumen ul{margin-bottom:0}
+.nota{font-size:.9375rem;color:var(--ink-3)}
+.tabla{overflow-x:auto;margin:0 0 1.25rem;border:1px solid var(--line);border-radius:1rem}
+table{width:100%;min-width:30rem;border-collapse:collapse;font:400 .9375rem/1.55 var(--body)}
+th,td{text-align:left;vertical-align:top;padding:.75rem 1rem;border-bottom:1px solid var(--line)}
+th{font:700 .75rem/1.3 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);background:var(--surface)}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:600}
+@media (max-width:40em){
+  .tabla{overflow:visible}
+  table{min-width:0}
+  thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  table,tbody,tr,td{display:block;width:100%}
+  tr{padding:.875rem 1rem;border-bottom:1px solid var(--line)}
+  tr:last-child{border-bottom:0}
+  td{padding:0;border:0}
+  td:first-child{margin-bottom:.25rem}
+}
+.ficha{display:grid;gap:.25rem;margin:0 0 1.25rem;padding:1.125rem 1.25rem;border:1px solid var(--line);border-radius:1rem;font-style:normal}
+.ficha strong{font-size:1rem}
+
+/* ---------- Pie ---------- */
+footer{background:#fff;border-top:1px solid var(--line)}
+.foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.25rem;padding-block:1.75rem}
+.powered{display:flex;align-items:center;gap:.875rem}
+.powered span{font:700 .75rem/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.powered img{height:2.75rem;width:auto}
+/* Pie: logo + ligas legales a la izquierda (donde iba «colmena.work»), Powered by a la derecha */
+.foot-izq{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 2rem}
+.foot-links{display:flex;flex-wrap:wrap;gap:0 1.5rem}
+.foot-links a{display:inline-flex;align-items:center;min-height:2.75rem;font:600 .875rem/1 var(--body);color:var(--ink-3);text-decoration:none}
+.foot-links a:hover,.foot-links a[aria-current="page"]{color:var(--ink)}
+.foot-links a:hover{text-decoration:underline;text-underline-offset:.25rem}
+
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} .toc summary svg{transition:none} }
+@media print{
+  .nav,.toc,.skip,.meta button,footer{display:none!important}
+  body{font-size:10.5pt}
+  .doc-head{padding:0 0 1rem}
+  .doc-grid{display:block;padding:0}
+  .doc-body{font-size:10.5pt;line-height:1.55;color:#000}
+  .doc-body section{padding-top:1.25rem;break-inside:auto}
+  .doc-body h2,.doc-body h3{break-after:avoid}
+  .resumen,.tabla,.ficha{border:1px solid #bbb;background:none}
+  .doc-body ul>li::before{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  a{color:inherit}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="./" aria-label="Colmena, inicio" translate="no"><span class="hex bee" aria-hidden="true">🐝</span><span class="name">Colmena</span></a>
+    <nav class="doc-nav" aria-label="Documentos legales">
+      <a href="terminos.html">Términos</a>
+      <a href="privacidad.html" aria-current="page">Privacidad</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido">
+  <div class="wrap">
+    <header class="doc-head">
+      <p class="eyebrow">Colmena · Legal</p>
+      <h1>Aviso de privacidad</h1>
+      <p class="meta"><span>Versión 1.0 · Vigente desde el 29 de octubre de 2026</span>
+        <button type="button" id="imprimir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg>Imprimir o guardar en PDF</button></p>
+      <p class="lang-note" lang="en">This privacy notice is in Spanish. An English version is coming soon.</p>
+    </header>
+
+    <div class="doc-grid">
+      <aside class="toc">
+        <details id="indice">
+          <summary>En esta página <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+          <ol>
+            <li><a href="#resumen">En resumen</a></li>
+            <li><a href="#responsable">1. Quién es responsable</a></li>
+            <li><a href="#datos">2. Qué datos tratamos</a></li>
+            <li><a href="#finalidades">3. Para qué los usamos</a></li>
+            <li><a href="#limitar">4. Cómo limitar su uso</a></li>
+            <li><a href="#talleres">5. Datos de los talleres</a></li>
+            <li><a href="#compartir">6. Con quién los compartimos</a></li>
+            <li><a href="#conservacion">7. Cuánto tiempo los guardamos</a></li>
+            <li><a href="#arco">8. Tus derechos</a></li>
+            <li><a href="#cookies">9. Cookies y almacenamiento</a></li>
+            <li><a href="#seguridad">10. Cómo los protegemos</a></li>
+            <li><a href="#menores">11. Menores de edad</a></li>
+            <li><a href="#cambios">12. Cambios a este aviso</a></li>
+            <li><a href="#autoridad">13. Autoridad</a></li>
+          </ol>
+        </details>
+      </aside>
+
+      <article class="doc-body">
+        <section id="resumen" class="resumen" aria-labelledby="t-resumen">
+          <h2 id="t-resumen">En resumen</h2>
+          <ul>
+            <li>Colmena es un servicio de <strong>Quality &amp; Knowledge on IT Services, S.A. de C.V.</strong> (QK).</li>
+            <li>Pedimos solo lo necesario para contactarte, darte una cuenta y que los talleres funcionen. <strong>No pedimos datos sensibles.</strong></li>
+            <li>Lo que se escribe en un taller es de la organización que lo realiza. QK lo guarda y lo procesa por cuenta de ella.</li>
+            <li><strong>No vendemos tus datos</strong> ni los compartimos para publicidad.</li>
+            <li>Puedes acceder a tus datos, corregirlos, cancelarlos u oponerte a su uso escribiendo a <a href="mailto:admonrh@qacg.com">admonrh@qacg.com</a>.</li>
+            <li>Si tienes cuenta, puedes eliminarla cuando quieras en la app, en <strong>Ajustes → Eliminar mi cuenta</strong>.</li>
+          </ul>
+        </section>
+
+        <section id="responsable" aria-labelledby="t-responsable">
+          <h2 id="t-responsable">1. Quién es responsable de tus datos</h2>
+          <address class="ficha">
+            <strong>Quality &amp; Knowledge on IT Services, S.A. de C.V.</strong>
+            <span>Ejército Nacional 373, interior 503, colonia Granada, alcaldía Miguel Hidalgo, C.P. 11520, Ciudad de México, México.</span>
+            <span>Contacto para datos personales: <a href="mailto:admonrh@qacg.com">admonrh@qacg.com</a> (área de Administración y Finanzas).</span>
+          </address>
+          <p>QK es responsable de los datos personales que se recaban en Colmena (<a href="./">colmena.work</a> y la app en colmena.work/app), salvo los datos de los talleres que una organización realiza en Colmena, que explicamos en la <a href="#talleres">sección 5</a>.</p>
+          <p>Este aviso complementa el <a href="https://qacg.com/aviso-de-privacidad/" rel="noopener">aviso de privacidad general de QK</a>, que aplica a las demás relaciones con QK (clientes, proveedores y candidatos).</p>
+        </section>
+
+        <section id="datos" aria-labelledby="t-datos">
+          <h2 id="t-datos">2. Qué datos tratamos</h2>
+          <h3>Si visitas colmena.work</h3>
+          <ul>
+            <li>Datos de navegación: páginas que visitas, tiempo en cada una, de dónde llegaste, tipo de dispositivo y navegador, idioma, y ciudad o país aproximados (con Google Analytics).</li>
+            <li>Si usas el formulario: señales técnicas de tu navegador para comprobar que eres una persona (con Cloudflare Turnstile).</li>
+            <li>El idioma que eliges (ES o EN) se guarda solo en tu navegador.</li>
+          </ul>
+          <h3>Si pides un taller de prueba</h3>
+          <ul>
+            <li>Nombre y apellido, correo de trabajo, empresa, cuántas personas suelen participar, cada cuánto harías talleres, el taller que quieres probar y el idioma de la página.</li>
+            <li>Por seguridad, una huella cifrada (hash) de tu dirección IP y el identificador de tu navegador, para evitar envíos automáticos o repetidos.</li>
+          </ul>
+          <h3>Si tienes una cuenta (quien facilita o administra)</h3>
+          <ul>
+            <li>Nombre, correo, puesto, foto de perfil (si la agregas), rol en el equipo, quién te invitó y qué correos de aviso quieres recibir.</li>
+            <li>Datos de acceso: tu contraseña se guarda cifrada y nadie en QK puede verla. Si activas Face ID, huella o una llave de acceso, solo se guarda la llave pública del dispositivo; tu rostro o tu huella nunca salen de tu dispositivo. Si activas una app autenticadora, se guarda el registro de ese segundo paso.</li>
+            <li>Actividad de la cuenta: fecha de alta, último acceso, notificaciones, uso de las funciones de IA (cuántas solicitudes y de qué tamaño) y los talleres y borradores que creas.</li>
+          </ul>
+          <h3>Si participas en un taller</h3>
+          <ul>
+            <li>Lo que escribes al entrar: nombre (el apellido es opcional), área, rol y avatar.</li>
+            <li>Lo que respondes en el taller: cómo llegas y qué esperas, las tarjetas con lo que te estorba y qué tanto, tus votos, calificaciones, ideas y apoyos, con su fecha y hora.</li>
+            <li>Entras sin cuenta: no te pedimos correo ni teléfono. Tu navegador guarda una sesión anónima para que no pierdas tu lugar si recargas la página.</li>
+          </ul>
+          <h3>Cuando usas la app</h3>
+          <ul>
+            <li>Eventos de uso seudonimizados para saber si Colmena funciona bien: qué pantalla o paso se usa, cuánto tarda, errores, tipo de dispositivo, navegador, sistema, tamaño de pantalla y tipo de conexión. Se guardan con una clave cifrada, sin tu nombre ni tu correo.</li>
+          </ul>
+          <h3>Datos sensibles</h3>
+          <p>Colmena <strong>no te pide datos personales sensibles</strong>, como los de salud, origen étnico, creencias religiosas, opiniones políticas o preferencia sexual. Te pedimos no escribirlos en tus respuestas, y quien facilita no debe pedirlos.</p>
+        </section>
+
+        <section id="finalidades" aria-labelledby="t-finalidades">
+          <h2 id="t-finalidades">3. Para qué usamos tus datos</h2>
+          <h3>Finalidades necesarias</h3>
+          <p>Son la razón de la relación contigo. Si no estás de acuerdo con ellas, no podremos darte el servicio.</p>
+          <ol>
+            <li>Responder tu solicitud de taller de prueba y darle seguimiento.</li>
+            <li>Crear y administrar tu cuenta y darte un acceso seguro.</li>
+            <li>Prestar el servicio: crear talleres, permitir que las personas entren con su código, mostrar las respuestas en tiempo real, calcular resultados y generar exportaciones.</li>
+            <li>Enviarte los correos del servicio: invitaciones, enlaces de acceso, cambios de contraseña, avisos de tus talleres y la confirmación cuando eliminas tu cuenta.</li>
+            <li>Ejecutar las funciones de IA cuando las pides: proponer un taller o resumir sus resultados.</li>
+            <li>Mantener Colmena funcionando y segura: detectar errores y fallas, prevenir abusos y fraudes, limitar intentos e investigar incidentes.</li>
+            <li>Cumplir obligaciones legales y atender requerimientos de autoridades competentes.</li>
+          </ol>
+          <h3>Finalidades adicionales</h3>
+          <p>Puedes negarte a ellas en cualquier momento, sin que eso afecte el servicio:</p>
+          <ol>
+            <li>Enviarte novedades, contenido y ofertas sobre Colmena y QK.</li>
+            <li>Medir y mejorar el sitio con analítica (Google Analytics).</li>
+            <li>Invitarte a encuestas o entrevistas para mejorar Colmena.</li>
+          </ol>
+          <p>Para negarte, escribe a <a href="mailto:admonrh@qacg.com?subject=Colmena%3A%20finalidades%20adicionales">admonrh@qacg.com</a> con el asunto «Colmena: finalidades adicionales» o usa el enlace para darte de baja que viene en esos correos. Para la analítica del sitio también puedes bloquear las cookies (<a href="#cookies">sección 9</a>).</p>
+          <p>No usamos tus datos para tomar decisiones automatizadas que te produzcan efectos jurídicos o te afecten de forma significativa.</p>
+        </section>
+
+        <section id="limitar" aria-labelledby="t-limitar">
+          <h2 id="t-limitar">4. Cómo puedes limitar el uso o la divulgación de tus datos</h2>
+          <ul>
+            <li>Escríbenos a <a href="mailto:admonrh@qacg.com">admonrh@qacg.com</a> para que dejemos de usar tus datos en las finalidades adicionales o para entrar a nuestra lista de exclusión: no te enviaremos promociones.</li>
+            <li>Bloquea o borra las cookies del sitio desde tu navegador (<a href="#cookies">sección 9</a>).</li>
+            <li>Si tienes cuenta, elige en Ajustes qué correos de aviso quieres recibir, o elimina tu cuenta en <strong>Ajustes → Eliminar mi cuenta</strong>.</li>
+            <li>Si participaste en un taller, puedes pedirle a quien lo facilitó que borre tus respuestas. Al exportar resultados, quien facilita puede anonimizar a los participantes.</li>
+          </ul>
+        </section>
+
+        <section id="talleres" aria-labelledby="t-talleres">
+          <h2 id="t-talleres">5. Datos de los talleres: quién es responsable</h2>
+          <p>Cuando una empresa u organización usa Colmena, ella decide quién participa, qué se pregunta y para qué usará los resultados. Por eso, sobre los datos de sus talleres (participantes y respuestas), <strong>la organización es la responsable y QK actúa como encargado</strong>: los guarda y procesa solo para prestarle el servicio, conforme a sus instrucciones y a los <a href="terminos.html#datos">Términos y condiciones</a>, y no los usa para fines propios.</p>
+          <ul>
+            <li>Quien facilita ve tu nombre junto a tus respuestas y puede exportarlas en Excel, CSV o PDF, con la opción de anonimizar a los participantes.</li>
+            <li>En la pantalla de la sala pueden aparecer tu nombre o tu avatar (por ejemplo, en la sala de espera) y los resultados del grupo.</li>
+            <li>Para ejercer tus derechos sobre esos datos, acude a la organización que te invitó o a quien facilitó el taller. Si nos escribes, le haremos llegar tu solicitud y la apoyaremos para responderte.</li>
+            <li>Si el taller lo organiza QK, QK es la responsable.</li>
+            <li>Solo usamos información de los talleres de forma agregada y anónima (por ejemplo, cuántos talleres se hacen al mes) para operar y mejorar Colmena, nunca para identificar a alguien.</li>
+          </ul>
+        </section>
+
+        <section id="compartir" aria-labelledby="t-compartir">
+          <h2 id="t-compartir">6. Con quién compartimos tus datos</h2>
+          <h3>Proveedores que nos ayudan a dar el servicio</h3>
+          <p>Estos proveedores actúan como encargados: tratan los datos solo por cuenta de QK, para lo que se indica y con obligaciones de seguridad y confidencialidad. Algunos están fuera de México, principalmente en Estados Unidos.</p>
+          <div class="tabla" role="region" aria-label="Proveedores" tabindex="0">
+            <table>
+              <thead><tr><th scope="col">Proveedor</th><th scope="col">Para qué</th><th scope="col">Dónde</th></tr></thead>
+              <tbody>
+                <tr><td>Supabase</td><td>Base de datos, inicio de sesión y funciones del servidor</td><td>Estados Unidos</td></tr>
+                <tr><td>GitHub (Microsoft)</td><td>Publicación del sitio y la app</td><td>Estados Unidos</td></tr>
+                <tr><td>Google</td><td>Envío de correos (Gmail) y analítica del sitio (Google Analytics)</td><td>Estados Unidos</td></tr>
+                <tr><td>Cloudflare</td><td>Verificación anti-spam del formulario (Turnstile)</td><td>Estados Unidos</td></tr>
+                <tr><td>Anthropic</td><td>Funciones de IA, solo cuando las usas</td><td>Estados Unidos</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>A las funciones de IA solo enviamos lo necesario. Para proponer un taller, lo que escribes en el creador. Para el resumen, los resultados del taller (conteos, áreas y los textos de las tarjetas e ideas más votadas), <strong>sin nombres de participantes</strong>.</p>
+          <h3>Transferencias</h3>
+          <p>No vendemos tus datos ni los transferimos a terceros para que los usen para sus propios fines. <strong>No realizamos transferencias que requieran tu consentimiento.</strong> Solo podríamos compartirlos sin tu consentimiento en los casos que permite la ley; por ejemplo, para atender el requerimiento de una autoridad competente.</p>
+        </section>
+
+        <section id="conservacion" aria-labelledby="t-conservacion">
+          <h2 id="t-conservacion">7. Cuánto tiempo guardamos tus datos</h2>
+          <div class="tabla" role="region" aria-label="Plazos de conservación" tabindex="0">
+            <table>
+              <thead><tr><th scope="col">Datos</th><th scope="col">Plazo</th></tr></thead>
+              <tbody>
+                <tr><td>Solicitudes de taller de prueba</td><td>Hasta 12 meses después del último contacto, salvo que se convierta en una relación comercial.</td></tr>
+                <tr><td>Cuenta de quien facilita o administra</td><td>Mientras la cuenta esté activa. Se borra cuando la persona la elimina en Ajustes → Eliminar mi cuenta o cuando quien administra la da de baja; sus talleres pasan a una persona admin del equipo para que no se pierdan los resultados.</td></tr>
+                <tr><td>Talleres y respuestas de participantes</td><td>Mientras la organización o quien facilita los conserve. 30 días después de cerrar un taller, Colmena le recuerda exportarlo y borrarlo. Si la organización deja de usar Colmena, se eliminan a más tardar 60 días después.</td></tr>
+                <tr><td>Eventos de uso de la app</td><td>90 días. Después solo quedan conteos diarios, sin datos de personas.</td></tr>
+                <tr><td>Registro de uso de IA</td><td>Hasta 400 días, para controlar el consumo.</td></tr>
+                <tr><td>Notificaciones de la app</td><td>90 días.</td></tr>
+                <tr><td>Analítica del sitio</td><td>Lo que indique la configuración de retención de Google Analytics (entre 2 y 14 meses).</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Al terminar cada plazo, los datos se bloquean (solo se conservan para atender responsabilidades legales) y después se eliminan de forma segura. Las copias de seguridad de nuestros proveedores se renuevan periódicamente.</p>
+        </section>
+
+        <section id="arco" aria-labelledby="t-arco">
+          <h2 id="t-arco">8. Tus derechos y cómo revocar tu consentimiento</h2>
+          <p>Tienes derecho a <strong>acceder</strong> a tus datos, <strong>rectificarlos</strong> si están incompletos, inexactos o desactualizados, <strong>cancelarlos</strong> y <strong>oponerte</strong> a su uso para fines específicos (derechos ARCO). También puedes revocar el consentimiento que nos hayas dado. Es gratuito.</p>
+          <p>Si tienes cuenta, puedes cancelarla sin escribirnos: en la app, entra a <strong>Ajustes → Eliminar mi cuenta</strong>. Se borran tu acceso y tus datos de perfil, y te llega un correo de confirmación. Para cualquier otra solicitud:</p>
+          <p>Envía un correo a <a href="mailto:admonrh@qacg.com?subject=Colmena%3A%20derechos%20ARCO">admonrh@qacg.com</a> con el asunto «Colmena: derechos ARCO», o un escrito al domicilio de la <a href="#responsable">sección 1</a>, con:</p>
+          <ol>
+            <li>Tu nombre y un correo para responderte.</li>
+            <li>Una copia de tu identificación oficial. Si actúas en representación de alguien, el documento que lo acredite y la identificación de ambos.</li>
+            <li>Qué derecho quieres ejercer y sobre qué datos, explicado con claridad.</li>
+            <li>Cualquier dato que nos ayude a encontrar tu información; por ejemplo, el correo de tu cuenta o el código del taller.</li>
+            <li>Si pides una rectificación: el cambio que pides y, si aplica, el documento que lo respalde.</li>
+          </ol>
+          <p>Te respondemos en un máximo de <strong>20 días</strong> desde que recibimos tu solicitud y, si procede, la hacemos efectiva dentro de los <strong>15 días</strong> siguientes. Estos plazos pueden ampliarse una sola vez por un periodo igual cuando se justifique; si pasa, te lo diremos.</p>
+          <p class="nota">Una solicitud puede no proceder cuando la ley nos obliga a conservar los datos. Si revocas tu consentimiento para una finalidad necesaria, es posible que no podamos seguir dándote el servicio.</p>
+        </section>
+
+        <section id="cookies" aria-labelledby="t-cookies">
+          <h2 id="t-cookies">9. Cookies y almacenamiento en tu navegador</h2>
+          <ul>
+            <li><strong>Google Analytics</strong>, solo en colmena.work: cookies que distinguen visitas (<code>_ga</code> y <code>_ga_…</code>) para la analítica del sitio. Puedes bloquearlas en la configuración de tu navegador o con el <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">complemento de inhabilitación de Google Analytics</a>.</li>
+            <li><strong>Cloudflare Turnstile</strong>, solo en el formulario: revisa señales técnicas del navegador para confirmar que eres una persona y puede usar cookies propias de esa verificación.</li>
+            <li><strong>Almacenamiento local</strong>: el idioma que eliges y, en la app, tu sesión iniciada (para no pedirte entrar cada vez), tus preferencias de accesibilidad, un identificador seudonimizado del dispositivo para los eventos de uso y una copia de la app para que abra más rápido.</li>
+          </ul>
+          <p>Si borras los datos del sitio en tu navegador, todo esto se elimina; tendrás que volver a iniciar sesión.</p>
+        </section>
+
+        <section id="seguridad" aria-labelledby="t-seguridad">
+          <h2 id="t-seguridad">10. Cómo protegemos tus datos</h2>
+          <ul>
+            <li>Conexión cifrada (HTTPS) en todo momento.</li>
+            <li>Control de acceso en la base de datos: cada persona solo puede ver los datos que le corresponden.</li>
+            <li>Contraseñas guardadas cifradas y segundo paso de verificación (Face ID, huella o app autenticadora) para cuentas de administración.</li>
+            <li>Acceso interno limitado a quien lo necesita y obligación de confidencialidad, también para nuestros proveedores.</li>
+            <li>Si ocurre una vulneración de seguridad que afecte de forma significativa tus derechos, te lo informaremos sin demora para que puedas tomar medidas.</li>
+          </ul>
+        </section>
+
+        <section id="menores" aria-labelledby="t-menores">
+          <h2 id="t-menores">11. Menores de edad</h2>
+          <p>Colmena es para organizaciones y personas mayores de edad. Si una organización invita a menores a un taller, es su responsabilidad contar con el consentimiento de quien ejerza la patria potestad o la tutela.</p>
+        </section>
+
+        <section id="cambios" aria-labelledby="t-cambios">
+          <h2 id="t-cambios">12. Cambios a este aviso</h2>
+          <p>Podemos actualizar este aviso por cambios en la ley, en Colmena o en nuestras prácticas. La versión vigente siempre estará en <a href="privacidad.html">colmena.work/privacidad.html</a>, con su fecha. Si un cambio afecta las finalidades o los datos que tratamos, te avisaremos antes de aplicarlo: por correo si tienes cuenta, o con un aviso visible en Colmena.</p>
+        </section>
+
+        <section id="autoridad" aria-labelledby="t-autoridad">
+          <h2 id="t-autoridad">13. Autoridad</h2>
+          <p>Si consideras que tu derecho a la protección de tus datos personales fue lesionado, puedes acudir a la Secretaría Anticorrupción y Buen Gobierno, autoridad en la materia conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+          <p class="nota">Versión 1.0 · Vigente desde el 29 de octubre de 2026.</p>
+        </section>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-izq">
+      <a class="brand" href="./" translate="no"><span class="hex bee" aria-hidden="true">🐝</span>Colmena</a>
+      <nav class="foot-links" aria-label="Legal"><a href="terminos.html">Términos y condiciones</a><a href="privacidad.html" aria-current="page">Aviso de privacidad</a></nav>
+    </div>
+    <div class="powered" translate="no"><span>Powered by</span><img src="img/brand-qk.png" alt="Quality &amp; Knowledge"></div>
+  </div>
+</footer>
+
+<script>
+/* Índice: abierto en escritorio, plegable en celular; resalta la sección que estás leyendo. Botón para imprimir. */
+(function(){
+  var D=document, det=D.getElementById('indice'), mq=matchMedia('(min-width: 64em)');
+  function ajusta(){ if(mq.matches) det.open=true; }
+  ajusta(); if(mq.addEventListener) mq.addEventListener('change',ajusta);
+  det.addEventListener('click',function(e){ if(e.target.closest('a') && !mq.matches) det.open=false; });
+  var ligas={}; [].forEach.call(det.querySelectorAll('a[href^="#"]'),function(a){ ligas[a.getAttribute('href').slice(1)]=a; });
+  if('IntersectionObserver' in window){
+    var actual=null, io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ if(actual) actual.classList.remove('is-on'); actual=ligas[e.target.id]||null; if(actual) actual.classList.add('is-on'); } });
+    },{rootMargin:'-20% 0px -70% 0px'});
+    [].forEach.call(D.querySelectorAll('.doc-body section[id]'),function(s){ io.observe(s); });
+  }
+  var p=D.getElementById('imprimir'); if(p) p.addEventListener('click',function(){ window.print(); });
+})();
+</script>
+</body>
+</html>
