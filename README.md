@@ -12,7 +12,7 @@
 > **Idiomas (español / inglés), desde el 28 oct 2026.** El original es español. El inglés vive en un solo archivo: **`i18n/en.po`** (`msgid` = español, `msgstr` = inglés; se abre con un editor de texto o con Poedit). Sin IA ni costo.
 > - Landing: después de editar `en.po`, corre `python3 tools/i18n.py` (copia el inglés dentro de `index.html`) y sube `index.html`.
 > - Botón **ES | EN** en la barra. La primera vez: español si el navegador está en español; inglés en cualquier otro idioma. La elección se guarda en el navegador (`colmena-lang`) y la app la usará también. Para revisar: abre `index.html?lang=en`.
-> - Lo que el facilitador escribe a mano (nombre del taller, preguntas propias) no se traduce. Las pantallas del participante ya están en inglés (v2.6). Siguiente: el panel del facilitador, correos y PDF/Excel, todo desde el mismo `en.po`.
+> - Lo que el facilitador escribe a mano (nombre del taller, preguntas propias) no se traduce. Las pantallas del participante (v2.6), el panel de quien facilita y el Excel, CSV y PDF (v2.7) ya están en inglés. Siguiente: correos e IA, todo desde el mismo `en.po`.
 >
 > **29 oct 2026 · v2.5.2.**
 > - Landing: menú de hamburguesa cuando las secciones ya no caben en la barra, caja de Cloudflare visible arriba del botón del formulario y abejas que cruzan entre secciones al hacer scroll (con «reducir movimiento» se quedan quietas).
@@ -26,6 +26,12 @@
 > - Qué idioma ve: la primera vez, el de su celular o computadora (español si lo tiene antes que el inglés; cualquier otro idioma → inglés). Lo cambia en la hoja **Aa** (Idioma, texto y contraste); en tablet y computadora también con el botón **EN / ES** de la barra, y en celular con «View in English» bajo «Comenzar». La elección se comparte con la landing (`colmena-lang`). Para revisar: `colmena.work/app/?s=CÓDIGO&lang=en`.
 > - Lo que escriben quien facilita y la sala (nombre del taller, preguntas propias, etapas, tarjetas, ideas) se queda como se escribió. Las preguntas que salen de las plantillas de los 5 tipos sí se traducen, aunque lleven en medio las palabras de quien facilita.
 > - El inglés está en `i18n/en.po` (los textos de la app llevan `#: app`). Después de editarlo: `python3 build.py` y sube `app/index.html` y `app/sw.js`. Texto nuevo en la app: escríbelo como `_t("…")` y corre `python3 tools/i18n.py app` (lo agrega a `en.po` con el inglés vacío y te dice cuáles faltan).
+> - Para publicar: sube `app/index.html` y `app/sw.js`. Sin cambios en Supabase.
+>
+> **29 oct 2026 · v2.7 · El idioma se elige dentro de la app.**
+> - Participante: el primer paso del registro es **Elige tu idioma · Choose your language** (Español / English); también se cambia en la hoja **Aa**. Se quitaron el botón EN / ES de la barra y «View in English».
+> - Quien facilita: **Ajustes → Idioma** cambia todo el panel (Inicio, creador, consola en vivo, resultados, presentación, Equipo, Analítica, Uso de IA y avisos) y también el Excel, CSV y PDF que descarga. Se guarda en ese dispositivo.
+> - Siguen en español por ahora: los correos y lo que propone la IA. En el Excel y el CSV los nombres de columnas y tablas no cambian de idioma (así no se rompen tablas dinámicas, Power BI ni scripts); se traducen títulos, descripciones y valores.
 > - Para publicar: sube `app/index.html` y `app/sw.js`. Sin cambios en Supabase.
 
 Herramienta propia para talleres en vivo: design thinking («Mejora de procesos», el de siempre) y, desde la v2.0, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
@@ -303,7 +309,7 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `migracion-v232-mapa-interacciones.sql` | v2.3.2: mapa privado de interacciones por acción, audiencia, pantalla y dispositivo. |
 | `migracion-v250-eliminar-cuenta.sql` | v2.5.0: «Eliminar mi cuenta» en Ajustes. Los talleres pasan a una persona admin y nadie puede dejar a Colmena sin admin. |
 | `migraciones-anteriores/` | Las migraciones de antes y el `setup.sql` anterior (`setup-base-v126.sql`). Ya están dentro de `setup.sql`; cada una se detiene sola en una base versionada actual. |
-| `i18n/en.po` | v2.6: el inglés de la landing y de la app (`msgid` = español, `msgstr` = inglés). Se edita con un editor de texto o con Poedit. |
+| `i18n/en.po` | v2.7: el inglés de la landing y de la app (participante, panel de quien facilita, Excel, CSV y PDF; `msgid` = español, `msgstr` = inglés). Se edita con un editor de texto o con Poedit. |
 | `tools/i18n.py` | Copia el inglés a la landing (`python3 tools/i18n.py`) y pone al día los textos de la app en `en.po` (`python3 tools/i18n.py app`). `build.py` mete el inglés de la app en `app/index.html`. |
 | `tools/arma_setup.py` | Arma `setup.sql` juntando la base y las migraciones en orden (`--guardias` pone la guardia a las archivadas). |
 | `pruebas/` | Pruebas de base de datos (`sql/probar_sql.py`), de pantallas (`navegador/`) y de seguridad (`seguridad/`). Ver `pruebas/LEEME.md`. |
