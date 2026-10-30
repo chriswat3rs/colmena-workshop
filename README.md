@@ -12,7 +12,7 @@
 > **Idiomas (español / inglés), desde el 28 oct 2026.** El original es español. El inglés vive en un solo archivo: **`i18n/en.po`** (`msgid` = español, `msgstr` = inglés; se abre con un editor de texto o con Poedit). Sin IA ni costo.
 > - Landing: después de editar `en.po`, corre `python3 tools/i18n.py` (copia el inglés dentro de `index.html`) y sube `index.html`.
 > - Botón **ES | EN** en la barra. La primera vez: español si el navegador está en español; inglés en cualquier otro idioma. La elección se guarda en el navegador (`colmena-lang`) y la app la usará también. Para revisar: abre `index.html?lang=en`.
-> - Lo que el facilitador escribe a mano (nombre del taller, preguntas propias) no se traduce. Siguiente: la app (pantallas del participante primero), luego facilitador, correos y PDF/Excel, todo desde el mismo `en.po`.
+> - Lo que el facilitador escribe a mano (nombre del taller, preguntas propias) no se traduce. Las pantallas del participante ya están en inglés (v2.6). Siguiente: el panel del facilitador, correos y PDF/Excel, todo desde el mismo `en.po`.
 >
 > **29 oct 2026 · v2.5.2.**
 > - Landing: menú de hamburguesa cuando las secciones ya no caben en la barra, caja de Cloudflare visible arriba del botón del formulario y abejas que cruzan entre secciones al hacer scroll (con «reducir movimiento» se quedan quietas).
@@ -21,6 +21,12 @@
 > **29 oct 2026 · v2.5.3 · Términos y Aviso de privacidad.** `terminos.html` y `privacidad.html` en la raíz (colmena.work/terminos.html y colmena.work/privacidad.html), con ligas en el pie de la landing y un aviso de privacidad corto junto al formulario. Redactados con base en la Ley Federal de Protección de Datos Personales en Posesión de los Particulares de 2025; deben revisarse con el área legal de QK antes de darlos por definitivos. Si cambian proveedores, datos que se piden o plazos, actualiza también `privacidad.html`.
 >
 > **29 oct 2026 · v2.5.4 · Eliminar mi cuenta.** Cada persona del equipo puede borrar su cuenta en **Ajustes → Eliminar mi cuenta** (contraseña + escribir ELIMINAR). Sus talleres pasan a quien la invitó o a la admin más antigua; la última admin no puede eliminarse. Para publicarlo, en este orden: (1) corre `migracion-v250-eliminar-cuenta.sql` en Supabase → SQL Editor, (2) despliega la función `account` con `supabase/functions/account/index.ts`, (3) sube `app/index.html` y `app/sw.js`. Detalle en «v2.5.4 · Eliminar mi cuenta».
+>
+> **29 oct 2026 · v2.6 · El participante, en español o inglés.** Entrada, registro, sala de espera, las 5 actividades, resultados y cierre, en los 5 tipos de taller. El panel de quien facilita sigue en español.
+> - Qué idioma ve: la primera vez, el de su celular o computadora (español si lo tiene antes que el inglés; cualquier otro idioma → inglés). Lo cambia en la hoja **Aa** (Idioma, texto y contraste); en tablet y computadora también con el botón **EN / ES** de la barra, y en celular con «View in English» bajo «Comenzar». La elección se comparte con la landing (`colmena-lang`). Para revisar: `colmena.work/app/?s=CÓDIGO&lang=en`.
+> - Lo que escriben quien facilita y la sala (nombre del taller, preguntas propias, etapas, tarjetas, ideas) se queda como se escribió. Las preguntas que salen de las plantillas de los 5 tipos sí se traducen, aunque lleven en medio las palabras de quien facilita.
+> - El inglés está en `i18n/en.po` (los textos de la app llevan `#: app`). Después de editarlo: `python3 build.py` y sube `app/index.html` y `app/sw.js`. Texto nuevo en la app: escríbelo como `_t("…")` y corre `python3 tools/i18n.py app` (lo agrega a `en.po` con el inglés vacío y te dice cuáles faltan).
+> - Para publicar: sube `app/index.html` y `app/sw.js`. Sin cambios en Supabase.
 
 Herramienta propia para talleres en vivo: design thinking («Mejora de procesos», el de siempre) y, desde la v2.0, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
 
@@ -297,6 +303,8 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `migracion-v232-mapa-interacciones.sql` | v2.3.2: mapa privado de interacciones por acción, audiencia, pantalla y dispositivo. |
 | `migracion-v250-eliminar-cuenta.sql` | v2.5.0: «Eliminar mi cuenta» en Ajustes. Los talleres pasan a una persona admin y nadie puede dejar a Colmena sin admin. |
 | `migraciones-anteriores/` | Las migraciones de antes y el `setup.sql` anterior (`setup-base-v126.sql`). Ya están dentro de `setup.sql`; cada una se detiene sola en una base versionada actual. |
+| `i18n/en.po` | v2.6: el inglés de la landing y de la app (`msgid` = español, `msgstr` = inglés). Se edita con un editor de texto o con Poedit. |
+| `tools/i18n.py` | Copia el inglés a la landing (`python3 tools/i18n.py`) y pone al día los textos de la app en `en.po` (`python3 tools/i18n.py app`). `build.py` mete el inglés de la app en `app/index.html`. |
 | `tools/arma_setup.py` | Arma `setup.sql` juntando la base y las migraciones en orden (`--guardias` pone la guardia a las archivadas). |
 | `pruebas/` | Pruebas de base de datos (`sql/probar_sql.py`), de pantallas (`navegador/`) y de seguridad (`seguridad/`). Ver `pruebas/LEEME.md`. |
 | `README.md` | Esta guía. |
