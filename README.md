@@ -51,6 +51,16 @@
 >   - *Retrospectiva* → **Acuerdos**: «Cómo nos fue» (Funcionó / No funcionó / Aprendimos), cada tema elegido con su acción más apoyada y la lista de lo que aprendió el equipo.
 > - En los tres: aviso si votaron menos de 3 personas o si los votos quedaron repartidos, avisos de empate o de propuestas sin apoyos, lo que también votó la sala, «Copiar», el bloque en el **PDF** y una hoja nueva en **Excel y CSV** (`diagnostico_priorizado`, `ideas_para_probar` o `acuerdos`, con columnas en español). Sin IA.
 > - Para publicar: sube `app/index.html` y `app/sw.js`. Sin cambios en Supabase (usa la tabla `ws_deliverables` de la v2.8).
+>
+> **2 nov 2026 · v2.10 · Resultados más claros y base común de la interfaz.**
+> - **Resultados**, de arriba abajo: la banda con las **tarjetas de cifras encima** (personas, lo votado, votos e ideas, como en las demás fases), el **resumen con IA** (el texto o, si aún no existe, una fila con «Generar resumen»), el **entregable** (lo que decidió la sala y qué sigue) y el **Detalle por actividad**, plegado (ranking, ideas, quick wins, reglas, tiempos y contexto; cada fila dice su dato principal antes de abrirla).
+> - Cada dato sale una vez. Se quitaron el bloque «el más votado», los 4 datos clave, «Hallazgos» y la barra de secciones: repetían lo mismo (en Diagnóstico, el tema más votado salía 8 veces).
+> - La banda dice «Lo que decidió la sala» y junta las acciones: **Cerrar taller**, **Presentar** y **Compartir** (en solo lectura, Presentar y Compartir).
+> - Entregable: debajo del título, en una línea, qué tan firme es lo elegido («La sala coincide…» o el aviso de votos repartidos o pocos votantes, y quién no votó) y, en Diagnóstico y Retrospectiva, cómo está hoy. En cada fila todas las líneas empiezan en el mismo borde, los pendientes son avisos de texto (no etiquetas), «Lo que dijo la sala» va plegado y Responsable, Fecha y Estado se nombran una vez arriba de las columnas.
+> - **Presentar** empieza con «Lo que decidió la sala» (lo elegido, sus votos y lo más apoyado de cada uno); ya no lleva la diapositiva de hallazgos.
+> - El frasco de la banda de Resultados: la miel, su superficie y las burbujas suben juntas (antes la superficie se veía separada de la miel). Se llena una vez y se queda lleno con un vaivén suave; con «Reducir animaciones» se ve lleno.
+> - **Base común** (ver «Base común de la interfaz», abajo): una escala de texto y un componente por tipo de dato. En Diagnóstico, Resultados pasó de 47 a 26 estilos de texto, de 4,007 a 1,865 px de alto en computadora (7,214 → 3,187 en celular) y de 851 a 402 palabras a la vista.
+> - Para publicar: sube `app/index.html` y `app/sw.js`. Sin cambios en Supabase.
 
 Herramienta propia para talleres en vivo: design thinking («Mejora de procesos», el de siempre) y, desde la v2.0, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
 
@@ -348,6 +358,35 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `migraciones-anteriores/migracion-v117-eliminar-usuarios.sql` | v1.17: eliminar a alguien del equipo; sus talleres, borradores y lo capturado pasan al admin que lo elimina. |
 | `tools/springs.py` | v1.18: genera los resortes (`--spring-*`, `--dur-*`) con física real; `python3 tools/springs.py --write` actualiza `src/prefix.html`. |
 | `migraciones-anteriores/migracion-v200-tipos.sql` | v2.0: tipo de taller, minutos y reloj por fase, «Juntar parecidas» (grupos de tarjetas) y avisos con las palabras de cada tipo. |
+
+## Base común de la interfaz (v2.10)
+
+Un componente por tipo de dato y una sola escala de texto. Se estrenó en **Resultados**; la consola en vivo, Inicio, Mis talleres y las pantallas del participante se pasan después, una por una. Los estilos están en `src/prefix.html` (sección «v2.10 · Base común»).
+
+**Escala de texto** (en rem: sigue a «Tamaño de texto»):
+
+| Uso | Tamaño · peso | Ejemplo |
+|---|---|---|
+| Título de tarjeta | 1.25 · Bricolage 800 | «Diagnóstico priorizado», «Detalle por actividad» |
+| Título de fila | 1 · Montserrat 700 | el nombre de un tema o de un reto |
+| Texto | .875 · 500 (la etiqueta de la línea en 700) | «**Idea más apoyada:** …» |
+| Dato | .8125 · 500 | «Estorba · 3 tarjetas · 12 votos» |
+| Etiqueta | .75 · 700 | «Entregable», «Pendiente», «Responsable» |
+
+Las cifras de la sala van en las **tarjetas sobre la banda** (las mismas de todas las fases).
+
+**Componentes:**
+
+| Dato | Componente | Regla |
+|---|---|---|
+| Lugar | `.c-rk` (hexágono) | Miel solo para lo elegido; gris para lo demás. El mismo en el entregable, el ranking, las ideas y la presentación. |
+| Votos y apoyos | `.c-sup` | Siempre «N votos» o «N apoyos», en el tamaño del texto donde están y sin negritas. Las barras, solo en el ranking. |
+| Etiqueta | `.c-tag` (+ `info`, `ok`, `warn`, `miel`) | Solo textos cortos: estado (Pendiente, En curso, Hecho), «Entregable», «IA», «Elegido», «Más apoyada». |
+| Aviso | `.c-note` (+ `ok`, `warn`; `line` sin caja) | En caja, solo lo que hay que arreglar (falta una migración, no se pudo cargar). En una línea, el estado de lo elegido. Los pendientes de cada fila, como texto con ícono de alerta. |
+| Ver detalle | `details.c-more` (+ `sm`) | Lo que no hace falta para decidir va plegado y dice en su línea qué hay dentro. Se abre con el teclado y recuerda si estaba abierto. |
+| Tarjeta | `.panel` | Blanca, sin borde de color. Una por bloque. |
+
+Reglas: **cada dato sale una vez por pantalla** (si hace falta repetirlo para proyectarlo, va en la presentación) y **en una fila todas las líneas empiezan en el mismo borde**.
 
 ## v1.12 · Acceso sin contraseñas y creador con IA
 
