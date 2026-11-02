@@ -1,6 +1,8 @@
 // Colmena v1.23 · suggest-workshop (v1.12.2: verificación con tiempo límite y reintento; v1.21: registro de tokens, pausa y tope por persona;
 //   v1.23: resumen con IA de los resultados de un taller, acción «summary»; v1.26: mensaje claro si la cuenta de Anthropic se queda sin saldo;
-//   v2.0: el resumen usa las palabras del tipo de taller y viene en puntos con etiqueta)
+//   v2.0: el resumen usa las palabras del tipo de taller y viene en puntos con etiqueta;
+//   v2.8: reglas por tipo de taller sin inventar consenso ni huecos, y acción «deliverable»: definiciones sugeridas
+//         para el modelo de competencias, una vez por taller)
 // Con un formulario corto del facilitador (cliente, proceso, qué duele, objetivo, gente, duración…) devuelve
 // una PROPUESTA completa del taller. La IA decide el contenido; el código decide números, topes y estructura.
 // La página la muestra para revisar y editar: nada se crea solo.
@@ -85,7 +87,7 @@ gate {"s":3,"t":"No se dictamina sin fotos y presupuesto completos","h":"El caso
 type Fields = { cliente: string; industria: string; proceso: string; dolor: string; objetivo: string;
   gente: string; duracion: string; participantes: string[]; herramientas: string; trato: string };
 
-const clean = (v: unknown, max = 160) => String(v ?? "").replace(/[“”«»]/g, '"').replace(/[‘’]/g, "'")
+const clean = (v: unknown) => String(v ?? "").replace(/[“”«»]/g, '"').replace(/[‘’]/g, "'")
   .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, "").replace(/\s+/g, " ").trim();
 /* corta en palabra completa */
 const cut = (v: unknown, max: number) => { const s = clean(v); if (s.length <= max) return s; const c = s.slice(0, max); const i = c.lastIndexOf(" "); return (i > max * 0.6 ? c.slice(0, i) : c).replace(/[,;:.\-–]+$/, "").trim(); };
@@ -208,7 +210,7 @@ async function handle(req: Request, t0: number, reqId: string): Promise<Response
   if (!auth.startsWith("Bearer ")) return json(401, { error: "Inicia sesión" });
   const apiKey = (Deno.env.get("ANTHROPIC_API_KEY") || "").replace(/\s+/g, "");
 
-  let body: { fields?: Partial<Fields>; brief?: string; adjust?: string; keepStages?: string[]; ping?: boolean; regen?: boolean; draft_id?: string; label?: string; action?: string; session_id?: string; stats?: unknown };
+  let body: { fields?: Partial<Fields>; brief?: string; adjust?: string; keepStages?: string[]; ping?: boolean; regen?: boolean; draft_id?: string; label?: string; action?: string; session_id?: string; stats?: unknown; items?: unknown };
   try { body = await req.json(); } catch { return json(400, { error: "Solicitud inválida" }); }
 
   const pubKey = Deno.env.get("SUPABASE_ANON_KEY") || req.headers.get("apikey") || "";
@@ -234,6 +236,7 @@ async function handle(req: Request, t0: number, reqId: string): Promise<Response
   if (body.ping) return json(200, { enabled: !!apiKey, model: apiKey ? MODEL : null });
   if (!apiKey) return json(501, { error: "La IA no está disponible por ahora. Puedes armar el taller a mano con lo que escribiste." });
   if (body.action === "summary") return await summarize(sb, auth, body, apiKey, reqId, t0);
+  if (body.action === "deliverable") return await deliverable(sb, auth, body, apiKey, reqId, t0);
 
   const F = body.fields || {};
   const f: Fields = {
@@ -340,8 +343,15 @@ Formato (respétalo exactamente, sin títulos, saludos ni despedidas):
 - Máximo 130 palabras en total.
 Reglas:
 - Usa solo los datos que recibes. No inventes cifras, causas, nombres ni recomendaciones que no se desprendan de los datos. Si un dato no viene, no lo menciones.
-- Si los datos no traen «tipo», es un taller de design thinking (mejora de procesos). Cubre, si hay datos: dónde se concentra el dolor (etapas), el reto más votado y si los votos quedaron repartidos (retosPct menor a 35), las mejoras con más respaldo con su índice 0–100, las reglas con fricción (índice menor a 50) y la etapa más lenta.
-- Si los datos traen «tipo» (por ejemplo Definir competencias, Diagnóstico, Lluvia de ideas o Retrospectiva), usa las palabras de «palabras» y no hables de dolores, retos ni etapas. Cubre, si hay datos: lo más votado (votos.elegidos, con cuántas tarjetas lo forman), si los votos quedaron repartidos (elegidosPct menor a 35), lo que domina por categoría (tarjetas.porCategoria) y lo más apoyado de cada elegido (propuestas).
+- Consenso: di que la sala coincide o que hay consenso solo si votaron 3 personas o más (votos.votantes) y retosPct o elegidosPct es 35 o más. Si es menor a 35, di que los votos quedaron repartidos. Si votaron menos de 3 personas, di que aún hay pocos votos y no hables de consenso ni de prioridades firmes.
+- No inventes huecos: no digas que algo falta, que hay una brecha, una debilidad o un área de oportunidad si los datos no lo dicen.
+- Si los datos no traen «tipo», es un taller de mejora de procesos. Cubre, si hay datos: dónde se concentra el dolor (etapas), el reto más votado y si los votos quedaron repartidos (retosPct menor a 35), las mejoras con más respaldo con su índice 0–100, las reglas con fricción (índice menor a 50) y la etapa más lenta.
+- Si los datos traen «tipo», usa las palabras de «palabras» y no hables de dolores, retos ni etapas. Cubre, si hay datos, según «clave»:
+  · comp (Definir competencias): las competencias elegidas, cuántos comportamientos forman cada una y la propuesta más apoyada de cómo se ve. La sala describió lo que hace bien alguien en ese rol: no evaluó a nadie, así que no digas que el equipo o una persona tiene o no tiene una competencia.
+  · diag (Diagnóstico): qué domina entre lo que funciona y lo que estorba (tarjetas.porCategoria), los temas elegidos y lo más apoyado de qué haríamos.
+  · ideas (Lluvia de ideas): las ideas elegidas, cuántas ideas parecidas juntó cada una y los pasos más apoyados.
+  · retro (Retrospectiva): el balance entre lo que funcionó, lo que no funcionó y lo que aprendimos (tarjetas.porCategoria), los temas elegidos y las acciones más apoyadas.
+  · En cualquier tipo: si los votos quedaron repartidos (elegidosPct menor a 35), dilo.
 - Fuera de las etiquetas, resalta con **negritas** como máximo una frase clave por línea.
 - Tono claro, concreto y profesional.`;
 
@@ -419,4 +429,141 @@ async function summarize(sb: any, auth: string, body: any, apiKey: string, reqId
   if (!text) return json(502, { error: "No pudimos escribir el resumen esta vez. Intenta de nuevo.", req: reqId });
   if (!saved) return json(503, { error: "No pudimos guardar el resumen. Intenta de nuevo.", retry: true, req: reqId });
   return json(200, { summary: text, summary_at: at, model: MODEL, usage, ai: null });
+}
+
+/* v2.8 · Entregable: definiciones sugeridas para el modelo de competencias (Definir competencias).
+   Solo quien facilita y con el taller terminado; UNA vez por taller (Uso de IA: kind «entregable»). No la frenan la
+   pausa ni el tope mensual, igual que el resumen; sus tokens sí se registran. La IA solo redacta definiciones con los
+   comportamientos y «Cómo se ve» que escribió la sala. Se guardan marcadas como sugeridas (src «ai», «por validar»)
+   y nunca reemplazan una definición que quien facilita ya revisó o escribió (src «ok»). */
+const DELIV_SYSTEM = `Eres analista de Colmena (Quality & Knowledge). En un taller para definir competencias, la sala escribió comportamientos de alguien que hace bien un rol, los juntó en competencias y propuso cómo se ve cada una en el día a día.
+Para cada competencia redacta una definición sugerida para un modelo de competencias.
+Reglas:
+- Una sola oración por competencia, de 15 a 30 palabras: qué hace la persona y para qué le sirve al rol. En tercera persona y en presente.
+- Básate solo en sus comportamientos y en cómo se ve. No agregues conductas, niveles, porcentajes, herramientas ni ejemplos que no estén en los datos.
+- No copies los comportamientos al pie de la letra ni los enlistes.
+- Escribe en el mismo idioma en que vienen los comportamientos.
+- Sin títulos, comillas ni explicaciones.
+Responde SOLO con JSON válido: {"d":["definición de la competencia 1","definición de la competencia 2"]}, una definición por competencia y en el mismo orden.`;
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/* {"d":[…]} aunque la respuesta venga con texto de más o cortada */
+function parseDefs(text: string, n: number): string[] {
+  const t = ("{" + text).replace(/```(?:json)?/gi, "").trim();
+  // deno-lint-ignore no-explicit-any
+  let arr: any = null;
+  try { arr = JSON.parse(t).d; } catch { /* sigue */ }
+  if (!Array.isArray(arr)) {
+    const i = t.indexOf("["); arr = [];
+    if (i >= 0) for (const m of t.slice(i).matchAll(/"((?:[^"\\]|\\.)*)"/g)) { try { arr.push(JSON.parse('"' + m[1] + '"')); } catch { /* otra */ } }
+  }
+  return Array.from({ length: n }, (_, k) => cut(String(arr[k] ?? "").replace(/^["'\s]+|["'\s]+$/g, ""), 400));
+}
+
+// deno-lint-ignore no-explicit-any
+async function deliverable(sb: any, auth: string, body: any, apiKey: string, reqId: string, t0: number): Promise<Response> {
+  const MSG_DFAIL = "No pudimos sugerir las definiciones esta vez. Intenta de nuevo.";
+  const sid = String(body.session_id || "");
+  if (!UUID.test(sid)) return json(400, { error: "Solicitud inválida" });
+  const { data: ses, error: se } = await sb.from("ws_sessions").select("id,name,owner_id,phase,kind").eq("id", sid).maybeSingle();
+  if (se) { logErr({ req: reqId, deliverable: "ws_sessions", message: String(se.message || se).slice(0, 200) }); return json(503, { error: MSG_RETRY, retry: true, req: reqId }); }
+  if (!ses) return json(404, { error: "No encontramos el taller." });
+  const uid = jwtSub(auth);
+  if (ses.owner_id !== uid) return json(403, { error: "Solo quien facilita el taller puede pedir las definiciones." });
+  if (!["results", "closed"].includes(String(ses.phase))) return json(409, { error: "Las definiciones con IA se piden cuando el taller termina (Resultados o Cierre).", ai: "phase" });
+  if (String(ses.kind) !== "comp") return json(400, { error: "Las definiciones con IA son para talleres de Definir competencias." });
+
+  // Lo que manda la página: [{k: id de la competencia, n: nombre, c: comportamientos, v: cómo se ve}]
+  // deno-lint-ignore no-explicit-any
+  const raw: any[] = Array.isArray(body.items) ? body.items.slice(0, 8) : [];
+  const items = raw.map((x) => ({ k: String(x?.k || ""), n: cut(x?.n, 120),
+    c: (Array.isArray(x?.c) ? x.c : []).slice(0, 15).map((s: unknown) => cut(s, 160)).filter(Boolean),
+    v: (Array.isArray(x?.v) ? x.v : []).slice(0, 5).map((s: unknown) => cut(s, 160)).filter(Boolean) }))
+    .filter((x) => UUID.test(x.k) && x.n && x.c.length);
+  if (!items.length) return json(400, { error: "Aún no hay competencias elegidas para definir." });
+
+  const svc = createClient(Deno.env.get("SUPABASE_URL")!, serverKey(), { auth: { persistSession: false, autoRefreshToken: false } });
+  // Solo competencias de este taller (las tarjetas o grupos que votó la sala)
+  const { data: cards, error: ce } = await svc.from("ws_cards").select("id").eq("session_id", sid).in("id", items.map((x) => x.k));
+  if (ce) { logErr({ req: reqId, deliverable: "ws_cards", message: String(ce.message || ce).slice(0, 200) }); return json(503, { error: MSG_RETRY, retry: true, req: reqId }); }
+  const mine = new Set((cards || []).map((c: { id: string }) => c.id));
+  const list = items.filter((x) => mine.has(x.k));
+  if (!list.length) return json(400, { error: "Aún no hay competencias elegidas para definir." });
+
+  // Antes de gastar tokens: la tabla existe y el taller no ha usado su oportunidad
+  const { data: cur, error: re } = await svc.from("ws_deliverables").select("data").eq("session_id", sid).maybeSingle();
+  if (re) {
+    logErr({ req: reqId, deliverable: "ws_deliverables", message: String(re.message || re).slice(0, 200) });
+    return /ws_deliverables|does not exist|schema cache/i.test(String(re.message || ""))
+      ? json(500, { error: "Falta correr migracion-v280-entregable.sql en Supabase. Avísale al admin.", req: reqId })
+      : json(503, { error: MSG_RETRY, retry: true, req: reqId });
+  }
+  const { data: done, error: de } = await svc.from("ws_ai_log").select("id").eq("session_id", sid).eq("kind", "entregable").eq("ok", true).limit(1);
+  if (de) { logErr({ req: reqId, deliverable: "ws_ai_log", message: String(de.message || de).slice(0, 200) }); return json(503, { error: MSG_RETRY, retry: true, req: reqId }); }
+  if ((done && done.length) || (cur?.data && cur.data.ai_at)) return json(409, { error: "Este taller ya usó sus definiciones con IA. Puedes editarlas, pero no volver a pedirlas.", ai: "once" });
+  let logId: number | null = null;
+  { const { data: row, error: le } = await svc.from("ws_ai_log").insert({ user_id: uid, kind: "entregable", label: cut(ses.name, 160), session_id: sid }).select("id").single();
+    if (le) logErr({ req: reqId, deliverable: "ws_ai_log insert", message: String(le.message || le).slice(0, 200) }); else logId = Number(row?.id) || null; }
+
+  const left = () => DEADLINE_MS - (Date.now() - t0);
+  const payload = JSON.stringify(list.map((x, i) => ({ n: i + 1, competencia: x.n, comportamientos: x.c, comoSeVe: x.v })));
+  // deno-lint-ignore no-explicit-any
+  let out: any;
+  try {
+    const r = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+      body: JSON.stringify({ model: MODEL, max_tokens: 900, temperature: 0.3, system: DELIV_SYSTEM,
+        messages: [{ role: "user", content: "Taller: " + cut(ses.name, 160) + "\n\nCompetencias (JSON):\n" + payload.slice(0, 9000) }, { role: "assistant", content: "{" }] }),
+      signal: AbortSignal.timeout(Math.max(1000, left())),
+    });
+    if (!r.ok) {
+      const tx = await r.text(); logErr({ req: reqId, deliverable: r.status, body: tx.slice(0, 300) });
+      const busy = r.status === 429 || r.status === 529;
+      const msg = busy ? "La IA está ocupada. Intenta en un minuto."
+        : r.status === 400 && /credit/i.test(tx) ? MSG_NO_CREDIT
+        : r.status === 401 ? "La llave de la IA no es válida: revísala en Supabase → Edge Functions → Secrets."
+        : MSG_DFAIL;
+      return json(busy ? 429 : 502, { error: msg, ai: /credit/i.test(tx) ? "credit" : undefined, req: reqId });
+    }
+    out = await r.json();
+  } catch (e) {
+    const timeout = /Timeout|Abort/i.test(String((e as Error)?.name || ""));
+    logErr({ req: reqId, deliverable: "fetch", timeout, message: String((e as Error)?.message || e).slice(0, 300) });
+    return json(timeout ? 504 : 503, { error: timeout ? "La IA tardó demasiado. Intenta de nuevo." : "No pudimos conectar con la IA. Intenta de nuevo en un momento.", retry: true, req: reqId });
+  }
+  const usage = out?.usage || null;
+  const text = (out?.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join("");
+  const defs = parseDefs(text, list.length);
+  const tin = Number(usage?.input_tokens) || 0, tout = Number(usage?.output_tokens) || 0;
+
+  // Se guarda junto con lo que ya completó quien facilita. Primero se guarda y solo entonces cuenta como «ya usado».
+  const at = new Date().toISOString();
+  // deno-lint-ignore no-explicit-any
+  const data: any = cur?.data && typeof cur.data === "object" && !Array.isArray(cur.data) ? cur.data : {};
+  data.v = 1; data.kind = "comp";
+  data.items = data.items && typeof data.items === "object" && !Array.isArray(data.items) ? data.items : {};
+  let n = 0;
+  list.forEach((x, i) => {
+    const d = defs[i]; if (!d) return;
+    const it = data.items[x.k] && typeof data.items[x.k] === "object" ? data.items[x.k] : {};
+    if (it.def && it.src === "ok") return;
+    data.items[x.k] = { ...it, def: d, src: "ai", at }; n++;
+  });
+  let saved = false;
+  if (n) {
+    data.ai_at = at;
+    const { error } = await svc.from("ws_deliverables").upsert({ session_id: sid, data, updated_by: uid }, { onConflict: "session_id" });
+    if (error) logErr({ req: reqId, deliverable_save: String(error.message || error).slice(0, 200) }); else saved = true;
+  }
+  if (logId) {
+    try {
+      const { error } = await svc.from("ws_ai_log").update({ input_tokens: tin, output_tokens: tout, model: MODEL, ok: saved, session_id: sid }).eq("id", logId);
+      if (error) logErr({ req: reqId, usage_log: String(error.message || error).slice(0, 200) });
+    } catch (e) { logErr({ req: reqId, usage_log: String((e as Error)?.message || e).slice(0, 200) }); }
+  }
+  if (!n) return json(502, { error: MSG_DFAIL, req: reqId });
+  if (!saved) return json(503, { error: "No pudimos guardar las definiciones. Intenta de nuevo.", retry: true, req: reqId });
+  return json(200, { data, at, n, model: MODEL, usage, ai: null });
 }
