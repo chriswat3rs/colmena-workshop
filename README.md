@@ -43,6 +43,14 @@
 > - `setup.sql` (ahora v2.8.0) se puede volver a correr completo en una base que ya existe: antes se detenía a la mitad (parte v2.2).
 > - **Barrido de código** (lo que quedaba de COD-16 en la revisión de octubre, y más): se quitó lo que ya nadie usaba: 35 funciones y métodos, 546 reglas de estilo, 5 animaciones, 7 íconos y 45 textos de traducción. La app pesa 90 KB menos y se ve igual (149 pantallas comparadas contra la versión anterior; Excel, CSV y PDF idénticos).
 > - Para publicar, en este orden: (1) corre `migracion-v280-entregable.sql` en Supabase → SQL Editor (al final sale `tabla = 1 · reglas = 3 · version = 2.8.0`); (2) despliega la función `suggest-workshop` con `supabase/functions/suggest-workshop/index.ts`; (3) sube `app/index.html` y `app/sw.js`.
+>
+> **2 nov 2026 · v2.9 · Entregable para Diagnóstico, Lluvia de ideas y Retrospectiva.**
+> - Los cinco tipos de taller ya tienen su entregable en **Resultados**. Como el plan de acción, sale solo de lo que decidió la sala (texto literal) y quien facilita completa primer paso, responsable, fecha y estado:
+>   - *Diagnóstico* → **Diagnóstico priorizado**: cuántas tarjetas hay de cada categoría («Cómo está hoy»), cada tema elegido con lo que dijo la sala y la idea más apoyada de «Qué haríamos».
+>   - *Lluvia de ideas* → **Ideas para probar**: cada idea elegida con las ideas parecidas que juntó y el paso más apoyado de «Cómo la hacemos».
+>   - *Retrospectiva* → **Acuerdos**: «Cómo nos fue» (Funcionó / No funcionó / Aprendimos), cada tema elegido con su acción más apoyada y la lista de lo que aprendió el equipo.
+> - En los tres: aviso si votaron menos de 3 personas o si los votos quedaron repartidos, avisos de empate o de propuestas sin apoyos, lo que también votó la sala, «Copiar», el bloque en el **PDF** y una hoja nueva en **Excel y CSV** (`diagnostico_priorizado`, `ideas_para_probar` o `acuerdos`, con columnas en español). Sin IA.
+> - Para publicar: sube `app/index.html` y `app/sw.js`. Sin cambios en Supabase (usa la tabla `ws_deliverables` de la v2.8).
 
 Herramienta propia para talleres en vivo: design thinking («Mejora de procesos», el de siempre) y, desde la v2.0, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
 
