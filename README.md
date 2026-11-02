@@ -33,6 +33,16 @@
 > - Quien facilita: **Ajustes → Idioma** cambia todo el panel (Inicio, creador, consola en vivo, resultados, presentación, Equipo, Analítica, Uso de IA y avisos) y también el Excel, CSV y PDF que descarga. Se guarda en ese dispositivo.
 > - Siguen en español por ahora: los correos y lo que propone la IA. En el Excel y el CSV los nombres de columnas y tablas no cambian de idioma (así no se rompen tablas dinámicas, Power BI ni scripts); se traducen títulos, descripciones y valores.
 > - Para publicar: sube `app/index.html` y `app/sw.js`. Sin cambios en Supabase.
+>
+> **2 nov 2026 · v2.8 · Entregable del taller y resumen sin consensos inventados.**
+> - **Resultados → Entregable**, debajo del Resumen. En *Definir competencias*: un **modelo de competencias preliminar** (cada competencia elegida con su definición, los comportamientos que vio la sala, cómo se ve, su prioridad por votos y lo que falta antes de validarla con el cliente). En *Mejora de procesos*: un **plan de acción** (cada reto con su idea más apoyada y los quick wins que pasaron de 70, con primer paso, responsable, fecha y estado). Diagnóstico, Lluvia de ideas y Retrospectiva llegan después.
+> - Se arma solo con lo que decidió la sala, con su texto literal. Lo que completa quien facilita se guarda en la tabla nueva `ws_deliverables`: no viaja por tiempo real, los celulares no la pueden leer y una admin la ve en solo lectura.
+> - **Definiciones con IA** (solo competencias, una vez por taller, botón «Sugerir definiciones»): quedan marcadas **«Sugerida por IA · por validar»** hasta que quien facilita las guarda como revisadas; nunca reemplazan una definición que ya escribiste. En Uso de IA aparecen como «Entregable».
+> - **Resumen con IA:** solo habla de consenso si votaron 3 personas o más y lo elegido junta 35 % de los votos o más; no inventa huecos ni áreas de oportunidad; tiene reglas propias para cada tipo de taller y recibe los datos en español aunque el panel esté en inglés.
+> - El entregable también sale en el **PDF** (después de la portada, junto con el resumen) y en el **Excel y CSV** (hoja `plan_accion` o `modelo_competencias`, con columnas en español).
+> - `setup.sql` (ahora v2.8.0) se puede volver a correr completo en una base que ya existe: antes se detenía a la mitad (parte v2.2).
+> - **Barrido de código** (lo que quedaba de COD-16 en la revisión de octubre, y más): se quitó lo que ya nadie usaba: 35 funciones y métodos, 546 reglas de estilo, 5 animaciones, 7 íconos y 45 textos de traducción. La app pesa 90 KB menos y se ve igual (149 pantallas comparadas contra la versión anterior; Excel, CSV y PDF idénticos).
+> - Para publicar, en este orden: (1) corre `migracion-v280-entregable.sql` en Supabase → SQL Editor (al final sale `tabla = 1 · reglas = 3 · version = 2.8.0`); (2) despliega la función `suggest-workshop` con `supabase/functions/suggest-workshop/index.ts`; (3) sube `app/index.html` y `app/sw.js`.
 
 Herramienta propia para talleres en vivo: design thinking («Mejora de procesos», el de siempre) y, desde la v2.0, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
 
@@ -272,7 +282,7 @@ Límites que conviene conocer:
 
 ### Actualizar desde una versión anterior
 
-`setup.sql` se puede volver a correr completo sin perder datos (todo es `if not exists` / `create or replace`). **Es el estado actual (v2.5.0):** lo arma `tools/arma_setup.py` con la base v1.26 y cada migración nueva, así que correrlo nunca regresa funciones a una versión vieja. La base guarda su versión (`ws_schema_version`): un `setup.sql` más viejo o una migración de `migraciones-anteriores/` se detienen con un aviso y no cambian nada. Para una base que ya existe basta con correr, en orden, las migraciones que aún le falten.
+`setup.sql` se puede volver a correr completo sin perder datos (todo es `if not exists` / `create or replace`). **Es el estado actual (v2.8.0):** lo arma `tools/arma_setup.py` con la base v1.26 y cada migración nueva, así que correrlo nunca regresa funciones a una versión vieja. La base guarda su versión (`ws_schema_version`): un `setup.sql` más viejo o una migración de `migraciones-anteriores/` se detienen con un aviso y no cambian nada. Para una base que ya existe basta con correr, en orden, las migraciones que aún le falten.
 
 **De v1.4 a v1.5 (roles):** corre `setup.sql` completo otra vez. Tu cuenta (la primera facilitadora) pasa sola a **admin** y tus talleres se conservan. Luego haz el ajuste de **Confirm email** del paso 2 y sube el nuevo `index.html`.
 
@@ -301,13 +311,14 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | Archivo | Qué es |
 |---|---|
 | `index.html` | Toda la app: participante (móvil) + panel del facilitador. Incluye la librería de Supabase y el generador de QR, sin depender de CDNs. |
-| `setup.sql` | Estado actual de la base (v2.5.0): esquema, reglas de seguridad, tiempo real y analítica privada. Re-ejecutable y sin borrar datos. Se arma con `python3 tools/arma_setup.py`; no se edita a mano. |
+| `setup.sql` | Estado actual de la base (v2.8.0): esquema, reglas de seguridad, tiempo real y analítica privada. Re-ejecutable y sin borrar datos. Se arma con `python3 tools/arma_setup.py`; no se edita a mano. |
 | `migracion-v210-seguridad.sql` | v2.1: lo que corres en una base que ya existe (permisos del participante, candado de votos, versión de la base). |
 | `migracion-v220-lobby-edit.sql` | v2.2: bloquea en PostgreSQL la configuración al entrar la primera persona o iniciar el taller. Incluye protección atómica ante entradas y ediciones simultáneas. |
 | `migracion-v230-analitica.sql` | v2.3: telemetría privada, RPC de ingesta y consulta admin, agregados diarios y retención de 90 días. |
 | `migracion-v231-ultimo-acceso.sql` | v2.3.1: último acceso de cada integrante, visible únicamente para admin en Equipo. |
 | `migracion-v232-mapa-interacciones.sql` | v2.3.2: mapa privado de interacciones por acción, audiencia, pantalla y dispositivo. |
 | `migracion-v250-eliminar-cuenta.sql` | v2.5.0: «Eliminar mi cuenta» en Ajustes. Los talleres pasan a una persona admin y nadie puede dejar a Colmena sin admin. |
+| `migracion-v280-entregable.sql` | v2.8.0: tabla `ws_deliverables` con lo que completa quien facilita en el entregable (definiciones, responsables, fechas y estado). Solo quien facilita la edita; no viaja por tiempo real. |
 | `migraciones-anteriores/` | Las migraciones de antes y el `setup.sql` anterior (`setup-base-v126.sql`). Ya están dentro de `setup.sql`; cada una se detiene sola en una base versionada actual. |
 | `i18n/en.po` | v2.7: el inglés de la landing y de la app (participante, panel de quien facilita, Excel, CSV y PDF; `msgid` = español, `msgstr` = inglés). Se edita con un editor de texto o con Poedit. |
 | `tools/i18n.py` | Copia el inglés a la landing (`python3 tools/i18n.py`) y pone al día los textos de la app en `en.po` (`python3 tools/i18n.py app`). `build.py` mete el inglés de la app en `app/index.html`. |
@@ -318,7 +329,7 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `supabase/functions/send-invite/index.ts` | Función que envía la invitación (Gmail o Resend). |
 | `supabase/functions/send-notifications/index.ts` | Función que envía los correos del centro de notificaciones. |
 | `manifest.json`, `sw.js`, `icons/` | App instalable (v1.10): manifiesto, service worker e íconos. |
-| `supabase/functions/suggest-workshop/index.ts` | Función que pide a la IA un borrador de taller (v1.9, opcional). |
+| `supabase/functions/suggest-workshop/index.ts` | Función de IA (opcional): borrador de taller (v1.9), resumen de resultados (v1.23) y definiciones del modelo de competencias (v2.8). |
 | `migraciones-anteriores/migracion-v16-notificaciones.sql` | Instala el centro de notificaciones sobre la v1.5. |
 | `migraciones-anteriores/migracion-v17-inicio.sql` | Inicio, perfil editable y datos del dashboard sobre la v1.6. |
 | `supabase/functions/account/index.ts` | v1.12: aceptar invitación sin contraseña, «Entrar sin contraseña» (enlace por correo) y «Reiniciar acceso». |
