@@ -1,20 +1,20 @@
 -- ============================================================
--- COLMENA · setup.sql · ESTADO ACTUAL v2.8.0
+-- COLMENA · setup.sql · ESTADO ACTUAL v2.11.1
 -- Lo arma tools/arma_setup.py: no lo edites a mano (edita la migración y vuelve a armarlo).
 --
 -- Base nueva: pega TODO este archivo en Supabase → SQL Editor → New query → Run.
 -- Base que ya existe: también sirve y no borra datos (todo es «if not exists» / «create or replace»),
 -- aunque basta con correr la migración nueva que indique el README.
--- Incluye, en orden: Base v1.26 · v2.0 · Tipos de taller, «Juntar parecidas» y tiempo por fase · v2.1 · Seguridad y datos · v2.2 · Edición segura en Sala de espera · v2.3 · Analítica privada de producto · v2.3.1 · Último acceso del equipo · v2.3.2 · Mapa de calor por acciones · v2.5 · Eliminar mi cuenta · v2.8 · Entregable del taller.
--- Si la base ya está en una versión más nueva que la 2.8.0, se detiene con un aviso y no cambia nada.
+-- Incluye, en orden: Base v1.26 · v2.0 · Tipos de taller, «Juntar parecidas» y tiempo por fase · v2.1 · Seguridad y datos · v2.2 · Edición segura en Sala de espera · v2.3 · Analítica privada de producto · v2.3.1 · Último acceso del equipo · v2.3.2 · Mapa de calor por acciones · v2.4 · Solicitudes de taller de prueba · v2.5 · Eliminar mi cuenta · v2.8 · Entregable del taller · v2.11 · Eliminar mi cuenta solo desde el servidor y límites de IA sin huecos · v2.11.1 · Límites de IA más firmes y entregable sin ediciones perdidas.
+-- Si la base ya está en una versión más nueva que la 2.11.1, se detiene con un aviso y no cambia nada.
 -- ============================================================
 do $$
 declare v text;
 begin
   if to_regclass('public.ws_schema_version') is not null then
     select version into v from public.ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
-    if v is not null and string_to_array(v, '.')::int[] > array[2,8,0] then
-      raise exception 'Tu base ya está en la versión % y este setup.sql es de la 2.8.0. No lo corras: regresaría funciones a una versión anterior. Usa el setup.sql más nuevo.', v;
+    if v is not null and string_to_array(v, '.')::int[] > array[2,11,1] then
+      raise exception 'Tu base ya está en la versión % y este setup.sql es de la 2.11.1. No lo corras: regresaría funciones a una versión anterior. Usa el setup.sql más nuevo.', v;
     end if;
   end if;
 end $$;
@@ -2344,7 +2344,7 @@ begin
     raise exception 'Primero corre migracion-v210-seguridad.sql (v2.1) y después esta migración.';
   end if;
   select version into v from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
-  if v is not null and string_to_array(v, '.')::int[] > array[2,8,0] then
+  if v is not null and string_to_array(v, '.')::int[] > array[2,11,1] then
     raise exception 'Tu base ya está en la versión %; no corras una migración anterior.', v;
   end if;
 end $$;
@@ -2431,7 +2431,7 @@ begin
     raise exception 'Primero corre migracion-v220-lobby-edit.sql (v2.2) y después esta migración.';
   end if;
   select version into v from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
-  if v is not null and string_to_array(v, '.')::int[] > array[2,8,0] then
+  if v is not null and string_to_array(v, '.')::int[] > array[2,11,1] then
     raise exception 'Tu base ya está en la versión %; no corras una migración anterior.', v;
   end if;
 end $$;
@@ -2664,7 +2664,7 @@ begin
     raise exception 'Primero corre migracion-v230-analitica.sql (v2.3) y después esta migración.';
   end if;
   select version into v from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
-  if v is not null and string_to_array(v, '.')::int[] > array[2,8,0] then
+  if v is not null and string_to_array(v, '.')::int[] > array[2,11,1] then
     raise exception 'Tu base ya está en la versión %; no corras una migración anterior.', v;
   end if;
 end $$;
@@ -2720,7 +2720,7 @@ begin
     raise exception 'Primero corre migracion-v231-ultimo-acceso.sql (v2.3.1) y después esta migración.';
   end if;
   select version into v from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
-  if v is not null and string_to_array(v, '.')::int[] > array[2,8,0] then
+  if v is not null and string_to_array(v, '.')::int[] > array[2,11,1] then
     raise exception 'Tu base ya está en la versión %; no corras una migración anterior.', v;
   end if;
 end $$;
@@ -2842,6 +2842,39 @@ select
   (select version from ws_schema_version order by string_to_array(version,'.')::int[] desc limit 1) as version;
 
 -- ============================================================
+-- PARTE · v2.4 · Solicitudes de taller de prueba (landing)
+-- (de migracion-v240-solicitudes-prueba.sql)
+-- ============================================================
+-- Colmena v2.4 · Solicitudes de prueba desde la landing (colmena.work)
+-- Guarda lo que llega del formulario «Pide tu taller de prueba».
+-- Solo la función trial-request (con la llave secreta del servidor) puede escribir y leer.
+-- Con la llave pública nadie puede ver ni crear filas: RLS encendido y sin permisos para anon ni authenticated.
+-- Se corre una sola vez en Supabase → SQL Editor. Se puede volver a correr sin problema.
+
+create table if not exists public.ws_trial_requests (
+  id            uuid primary key default gen_random_uuid(),
+  created_at    timestamptz not null default now(),
+  name          text not null check (char_length(name) between 2 and 80),
+  company       text not null check (char_length(company) between 2 and 120),
+  email         text not null check (char_length(email) between 5 and 160),
+  room_size     text not null check (room_size in ('hasta-15','16-30','31-60','mas-60')),
+  frequency     text not null check (frequency in ('uno','cada-2-3-meses','1-2-al-mes','semanal')),
+  workshop_type text check (workshop_type is null or char_length(workshop_type) <= 60),
+  ip_hash       text,
+  user_agent    text,
+  email_sent    boolean not null default false,
+  handled       boolean not null default false
+);
+
+comment on table public.ws_trial_requests is 'Solicitudes de taller de prueba desde la landing (v2.4). Solo la función trial-request escribe aquí.';
+
+alter table public.ws_trial_requests enable row level security;
+revoke all on public.ws_trial_requests from anon, authenticated;
+
+create index if not exists ws_trial_requests_ip_idx    on public.ws_trial_requests (ip_hash, created_at desc);
+create index if not exists ws_trial_requests_email_idx on public.ws_trial_requests (email, created_at desc);
+
+-- ============================================================
 -- PARTE · v2.5 · Eliminar mi cuenta
 -- (de migracion-v250-eliminar-cuenta.sql)
 -- ============================================================
@@ -2862,7 +2895,7 @@ begin
     raise exception 'Primero corre migracion-v232-mapa-interacciones.sql (v2.3.2) y después esta migración.';
   end if;
   select version into v from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
-  if v is not null and string_to_array(v, '.')::int[] > array[2,8,0] then
+  if v is not null and string_to_array(v, '.')::int[] > array[2,11,1] then
     raise exception 'Tu base ya está en la versión %; no corras una migración anterior.', v;
   end if;
 end $$;
@@ -2983,7 +3016,7 @@ begin
     raise exception 'Primero corre migracion-v250-eliminar-cuenta.sql (v2.5) y después esta migración.';
   end if;
   select version into v from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
-  if v is not null and string_to_array(v, '.')::int[] > array[2,8,0] then
+  if v is not null and string_to_array(v, '.')::int[] > array[2,11,1] then
     raise exception 'Tu base ya está en la versión %; no corras una migración anterior.', v;
   end if;
 end $$;
@@ -3037,7 +3070,362 @@ select
   (select version from ws_schema_version order by string_to_array(version,'.')::int[] desc limit 1) as version;
 
 -- ============================================================
--- Verificación final (una sola fila): version = 2.8.0 y todas las tablas con seguridad activa
+-- PARTE · v2.11 · Eliminar mi cuenta solo desde el servidor y límites de IA sin huecos
+-- (de migracion-v2-11-cuenta-e-ia.sql)
+-- ============================================================
+-- Colmena v2.11 · «Eliminar mi cuenta» solo desde el servidor y límites de IA sin huecos
+-- Córrela en Supabase → SQL Editor después de la v2.8. Se puede repetir sin problema.
+-- 1) Eliminar mi cuenta: la parte de la base (pasar talleres, borradores y lo capturado a una persona admin y
+--    salir del equipo) ya no se puede llamar desde el navegador. Solo la usa la función «account», después de
+--    confirmar la contraseña, el segundo paso y la palabra ELIMINAR.
+-- 2) IA · resumen y definiciones del entregable: el «una vez por taller» se aparta en un solo paso (dos pedidos
+--    al mismo tiempo ya no generan dos llamadas) y respetan la pausa y el tope mensual que pone el admin.
+-- 3) IA · propuestas: el límite de 30 al día se cuenta en orden (dos pedidos al mismo tiempo no lo rebasan).
+-- 4) Uso de IA: cada llamada marca cuándo terminó (done_at); así se sabe si una sigue en curso.
+-- Después de correrla, actualiza las funciones «account» y «suggest-workshop» (vienen en esta misma versión).
+-- Al final sale una fila: funciones = 3, version = 2.11.0
+-- ------------------------------------------------------------
+
+do $$
+declare v text;
+begin
+  if to_regclass('public.ws_schema_version') is null
+     or not exists (select 1 from ws_schema_version where version = '2.8.0') then
+    raise exception 'Primero corre migracion-v280-entregable.sql (v2.8) y después esta migración.';
+  end if;
+  select version into v from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
+  if v is not null and string_to_array(v, '.')::int[] > array[2,11,1] then
+    raise exception 'Tu base ya está en la versión %; no corras una migración anterior.', v;
+  end if;
+end $$;
+
+-- ------------------------------------------------------------
+-- 1) Eliminar mi cuenta: solo el servidor
+-- ------------------------------------------------------------
+-- La versión anterior (sin datos) se podía llamar con la sesión de la persona y se saltaba la contraseña.
+drop function if exists ws_self_remove();
+
+-- La llama la función «account» con la llave del servidor, ya confirmada la identidad. Recibe la cuenta.
+-- Sus talleres, borradores, lo capturado e invitaciones pendientes pasan a la persona admin que los recibe,
+-- se cancelan las invitaciones para su correo y sale del equipo. Todo o nada.
+-- Después, «account» borra su cuenta (ws_sessions y ws_drafts se borrarían en cascada con ella).
+create or replace function ws_self_remove(p_user uuid) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare v ws_admins; h ws_admins; v_heir uuid; v_who text; v_body text;
+        n_ses int := 0; n_dra int := 0; n_par int := 0;
+begin
+  if p_user is null then raise exception 'Falta indicar la cuenta'; end if;
+  -- Candado en orden fijo sobre las admins activas y la propia fila: dos bajas al mismo tiempo no dejan a Colmena sin admin
+  perform 1 from ws_admins a where (a.active and a.role = 'admin') or a.user_id = p_user order by a.user_id for update;
+  select * into v from ws_admins a where a.user_id = p_user and a.active;
+  if not found then raise exception 'Inicia sesión para eliminar tu cuenta'; end if;
+  v_heir := ws_self_heir(p_user);
+  if v_heir is null then
+    if v.role = 'admin' then
+      raise exception 'Eres la única persona admin de Colmena. Antes de eliminar tu cuenta, haz admin a alguien más en Equipo.';
+    end if;
+    raise exception 'No hay una persona admin activa que reciba tus talleres. Pide ayuda a quien administra Colmena.';
+  end if;
+  select * into h from ws_admins a where a.user_id = v_heir;
+  v_who := coalesce(nullif(trim(v.name), ''), v.email, 'Alguien');
+
+  update ws_sessions set owner_id = v_heir where owner_id = p_user;
+  get diagnostics n_ses = row_count;
+  update ws_drafts set owner_id = v_heir where owner_id = p_user;
+  get diagnostics n_dra = row_count;
+  -- Lo que capturó como participante con su cuenta del panel también pasa (si quien recibe ya participó
+  -- en ese mismo taller, se conserva su registro y el de la persona se va con su cuenta)
+  update ws_participants p set user_id = v_heir where p.user_id = p_user
+     and not exists (select 1 from ws_participants q where q.session_id = p.session_id and q.user_id = v_heir);
+  get diagnostics n_par = row_count;
+  -- Invitaciones pendientes que mandó: ahora son de quien recibe; las que eran para su correo se cancelan
+  update ws_invites set created_by = v_heir where created_by = p_user and used_at is null and revoked_at is null;
+  update ws_invites set revoked_at = now()
+   where lower(email) = lower(v.email) and used_at is null and revoked_at is null;
+  delete from ws_admins where user_id = p_user;
+
+  v_body := case when n_ses = 0 and n_dra = 0 then 'No tenía talleres ni borradores a su nombre.'
+    else 'Ahora están a tu nombre ' || concat_ws(' y ',
+           case when n_ses = 1 then 'su taller' when n_ses > 1 then 'sus ' || n_ses || ' talleres' end,
+           case when n_dra = 1 then 'su borrador' when n_dra > 1 then 'sus ' || n_dra || ' borradores' end) || ', con todo lo capturado.' end;
+  perform ws_notify(v_heir, 'member_left', v_who || ' eliminó su cuenta', v_body,
+    case when n_ses + n_dra > 0 then jsonb_build_object('label', 'Ver mis talleres', 'view', 'mine') else jsonb_build_object('label', 'Ver equipo', 'view', 'team') end,
+    jsonb_build_object('email', v.email), true, null);
+
+  return jsonb_build_object('talleres', n_ses, 'borradores', n_dra, 'participaciones', n_par,
+    'email', v.email, 'nombre', v.name,
+    'para', jsonb_build_object('nombre', coalesce(nullif(trim(h.name), ''), h.email), 'correo', h.email));
+end $$;
+revoke execute on function ws_self_remove(uuid) from public, anon, authenticated;
+grant execute on function ws_self_remove(uuid) to service_role;
+
+-- ------------------------------------------------------------
+-- 2) Uso de IA: cuándo terminó cada llamada
+-- ------------------------------------------------------------
+alter table ws_ai_log add column if not exists done_at timestamptz;
+-- Lo de antes de esta versión ya terminó
+update ws_ai_log set done_at = at where done_at is null and at < now() - interval '10 minutes';
+
+-- ------------------------------------------------------------
+-- 3) Resumen y definiciones con IA: una vez por taller, una a la vez, con pausa y tope
+-- ------------------------------------------------------------
+-- La llama «suggest-workshop» con la sesión de quien facilita, ANTES de llamar a la IA. Si responde ok, deja el
+-- renglón «en curso» en Uso de IA y devuelve su id; la función lo completa con los tokens y done_at al terminar.
+-- Motivos para no seguir: denied (no es su taller), paused (su admin pausó la IA), once (ya se generó y se guardó),
+-- busy (hay otra llamada en curso para ese taller, de menos de 2 minutos) y cap (llegó a su tope del mes).
+create or replace function ws_ai_once(p_session uuid, p_kind text) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare a ws_admins; v_used bigint; v_id bigint; v_name text;
+begin
+  if p_kind is null or p_kind not in ('insights', 'entregable') then return jsonb_build_object('ok', false, 'reason', 'denied'); end if;
+  if p_session is null or not ws_is_owner(p_session) then return jsonb_build_object('ok', false, 'reason', 'denied'); end if;
+  select * into a from ws_admins where user_id = auth.uid();
+  if not coalesce(a.ai_enabled, true) then return jsonb_build_object('ok', false, 'reason', 'paused'); end if;
+  -- Una a la vez por taller y tipo: quien llega segundo espera aquí y después ve el renglón del primero
+  perform pg_advisory_xact_lock(hashtextextended('ws_ai_once:' || p_session::text || ':' || p_kind, 0));
+  if exists (select 1 from ws_ai_log where session_id = p_session and kind = p_kind and ok) then
+    return jsonb_build_object('ok', false, 'reason', 'once');
+  end if;
+  if exists (select 1 from ws_ai_log where session_id = p_session and kind = p_kind and done_at is null
+               and at > now() - interval '2 minutes') then
+    return jsonb_build_object('ok', false, 'reason', 'busy');
+  end if;
+  select coalesce(sum(input_tokens + output_tokens), 0) into v_used from ws_ai_log
+   where user_id = auth.uid() and at >= date_trunc('month', now());
+  if a.ai_monthly_cap is not null and v_used >= a.ai_monthly_cap then
+    return jsonb_build_object('ok', false, 'reason', 'cap', 'used', v_used, 'cap', a.ai_monthly_cap);
+  end if;
+  select s.name into v_name from ws_sessions s where s.id = p_session;
+  insert into ws_ai_log(user_id, kind, session_id, label)
+  values (auth.uid(), p_kind, p_session, left(v_name, 160))
+  returning id into v_id;
+  return jsonb_build_object('ok', true, 'id', v_id, 'used', v_used, 'cap', a.ai_monthly_cap);
+end $$;
+revoke execute on function ws_ai_once(uuid, text) from public, anon;
+grant execute on function ws_ai_once(uuid, text) to authenticated;
+
+-- ------------------------------------------------------------
+-- 4) Propuestas con IA: el límite del día se cuenta en orden
+-- ------------------------------------------------------------
+-- Igual que en la v1.21 (pausa, tope mensual y 30 al día), pero los pedidos de una misma persona pasan de uno
+-- en uno por esta revisión: dos al mismo tiempo ya no ven el mismo conteo.
+create or replace function ws_ai_begin(p_kind text default 'propuesta', p_draft uuid default null, p_label text default null)
+returns jsonb language plpgsql security definer set search_path = public as $$
+declare a ws_admins; v_used bigint; v_n int; v_id bigint;
+begin
+  if not ws_is_admin() then return jsonb_build_object('ok', false, 'reason', 'denied'); end if;
+  perform pg_advisory_xact_lock(hashtextextended('ws_ai_begin:' || auth.uid()::text, 0));
+  select * into a from ws_admins where user_id = auth.uid();
+  if not coalesce(a.ai_enabled, true) then return jsonb_build_object('ok', false, 'reason', 'paused'); end if;
+  select coalesce(sum(input_tokens + output_tokens), 0) into v_used from ws_ai_log
+   where user_id = auth.uid() and at >= date_trunc('month', now());
+  if a.ai_monthly_cap is not null and v_used >= a.ai_monthly_cap then
+    return jsonb_build_object('ok', false, 'reason', 'cap', 'used', v_used, 'cap', a.ai_monthly_cap);
+  end if;
+  select count(*) into v_n from ws_ai_log where user_id = auth.uid() and at > now() - interval '1 day';
+  if v_n >= 30 then return jsonb_build_object('ok', false, 'reason', 'daily'); end if;
+  insert into ws_ai_log(user_id, kind, draft_id, label)
+  values (auth.uid(), case when p_kind in ('propuesta','otra','ajuste','insights') then p_kind else 'propuesta' end, p_draft, left(p_label, 160))
+  returning id into v_id;
+  delete from ws_ai_log where at < now() - interval '400 days';
+  return jsonb_build_object('ok', true, 'id', v_id, 'used', v_used, 'cap', a.ai_monthly_cap);
+end $$;
+revoke execute on function ws_ai_begin(text, uuid, text) from public, anon;
+grant execute on function ws_ai_begin(text, uuid, text) to authenticated;
+
+insert into ws_schema_version(version) values ('2.11.0') on conflict (version) do nothing;
+
+select
+  (select count(*) from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+    where n.nspname='public' and p.proname in ('ws_self_remove','ws_ai_once','ws_ai_begin')) as funciones,
+  (select version from ws_schema_version order by string_to_array(version,'.')::int[] desc limit 1) as version;
+
+-- ============================================================
+-- PARTE · v2.11.1 · Límites de IA más firmes y entregable sin ediciones perdidas
+-- (de migracion-v2-11-1-ia-y-entregable.sql)
+-- ============================================================
+-- Colmena v2.11.1 · Límites de IA más firmes y entregable sin ediciones perdidas
+-- Córrela en Supabase → SQL Editor después de la v2.11 (migracion-v2-11-cuenta-e-ia.sql). Se puede repetir sin problema.
+-- Sale de una segunda revisión de la v2.11:
+-- 1) Tope mensual: cuenta también las llamadas a la IA que siguen en curso (cada una aparta 3,000 tokens hasta que
+--    termina) y todas las de una persona se revisan de una en una. Antes, con tope de 1 token pasaban 4 pedidos
+--    seguidos porque sus tokens aún no se registraban.
+-- 2) «Una vez por taller» del resumen y de las definiciones ya no depende solo de Uso de IA (que borra lo de más de
+--    400 días): si el taller ya tiene su resumen o ya usó sus definiciones con IA, no se vuelven a generar.
+-- 3) Entregable: la IA (ws_deliverable_ai_merge) y quien facilita (ws_deliverable_patch) guardan con candado y sobre
+--    lo último guardado. Antes, la IA guardaba lo que había leído antes de llamar a la IA y se perdía lo editado
+--    mientras tanto (por ejemplo, en otra pestaña).
+-- Después de correrla, actualiza la función «suggest-workshop» y la app (vienen en esta misma versión).
+-- Al final sale una fila: funciones = 4, version = 2.11.1
+-- ------------------------------------------------------------
+
+do $$
+declare v text;
+begin
+  if to_regclass('public.ws_schema_version') is null
+     or not exists (select 1 from ws_schema_version where version = '2.11.0') then
+    raise exception 'Primero corre migracion-v2-11-cuenta-e-ia.sql (v2.11) y después esta migración.';
+  end if;
+  select version into v from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1;
+  if v is not null and string_to_array(v, '.')::int[] > array[2,11,1] then
+    raise exception 'Tu base ya está en la versión %; no corras una migración anterior.', v;
+  end if;
+end $$;
+
+-- ------------------------------------------------------------
+-- 1) Propuestas con IA: pausa, tope mensual (con lo que sigue en curso) y 30 al día
+-- ------------------------------------------------------------
+create or replace function ws_ai_begin(p_kind text default 'propuesta', p_draft uuid default null, p_label text default null)
+returns jsonb language plpgsql security definer set search_path = public as $$
+declare a ws_admins; v_used bigint; v_run int; v_n int; v_id bigint;
+begin
+  if not ws_is_admin() then return jsonb_build_object('ok', false, 'reason', 'denied'); end if;
+  -- Candado de la persona: sus pedidos de IA (propuestas, resumen y definiciones) se revisan de uno en uno
+  perform pg_advisory_xact_lock(hashtextextended('ws_ai_begin:' || auth.uid()::text, 0));
+  select * into a from ws_admins where user_id = auth.uid();
+  if not coalesce(a.ai_enabled, true) then return jsonb_build_object('ok', false, 'reason', 'paused'); end if;
+  select coalesce(sum(input_tokens + output_tokens), 0) into v_used from ws_ai_log
+   where user_id = auth.uid() and at >= date_trunc('month', now());
+  -- Llamadas suyas que siguen en curso (sin terminar y de menos de 2 minutos): cada una aparta 3,000 tokens
+  select count(*) into v_run from ws_ai_log
+   where user_id = auth.uid() and done_at is null and at > now() - interval '2 minutes';
+  if a.ai_monthly_cap is not null and v_used + v_run * 3000 >= a.ai_monthly_cap then
+    return jsonb_build_object('ok', false, 'reason', 'cap', 'used', v_used, 'cap', a.ai_monthly_cap);
+  end if;
+  select count(*) into v_n from ws_ai_log where user_id = auth.uid() and at > now() - interval '1 day';
+  if v_n >= 30 then return jsonb_build_object('ok', false, 'reason', 'daily'); end if;
+  insert into ws_ai_log(user_id, kind, draft_id, label)
+  values (auth.uid(), case when p_kind in ('propuesta','otra','ajuste','insights') then p_kind else 'propuesta' end, p_draft, left(p_label, 160))
+  returning id into v_id;
+  delete from ws_ai_log where at < now() - interval '400 days';
+  return jsonb_build_object('ok', true, 'id', v_id, 'used', v_used, 'cap', a.ai_monthly_cap);
+end $$;
+revoke execute on function ws_ai_begin(text, uuid, text) from public, anon;
+grant execute on function ws_ai_begin(text, uuid, text) to authenticated;
+
+-- ------------------------------------------------------------
+-- 2) Resumen y definiciones con IA: una vez por taller (también después de 400 días), una a la vez, pausa y tope
+-- ------------------------------------------------------------
+create or replace function ws_ai_once(p_session uuid, p_kind text) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare a ws_admins; v_used bigint; v_run int; v_id bigint; v_name text;
+begin
+  if p_kind is null or p_kind not in ('insights', 'entregable') then return jsonb_build_object('ok', false, 'reason', 'denied'); end if;
+  if p_session is null or not ws_is_owner(p_session) then return jsonb_build_object('ok', false, 'reason', 'denied'); end if;
+  -- Primero el candado de la persona (el mismo de ws_ai_begin: el tope se revisa con todos sus pedidos en orden)
+  -- y después el del taller y tipo: quien llega segundo espera aquí y después ve el renglón del primero
+  perform pg_advisory_xact_lock(hashtextextended('ws_ai_begin:' || auth.uid()::text, 0));
+  perform pg_advisory_xact_lock(hashtextextended('ws_ai_once:' || p_session::text || ':' || p_kind, 0));
+  select * into a from ws_admins where user_id = auth.uid();
+  if not coalesce(a.ai_enabled, true) then return jsonb_build_object('ok', false, 'reason', 'paused'); end if;
+  -- Ya se usó: lo dice Uso de IA o, aunque ese registro ya se haya borrado, el propio taller
+  if exists (select 1 from ws_ai_log where session_id = p_session and kind = p_kind and ok)
+     or (p_kind = 'insights' and exists (select 1 from ws_sessions s where s.id = p_session and nullif(trim(s.summary), '') is not null))
+     or (p_kind = 'entregable' and exists (select 1 from ws_deliverables d where d.session_id = p_session and d.data ? 'ai_at')) then
+    return jsonb_build_object('ok', false, 'reason', 'once');
+  end if;
+  if exists (select 1 from ws_ai_log where session_id = p_session and kind = p_kind and done_at is null
+               and at > now() - interval '2 minutes') then
+    return jsonb_build_object('ok', false, 'reason', 'busy');
+  end if;
+  select coalesce(sum(input_tokens + output_tokens), 0) into v_used from ws_ai_log
+   where user_id = auth.uid() and at >= date_trunc('month', now());
+  select count(*) into v_run from ws_ai_log
+   where user_id = auth.uid() and done_at is null and at > now() - interval '2 minutes';
+  if a.ai_monthly_cap is not null and v_used + v_run * 3000 >= a.ai_monthly_cap then
+    return jsonb_build_object('ok', false, 'reason', 'cap', 'used', v_used, 'cap', a.ai_monthly_cap);
+  end if;
+  select s.name into v_name from ws_sessions s where s.id = p_session;
+  insert into ws_ai_log(user_id, kind, session_id, label)
+  values (auth.uid(), p_kind, p_session, left(v_name, 160))
+  returning id into v_id;
+  return jsonb_build_object('ok', true, 'id', v_id, 'used', v_used, 'cap', a.ai_monthly_cap);
+end $$;
+revoke execute on function ws_ai_once(uuid, text) from public, anon;
+grant execute on function ws_ai_once(uuid, text) to authenticated;
+
+-- ------------------------------------------------------------
+-- 3) Entregable: la IA y quien facilita guardan con el mismo candado y sobre lo último guardado
+-- ------------------------------------------------------------
+-- Definiciones con IA. La llama «suggest-workshop» con la llave del servidor, ya revisado que el taller es de quien
+-- facilita. p_defs = {"<id de la competencia>": "definición", …}. Llena solo las competencias sin una definición
+-- revisada (src «ok») y marca ai_at. Si ya tenía ai_at, no cambia nada (once). Si ninguna aplica, no escribe (n = 0).
+create or replace function ws_deliverable_ai_merge(p_session uuid, p_defs jsonb, p_at timestamptz, p_by uuid)
+returns jsonb language plpgsql security definer set search_path = public as $$
+declare d jsonb; it jsonb; k text; v text; n int := 0; existe boolean;
+begin
+  if p_session is null or p_defs is null or jsonb_typeof(p_defs) <> 'object' then
+    raise exception 'Solicitud inválida' using errcode = '22023';
+  end if;
+  perform pg_advisory_xact_lock(hashtextextended('ws_deliverable:' || p_session::text, 0));
+  select data into d from ws_deliverables where session_id = p_session for update;
+  existe := found;
+  if d is null or jsonb_typeof(d) <> 'object' then d := '{}'::jsonb; end if;
+  if d ? 'ai_at' then return jsonb_build_object('ok', false, 'reason', 'once', 'n', 0, 'data', d); end if;
+  d := d || jsonb_build_object('v', 1, 'kind', 'comp');
+  if jsonb_typeof(d -> 'items') is distinct from 'object' then d := jsonb_set(d, '{items}', '{}'::jsonb); end if;
+  for k, v in select e.key, e.value #>> '{}' from jsonb_each(p_defs) e loop
+    continue when nullif(trim(coalesce(v, '')), '') is null;
+    it := d -> 'items' -> k;
+    if it is null or jsonb_typeof(it) <> 'object' then it := '{}'::jsonb; end if;
+    continue when nullif(it ->> 'def', '') is not null and it ->> 'src' = 'ok';   -- nunca reemplaza una definición revisada
+    d := jsonb_set(d, array['items', k], it || jsonb_build_object('def', left(v, 400), 'src', 'ai', 'at', p_at));
+    n := n + 1;
+  end loop;
+  if n = 0 then return jsonb_build_object('ok', true, 'n', 0, 'data', d); end if;
+  d := d || jsonb_build_object('ai_at', p_at);
+  if existe then
+    update ws_deliverables set data = d, updated_by = p_by where session_id = p_session;
+  else
+    insert into ws_deliverables(session_id, data, updated_by) values (p_session, d, p_by);
+  end if;
+  return jsonb_build_object('ok', true, 'n', n, 'data', d);
+end $$;
+revoke execute on function ws_deliverable_ai_merge(uuid, jsonb, timestamptz, uuid) from public, anon, authenticated;
+grant execute on function ws_deliverable_ai_merge(uuid, jsonb, timestamptz, uuid) to service_role;
+
+-- Lo que completa quien facilita (definición, primer paso, responsable, fecha, estado): un elemento a la vez.
+-- p_patch se mezcla con lo guardado de ese elemento; un valor null o vacío lo quita, y si el elemento queda vacío se
+-- borra. Mismos permisos que la tabla (solo quien facilita el taller). Regresa {data, updated_at}.
+create or replace function ws_deliverable_patch(p_session uuid, p_key text, p_patch jsonb)
+returns jsonb language plpgsql security definer set search_path = public as $$
+declare d jsonb; it jsonb; v_kind text; v_at timestamptz;
+begin
+  if p_session is null or nullif(p_key, '') is null or length(p_key) > 120
+     or p_patch is null or jsonb_typeof(p_patch) <> 'object' then
+    raise exception 'Solicitud inválida' using errcode = '22023';
+  end if;
+  if not ws_is_owner(p_session) then
+    raise exception 'permission denied for table ws_deliverables' using errcode = '42501';
+  end if;
+  perform pg_advisory_xact_lock(hashtextextended('ws_deliverable:' || p_session::text, 0));
+  select data into d from ws_deliverables where session_id = p_session for update;
+  if d is null or jsonb_typeof(d) <> 'object' then d := '{}'::jsonb; end if;
+  select coalesce(nullif(s.kind, ''), 'dt') into v_kind from ws_sessions s where s.id = p_session;
+  d := d || jsonb_build_object('v', 1, 'kind', v_kind);
+  if jsonb_typeof(d -> 'items') is distinct from 'object' then d := jsonb_set(d, '{items}', '{}'::jsonb); end if;
+  it := case when jsonb_typeof(d -> 'items' -> p_key) = 'object' then d -> 'items' -> p_key else '{}'::jsonb end || p_patch;
+  select coalesce(jsonb_object_agg(e.key, e.value), '{}'::jsonb) into it
+    from jsonb_each(it) e where e.value not in ('null'::jsonb, '""'::jsonb);
+  if it = '{}'::jsonb then d := d #- array['items', p_key];
+  else d := jsonb_set(d, array['items', p_key], it); end if;
+  insert into ws_deliverables(session_id, data) values (p_session, d)
+  on conflict (session_id) do update set data = excluded.data
+  returning updated_at into v_at;
+  return jsonb_build_object('data', d, 'updated_at', v_at);
+end $$;
+revoke execute on function ws_deliverable_patch(uuid, text, jsonb) from public, anon;
+grant execute on function ws_deliverable_patch(uuid, text, jsonb) to authenticated;
+
+insert into ws_schema_version(version) values ('2.11.1') on conflict (version) do nothing;
+
+select
+  (select count(*) from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+    where n.nspname='public' and p.proname in ('ws_ai_begin','ws_ai_once','ws_deliverable_ai_merge','ws_deliverable_patch')) as funciones,
+  (select version from ws_schema_version order by string_to_array(version,'.')::int[] desc limit 1) as version;
+
+-- ============================================================
+-- Verificación final (una sola fila): version = 2.11.1 y todas las tablas con seguridad activa
 -- ============================================================
 select
   (select version from ws_schema_version order by string_to_array(version, '.')::int[] desc limit 1) as version,

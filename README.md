@@ -61,6 +61,31 @@
 > - El frasco de la banda de Resultados: la miel, su superficie y las burbujas suben juntas (antes la superficie se veía separada de la miel). Se llena una vez y se queda lleno con un vaivén suave; con «Reducir animaciones» se ve lleno.
 > - **Base común** (ver «Base común de la interfaz», abajo): una escala de texto y un componente por tipo de dato. En Diagnóstico, Resultados pasó de 47 a 26 estilos de texto, de 4,007 a 1,865 px de alto en computadora (7,214 → 3,187 en celular) y de 851 a 402 palabras a la vista.
 > - Para publicar: sube `app/index.html` y `app/sw.js`. Sin cambios en Supabase.
+>
+> **2 nov 2026 · v2.11 · Consola en vivo con la base común.**
+> - Lo que ves mientras corre el taller (Sala de espera, Check-in, Dolores, Votación, Validación, Ideas y sus equivalentes en los otros tipos) usa la misma base que Resultados.
+> - **Cada dato una vez.** Cuántos están o terminaron lo dice solo la banda; las tarjetas de cifras ya no lo repiten y siempre muestran números (no frases como «El sistema se cae al subir fotos» o «Parejo»). Se quitaron las descripciones y los pies que repetían las tarjetas («La sala coincide…», «La idea con más apoyo…», «Donde más duele…»), y «Proyectar QR» y «Solo lectura» salen una sola vez.
+> - **Un solo «Quién falta»** en todas las fases con actividad: solo quienes no han tocado «Terminé», con lo que llevan («1 tarjeta», «2 de 5 votos», «4 calificaciones», «2 de 3 apoyos»). Antes eran 3 diseños (nombres sueltos, lista y toda la sala con puntos verdes).
+> - **La etapa se escribe igual en todos lados:** número y nombre («1 Recibir solicitud»). El hexágono queda solo para el lugar en un ranking.
+> - **Ideas en vivo** con el mismo componente que Resultados: lugar, votos, cada idea con «N apoyos» y la etiqueta «Más apoyada» (antes, hileras de hexágonos y un bloque oscuro).
+> - Validación: cada pestaña muestra solo su gráfica y abre en la primera (antes, al abrir otro taller se quedaba en «Propuestas», casi siempre vacía).
+> - **Escala de texto** de la base común en todas las fases: entre todas las fases pasó de 44 a 13 estilos de texto (por pantalla, de 30–37 a 21–24). Votación: de 1,586 a 1,415 px de alto en computadora y de 323 a 249 palabras; Ideas: de 1,268 a 1,009 px.
+> - **Celular:** la fase se lee junto a los pasos (ya no se repite en la banda), la banda va sin dibujo y con la sala en una fila: la banda bajó de 612–702 a 407–504 px de alto (Votación en celular: de 2,962 a 2,339 px).
+> - **Revisión de oficio** (accesibilidad, layout, tipografía, color y pulido): los números de las barras de Validación se leen (contraste 3.2:1 → 5.7:1); un solo botón con relleno por vista (el código del taller y «Proyectar QR» pasan a contorno); los avisos de la consola usan los colores del aviso de la base común (neutro, y ámbar cuando hay que atender algo; antes, miel y rosa de error); las cifras que cambian en vivo tienen dígitos de ancho fijo; párrafos y tarjetas del muro sin palabras solas; las tarjetas de cifras ya no se levantan al pasar el mouse (no son botones) y «Mis talleres» tiene 24 px para tocarlo.
+> - **Confirmar antes de avanzar:** si al abrir la siguiente fase falta más del 20 % de la sala por tocar «Terminé», la consola pregunta antes («¿Abrir Ideas con 11 personas sin terminar?», con «Esperar» y «Abrir Ideas»), porque sus celulares cambian de fase aunque no hayan terminado. Con casi todos listos, abre sin preguntar, como antes.
+> - **Solo lectura en celular:** «Solo lectura · nombre» baja a su propia línea, debajo del nombre del taller. Antes le quitaba media fila: el nombre se partía a media palabra y la ruta y la etiqueta salían cortadas.
+> - **Seguridad (revisión de código del 5 nov):**
+>   - **Eliminar mi cuenta** ya no se puede hacer desde el navegador saltándose la contraseña: la parte de la base (`ws_self_remove`) solo la llama la función `account`, con la llave del servidor, después de revisar la sesión con segundo paso, la contraseña y la palabra ELIMINAR.
+>   - Si la cuenta no se pudo borrar, la app ya no dice «Tu cuenta se eliminó» ni llega el correo de confirmación: avisa que ya salió del equipo y deja volver a intentarlo (el reintento solo borra la cuenta). Cuando una admin elimina a alguien y su cuenta no se borra, también se lo dice.
+>   - **IA:** si la base no contesta al revisar los límites, no se llama a la IA (antes seguía sin límites y sin registrar tokens). El resumen y las definiciones respetan la pausa y el tope mensual del admin, y su «una vez por taller» se aparta en la base en un solo paso (`ws_ai_once`): dos pedidos al mismo tiempo ya no generan dos llamadas. El límite de 30 propuestas al día tampoco se rebasa con pedidos simultáneos.
+>   - `setup.sql` también incluye la tabla de solicitudes de prueba de la landing (v2.4), que faltaba.
+> - **v2.11.1 · Segunda revisión (5 nov):**
+>   - **Tope mensual de IA:** cuenta también las llamadas que siguen en curso (cada una aparta 3,000 tokens hasta que termina) y los pedidos de una persona se revisan de uno en uno. Antes, con un tope de 1 token pasaban 4 pedidos seguidos porque sus tokens aún no se registraban.
+>   - **«Una vez por taller» sin vencimiento:** Uso de IA borra lo de más de 400 días; ahora también cuenta que el taller ya tenga su resumen o sus definiciones con IA, así que no se vuelven a generar.
+>   - **Entregable sin ediciones perdidas:** las definiciones de la IA se guardan sobre lo último guardado (`ws_deliverable_ai_merge`) y lo que completa quien facilita, un elemento a la vez y con el mismo candado (`ws_deliverable_patch`). Antes, lo editado mientras la IA escribía (por ejemplo, en otra pestaña) se perdía.
+>   - Las pruebas de la base ya no salen «OK» con resultados de una corrida anterior ni con errores de SQL fuera de las pruebas.
+> - Para publicar, en este orden: (1) corre `migracion-v2-11-1-ia-y-entregable.sql` en Supabase → SQL Editor (al final sale `funciones = 4 · version = 2.11.1`); (2) despliega la función `suggest-workshop` con `supabase/functions/suggest-workshop/index.ts`; (3) sube `app/index.html` y `app/sw.js`. La `migracion-v2-11-cuenta-e-ia.sql` y la función `account` ya están publicadas desde el 5 nov. `setup.sql` (base nueva) ya va en la v2.11.1.
+> - Pruebas: `bash pruebas/correr.sh` corre todas (navegador y base de datos) en cualquier computadora; ver `pruebas/LEEME.md`.
 
 Herramienta propia para talleres en vivo: design thinking («Mejora de procesos», el de siempre) y, desde la v2.0, Definir competencias, Diagnóstico, Lluvia de ideas y Retrospectiva.
 
@@ -337,11 +362,13 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 | `migracion-v232-mapa-interacciones.sql` | v2.3.2: mapa privado de interacciones por acción, audiencia, pantalla y dispositivo. |
 | `migracion-v250-eliminar-cuenta.sql` | v2.5.0: «Eliminar mi cuenta» en Ajustes. Los talleres pasan a una persona admin y nadie puede dejar a Colmena sin admin. |
 | `migracion-v280-entregable.sql` | v2.8.0: tabla `ws_deliverables` con lo que completa quien facilita en el entregable (definiciones, responsables, fechas y estado). Solo quien facilita la edita; no viaja por tiempo real. |
+| `migracion-v2-11-cuenta-e-ia.sql` | v2.11.0: «Eliminar mi cuenta» solo desde el servidor (`ws_self_remove(p_user)`), resumen y definiciones con IA una vez por taller con candado (`ws_ai_once`) y respetando pausa y tope, y `done_at` en Uso de IA. |
+| `migracion-v2-11-1-ia-y-entregable.sql` | v2.11.1: el tope mensual cuenta lo que sigue en curso, el «una vez por taller» no vence y el entregable se guarda con candado sobre lo último (`ws_deliverable_ai_merge`, `ws_deliverable_patch`). |
 | `migraciones-anteriores/` | Las migraciones de antes y el `setup.sql` anterior (`setup-base-v126.sql`). Ya están dentro de `setup.sql`; cada una se detiene sola en una base versionada actual. |
 | `i18n/en.po` | v2.7: el inglés de la landing y de la app (participante, panel de quien facilita, Excel, CSV y PDF; `msgid` = español, `msgstr` = inglés). Se edita con un editor de texto o con Poedit. |
 | `tools/i18n.py` | Copia el inglés a la landing (`python3 tools/i18n.py`) y pone al día los textos de la app en `en.po` (`python3 tools/i18n.py app`). `build.py` mete el inglés de la app en `app/index.html`. |
 | `tools/arma_setup.py` | Arma `setup.sql` juntando la base y las migraciones en orden (`--guardias` pone la guardia a las archivadas). |
-| `pruebas/` | Pruebas de base de datos (`sql/probar_sql.py`), de pantallas (`navegador/`) y de seguridad (`seguridad/`). Ver `pruebas/LEEME.md`. |
+| `pruebas/` | Pruebas de base de datos (`sql/probar_sql.py`) y de pantallas (`navegador/`); todas corren con `bash pruebas/correr.sh`. Las de versiones anteriores (incluidas las de seguridad) usan rutas de otra computadora y quedan en `antiguas/` como referencia. Ver `pruebas/LEEME.md`. |
 | `README.md` | Esta guía. |
 | `email/` | Logos del correo de invitación (Colmena + Quality & Knowledge). Se publican junto con `index.html`. |
 | `supabase/functions/send-invite/index.ts` | Función que envía la invitación (Gmail o Resend). |
@@ -361,7 +388,7 @@ where user_id = (select id from auth.users where email = 'tu-correo@empresa.com'
 
 ## Base común de la interfaz (v2.10)
 
-Un componente por tipo de dato y una sola escala de texto. Se estrenó en **Resultados**; la consola en vivo, Inicio, Mis talleres y las pantallas del participante se pasan después, una por una. Los estilos están en `src/prefix.html` (sección «v2.10 · Base común»).
+Un componente por tipo de dato y una sola escala de texto. Se estrenó en **Resultados** (v2.10) y la **consola en vivo** la usa desde la v2.11; Inicio, Mis talleres y las pantallas del participante se pasan después, una por una. Los estilos están en `src/prefix.html` (sección «v2.10 · Base común»).
 
 **Escala de texto** (en rem: sigue a «Tamaño de texto»):
 
@@ -372,8 +399,9 @@ Un componente por tipo de dato y una sola escala de texto. Se estrenó en **Resu
 | Texto | .875 · 500 (la etiqueta de la línea en 700) | «**Idea más apoyada:** …» |
 | Dato | .8125 · 500 | «Estorba · 3 tarjetas · 12 votos» |
 | Etiqueta | .75 · 700 | «Entregable», «Pendiente», «Responsable» |
+| Lo que escribió la sala | 1 · Montserrat 500 | las tarjetas del muro y las expectativas del check-in |
 
-Las cifras de la sala van en las **tarjetas sobre la banda** (las mismas de todas las fases).
+Las cifras de la sala van en las **tarjetas sobre la banda** (las mismas de todas las fases), siempre como número. La banda y sus tarjetas tienen sus tamaños propios (título y cifras en Bricolage), iguales en todas las fases.
 
 **Componentes:**
 
@@ -385,8 +413,10 @@ Las cifras de la sala van en las **tarjetas sobre la banda** (las mismas de toda
 | Aviso | `.c-note` (+ `ok`, `warn`; `line` sin caja) | En caja, solo lo que hay que arreglar (falta una migración, no se pudo cargar). En una línea, el estado de lo elegido. Los pendientes de cada fila, como texto con ícono de alerta. |
 | Ver detalle | `details.c-more` (+ `sm`) | Lo que no hace falta para decidir va plegado y dice en su línea qué hay dentro. Se abre con el teclado y recuerda si estaba abierto. |
 | Tarjeta | `.panel` | Blanca, sin borde de color. Una por bloque. |
+| Etapa | `.c-stn` + nombre | Siempre «número + nombre» («1 Recibir solicitud»), en la gráfica, el muro, la cobertura y el ranking. |
+| Quién falta | panel con filas de persona | En todas las fases con actividad: solo quienes no han tocado «Terminé», con lo que llevan. Con toda la sala lista, una línea «Toda la sala tocó «Terminé»». |
 
-Reglas: **cada dato sale una vez por pantalla** (si hace falta repetirlo para proyectarlo, va en la presentación) y **en una fila todas las líneas empiezan en el mismo borde**.
+Reglas: **cada dato sale una vez por pantalla** (si hace falta repetirlo para proyectarlo, va en la presentación), **la banda cuenta a la sala** (cuántos están o terminaron; las tarjetas y los paneles no lo repiten) y **en una fila todas las líneas empiezan en el mismo borde**.
 
 ## v1.12 · Acceso sin contraseñas y creador con IA
 

@@ -25,6 +25,11 @@
 //           password }. Confirma la contraseña; con su sesión, ws_self_remove pasa sus talleres, borradores y lo capturado
 //           a una persona admin y la saca del equipo; después se borra su cuenta y le llega un correo de confirmación.
 //           Requiere migracion-v250-eliminar-cuenta.sql. La última persona admin no puede eliminarse.
+// v2.11 · self-delete: ws_self_remove ya no se puede llamar desde el navegador (se saltaba la contraseña). Aquí se
+//           revisa primero, con la sesión de la persona, que siga en el equipo con su segundo paso (ws_is_admin), luego
+//           su contraseña, y solo entonces se llama ws_self_remove(p_user) con la llave del servidor. Si su cuenta no se
+//           pudo borrar, se responde con error (sin el correo de «eliminamos tu cuenta») y puede volver a intentarlo:
+//           si ya salió del equipo, solo falta borrar la cuenta. Requiere migracion-v2-11-cuenta-e-ia.sql.
 // Secretos: los mismos de send-invite (SMTP_USER/SMTP_PASS o RESEND_API_KEY, INVITE_FROM) y opcional SITE_URL.
 import { createClient } from "npm:@supabase/supabase-js@2";
 import nodemailer from "npm:nodemailer@6.9.16";
@@ -169,7 +174,7 @@ async function sendMail(to: string, subject: string, html: string, text: string)
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST") return json(405, { error: "Método no permitido" });
-  let body: { action?: string; code?: string; email?: string; user_id?: string; token?: string; password?: string };
+  let body: { action?: string; code?: string; email?: string; user_id?: string; token?: string; password?: string; confirm?: string };
   try { body = await req.json(); } catch { return json(400, { error: "Solicitud inválida" }); }
   const sb = admin();
 
@@ -329,35 +334,61 @@ Deno.serve(async (req) => {
     if (!uuidOk.test(uid) || !mailOk.test(email)) return json(401, { error: "Tu sesión expiró. Entra de nuevo." });
     if (String(body.confirm || "").trim().toUpperCase() !== "ELIMINAR") return json(400, { error: "Escribe ELIMINAR para confirmar.", field: "confirm" });
     if (!(await rateOk(sb, email, "self-delete", 5))) return json(429, { error: "Demasiados intentos. Espera unos minutos." });
+    // 0) v2.11 · Con SU sesión: ¿sigue en el equipo y entró completa (segundo paso si es admin)? Igual que antes, cuando
+    //    ws_self_remove corría con su sesión. Si ya no está en el equipo (un intento anterior la sacó, pero no se pudo
+    //    borrar su cuenta), solo falta borrar la cuenta.
+    const { data: staffOk, error: se } = await me.rpc("ws_is_admin");
+    if (se) { console.error("self-delete: ws_is_admin", uid, se); return json(503, { error: "No pudimos verificar tu cuenta. Intenta de nuevo." }); }
+    let onlyAccount = false;
+    if (staffOk !== true) {
+      const { data: row, error: re } = await sb.from("ws_admins").select("active").eq("user_id", uid).maybeSingle();
+      if (re) { console.error("self-delete: ws_admins", uid, re); return json(503, { error: "No pudimos verificar tu cuenta. Intenta de nuevo." }); }
+      if (row && !row.active) return json(403, { error: "Tu acceso al panel está desactivado. Si es un error, habla con tu admin." });
+      if (row) return json(403, { error: "Para eliminar tu cuenta, entra de nuevo con tu segundo paso (Face ID, huella o el código de tu app)." });
+      onlyAccount = true;
+    }
     // 1) Confirma con su contraseña, en un cliente aparte que no guarda nada; esa sesión de prueba se cierra enseguida
     const check = createClient(Deno.env.get("SUPABASE_URL")!, pub, { auth: { persistSession: false, autoRefreshToken: false } });
     const { error: pe } = await check.auth.signInWithPassword({ email, password: String(body.password || "") });
     if (pe) return json(400, { error: "La contraseña no es correcta. Si no la recuerdas, cámbiala en Ajustes → Acceso y vuelve a intentarlo.", field: "password" });
     try { await check.auth.signOut({ scope: "local" }); } catch (_e) { /* la cuenta se borra en un momento de todos modos */ }
-    // 2) Con SU sesión (auth.uid() = la persona): talleres, borradores y lo capturado pasan a una persona admin y sale
-    //    del equipo, todo o nada. Si es la última admin, la base no lo permite.
-    const { data: moved, error: e2 } = await me.rpc("ws_self_remove");
-    if (e2) {
-      console.error("self-delete", uid, e2);
-      if (e2.code === "PGRST202") return json(500, { error: "Falta correr migracion-v250-eliminar-cuenta.sql en Supabase." });
-      return json(400, { error: e2.message || "No pudimos eliminar tu cuenta. Intenta de nuevo." });
+    // 2) v2.11 · Con la llave del SERVIDOR y ya confirmada la identidad: talleres, borradores y lo capturado pasan a una
+    //    persona admin y sale del equipo, todo o nada. Si es la última admin, la base no lo permite.
+    let r: { talleres?: number; borradores?: number; nombre?: string; para?: { nombre?: string; correo?: string } } = {};
+    if (!onlyAccount) {
+      const { data: moved, error: e2 } = await sb.rpc("ws_self_remove", { p_user: uid });
+      if (e2) {
+        console.error("self-delete", uid, e2);
+        if (e2.code === "PGRST202") return json(500, { error: "Falta correr migracion-v2-11-cuenta-e-ia.sql en Supabase." });
+        return json(400, { error: e2.message || "No pudimos eliminar tu cuenta. Intenta de nuevo." });
+      }
+      r = (moved || {}) as typeof r;
     }
-    const r = (moved || {}) as { talleres?: number; borradores?: number; nombre?: string; para?: { nombre?: string; correo?: string } };
     // 3) Se borra la cuenta, solo si ya no tiene talleres ni borradores a su nombre (se borrarían en cascada).
-    //    Si algo falla, ya no tiene acceso (salió del equipo): queda el detalle en Logs para borrarla a mano.
+    //    v2.11 · Dos intentos. Si no se puede, se dice así: ya salió del equipo y puede volver a intentarlo.
     let deleted = false;
-    try {
-      const [ses, dra] = await Promise.all([
-        sb.from("ws_sessions").select("id", { count: "exact", head: true }).eq("owner_id", uid),
-        sb.from("ws_drafts").select("id", { count: "exact", head: true }).eq("owner_id", uid),
-      ]);
-      if (ses.error || dra.error) throw (ses.error || dra.error);
-      if ((ses.count ?? 0) > 0 || (dra.count ?? 0) > 0) throw new Error(`aún tiene ${ses.count} talleres y ${dra.count} borradores a su nombre`);
-      const { error: e3 } = await sb.auth.admin.deleteUser(uid);
-      if (e3) throw e3;
-      deleted = true;
-    } catch (e) { console.error("self-delete: salió del equipo pero no se borró su cuenta", uid, email, e); }
-    // 4) Correo de confirmación (si no sale, la baja ya está hecha)
+    for (let i = 0; i < 2 && !deleted; i++) {
+      try {
+        const [ses, dra] = await Promise.all([
+          sb.from("ws_sessions").select("id", { count: "exact", head: true }).eq("owner_id", uid),
+          sb.from("ws_drafts").select("id", { count: "exact", head: true }).eq("owner_id", uid),
+        ]);
+        if (ses.error || dra.error) throw (ses.error || dra.error);
+        if ((ses.count ?? 0) > 0 || (dra.count ?? 0) > 0) throw new Error(`aún tiene ${ses.count} talleres y ${dra.count} borradores a su nombre`);
+        const { error: e3 } = await sb.auth.admin.deleteUser(uid);
+        if (e3) throw e3;
+        deleted = true;
+      } catch (e) {
+        console.error(`self-delete: no se borró su cuenta (intento ${i + 1} de 2)`, uid, email, e);
+        if (i === 0) await new Promise((ok) => setTimeout(ok, 800));
+      }
+    }
+    if (!deleted) {
+      return json(500, { deleted: false, left_team: true, retry: true, error: onlyAccount
+        ? "No pudimos borrar tu cuenta. Intenta de nuevo en unos minutos; si sigue igual, escribe a admonrh@qacg.com."
+        : "Ya saliste del equipo, pero no pudimos borrar tu cuenta. Vuelve a tocar «Eliminar mi cuenta» en unos minutos; si sigue igual, escribe a admonrh@qacg.com." });
+    }
+    // 4) Correo de confirmación, solo ahora que la cuenta ya no existe (si no sale, la baja ya está hecha)
     try {
       const tuvo = ((r.talleres ?? 0) + (r.borradores ?? 0)) > 0;
       const quien = tuvo && r.para?.nombre ? ` Tus talleres quedaron a cargo de ${esc(r.para.nombre)}, para que tu equipo no pierda los resultados.` : "";

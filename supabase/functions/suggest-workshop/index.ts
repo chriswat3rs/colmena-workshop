@@ -2,7 +2,10 @@
 //   v1.23: resumen con IA de los resultados de un taller, acción «summary»; v1.26: mensaje claro si la cuenta de Anthropic se queda sin saldo;
 //   v2.0: el resumen usa las palabras del tipo de taller y viene en puntos con etiqueta;
 //   v2.8: reglas por tipo de taller sin inventar consenso ni huecos, y acción «deliverable»: definiciones sugeridas
-//         para el modelo de competencias, una vez por taller)
+//         para el modelo de competencias, una vez por taller;
+//   v2.11: si la base no contesta al revisar los límites, NO se llama a la IA; el resumen y las definiciones respetan
+//         la pausa y el tope mensual, y su «una vez por taller» se aparta en un solo paso (ws_ai_once); cada renglón de
+//         Uso de IA se cierra con done_at aunque la IA falle. Requiere migracion-v2-11-cuenta-e-ia.sql)
 // Con un formulario corto del facilitador (cliente, proceso, qué duele, objetivo, gente, duración…) devuelve
 // una PROPUESTA completa del taller. La IA decide el contenido; el código decide números, topes y estructura.
 // La página la muestra para revisar y editar: nada se crea solo.
@@ -29,7 +32,7 @@ const MODEL = Deno.env.get("AI_MODEL") || "claude-haiku-4-5-20251001";
 const MAX_TOKENS = Math.min(3000, Math.max(1200, Number(Deno.env.get("AI_MAX_TOKENS")) || 2200));
 
 /* v1.12.2 · Tiempos límite. La página espera 45 s; la función siempre contesta antes. */
-const RPC_TIMEOUT_MS = 6000;   // cada intento de hablar con la base (ws_me, ws_ai_take)
+const RPC_TIMEOUT_MS = 6000;   // cada intento de hablar con la base (ws_me, ws_ai_begin, ws_ai_once)
 const DEADLINE_MS = 38000;     // tope total de la función (incluye a la IA)
 const MSG_RETRY = "No pudimos verificar tu cuenta, intenta de nuevo.";
 const MSG_DENIED = "Solo facilitadores activos pueden pedir propuestas";
@@ -250,27 +253,29 @@ async function handle(req: Request, t0: number, reqId: string): Promise<Response
     return json(400, { error: "Cuéntanos un poco más del proceso o de lo que duele." });
   const adjust = cut(body.adjust, 200), keep = list(body.keepStages, 10, 60);
 
-  // 2) Límite diario por persona (30). Sin reintento (cada intento cuenta). Si la base no contesta o la función
-  //    no existe aún, no bloquea, pero queda en Logs.
+  // 2) Límite diario por persona (30). Sin reintento (cada intento cuenta).
   //    v1.21 · ws_ai_begin además revisa la pausa y el tope mensual que pone el admin, y deja el renglón para los tokens.
+  //    v2.11 · Si la base no contesta o falta la función, NO se llama a la IA (antes seguía sin límites y sin registrar
+  //            los tokens). Los pedidos de una misma persona pasan de uno en uno por ws_ai_begin.
   const uuidOk = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   const kind = adjust ? "ajuste" : body.regen ? "otra" : "propuesta";
   const label = cut(body.label || [f.cliente, f.proceso].filter(Boolean).join(" · "), 160);
-  let logId: number | null = null, usedBefore = 0, cap: number | null = null;
   const beg = await callRpc(sb, "ws_ai_begin", 0, reqId, { p_kind: kind, p_draft: uuidOk.test(String(body.draft_id || "")) ? body.draft_id : null, p_label: label });
-  if (beg.error && (beg.error.code === "PGRST202" || beg.status === 404)) {
-    const lim = await callRpc(sb, "ws_ai_take", 0, reqId);   // la base aún no tiene la migración v1.21
-    if (!lim.error && lim.data === false) return json(429, { error: "Llegaste al límite de propuestas de hoy. Mañana se renueva." });
-  } else if (!beg.error && beg.data) {
-    const b = beg.data as { ok?: boolean; reason?: string; id?: number; used?: number; cap?: number | null };
-    if (!b.ok) {
-      if (b.reason === "paused") return json(403, { error: "Tu admin pausó la IA para tu cuenta. Puedes armar el taller a mano.", ai: "paused" });
-      if (b.reason === "cap") return json(429, { error: `Llegaste a tu tope de IA de este mes (${Number(b.cap || 0).toLocaleString("es-MX")} tokens). Pídele a tu admin que lo amplíe o arma el taller a mano.`, ai: "cap" });
-      if (b.reason === "daily") return json(429, { error: "Llegaste al límite de propuestas de hoy. Mañana se renueva." });
-      return json(403, { error: MSG_DENIED, req: reqId });
-    }
-    logId = Number(b.id) || null; usedBefore = Number(b.used) || 0; cap = b.cap ?? null;
+  if (beg.error) {
+    if (beg.transient) return json(503, { error: MSG_RETRY, retry: true, req: reqId });
+    if (beg.status === 404 || beg.error.code === "PGRST202")
+      return json(500, { error: "Falta actualizar la base de datos (función ws_ai_begin). Avísale al admin.", req: reqId });
+    return json(403, { error: MSG_DENIED, req: reqId });
   }
+  const b = (beg.data || {}) as { ok?: boolean; reason?: string; id?: number; used?: number; cap?: number | null };
+  if (!b.ok) {
+    if (b.reason === "paused") return json(403, { error: "Tu admin pausó la IA para tu cuenta. Puedes armar el taller a mano.", ai: "paused" });
+    if (b.reason === "cap") return json(429, { error: `Llegaste a tu tope de IA de este mes (${Number(b.cap || 0).toLocaleString("es-MX")} tokens). Pídele a tu admin que lo amplíe o arma el taller a mano.`, ai: "cap" });
+    if (b.reason === "daily") return json(429, { error: "Llegaste al límite de propuestas de hoy. Mañana se renueva." });
+    return json(403, { error: MSG_DENIED, req: reqId });
+  }
+  const logId = Number(b.id) || null, usedBefore = Number(b.used) || 0, cap = b.cap ?? null;
+  if (!logId) return json(503, { error: MSG_RETRY, retry: true, req: reqId });
 
   // 3) La IA, con tope de tiempo: la función contesta antes de que la página se rinda
   const L = limits(f);
@@ -284,47 +289,86 @@ async function handle(req: Request, t0: number, reqId: string): Promise<Response
   });
   // deno-lint-ignore no-explicit-any
   let usage: any = null, draft: any = null;
-  const temps = [body.regen ? 0.8 : 0.5, 0.3];
-  for (let i = 0; i < temps.length; i++) {
-    if (i > 0 && left() < 10000) { logErr({ req: reqId, anthropic: "sin tiempo para el segundo intento", ms: Date.now() - t0 }); break; }
-    // deno-lint-ignore no-explicit-any
-    let out: any;
-    try {
-      const r = await call(temps[i]);
-      if (!r.ok) {
-        const t = await r.text(); logErr({ req: reqId, anthropic: r.status, body: t.slice(0, 300) });
-        const msg = r.status === 401 ? "La llave de la IA no es válida: revísala en Supabase → Edge Functions → Secrets."
-          : r.status === 429 || r.status === 529 ? "La IA está ocupada. Intenta en un minuto."
-          : r.status === 400 && /credit/i.test(t) ? MSG_NO_CREDIT
-          : MSG_FAIL;
-        return json(r.status === 429 || r.status === 529 ? 429 : 502, { error: msg, req: reqId });
+  // v2.11 · El renglón de Uso de IA se cierra siempre (también si la IA falla o tarda): tokens, si salió bien y done_at
+  try {
+    const temps = [body.regen ? 0.8 : 0.5, 0.3];
+    for (let i = 0; i < temps.length; i++) {
+      if (i > 0 && left() < 10000) { logErr({ req: reqId, anthropic: "sin tiempo para el segundo intento", ms: Date.now() - t0 }); break; }
+      // deno-lint-ignore no-explicit-any
+      let out: any;
+      try {
+        const r = await call(temps[i]);
+        if (!r.ok) {
+          const t = await r.text(); logErr({ req: reqId, anthropic: r.status, body: t.slice(0, 300) });
+          const msg = r.status === 401 ? "La llave de la IA no es válida: revísala en Supabase → Edge Functions → Secrets."
+            : r.status === 429 || r.status === 529 ? "La IA está ocupada. Intenta en un minuto."
+            : r.status === 400 && /credit/i.test(t) ? MSG_NO_CREDIT
+            : MSG_FAIL;
+          return json(r.status === 429 || r.status === 529 ? 429 : 502, { error: msg, req: reqId });
+        }
+        out = await r.json();
+      } catch (e) {
+        const name = String((e as Error)?.name || ""), timeout = /Timeout|Abort/i.test(name);
+        logErr({ req: reqId, anthropic: "fetch", name, timeout, ms: Date.now() - t0, message: String((e as Error)?.message || e).slice(0, 300) });
+        if (timeout) return json(504, { error: "La IA tardó demasiado en responder. Intenta de nuevo o arma el taller a mano.", retry: true, req: reqId });
+        if (e instanceof TypeError) return json(503, { error: "No pudimos conectar con la IA. Intenta de nuevo en un momento.", retry: true, req: reqId });
+        return json(502, { error: MSG_FAIL, req: reqId });
       }
-      out = await r.json();
-    } catch (e) {
-      const name = String((e as Error)?.name || ""), timeout = /Timeout|Abort/i.test(name);
-      logErr({ req: reqId, anthropic: "fetch", name, timeout, ms: Date.now() - t0, message: String((e as Error)?.message || e).slice(0, 300) });
-      if (timeout) return json(504, { error: "La IA tardó demasiado en responder. Intenta de nuevo o arma el taller a mano.", retry: true, req: reqId });
-      if (e instanceof TypeError) return json(503, { error: "No pudimos conectar con la IA. Intenta de nuevo en un momento.", retry: true, req: reqId });
-      return json(502, { error: MSG_FAIL, req: reqId });
+      usage = out?.usage || null;
+      const text = (out?.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join("");
+      const raw = parse(text);
+      draft = raw ? normalize(raw, f, L) : null;
+      if (out?.stop_reason === "max_tokens") console.warn("max_tokens", usage);
+      if (draft) break;
     }
-    usage = out?.usage || null;
-    const text = (out?.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join("");
-    const raw = parse(text);
-    draft = raw ? normalize(raw, f, L) : null;
-    if (out?.stop_reason === "max_tokens") console.warn("max_tokens", usage);
-    if (draft) break;
+    if (!draft) return json(502, { error: MSG_FAIL, req: reqId });
+    const tin = Number(usage?.input_tokens) || 0, tout = Number(usage?.output_tokens) || 0;
+    return json(200, { draft, model: MODEL, usage, ai: { used: usedBefore + tin + tout, cap } });
+  } finally {
+    // v1.21 · Guardar los tokens (aunque la propuesta no haya salido bien: también se cobraron)
+    await finishLog(logId, reqId, { tin: Number(usage?.input_tokens) || 0, tout: Number(usage?.output_tokens) || 0, ok: !!draft });
   }
-  // v1.21 · Guardar los tokens (aunque la propuesta no haya salido bien: también se cobraron)
-  const tin = Number(usage?.input_tokens) || 0, tout = Number(usage?.output_tokens) || 0;
-  if (logId) {
-    try {
-      const svc = createClient(Deno.env.get("SUPABASE_URL")!, serverKey(), { auth: { persistSession: false, autoRefreshToken: false } });
-      const { error } = await svc.from("ws_ai_log").update({ input_tokens: tin, output_tokens: tout, model: MODEL, ok: !!draft }).eq("id", logId);
-      if (error) logErr({ req: reqId, usage_log: String(error.message || error).slice(0, 200) });
-    } catch (e) { logErr({ req: reqId, usage_log: String((e as Error)?.message || e).slice(0, 200) }); }
+}
+
+/* v2.11 · Cierra el renglón de Uso de IA con los tokens, el modelo, si salió bien y cuándo terminó (done_at).
+   Si la base aún no tiene done_at (falta la migración), guarda lo demás para no perder el registro de tokens. */
+async function finishLog(logId: number | null, reqId: string, v: { tin: number; tout: number; ok: boolean; session_id?: string }) {
+  if (!logId) return;
+  try {
+    const svc = createClient(Deno.env.get("SUPABASE_URL")!, serverKey(), { auth: { persistSession: false, autoRefreshToken: false } });
+    const row: Record<string, unknown> = { input_tokens: v.tin, output_tokens: v.tout, model: MODEL, ok: v.ok, done_at: new Date().toISOString() };
+    if (v.session_id) row.session_id = v.session_id;
+    let { error } = await svc.from("ws_ai_log").update(row).eq("id", logId);
+    if (error && /done_at/.test(String(error.message || ""))) {
+      delete row.done_at;
+      ({ error } = await svc.from("ws_ai_log").update(row).eq("id", logId));
+    }
+    if (error) logErr({ req: reqId, usage_log: String(error.message || error).slice(0, 200) });
+  } catch (e) { logErr({ req: reqId, usage_log: String((e as Error)?.message || e).slice(0, 200) }); }
+}
+
+/* v2.11 · Antes de gastar tokens en el resumen o en las definiciones: ws_ai_once, con la sesión de quien facilita,
+   revisa que el taller sea suyo, la pausa y el tope del mes que pone el admin, y aparta en un solo paso su «una vez
+   por taller» (dos pedidos al mismo tiempo ya no generan dos llamadas). Si la base no contesta, NO se llama a la IA. */
+// deno-lint-ignore no-explicit-any
+async function aiOnce(sb: any, sid: string, kind: "insights" | "entregable", reqId: string): Promise<number | Response> {
+  const r = await callRpc(sb, "ws_ai_once", 0, reqId, { p_session: sid, p_kind: kind });
+  if (r.error) {
+    if (r.transient) return json(503, { error: MSG_RETRY, retry: true, req: reqId });
+    if (r.status === 404 || r.error.code === "PGRST202")
+      return json(500, { error: "Falta correr migracion-v2-11-cuenta-e-ia.sql en Supabase. Avísale al admin.", req: reqId });
+    return json(403, { error: MSG_DENIED, req: reqId });
   }
-  if (!draft) return json(502, { error: MSG_FAIL, req: reqId });
-  return json(200, { draft, model: MODEL, usage, ai: { used: usedBefore + tin + tout, cap } });
+  const b = (r.data || {}) as { ok?: boolean; reason?: string; id?: number; cap?: number | null };
+  if (b.ok && Number(b.id)) return Number(b.id);
+  const sum = kind === "insights";
+  if (b.reason === "once") return json(409, { ai: "once", error: sum
+    ? "Este taller ya tiene su resumen con IA. Puedes editarlo, pero no volver a generarlo."
+    : "Este taller ya usó sus definiciones con IA. Puedes editarlas, pero no volver a pedirlas." });
+  if (b.reason === "busy") return json(409, { ai: "busy", retry: true, error: "La IA ya está trabajando en este taller. Espera unos segundos y vuelve a intentarlo." });
+  if (b.reason === "paused") return json(403, { ai: "paused", error: "Tu admin pausó la IA para tu cuenta." });
+  if (b.reason === "cap") return json(429, { ai: "cap", error: `Llegaste a tu tope de IA de este mes (${Number(b.cap || 0).toLocaleString("es-MX")} tokens). Pídele a tu admin que lo amplíe.` });
+  return json(403, { req: reqId, error: sum ? "Solo quien facilita el taller puede generar el resumen." : "Solo quien facilita el taller puede pedir las definiciones." });
 }
 
 function serverKey() {
@@ -334,8 +378,9 @@ function serverKey() {
 }
 
 /* v1.23 · Resumen ejecutivo de los resultados de un taller. Solo quien lo facilita; cuenta como «insights» en Uso de IA.
-   v1.26 · Una sola regla: se genera UNA vez por taller terminado (Resultados o Cierre). No lo frenan la pausa, el tope
-   mensual ni el límite diario de propuestas; sus tokens sí se registran en Uso de IA. El servidor guarda el resumen. */
+   v1.26 · Una sola regla: se genera UNA vez por taller terminado (Resultados o Cierre). El servidor guarda el resumen.
+   v2.11 · Lo frenan la pausa y el tope mensual que pone el admin (el límite diario de propuestas no) y su «una vez»
+           se aparta en la base antes de llamar a la IA (ws_ai_once). Sus tokens se registran en Uso de IA. */
 const SUMMARY_SYSTEM = `Eres analista de Colmena (Quality & Knowledge). Con los resultados de un taller escribe un resumen ejecutivo en español de México para quien facilitó y para el cliente.
 Formato (respétalo exactamente, sin títulos, saludos ni despedidas):
 - Primera línea: una sola oración de contexto (quiénes participaron y qué se trabajó), máximo 30 palabras.
@@ -373,67 +418,61 @@ async function summarize(sb: any, auth: string, body: any, apiKey: string, reqId
   if (stats.length < 20) return json(400, { error: "Aún hay pocos datos para resumir este taller." });
 
   // v1.26 · Una vez por taller: si ya hubo un resumen con IA que salió bien, no se vuelve a generar (se puede editar).
+  // v2.11 · Lo revisa y lo aparta la base en un solo paso, con la pausa y el tope del mes (antes: aquí, sin candado).
+  const once = await aiOnce(sb, sid, "insights", reqId);
+  if (once instanceof Response) return once;
+  const logId = once;
   const svc = createClient(Deno.env.get("SUPABASE_URL")!, serverKey(), { auth: { persistSession: false, autoRefreshToken: false } });
-  const { data: done, error: de } = await svc.from("ws_ai_log").select("id").eq("session_id", sid).eq("kind", "insights").eq("ok", true).limit(1);
-  if (de) { logErr({ req: reqId, summary: "ws_ai_log", message: String(de.message || de).slice(0, 200) }); return json(503, { error: MSG_RETRY, retry: true, req: reqId }); }
-  if (done && done.length) return json(409, { error: "Este taller ya tiene su resumen con IA. Puedes editarlo, pero no volver a generarlo.", ai: "once" });
-  // El renglón de Uso de IA se crea aquí (sin pasar por la pausa ni el tope) y se completa con los tokens al final
-  let logId: number | null = null;
-  { const { data: row, error: le } = await svc.from("ws_ai_log").insert({ user_id: uid, kind: "insights", label: cut(ses.name, 160), session_id: sid }).select("id").single();
-    if (le) logErr({ req: reqId, summary: "ws_ai_log insert", message: String(le.message || le).slice(0, 200) }); else logId = Number(row?.id) || null; }
 
   const left = () => DEADLINE_MS - (Date.now() - t0);
   // deno-lint-ignore no-explicit-any
-  let out: any;
+  let out: any, usage: any = null, saved = false;
   try {
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model: MODEL, max_tokens: 500, temperature: 0.4, system: SUMMARY_SYSTEM,
-        messages: [{ role: "user", content: "Resultados del taller (JSON):\n" + stats.slice(0, 7000) }] }),
-      signal: AbortSignal.timeout(Math.max(1000, left())),
-    });
-    if (!r.ok) {
-      const t = await r.text(); logErr({ req: reqId, summary: r.status, body: t.slice(0, 300) });
-      // v1.26 · Mismos mensajes claros que la propuesta (antes: «No pudimos escribir el resumen» aunque fuera falta de saldo)
-      const busy = r.status === 429 || r.status === 529;
-      const msg = busy ? "La IA está ocupada. Intenta en un minuto."
-        : r.status === 400 && /credit/i.test(t) ? MSG_NO_CREDIT
-        : r.status === 401 ? "La llave de la IA no es válida: revísala en Supabase → Edge Functions → Secrets."
-        : "No pudimos escribir el resumen esta vez. Intenta de nuevo.";
-      return json(busy ? 429 : 502, { error: msg, ai: /credit/i.test(t) ? "credit" : undefined, req: reqId });
-    }
-    out = await r.json();
-  } catch (e) {
-    const timeout = /Timeout|Abort/i.test(String((e as Error)?.name || ""));
-    logErr({ req: reqId, summary: "fetch", timeout, message: String((e as Error)?.message || e).slice(0, 300) });
-    return json(timeout ? 504 : 503, { error: timeout ? "La IA tardó demasiado. Intenta de nuevo." : "No pudimos conectar con la IA. Intenta de nuevo en un momento.", retry: true, req: reqId });
-  }
-  const usage = out?.usage || null;
-  const text = (out?.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join("").trim().slice(0, 1400);
-  const tin = Number(usage?.input_tokens) || 0, tout = Number(usage?.output_tokens) || 0;
-  // v1.26 · Primero se guarda el resumen en el taller y solo entonces cuenta como «ya generado»: si no se pudo guardar,
-  //         el taller conserva su oportunidad (los tokens sí quedan registrados en Uso de IA).
-  const at = new Date().toISOString();
-  let saved = false;
-  if (text) {
-    const { error } = await svc.from("ws_sessions").update({ summary: text, summary_at: at }).eq("id", sid);
-    if (error) logErr({ req: reqId, summary_save: String(error.message || error).slice(0, 200) }); else saved = true;
-  }
-  if (logId) {
     try {
-      const { error } = await svc.from("ws_ai_log").update({ input_tokens: tin, output_tokens: tout, model: MODEL, ok: saved, session_id: sid }).eq("id", logId);
-      if (error) logErr({ req: reqId, usage_log: String(error.message || error).slice(0, 200) });
-    } catch (e) { logErr({ req: reqId, usage_log: String((e as Error)?.message || e).slice(0, 200) }); }
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+        body: JSON.stringify({ model: MODEL, max_tokens: 500, temperature: 0.4, system: SUMMARY_SYSTEM,
+          messages: [{ role: "user", content: "Resultados del taller (JSON):\n" + stats.slice(0, 7000) }] }),
+        signal: AbortSignal.timeout(Math.max(1000, left())),
+      });
+      if (!r.ok) {
+        const t = await r.text(); logErr({ req: reqId, summary: r.status, body: t.slice(0, 300) });
+        // v1.26 · Mismos mensajes claros que la propuesta (antes: «No pudimos escribir el resumen» aunque fuera falta de saldo)
+        const busy = r.status === 429 || r.status === 529;
+        const msg = busy ? "La IA está ocupada. Intenta en un minuto."
+          : r.status === 400 && /credit/i.test(t) ? MSG_NO_CREDIT
+          : r.status === 401 ? "La llave de la IA no es válida: revísala en Supabase → Edge Functions → Secrets."
+          : "No pudimos escribir el resumen esta vez. Intenta de nuevo.";
+        return json(busy ? 429 : 502, { error: msg, ai: /credit/i.test(t) ? "credit" : undefined, req: reqId });
+      }
+      out = await r.json();
+    } catch (e) {
+      const timeout = /Timeout|Abort/i.test(String((e as Error)?.name || ""));
+      logErr({ req: reqId, summary: "fetch", timeout, message: String((e as Error)?.message || e).slice(0, 300) });
+      return json(timeout ? 504 : 503, { error: timeout ? "La IA tardó demasiado. Intenta de nuevo." : "No pudimos conectar con la IA. Intenta de nuevo en un momento.", retry: true, req: reqId });
+    }
+    usage = out?.usage || null;
+    const text = (out?.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join("").trim().slice(0, 1400);
+    // v1.26 · Primero se guarda el resumen en el taller y solo entonces cuenta como «ya generado»: si no se pudo guardar,
+    //         el taller conserva su oportunidad (los tokens sí quedan registrados en Uso de IA).
+    const at = new Date().toISOString();
+    if (text) {
+      const { error } = await svc.from("ws_sessions").update({ summary: text, summary_at: at }).eq("id", sid);
+      if (error) logErr({ req: reqId, summary_save: String(error.message || error).slice(0, 200) }); else saved = true;
+    }
+    if (!text) return json(502, { error: "No pudimos escribir el resumen esta vez. Intenta de nuevo.", req: reqId });
+    if (!saved) return json(503, { error: "No pudimos guardar el resumen. Intenta de nuevo.", retry: true, req: reqId });
+    return json(200, { summary: text, summary_at: at, model: MODEL, usage, ai: null });
+  } finally {
+    // El renglón de Uso de IA se cierra siempre (también si la IA falló): así no queda «en curso»
+    await finishLog(logId, reqId, { tin: Number(usage?.input_tokens) || 0, tout: Number(usage?.output_tokens) || 0, ok: saved, session_id: sid });
   }
-  if (!text) return json(502, { error: "No pudimos escribir el resumen esta vez. Intenta de nuevo.", req: reqId });
-  if (!saved) return json(503, { error: "No pudimos guardar el resumen. Intenta de nuevo.", retry: true, req: reqId });
-  return json(200, { summary: text, summary_at: at, model: MODEL, usage, ai: null });
 }
 
 /* v2.8 · Entregable: definiciones sugeridas para el modelo de competencias (Definir competencias).
-   Solo quien facilita y con el taller terminado; UNA vez por taller (Uso de IA: kind «entregable»). No la frenan la
-   pausa ni el tope mensual, igual que el resumen; sus tokens sí se registran. La IA solo redacta definiciones con los
+   Solo quien facilita y con el taller terminado; UNA vez por taller (Uso de IA: kind «entregable»). v2.11 · La frenan
+   la pausa y el tope mensual, igual que el resumen, y su «una vez» se aparta con ws_ai_once; sus tokens se registran. La IA solo redacta definiciones con los
    comportamientos y «Cómo se ve» que escribió la sala. Se guardan marcadas como sugeridas (src «ai», «por validar»)
    y nunca reemplazan una definición que quien facilita ya revisó o escribió (src «ok»). */
 const DELIV_SYSTEM = `Eres analista de Colmena (Quality & Knowledge). En un taller para definir competencias, la sala escribió comportamientos de alguien que hace bien un rol, los juntó en competencias y propuso cómo se ve cada una en el día a día.
@@ -499,71 +538,66 @@ async function deliverable(sb: any, auth: string, body: any, apiKey: string, req
       ? json(500, { error: "Falta correr migracion-v280-entregable.sql en Supabase. Avísale al admin.", req: reqId })
       : json(503, { error: MSG_RETRY, retry: true, req: reqId });
   }
-  const { data: done, error: de } = await svc.from("ws_ai_log").select("id").eq("session_id", sid).eq("kind", "entregable").eq("ok", true).limit(1);
-  if (de) { logErr({ req: reqId, deliverable: "ws_ai_log", message: String(de.message || de).slice(0, 200) }); return json(503, { error: MSG_RETRY, retry: true, req: reqId }); }
-  if ((done && done.length) || (cur?.data && cur.data.ai_at)) return json(409, { error: "Este taller ya usó sus definiciones con IA. Puedes editarlas, pero no volver a pedirlas.", ai: "once" });
-  let logId: number | null = null;
-  { const { data: row, error: le } = await svc.from("ws_ai_log").insert({ user_id: uid, kind: "entregable", label: cut(ses.name, 160), session_id: sid }).select("id").single();
-    if (le) logErr({ req: reqId, deliverable: "ws_ai_log insert", message: String(le.message || le).slice(0, 200) }); else logId = Number(row?.id) || null; }
+  if (cur?.data && cur.data.ai_at) return json(409, { error: "Este taller ya usó sus definiciones con IA. Puedes editarlas, pero no volver a pedirlas.", ai: "once" });
+  // v2.11 · La base revisa la pausa y el tope del mes y aparta el «una vez» en un solo paso (antes: aquí, sin candado)
+  const once = await aiOnce(sb, sid, "entregable", reqId);
+  if (once instanceof Response) return once;
+  const logId = once;
 
   const left = () => DEADLINE_MS - (Date.now() - t0);
   const payload = JSON.stringify(list.map((x, i) => ({ n: i + 1, competencia: x.n, comportamientos: x.c, comoSeVe: x.v })));
   // deno-lint-ignore no-explicit-any
-  let out: any;
+  let out: any, usage: any = null, saved = false;
   try {
-    const r = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model: MODEL, max_tokens: 900, temperature: 0.3, system: DELIV_SYSTEM,
-        messages: [{ role: "user", content: "Taller: " + cut(ses.name, 160) + "\n\nCompetencias (JSON):\n" + payload.slice(0, 9000) }, { role: "assistant", content: "{" }] }),
-      signal: AbortSignal.timeout(Math.max(1000, left())),
-    });
-    if (!r.ok) {
-      const tx = await r.text(); logErr({ req: reqId, deliverable: r.status, body: tx.slice(0, 300) });
-      const busy = r.status === 429 || r.status === 529;
-      const msg = busy ? "La IA está ocupada. Intenta en un minuto."
-        : r.status === 400 && /credit/i.test(tx) ? MSG_NO_CREDIT
-        : r.status === 401 ? "La llave de la IA no es válida: revísala en Supabase → Edge Functions → Secrets."
-        : MSG_DFAIL;
-      return json(busy ? 429 : 502, { error: msg, ai: /credit/i.test(tx) ? "credit" : undefined, req: reqId });
-    }
-    out = await r.json();
-  } catch (e) {
-    const timeout = /Timeout|Abort/i.test(String((e as Error)?.name || ""));
-    logErr({ req: reqId, deliverable: "fetch", timeout, message: String((e as Error)?.message || e).slice(0, 300) });
-    return json(timeout ? 504 : 503, { error: timeout ? "La IA tardó demasiado. Intenta de nuevo." : "No pudimos conectar con la IA. Intenta de nuevo en un momento.", retry: true, req: reqId });
-  }
-  const usage = out?.usage || null;
-  const text = (out?.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join("");
-  const defs = parseDefs(text, list.length);
-  const tin = Number(usage?.input_tokens) || 0, tout = Number(usage?.output_tokens) || 0;
-
-  // Se guarda junto con lo que ya completó quien facilita. Primero se guarda y solo entonces cuenta como «ya usado».
-  const at = new Date().toISOString();
-  // deno-lint-ignore no-explicit-any
-  const data: any = cur?.data && typeof cur.data === "object" && !Array.isArray(cur.data) ? cur.data : {};
-  data.v = 1; data.kind = "comp";
-  data.items = data.items && typeof data.items === "object" && !Array.isArray(data.items) ? data.items : {};
-  let n = 0;
-  list.forEach((x, i) => {
-    const d = defs[i]; if (!d) return;
-    const it = data.items[x.k] && typeof data.items[x.k] === "object" ? data.items[x.k] : {};
-    if (it.def && it.src === "ok") return;
-    data.items[x.k] = { ...it, def: d, src: "ai", at }; n++;
-  });
-  let saved = false;
-  if (n) {
-    data.ai_at = at;
-    const { error } = await svc.from("ws_deliverables").upsert({ session_id: sid, data, updated_by: uid }, { onConflict: "session_id" });
-    if (error) logErr({ req: reqId, deliverable_save: String(error.message || error).slice(0, 200) }); else saved = true;
-  }
-  if (logId) {
     try {
-      const { error } = await svc.from("ws_ai_log").update({ input_tokens: tin, output_tokens: tout, model: MODEL, ok: saved, session_id: sid }).eq("id", logId);
-      if (error) logErr({ req: reqId, usage_log: String(error.message || error).slice(0, 200) });
-    } catch (e) { logErr({ req: reqId, usage_log: String((e as Error)?.message || e).slice(0, 200) }); }
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+        body: JSON.stringify({ model: MODEL, max_tokens: 900, temperature: 0.3, system: DELIV_SYSTEM,
+          messages: [{ role: "user", content: "Taller: " + cut(ses.name, 160) + "\n\nCompetencias (JSON):\n" + payload.slice(0, 9000) }, { role: "assistant", content: "{" }] }),
+        signal: AbortSignal.timeout(Math.max(1000, left())),
+      });
+      if (!r.ok) {
+        const tx = await r.text(); logErr({ req: reqId, deliverable: r.status, body: tx.slice(0, 300) });
+        const busy = r.status === 429 || r.status === 529;
+        const msg = busy ? "La IA está ocupada. Intenta en un minuto."
+          : r.status === 400 && /credit/i.test(tx) ? MSG_NO_CREDIT
+          : r.status === 401 ? "La llave de la IA no es válida: revísala en Supabase → Edge Functions → Secrets."
+          : MSG_DFAIL;
+        return json(busy ? 429 : 502, { error: msg, ai: /credit/i.test(tx) ? "credit" : undefined, req: reqId });
+      }
+      out = await r.json();
+    } catch (e) {
+      const timeout = /Timeout|Abort/i.test(String((e as Error)?.name || ""));
+      logErr({ req: reqId, deliverable: "fetch", timeout, message: String((e as Error)?.message || e).slice(0, 300) });
+      return json(timeout ? 504 : 503, { error: timeout ? "La IA tardó demasiado. Intenta de nuevo." : "No pudimos conectar con la IA. Intenta de nuevo en un momento.", retry: true, req: reqId });
+    }
+    usage = out?.usage || null;
+    const text = (out?.content || []).filter((c: { type: string }) => c.type === "text").map((c: { text: string }) => c.text).join("");
+    const defs = parseDefs(text, list.length);
+
+    // Se guarda junto con lo que ya completó quien facilita. Primero se guarda y solo entonces cuenta como «ya usado».
+    // v2.11.1 · La base mezcla las definiciones con lo ÚLTIMO guardado y con candado (ws_deliverable_ai_merge). Antes se
+    //           guardaba lo leído antes de llamar a la IA y se perdía lo que quien facilita editó mientras tanto.
+    const at = new Date().toISOString();
+    const defsBy: Record<string, string> = {};
+    list.forEach((x, i) => { if (defs[i]) defsBy[x.k] = defs[i]; });
+    if (!Object.keys(defsBy).length) return json(502, { error: MSG_DFAIL, req: reqId });
+    const { data: m, error: me } = await svc.rpc("ws_deliverable_ai_merge", { p_session: sid, p_defs: defsBy, p_at: at, p_by: uid });
+    if (me) {
+      logErr({ req: reqId, deliverable_save: String(me.message || me).slice(0, 200), code: me.code });
+      if (me.code === "PGRST202" || me.code === "42883") {   // la base aún no tiene la v2.11.1
+        return json(500, { error: "Falta correr migracion-v2-11-1-ia-y-entregable.sql en Supabase. Avísale al admin.", req: reqId });
+      }
+      return json(503, { error: "No pudimos guardar las definiciones. Intenta de nuevo.", retry: true, req: reqId });
+    }
+    if (m?.reason === "once") return json(409, { error: "Este taller ya usó sus definiciones con IA. Puedes editarlas, pero no volver a pedirlas.", ai: "once" });
+    const n = Number(m?.n) || 0;
+    if (!n) return json(502, { error: MSG_DFAIL, req: reqId });
+    saved = true;
+    return json(200, { data: m.data, at, n, model: MODEL, usage, ai: null });
+  } finally {
+    // El renglón de Uso de IA se cierra siempre (también si la IA falló): así no queda «en curso»
+    await finishLog(logId, reqId, { tin: Number(usage?.input_tokens) || 0, tout: Number(usage?.output_tokens) || 0, ok: saved, session_id: sid });
   }
-  if (!n) return json(502, { error: MSG_DFAIL, req: reqId });
-  if (!saved) return json(503, { error: "No pudimos guardar las definiciones. Intenta de nuevo.", retry: true, req: reqId });
-  return json(200, { data, at, n, model: MODEL, usage, ai: null });
 }
